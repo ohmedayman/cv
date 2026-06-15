@@ -272,7 +272,7 @@
                 <button type="submit" class="btn" id="adminLoginBtn">دخول لوحة التحكم</button>
             </form>
             <div class="error" id="loginError"></div>
-            <div class="back-link"><a href="landing.html">← العودة للموقع</a></div>
+            <div class="back-link"><a href="index.html">← العودة للموقع</a></div>
         </div>
     </div>
 
@@ -515,7 +515,7 @@
                 await signOut(auth);
                 document.getElementById('blockMsg').textContent = 'ليس لديك صلاحية دخول هذه الصفحة';
                 document.getElementById('blockMsg').style.color = '#ef4444';
-                setTimeout(() => { window.location.href = 'landing.html'; }, 2000);
+                setTimeout(() => { window.location.href = 'index.html'; }, 2000);
             }
         });
 

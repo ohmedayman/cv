@@ -274,7 +274,7 @@
     onAuthStateChanged(auth, (user) => {
         if (user && !isSignUpMode && !isResetting && !blockRedirect) {
             showSuccessOverlay('مرحباً بعودتك!', 'جاري التحويل...');
-            setTimeout(() => location.replace("index.html"), 800);
+            setTimeout(() => location.replace("editor.html"), 800);
         }
     });
 
@@ -328,7 +328,7 @@
                 await signInWithEmailAndPassword(auth, email, pass);
                 set(ref(db, 'users/' + auth.currentUser.uid + '/lastLogin'), Date.now()).catch(()=>{});
                 showSuccessOverlay('مرحباً!', 'جاري التحويل...');
-                setTimeout(() => location.replace("index.html"), 800);
+                setTimeout(() => location.replace("editor.html"), 800);
             }
         } catch (err) {
             setLoading(btn, false);
@@ -357,7 +357,7 @@
                 registeredAt: Date.now(), lastLogin: Date.now()
             }).catch(()=>{});
             showSuccessOverlay('مرحباً ' + (res.user.displayName || ''), 'جاري التحويل...');
-            setTimeout(() => location.replace("index.html"), 800);
+            setTimeout(() => location.replace("editor.html"), 800);
         } catch (err) {
             showToast('errorToast', err.code === 'auth/unauthorized-domain' ? 'خطأ في النطاق' : 'خطأ: ' + err.message);
         }
