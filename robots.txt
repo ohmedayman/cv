@@ -1,0 +1,29 @@
+# robots.txt for QCV - منشئ السير الذاتية الذكي بالذكاء الاصطناعي
+# https://qcv.vexonet.online
+
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /admin-setup.html
+Disallow: /.qodo/
+Disallow: /.sixth/
+
+# Allow all search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Sitemap location
+Sitemap: https://qcv.vexonet.online/sitemap.xml
+
+# Crawl-delay for polite bots
+Crawl-delay: 1
+
+# Specific rules for important pages
+# Landing page - highest priority
+# /landing.html -> /
