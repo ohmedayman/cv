@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إعداد المدير | QCV</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{background:#060913;color:#fff;font-family:'Cairo',sans-serif;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}
+        .box{background:#0f172a;border:1px solid #1e293b;border-radius:20px;padding:45px 40px;width:100%;max-width:460px;box-shadow:0 25px 60px rgba(0,0,0,0.5);text-align:center}
+        .logo{font-size:2.5rem;font-weight:900;margin-bottom:8px}
+        .logo span{color:#00a3ff}
+        .sub{color:#64748b;font-size:0.85rem;margin-bottom:30px}
+        .input-group{margin-bottom:18px;text-align:right}
+        .input-group label{display:block;font-size:0.82rem;color:#64748b;margin-bottom:6px;font-weight:600}
+        .input-group input{width:100%;padding:14px 16px;background:#060913;border:1px solid #1e293b;color:#fff;border-radius:12px;outline:none;font-family:'Cairo',sans-serif;font-size:0.9rem;transition:all 0.2s}
+        .input-group input:focus{border-color:#00a3ff;box-shadow:0 0 0 3px rgba(0,163,255,0.15)}
+        .btn{width:100%;padding:14px;background:#00a3ff;color:#000;border:none;border-radius:12px;font-weight:800;font-size:1rem;cursor:pointer;font-family:'Cairo',sans-serif;margin-top:10px;transition:all 0.2s}
+        .btn:hover{background:#00b8ff}
+        .btn:disabled{opacity:0.5;cursor:not-allowed}
+        .btn-green{background:#10b981}.btn-green:hover{background:#059669}
+        .msg{margin-top:15px;font-size:0.85rem;font-weight:600}
+        .ok{color:#10b981}.err{color:#ef4444}.info{color:#00a3ff}
+        .step{margin:25px 0;padding:20px;background:rgba(0,163,255,0.04);border:1px solid rgba(0,163,255,0.1);border-radius:12px;text-align:right}
+        .step h3{font-size:0.95rem;font-weight:800;color:#00a3ff;margin-bottom:8px}
+        .step p{font-size:0.82rem;color:#94a3b8;line-height:1.6}
+        .links{margin-top:25px}
+        .links a{color:#00a3ff;text-decoration:none;font-weight:700;font-size:0.88rem}
+        .divider{border:none;border-top:1px solid #1e293b;margin:25px 0}
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="logo">Q<span>CV</span></div>
+        <div class="sub">إعداد حساب المدير الأول</div>
+
+        <div class="step">
+            <h3>الخطوة 1: إنشاء الحساب</h3>
+            <p>املأ البيانات واضغط "إنشاء حساب المدير"</p>
+        </div>
+
+        <div class="input-group">
+            <label>اسم المدير</label>
+            <input type="text" id="name" value="Mohamed Ayman" placeholder="الاسم الكامل">
+        </div>
+        <div class="input-group">
+            <label>البريد الإلكتروني</label>
+            <input type="email" id="email" value="admin@qcv-app.com" placeholder="admin@qcv-app.com">
+        </div>
+        <div class="input-group">
+            <label>كلمة المرور</label>
+            <input type="password" id="pass" placeholder="6 أحرف على الأقل">
+        </div>
+
+        <button class="btn" id="createBtn" onclick="createAdmin()">إنشاء حساب المدير</button>
+        <div class="msg" id="msg1"></div>
+
+        <hr class="divider">
+
+        <div class="step">
+            <h3>الخطوة 2: تفعيل الصلاحيات</h3>
+            <p>بعد الإنشاء، سجل دخول بالحساب وافعال صلاحيات المدير</p>
+        </div>
+
+        <button class="btn btn-green" id="activateBtn" onclick="activateAdmin()">تفعيل صلاحيات المدير</button>
+        <div class="msg" id="msg2"></div>
+
+        <div class="links">
+            <a href="admin.html">الذهاب للوحة التحكم ←</a>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",
+            authDomain: "qwcv-1cfad.firebaseapp.com",
+            projectId: "qwcv-1cfad",
+            storageBucket: "qwcv-1cfad.firebasestorage.app",
+            messagingSenderId: "792471802122",
+            appId: "1:792471802122:web:808e04099afc90315aaaf3",
+            databaseURL: "https://qwcv-1cfad-default-rtdb.firebaseio.com"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app);
+
+        window.createAdmin = async function() {
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const pass = document.getElementById('pass').value;
+            const msg = document.getElementById('msg1');
+            const btn = document.getElementById('createBtn');
+
+            if (!name || !email || !pass) {
+                msg.className = 'msg err'; msg.textContent = 'املأ كل الحقول'; return;
+            }
+            if (pass.length < 6) {
+                msg.className = 'msg err'; msg.textContent = 'كلمة المرور 6 أحرف على الأقل'; return;
+            }
+
+            btn.textContent = 'جاري الإنشاء...'; btn.disabled = true;
+
+            try {
+                const cred = await createUserWithEmailAndPassword(auth, email, pass);
+                await updateProfile(cred.user, { displayName: name });
+
+                await set(ref(db, 'users/' + cred.user.uid), {
+                    uid: cred.user.uid,
+                    name: name,
+                    email: email,
+                    plan: 'unlimited',
+                    role: 'admin',
+                    banned: false,
+                    registeredAt: Date.now(),
+                    lastLogin: Date.now()
+                });
+
+                await set(ref(db, 'admins/' + cred.user.uid), {
+                    uid: cred.user.uid,
+                    name: name,
+                    email: email,
+                    createdAt: Date.now()
+                });
+
+                await signOut(auth);
+
+                msg.className = 'msg ok';
+                msg.textContent = 'تم إنشاء حساب المدير وتفعيل الصلاحيات بنجاح!';
+            } catch (err) {
+                msg.className = 'msg err';
+                const m = {
+                    'auth/email-already-in-use': 'البريد مستخدم بالفعل - اضغط "تفعيل الصلاحيات"',
+                    'auth/weak-password': 'كلمة المرور ضعيفة',
+                    'auth/invalid-email': 'البريد غير صالح'
+                };
+                msg.textContent = m[err.code] || 'خطأ: ' + err.message;
+            }
+
+            btn.textContent = 'إنشاء حساب المدير'; btn.disabled = false;
+        };
+
+        window.activateAdmin = async function() {
+            const email = document.getElementById('email').value.trim();
+            const pass = document.getElementById('pass').value;
+            const msg = document.getElementById('msg2');
+            const btn = document.getElementById('activateBtn');
+
+            if (!email || !pass) {
+                msg.className = 'msg err'; msg.textContent = 'املأ الإيميل والباسورد'; return;
+            }
+
+            btn.textContent = 'جاري التفعيل...'; btn.disabled = true;
+
+            try {
+                const cred = await signInWithEmailAndPassword(auth, email, pass);
+                const uid = cred.user.uid;
+
+                await set(ref(db, 'admins/' + uid), {
+                    uid: uid,
+                    name: cred.user.displayName || 'Admin',
+                    email: email,
+                    createdAt: Date.now()
+                });
+
+                await set(ref(db, 'users/' + uid + '/role'), 'admin');
+                await set(ref(db, 'users/' + uid + '/plan'), 'unlimited');
+
+                await signOut(auth);
+
+                msg.className = 'msg ok';
+                msg.textContent = 'تم تفعيل صلاحيات المدير بنجاح! يمكنك الدخول من admin.html';
+            } catch (err) {
+                msg.className = 'msg err';
+                msg.textContent = 'خطأ: ' + err.message;
+            }
+
+            btn.textContent = 'تفعيل صلاحيات المدير'; btn.disabled = false;
+        };
+    </script>
+</body>
+</html>

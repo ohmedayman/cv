@@ -1,0 +1,673 @@
+/* 💡 Global CSS Variables Setup */
+:root {
+    --app-bg-dark: #090d16;
+    --app-sidebar-bg: #111827;
+    --app-accent-blue: #3b82f6;
+    --app-border-color: #1f2937;
+
+    /* Document Live Controls */
+    --cv-font-size: 12px;
+    --cv-line-height: 1.4;
+    --cv-padding: 15mm;
+}
+
+* {
+    box-sizing: border-box !important;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--app-bg-dark);
+    color: #f3f4f6;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* 💻 Custom Scrollbars for Dark Theme */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0b0f19;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #1f2937;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--app-accent-blue);
+}
+
+/* 🏢 Top Navigation */
+.app-top-bar {
+    height: 75px;
+    background: #0f172a;
+    border-bottom: 1px solid var(--app-border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    position: relative;
+    z-index: 10;
+}
+
+.app-top-bar .logo {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #fff;
+}
+
+.app-top-bar .logo span {
+    color: var(--app-accent-blue);
+    font-size: 0.85rem;
+    font-weight: 400;
+    margin-left: 6px;
+    border: 1px solid #334155;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.quick-controls {
+    display: flex;
+    align-items: center;
+}
+
+.control-group-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+.control-group-row select {
+    background: #1e293b;
+    border: 1px solid var(--app-border-color);
+    padding: 10px 16px;
+    border-radius: 6px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.control-group-row select:focus {
+    border-color: var(--app-accent-blue);
+}
+
+.btn-primary-download {
+    background: #ffffff;
+    color: #0f172a;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.2s;
+}
+
+.btn-primary-download:hover {
+    background: #e2e8f0;
+    transform: translateY(-1px);
+}
+
+/* 🕋 Layout Structure */
+.studio-container {
+    display: flex !important;
+    flex-direction: row !important;
+    height: calc(100vh - 75px) !important;
+    width: 100% !important;
+    overflow: hidden !important;
+}
+
+/* 📝 Sidebar Style */
+.editor-sidebar {
+    width: 420px !important;
+    min-width: 420px !important;
+    max-width: 420px !important;
+    background: var(--app-sidebar-bg) !important;
+    border-right: 1px solid var(--app-border-color) !important;
+    padding: 25px !important;
+    overflow-y: auto !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+}
+
+.sidebar-section {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 18px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-section h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #f8fafc;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #334155;
+    padding-bottom: 6px;
+    text-transform: uppercase;
+}
+
+/* ✍️ Section Titles Customizing Inputs */
+.label-highlight {
+    color: var(--app-accent-blue) !important;
+    font-weight: 700 !important;
+    font-size: 0.75rem !important;
+    text-transform: uppercase;
+}
+
+.section-title-input {
+    background: #111827 !important;
+    border: 1px solid #334155 !important;
+    font-weight: 700;
+    color: #fff !important;
+    margin-bottom: 10px;
+}
+
+.control-box {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.slider-item {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.slider-item input {
+    width: 100%;
+    accent-color: var(--app-accent-blue);
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 12px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.78rem;
+    margin-bottom: 4px;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid var(--app-border-color);
+    background: #0b0f19;
+    color: #fff;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: var(--app-accent-blue);
+}
+
+/* ➕ Repeater Design */
+.repeater-item-block {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px dashed #334155;
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    position: relative;
+}
+
+.btn-delete-item {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 5px;
+    width: 100%;
+    text-align: center;
+    transition: 0.2s;
+}
+
+.btn-delete-item:hover {
+    background: #ef4444;
+    color: #fff;
+}
+
+.btn-add-repeater {
+    background: transparent;
+    border: 1px solid var(--app-accent-blue);
+    color: var(--app-accent-blue);
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-add-repeater:hover {
+    background: var(--app-accent-blue);
+    color: #fff;
+}
+
+/* 🗑️ Trash Bin Styles */
+.trash-bin-section {
+    border: 1px solid rgba(239, 68, 68, 0.2) !important;
+    background: rgba(239, 68, 68, 0.02) !important;
+}
+
+.trash-bin-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.empty-trash-msg {
+    font-size: 0.78rem;
+    color: #64748b;
+    text-align: center;
+    font-style: italic;
+}
+
+.trash-item-card {
+    background: #1e1b1b;
+    border: 1px solid #451a1a;
+    padding: 8px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+}
+
+.trash-item-info {
+    color: #cbd5e1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+.btn-restore-item {
+    background: #10b981;
+    color: #fff;
+    border: none;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* 🖥️ Strict 1-Page Document Canvas Setup */
+.preview-zone {
+    flex: 1 !important;
+    height: 100% !important;
+    padding: 30px !important;
+    overflow: auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    background: #060911 !important;
+}
+
+.cv-page-container {
+    width: 210mm;
+    min-height: 297mm;
+    height: 297mm;
+    max-height: 297mm;
+    overflow: hidden !important;
+    background: #fff;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    position: relative;
+}
+
+.cv-document {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 297mm !important;
+    padding: var(--cv-padding) !important;
+    color: #111827 !important;
+    background: #ffffff !important;
+    font-size: var(--cv-font-size) !important;
+    line-height: var(--cv-line-height) !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+}
+
+/* 🏛️ ATS Typography Spacing */
+.cv-body-content {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 15px;
+}
+
+.cv-section-item {
+    page-break-inside: avoid !important;
+}
+
+.section-text-p {
+    color: #374151;
+    white-space: pre-line;
+    text-align: justify;
+    font-size: 1em;
+}
+
+.contact-details-row {
+    font-size: 0.88rem;
+    color: #4b5563;
+    margin-top: 3px;
+}
+
+.links-row {
+    color: #6b7280;
+    font-size: 0.82rem;
+}
+
+.cv-render-item {
+    margin-bottom: 8px;
+    page-break-inside: avoid !important;
+}
+
+.cv-render-meta {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    color: #111827;
+    font-size: 0.95em;
+    margin-bottom: 2px;
+}
+
+.cv-render-meta .duration-span {
+    font-weight: 500;
+    color: #4b5563;
+    font-size: 0.88em;
+}
+
+/* Templates switch logic rules */
+.cv-document.ats-classic {
+    font-family: 'Inter', sans-serif;
+}
+
+.cv-document.ats-classic .cv-header-block {
+    text-align: center;
+    border-bottom: 2px solid #111827;
+    padding-bottom: 10px;
+}
+
+.cv-document.ats-classic #cvName {
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: #111827;
+    text-transform: uppercase;
+}
+
+.cv-document.ats-classic .sub-title-job {
+    font-size: 1.1rem;
+    color: #4b5563;
+    font-weight: 500;
+}
+
+.cv-document.ats-classic .section-heading-title {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-bottom: 1px solid #111827;
+    margin-bottom: 8px;
+    padding-bottom: 2px;
+    color: #111827;
+}
+
+.cv-document.ats-executive {
+    font-family: 'Merriweather', serif;
+}
+
+.cv-document.ats-executive .cv-header-block {
+    text-align: left;
+    margin-bottom: 12px;
+}
+
+.cv-document.ats-executive #cvName {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.cv-document.ats-executive .sub-title-job {
+    font-size: 1.05rem;
+    color: #111827;
+    font-weight: 400;
+    font-style: italic;
+    border-bottom: 1px solid #9ca3af;
+    padding-bottom: 6px;
+    margin-bottom: 6px;
+}
+
+.cv-document.ats-executive .section-heading-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    border-left: 4px solid #111827;
+    padding-left: 6px;
+}
+
+.cv-document.ats-minimalist {
+    font-family: 'Inter', sans-serif;
+}
+
+.cv-document.ats-minimalist .cv-header-block {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.cv-document.ats-minimalist #cvName {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.cv-document.ats-minimalist .sub-title-job {
+    font-size: 0.95rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.cv-document.ats-minimalist .section-heading-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #4b5563;
+    margin-bottom: 6px;
+    border-bottom: 1px dashed #d1d5db;
+    padding-bottom: 3px;
+}
+
+.cv-document.ats-tech {
+    font-family: 'Inter', sans-serif;
+}
+
+.cv-document.ats-tech .cv-header-block {
+    text-align: left;
+    border-bottom: 3px double #111827;
+    padding-bottom: 10px;
+}
+
+.cv-document.ats-tech #cvName {
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: #111827;
+}
+
+.cv-document.ats-tech .sub-title-job {
+    font-size: 1.05rem;
+    color: #374151;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.cv-document.ats-tech .section-heading-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 2px;
+}
+
+/* 🔐 Admin Login Wall Premium Styling */
+.admin-login-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(5, 8, 15, 0.96) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    z-index: 99999 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.login-card {
+    background: #111827 !important;
+    border: 1px solid #1f2937 !important;
+    padding: 40px !important;
+    border-radius: 12px !important;
+    width: 90% !important;
+    max-width: 400px !important;
+    text-align: center !important;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.7) !important;
+}
+
+.login-card h2 {
+    font-size: 1.4rem !important;
+    font-weight: 800 !important;
+    color: #fff !important;
+    margin-bottom: 8px !important;
+}
+
+.login-card p {
+    font-size: 0.85rem !important;
+    color: #94a3b8 !important;
+    margin-bottom: 24px !important;
+    line-height: 1.5 !important;
+}
+
+.login-card input {
+    text-align: center !important;
+    font-size: 1.2rem !important;
+    letter-spacing: 4px !important;
+    border: 1px solid #334155 !important;
+    background: #070a12 !important;
+    margin-bottom: 15px;
+    color: #fff;
+    padding: 10px;
+    width: 100%;
+    border-radius: 6px;
+}
+
+.login-card input:focus {
+    border-color: var(--app-accent-blue) !important;
+    outline: none;
+}
+
+.btn-login {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    border: none !important;
+    width: 100% !important;
+    padding: 14px !important;
+    border-radius: 6px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    font-size: 0.95rem !important;
+    transition: 0.2s ease !important;
+}
+
+.btn-login:hover {
+    background: #e2e8f0 !important;
+    transform: translateY(-1px) !important;
+}
+
+.error-msg {
+    color: #f87171 !important;
+    font-size: 0.82rem !important;
+    margin-top: 15px !important;
+    font-weight: 600 !important;
+    display: none;
+}
+
+/* 🖨️ Strict Native PDF Print Engine Optimization */
+@media print {
+
+    body,
+    .studio-container,
+    .preview-zone {
+        background: #ffffff !important;
+        color: #000000 !important;
+        overflow: visible !important;
+        height: auto !important;
+        width: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* إخفاء واجهة الاستوديو بالكامل أثناء معالجة الطباعة */
+    .app-top-bar,
+    .editor-sidebar,
+    .admin-login-overlay,
+    .btn-primary-download {
+        display: none !important;
+    }
+
+    .cv-page-container {
+        box-shadow: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 210mm !important;
+        height: 297mm !important;
+        max-height: 297mm !important;
+        page-break-after: avoid !important;
+        page-break-before: avoid !important;
+    }
+
+    .cv-document {
+        padding: var(--cv-padding) !important;
+        font-size: var(--cv-font-size) !important;
+        line-height: var(--cv-line-height) !important;
+    }
+}

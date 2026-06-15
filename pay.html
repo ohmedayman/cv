@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QCV - اشترك ودفع</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --bg:#0a0f1f;--card:#111a33;--card2:#162040;--border:rgba(0,163,255,0.15);
+            --accent:#00a3ff;--glow:rgba(0,163,255,0.35);
+            --green:#10b981;--green-bg:rgba(16,185,129,0.12);
+            --red:#ef4444;--red-bg:rgba(239,68,68,0.08);
+            --orange:#f59e0b;--purple:#8b5cf6;
+            --text:#ffffff;--muted:#8892a8;--light:#b8c4d8;
+            --input:#0d1428;
+        }
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{background:var(--bg);color:var(--text);font-family:'Cairo',sans-serif;min-height:100vh;overflow-x:hidden;background-image:radial-gradient(ellipse at top,rgba(0,163,255,0.06),transparent 60%)}
+
+        /* ===== LAYOUT ===== */
+        .container{max-width:1100px;margin:0 auto;padding:25px 20px 60px}
+        .back-link{display:inline-flex;align-items:center;gap:8px;color:var(--muted);text-decoration:none;font-size:0.85rem;font-weight:600;margin-bottom:28px;transition:all 0.2s}
+        .back-link:hover{color:var(--accent)}
+
+        /* ===== PAGE HEADER ===== */
+        .page-header{text-align:center;margin-bottom:35px}
+        .page-header h1{font-size:1.8rem;font-weight:900;margin-bottom:8px}
+        .page-header h1 span{background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .page-header p{color:var(--muted);font-size:0.9rem}
+
+        /* ===== STEPS ===== */
+        .steps{display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:35px}
+        .step{display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:30px;font-size:0.8rem;font-weight:700;color:var(--muted);background:rgba(255,255,255,0.03);border:1px solid transparent;transition:all 0.3s}
+        .step.active{color:#fff;background:rgba(0,163,255,0.12);border-color:rgba(0,163,255,0.4);box-shadow:0 0 20px rgba(0,163,255,0.15)}
+        .step.done{color:var(--green);background:rgba(16,185,129,0.1);box-shadow:0 0 15px rgba(16,185,129,0.1)}
+        .step-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:800;background:rgba(255,255,255,0.06);flex-shrink:0}
+        .step.active .step-num{background:var(--accent);color:#000;box-shadow:0 0 15px rgba(0,163,255,0.3)}
+        .step.done .step-num{background:var(--green);color:#fff;box-shadow:0 0 12px rgba(16,185,129,0.3)}
+        .step-connector{width:30px;height:2px;background:var(--border);flex-shrink:0}
+
+        /* ===== STEP CONTENT ===== */
+        .step-content{display:none;animation:fadeIn 0.35s ease}
+        .step-content.active{display:block}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+        /* ===== PLAN CARDS (Step 1) ===== */
+        .plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:28px}
+        .plan-card{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:26px 20px;cursor:pointer;transition:all 0.3s;position:relative;text-align:center}
+        .plan-card:hover{border-color:rgba(0,163,255,0.4);transform:translateY(-3px);box-shadow:0 12px 35px rgba(0,0,0,0.3)}
+        .plan-card.selected{border-color:var(--accent);background:rgba(0,163,255,0.06);box-shadow:0 0 40px rgba(0,163,255,0.15)}
+        .plan-card.popular{border-color:var(--accent)}
+        .plan-popular{position:absolute;top:10px;left:10px;background:var(--accent);color:#000;font-size:0.58rem;padding:3px 10px;border-radius:20px;font-weight:800}
+        .plan-icon{font-size:2rem;margin-bottom:12px}
+        .plan-name{font-size:1.1rem;font-weight:800;margin-bottom:4px}
+        .plan-price{font-size:1.8rem;font-weight:900;color:var(--accent);margin-bottom:3px}
+        .plan-price .curr{font-size:0.8rem;font-weight:600}
+        .plan-price.free-p{color:var(--green)}
+        .plan-period{font-size:0.7rem;color:var(--muted);margin-bottom:16px}
+        .plan-features{list-style:none;margin-bottom:16px;text-align:right}
+        .plan-features li{font-size:0.78rem;color:var(--light);padding:5px 0;display:flex;align-items:center;gap:8px}
+        .plan-features li::before{content:'✓';color:var(--green);font-weight:800}
+        .plan-features li.dis{color:var(--muted);opacity:0.4}
+        .plan-features li.dis::before{content:'✕';color:var(--red)}
+        .plan-check{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;margin:10px auto 0;font-size:0.7rem;transition:all 0.2s}
+        .plan-card.selected .plan-check{background:var(--accent);border-color:var(--accent);color:#000}
+
+        /* ===== BUTTONS ===== */
+        .btn{padding:13px 28px;border-radius:12px;font-weight:800;font-size:0.9rem;cursor:pointer;font-family:'Cairo',sans-serif;border:none;transition:all 0.25s;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+        .btn-primary{background:linear-gradient(135deg,var(--accent),#0066ff);color:#000;width:100%;box-shadow:0 4px 20px rgba(0,163,255,0.25)}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,163,255,0.4)}
+        .btn-primary:disabled{opacity:0.4;cursor:not-allowed;transform:none}
+        .btn-secondary{background:rgba(255,255,255,0.04);color:var(--light);border:1px solid var(--border)}
+        .btn-secondary:hover{background:rgba(255,255,255,0.07)}
+        .btn-group{display:flex;gap:12px;margin-top:22px}
+        .btn-group .btn{flex:1}
+        .btn .spinner{display:none;width:18px;height:18px;border:2.5px solid rgba(0,0,0,0.15);border-top-color:#000;border-radius:50%;animation:spin 0.7s linear infinite}
+        .btn.loading .btn-text{display:none}
+        .btn.loading .spinner{display:block}
+        @keyframes spin{to{transform:rotate(360deg)}}
+
+        /* ===== STEP 2: TWO COLUMN LAYOUT ===== */
+        .pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+
+        /* ===== RIGHT: PAYMENT METHODS ===== */
+        .methods-col{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px;box-shadow:0 8px 32px rgba(0,0,0,0.2)}
+        .methods-title{font-size:1.05rem;font-weight:800;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+
+        .method-card{display:flex;align-items:center;gap:14px;padding:16px;border:2px solid var(--border);border-radius:14px;cursor:pointer;transition:all 0.25s;margin-bottom:10px;position:relative;background:rgba(255,255,255,0.02)}
+        .method-card:hover{border-color:rgba(0,163,255,0.4);background:rgba(0,163,255,0.04);box-shadow:0 0 20px rgba(0,163,255,0.08)}
+        .method-card.selected{border-color:var(--green);background:var(--green-bg);box-shadow:0 0 25px rgba(16,185,129,0.12)}
+        .method-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:900;flex-shrink:0;color:#fff;box-shadow:0 4px 15px rgba(0,0,0,0.3)}
+        .method-icon.vodafone{background:linear-gradient(135deg,#ff1744,#d50000);box-shadow:0 4px 20px rgba(255,23,68,0.3)}
+        .method-icon.fawry{background:linear-gradient(135deg,#ffab00,#ff6d00);box-shadow:0 4px 20px rgba(255,171,0,0.3)}
+        .method-icon.instapay{background:linear-gradient(135deg,#00e676,#00c853);box-shadow:0 4px 20px rgba(0,230,118,0.3)}
+        .method-info{flex:1}
+        .method-name{font-size:0.95rem;font-weight:800;margin-bottom:2px}
+        .method-desc{font-size:0.75rem;color:var(--muted)}
+        .method-check{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.7rem;transition:all 0.2s;flex-shrink:0}
+        .method-card.selected .method-check{background:var(--green);border-color:var(--green);color:#fff;box-shadow:0 0 15px rgba(16,185,129,0.4)}
+
+        /* ===== WALLET BOX ===== */
+        .wallet-box{background:linear-gradient(135deg,rgba(16,185,129,0.08),rgba(0,163,255,0.05));border:1px solid rgba(16,185,129,0.2);border-radius:16px;padding:24px;margin-top:16px;text-align:center;box-shadow:0 0 30px rgba(16,185,129,0.08)}
+        .wallet-box .wb-label{font-size:0.85rem;color:var(--muted);margin-bottom:12px}
+        .wallet-box .wb-number{font-size:1.8rem;font-weight:900;color:var(--green);font-family:'Courier New',monospace;letter-spacing:1px;margin-bottom:6px;text-shadow:0 0 20px rgba(16,185,129,0.4)}
+        .wallet-box .wb-name{font-size:0.85rem;color:var(--light);margin-bottom:16px}
+        .btn-copy{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);color:var(--green);border-radius:10px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s;box-shadow:0 0 15px rgba(16,185,129,0.1)}
+        .btn-copy:hover{background:var(--green);color:#000;box-shadow:0 0 25px rgba(16,185,129,0.3)}
+        .btn-copy.copied{background:var(--green);color:#000}
+
+        /* ===== LEFT: PAYMENT FORM ===== */
+        .form-col{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:24px;box-shadow:0 8px 32px rgba(0,0,0,0.2)}
+        .form-title{font-size:1.05rem;font-weight:800;margin-bottom:20px;display:flex;align-items:center;gap:8px}
+
+        /* ===== FORM INPUTS ===== */
+        .fg{margin-bottom:16px}
+        .fg label{display:block;font-size:0.78rem;color:var(--muted);margin-bottom:6px;font-weight:600}
+        .fg label .req{color:var(--red)}
+        .fg input,.fg textarea,.fg select{width:100%;padding:13px 15px;background:var(--input);border:1.5px solid rgba(255,255,255,0.08);color:#fff;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.88rem;outline:none;transition:all 0.25s}
+        .fg input:focus,.fg textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,163,255,0.12),0 0 20px rgba(0,163,255,0.1)}
+        .fg input::placeholder,.fg textarea::placeholder{color:#3a4560}
+        .fg textarea{resize:vertical;min-height:70px;line-height:1.5}
+        .fg select{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 14px center}
+        .fg select option{background:var(--card)}
+        .fg .err-msg{font-size:0.72rem;color:var(--red);margin-top:5px;display:none}
+        .fg input.err{border-color:var(--red);box-shadow:0 0 0 3px rgba(239,68,68,0.08)}
+        .fg input.err ~ .err-msg{display:block}
+
+        /* ===== SUCCESS ===== */
+        .success-box{text-align:center;padding:50px 24px}
+        .success-icon{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,var(--green),#059669);display:flex;align-items:center;justify-content:center;font-size:2.5rem;margin:0 auto 20px;animation:popIn 0.4s cubic-bezier(0.16,1,0.3,1);box-shadow:0 0 60px rgba(16,185,129,0.4),0 0 100px rgba(16,185,129,0.15);color:#fff}
+        @keyframes popIn{0%{transform:scale(0)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+        .success-box h2{font-size:1.4rem;font-weight:900;margin-bottom:8px}
+        .success-box p{color:var(--muted);font-size:0.88rem;line-height:1.7;max-width:420px;margin:0 auto 28px}
+        .plan-recap{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 20px;max-width:350px;margin:0 auto 24px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 20px rgba(0,0,0,0.2)}
+        .waiting-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(245,158,11,0.1);color:var(--orange);border:1px solid rgba(245,158,11,0.25);padding:8px 20px;border-radius:30px;font-size:0.85rem;font-weight:700;animation:pulse 2s ease-in-out infinite;box-shadow:0 0 20px rgba(245,158,11,0.1)}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
+
+        /* ===== TOAST ===== */
+        .toast{position:fixed;top:22px;left:50%;transform:translateX(-50%) translateY(-100px);padding:12px 24px;border-radius:12px;font-weight:700;font-size:0.85rem;z-index:9999;transition:transform 0.35s cubic-bezier(0.16,1,0.3,1)}
+        .toast.show{transform:translateX(-50%) translateY(0)}
+        .toast-err{background:var(--red);color:#fff;box-shadow:0 8px 25px rgba(239,68,68,0.3)}
+        .toast-ok{background:var(--green);color:#fff;box-shadow:0 8px 25px rgba(16,185,129,0.3)}
+        .toast-info{background:var(--accent);color:#000;box-shadow:0 8px 25px rgba(0,163,255,0.3)}
+
+        /* ===== CONFETTI ===== */
+        .confetti-box{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;overflow:hidden}
+        .confetti{position:absolute;width:10px;height:10px;top:-10px;animation:confFall 3s ease-in forwards}
+        @keyframes confFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+        /* ===== RESPONSIVE ===== */
+        @media(max-width:800px){
+            .pay-grid{grid-template-columns:1fr}
+            .plans-grid{grid-template-columns:1fr;max-width:380px;margin-left:auto;margin-right:auto}
+            .page-header h1{font-size:1.4rem}
+        }
+    </style>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+<div class="confetti-box" id="confettiBox"></div>
+
+<div class="container">
+    <a href="index.html" class="back-link">&#8594; العودة للمحرر</a>
+
+    <div class="page-header">
+        <h1>اشترك في <span>QCV</span></h1>
+        <p>اختر الباقة المناسبة وابدأ في بناء سيرتك الذاتية</p>
+    </div>
+
+    <!-- Steps -->
+    <div class="steps">
+        <div class="step active" id="step1Ind"><span class="step-num">1</span> اختر الباقة</div>
+        <div class="step-connector" id="conn1"></div>
+        <div class="step" id="step2Ind"><span class="step-num">2</span> بيانات الدفع</div>
+        <div class="step-connector" id="conn2"></div>
+        <div class="step" id="step3Ind"><span class="step-num">3</span> التاكيد</div>
+    </div>
+
+    <!-- STEP 1: Plan Selection -->
+    <div class="step-content active" id="step1">
+        <div class="plans-grid">
+            <div class="plan-card" onclick="selectPlan(this,'free')">
+                <div class="plan-icon">&#128640;</div>
+                <div class="plan-name">Free</div>
+                <div class="plan-price free-p">مجاني</div>
+                <div class="plan-period">للأبد</div>
+                <ul class="plan-features">
+                    <li>سيرة ذاتية واحدة</li>
+                    <li>6 قوالب ATS</li>
+                    <li>تصدير PDF</li>
+                    <li class="dis">قوالب متقدمة</li>
+                    <li class="dis">أولوية في الدعم</li>
+                </ul>
+                <div class="plan-check">&#10003;</div>
+            </div>
+            <div class="plan-card popular" onclick="selectPlan(this,'pro')">
+                <div class="plan-popular">الأكثر شعبية</div>
+                <div class="plan-icon">&#11088;</div>
+                <div class="plan-name">Pro</div>
+                <div class="plan-price">299 <span class="curr">ج.م</span></div>
+                <div class="plan-period">شهرياً</div>
+                <ul class="plan-features">
+                    <li>5 سير ذاتية</li>
+                    <li>جميع القوالب</li>
+                    <li>تصدير PDF</li>
+                    <li>قوالب متقدمة</li>
+                    <li class="dis">أولوية في الدعم</li>
+                </ul>
+                <div class="plan-check">&#10003;</div>
+            </div>
+            <div class="plan-card" onclick="selectPlan(this,'unlimited')">
+                <div class="plan-icon">&#128142;</div>
+                <div class="plan-name">Unlimited</div>
+                <div class="plan-price">299 <span class="curr">ج.م</span></div>
+                <div class="plan-period">شهرياً</div>
+                <ul class="plan-features">
+                    <li>سير ذاتية غير محدودة</li>
+                    <li>جميع القوالب</li>
+                    <li>تصدير PDF</li>
+                    <li>قوالب متقدمة</li>
+                    <li>أولوية في الدعم 24/7</li>
+                </ul>
+                <div class="plan-check">&#10003;</div>
+            </div>
+        </div>
+        <div class="btn-group" style="max-width:460px;margin:0 auto">
+            <button class="btn btn-secondary" onclick="location.href='index.html'">السابق</button>
+            <button class="btn btn-primary" id="nextBtn1" onclick="goToStep(2)" disabled>التالي &#8592;</button>
+        </div>
+    </div>
+
+    <!-- STEP 2: Payment -->
+    <div class="step-content" id="step2">
+        <div class="pay-grid">
+
+            <!-- RIGHT: Payment Methods -->
+            <div class="methods-col">
+                <div class="methods-title">&#128179; اختر طريقة الدفع</div>
+
+                <div class="method-card selected" onclick="selectMethod(this,'vodafone')">
+                    <div class="method-icon vodafone">&#1581;</div>
+                    <div class="method-info">
+                        <div class="method-name">فودافون كاش</div>
+                        <div class="method-desc">تحويل فوري على المحفظة</div>
+                    </div>
+                    <div class="method-check">&#10003;</div>
+                </div>
+
+                <div class="method-card" onclick="selectMethod(this,'fawry')">
+                    <div class="method-icon fawry">&#128179;</div>
+                    <div class="method-info">
+                        <div class="method-name">pay فوري</div>
+                        <div class="method-desc">ادفع عن طريق فوري</div>
+                    </div>
+                    <div class="method-check">&#10003;</div>
+                </div>
+
+                <div class="method-card" onclick="selectMethod(this,'instapay')">
+                    <div class="method-icon instapay">&#9889;</div>
+                    <div class="method-info">
+                        <div class="method-name">استانبي</div>
+                        <div class="method-desc">تحويل فوري من البنك</div>
+                    </div>
+                    <div class="method-check">&#10003;</div>
+                </div>
+
+                <div class="wallet-box" id="walletBox">
+                    <div class="wb-label">قم بالتحويل على هذا الرقم</div>
+                    <div class="wb-number">01028707543</div>
+                    <div class="wb-name">محمد ايمن</div>
+                    <button class="btn-copy" onclick="copyNumber()">&#128203; نسخ الرقم</button>
+                </div>
+            </div>
+
+            <!-- LEFT: Payment Form -->
+            <div class="form-col">
+                <div class="form-title">&#128179; بيانات الدفع</div>
+
+                <div class="fg">
+                    <label>الباقة</label>
+                    <input type="text" id="planField" readonly style="opacity:0.7;cursor:default">
+                </div>
+                <div class="fg">
+                    <label>الاسم <span class="req">*</span></label>
+                    <input type="text" id="cardName" placeholder="أدخل اسمك">
+                    <div class="err-msg">أدخل اسم صاحب البطاقة</div>
+                </div>
+                <div class="fg">
+                    <label>رقم الهاتف <span class="req">*</span></label>
+                    <input type="text" id="phone" placeholder="01xxxxxxxxx" maxlength="11" oninput="formatPhone(this)">
+                    <div class="err-msg">أدخل رقم الهاتف</div>
+                </div>
+                <div class="fg">
+                    <label>رقم المحفظة</label>
+                    <input type="text" id="walletInput" placeholder="من المحفظة الشخصي">
+                </div>
+                <div class="fg">
+                    <label>ملاحظات</label>
+                    <textarea id="notes" placeholder="أي ملاحظات"></textarea>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="goToStep(1)">السابق</button>
+                    <button class="btn btn-primary" id="payBtn" onclick="submitPayment()">
+                        <span class="btn-text">تأكيد الدفع &#10003;</span>
+                        <div class="spinner"></div>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- STEP 3: Success -->
+    <div class="step-content" id="step3">
+        <div class="success-box">
+            <div class="success-icon">&#10003;</div>
+            <h2>تم التأكيد بنجاح!</h2>
+            <div class="plan-recap">
+                <span style="color:var(--muted);font-size:0.85rem">الباقة المطلوبة</span>
+                <span id="selectedPlanLabel" style="font-weight:800;color:var(--accent);font-size:1rem">Pro</span>
+            </div>
+            <p>تم إرسال التأكيد عبر البريد الإلكتروني أو الواتساب. سيتم مراجعة طلبك وتفعيل باقتك قريباً.</p>
+            <div class="waiting-badge">&#9203; بانتظار التفعيل</div>
+            <div class="btn-group" style="justify-content:center;margin-top:30px;max-width:320px;margin-left:auto;margin-right:auto">
+                <a href="index.html" class="btn btn-primary" style="text-decoration:none">العودة للمحرر &#8592;</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== FIREBASE ===== -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+    import { getDatabase, ref, get, push } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",
+        authDomain: "qwcv-1cfad.firebaseapp.com",
+        projectId: "qwcv-1cfad",
+        storageBucket: "qwcv-1cfad.firebasestorage.app",
+        messagingSenderId: "792471802122",
+        appId: "1:792471802122:web:808e04099afc90315aaaf3",
+        databaseURL: "https://qwcv-1cfad-default-rtdb.firebaseio.com"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    let currentUser = null;
+    let userData = null;
+
+    onAuthStateChanged(auth, (user) => {
+        if (!user) { location.replace("login.html"); return; }
+        currentUser = user;
+        loadUserData(user.uid);
+    });
+
+    async function loadUserData(uid) {
+        const snap = await get(ref(db, 'users/' + uid));
+        userData = snap.val() || {};
+    }
+
+    // ===== PLAN SELECTION =====
+    let selectedPlan = null;
+
+    window.selectPlan = function(el, plan) {
+        document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
+        el.classList.add('selected');
+        selectedPlan = plan;
+        document.getElementById('nextBtn1').disabled = false;
+    };
+
+    // ===== PAYMENT METHOD =====
+    let selectedMethod = 'vodafone';
+
+    window.selectMethod = function(el, method) {
+        document.querySelectorAll('.method-card').forEach(c => c.classList.remove('selected'));
+        el.classList.add('selected');
+        selectedMethod = method;
+    };
+
+    // ===== STEP NAVIGATION =====
+    window.goToStep = function(step) {
+        if (step === 2 && !selectedPlan) return;
+        document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
+        document.getElementById('step' + step).classList.add('active');
+
+        document.querySelectorAll('.step').forEach((s, i) => {
+            s.classList.remove('active', 'done');
+            if (i + 1 < step) s.classList.add('done');
+            if (i + 1 === step) s.classList.add('active');
+        });
+
+        document.querySelectorAll('.step-connector').forEach((c, i) => {
+            c.classList.remove('active', 'done');
+            if (i + 1 < step) c.classList.add('done');
+            if (i + 1 === step) c.classList.add('active');
+        });
+
+        if (step === 2) {
+            const planLabels = { free: 'مجاني', pro: '299 ج.م/شهر', unlimited: '299 ج.م/شهر' };
+            document.getElementById('planField').value = planLabels[selectedPlan] || '';
+            if (currentUser && userData) {
+                document.getElementById('cardName').value = userData.name || '';
+                document.getElementById('phone').value = userData.phone || '';
+            }
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // ===== PHONE FORMAT =====
+    window.formatPhone = function(input) {
+        input.value = input.value.replace(/\D/g, '').substring(0, 11);
+    };
+
+    // ===== COPY NUMBER =====
+    window.copyNumber = function() {
+        const num = '01028707543';
+        navigator.clipboard.writeText(num).then(() => {
+            const btn = document.querySelector('.btn-copy');
+            btn.innerHTML = '&#10003; تم النسخ';
+            btn.classList.add('copied');
+            showToast('تم نسخ الرقم بنجاح', 'ok');
+            setTimeout(() => {
+                btn.innerHTML = '&#128203; نسخ الرقم';
+                btn.classList.remove('copied');
+            }, 2000);
+        }).catch(() => {
+            showToast('رقم المحفظة: ' + num, 'info');
+        });
+    };
+
+    // ===== SUBMIT =====
+    window.submitPayment = async function() {
+        const name = document.getElementById('cardName').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        let hasErr = false;
+
+        if (!name) { document.getElementById('cardName').classList.add('err'); hasErr = true; }
+        else { document.getElementById('cardName').classList.remove('err'); }
+
+        if (phone.length < 11) { document.getElementById('phone').classList.add('err'); hasErr = true; }
+        else { document.getElementById('phone').classList.remove('err'); }
+
+        if (hasErr) { showToast('أكمل جميع الحقول المطلوبة', 'err'); return; }
+        if (!currentUser) { showToast('سجل دخولك أولاً', 'err'); return; }
+
+        const btn = document.getElementById('payBtn');
+        btn.disabled = true;
+        btn.classList.add('loading');
+
+        const planLabels = { free: 'Free', pro: 'Pro (299ج.م)', unlimited: 'Unlimited (299ج.م)' };
+
+        const subData = {
+            userId: currentUser.uid,
+            userName: name,
+            userEmail: userData?.email || currentUser.email || '',
+            userPhone: phone,
+            plan: selectedPlan,
+            planLabel: planLabels[selectedPlan] || selectedPlan,
+            paymentMethod: selectedMethod,
+            walletNumber: document.getElementById('walletInput').value || '',
+            notes: document.getElementById('notes').value || '',
+            status: 'pending',
+            createdAt: Date.now()
+        };
+
+        try {
+            await push(ref(db, 'subscriptions'), subData);
+
+            document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
+            document.getElementById('step3').classList.add('active');
+            document.querySelectorAll('.step').forEach((s, i) => {
+                s.classList.remove('active');
+                if (i < 2) s.classList.add('done');
+                if (i === 2) s.classList.add('active');
+            });
+            document.querySelectorAll('.step-connector').forEach(c => { c.classList.add('done'); c.classList.remove('active'); });
+
+            document.getElementById('selectedPlanLabel').textContent = planLabels[selectedPlan] || selectedPlan;
+
+            launchConfetti();
+            showToast('تم إرسال طلبك بنجاح!', 'ok');
+        } catch(err) {
+            showToast('حدث خطأ: ' + err.message, 'err');
+            btn.disabled = false;
+            btn.classList.remove('loading');
+        }
+    };
+
+    function showToast(msg, type) {
+        const t = document.getElementById('toast');
+        t.textContent = msg;
+        t.className = 'toast toast-' + type + ' show';
+        setTimeout(() => t.classList.remove('show'), 3500);
+    }
+
+    function launchConfetti() {
+        const box = document.getElementById('confettiBox');
+        const colors = ['#00a3ff', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444'];
+        for (let i = 0; i < 50; i++) {
+            setTimeout(() => {
+                const el = document.createElement('div');
+                el.className = 'confetti';
+                el.style.left = Math.random() * 100 + '%';
+                el.style.background = colors[Math.floor(Math.random() * colors.length)];
+                el.style.width = Math.random() * 8 + 6 + 'px';
+                el.style.height = Math.random() * 8 + 6 + 'px';
+                el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                el.style.animationDuration = Math.random() * 2 + 2 + 's';
+                box.appendChild(el);
+                setTimeout(() => el.remove(), 4000);
+            }, i * 35);
+        }
+    }
+</script>
+
+</body>
+</html>
