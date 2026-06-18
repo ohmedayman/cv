@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="components.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="templates/templates.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         :root{--bg:#080d1a;--card:#111a2e;--border:#1c2844;--accent:#38bdf8;--sky:#2563eb;--text:#f1f5f9;--muted:#5a6a85}
         *{box-sizing:border-box;margin:0;padding:0}
@@ -47,7 +48,7 @@
         <div class="logo">Q<span>CV</span></div>
         <div class="header-actions">
             <a href="index.html" class="btn-outline">الرئيسية</a>
-            <button class="btn-accent" onclick="window.print()">تحميل PDF</button>
+            <button class="btn-accent" id="downloadBtn" onclick="downloadPDF()">&#11015; تحميل PDF</button>
         </div>
     </div>
 
@@ -77,6 +78,56 @@
         const uid = params.get('uid');
         const template = params.get('tpl') || 'classic';
 
+        // PDF Download
+        window.downloadPDF = function() {
+            const el = document.getElementById('cvPage');
+            if (!el) return;
+            const btn = document.getElementById('downloadBtn');
+            btn.textContent = 'جاري التحميل...';
+            btn.disabled = true;
+            const opt = {
+                margin: 0,
+                filename: (document.title.split(' - ')[0] || 'CV') + '.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+            html2pdf().set(opt).from(el).save().then(() => {
+                btn.innerHTML = '&#11015; تحميل PDF';
+                btn.disabled = false;
+            }).catch(() => {
+                btn.innerHTML = '&#11015; تحميل PDF';
+                btn.disabled = false;
+            });
+        };
+
+        // Make phone/email/LinkedIn clickable
+        function makeLinksClickable() {
+            const wrapper = document.getElementById('cvPage');
+            if (!wrapper) return;
+
+            // Phone → WhatsApp
+            wrapper.querySelectorAll('*').forEach(el => {
+                if (el.children.length > 0) return;
+                const text = el.textContent.trim();
+                // Phone numbers
+                if (/^[\+]?[\d\s\-\(\)]{7,20}$/.test(text)) {
+                    const clean = text.replace(/[^\d+]/g, '');
+                    el.innerHTML = `<a href="https://wa.me/${clean.replace(/^\+/,'')}" target="_blank" style="color:#1a1a1a;text-decoration:none;border-bottom:1px dashed #999">${text}</a>`;
+                }
+                // Email
+                if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)) {
+                    el.innerHTML = `<a href="mailto:${text}" style="color:#1a1a1a;text-decoration:none;border-bottom:1px dashed #999">${text}</a>`;
+                }
+                // LinkedIn
+                if (text.includes('linkedin.com')) {
+                    const url = text.startsWith('http') ? text : 'https://' + text;
+                    el.innerHTML = `<a href="${url}" target="_blank" style="color:#1a1a1a;text-decoration:none;border-bottom:1px dashed #999">${text}</a>`;
+                }
+            });
+        }
+
         if (!uid) {
             document.getElementById('portfolioContent').innerHTML = '<div class="not-found"><h2>لم يتم العثور على السيرة الذاتية</h2><p>الرابط غير صالح. تأكد من صحة الرابط.</p></div>';
         } else {
@@ -100,7 +151,8 @@
                     if (metaDesc) metaDesc.content = `السيرة الذاتية الاحترافية لـ ${cvData.name || ''} - ${cvData.title || ''}`;
 
                     const html = QCVTemplates.render(template, cvData);
-                    document.getElementById('portfolioContent').innerHTML = `<div class="cv-wrapper">${html}</div>`;
+                    document.getElementById('portfolioContent').innerHTML = `<div class="cv-wrapper"><div id="cvPage" class="cv-page tpl-${template}">${html}</div></div>`;
+                    makeLinksClickable();
                 }
             } catch (err) {
                 document.getElementById('portfolioContent').innerHTML = '<div class="not-found"><h2>خطأ في التحميل</h2><p>حدث خطأ أثناء تحميل البيانات. حاول مرة أخرى.</p></div>';

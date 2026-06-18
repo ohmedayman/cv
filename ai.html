@@ -80,6 +80,12 @@
         .btn-send{width:48px;height:48px;border-radius:12px;background:var(--accent);border:none;color:#000;font-size:1.2rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;flex-shrink:0}
         .btn-send:hover{background:#60a5fa;transform:translateY(-1px)}
         .btn-send:disabled{opacity:0.4;cursor:not-allowed;transform:none}
+        .btn-voice{width:48px;height:48px;border-radius:12px;background:var(--card);border:1px solid var(--border);color:var(--light);font-size:1.2rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .btn-voice:hover{border-color:var(--accent);color:var(--accent)}
+        .btn-voice.recording{background:rgba(239,68,68,0.15);border-color:#ef4444;color:#ef4444;animation:pulse-rec 1.2s ease-in-out infinite}
+        @keyframes pulse-rec{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.3)}50%{box-shadow:0 0 0 8px rgba(239,68,68,0)}} 
+        .lang-toggle{padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--light);font-size:0.72rem;font-weight:600;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s}
+        .lang-toggle:hover,.lang-toggle.active{border-color:var(--accent);color:var(--accent)}
         .input-hint{font-size:0.7rem;color:var(--muted);text-align:center;margin-top:8px}
 
         /* Loading overlay */
@@ -116,22 +122,22 @@
         <span class="badge">AI</span>
     </div>
     <div class="topbar-right">
-        <a href="editor.html" class="btn-back">&#8592; Back to Editor</a>
-        <button class="btn-editor" id="btnToEditor" onclick="openEditorWithData()">Open in Editor &#8594;</button>
+        <a href="editor.html" class="btn-back" id="btnBack">&#8592; <span id="backText">Back to Editor</span></a>
+        <button class="btn-editor" id="btnToEditor" onclick="openEditorWithData()"><span id="editorBtnText2">Open in Editor</span> &#8594;</button>
     </div>
 </div>
 
 <!-- Progress -->
 <div class="progress" id="progressBar">
-    <div class="step active" id="step1"><div class="step-dot">1</div> Name</div>
+    <div class="step active" id="step1"><div class="step-dot">1</div> <span class="step-label" data-ar="الاسم" data-en="Name">الاسم</span></div>
     <div class="step-line"></div>
-    <div class="step" id="step2"><div class="step-dot">2</div> Role</div>
+    <div class="step" id="step2"><div class="step-dot">2</div> <span class="step-label" data-ar="الوظيفة" data-en="Role">الوظيفة</span></div>
     <div class="step-line"></div>
-    <div class="step" id="step3"><div class="step-dot">3</div> Experience</div>
+    <div class="step" id="step3"><div class="step-dot">3</div> <span class="step-label" data-ar="الخبرة" data-en="Experience">الخبرة</span></div>
     <div class="step-line"></div>
-    <div class="step" id="step4"><div class="step-dot">4</div> Skills</div>
+    <div class="step" id="step4"><div class="step-dot">4</div> <span class="step-label" data-ar="المهارات" data-en="Skills">المهارات</span></div>
     <div class="step-line"></div>
-    <div class="step" id="step5"><div class="step-dot">5</div> Generate</div>
+    <div class="step" id="step5"><div class="step-dot">5</div> <span class="step-label" data-ar="التوليد" data-en="Generate">التوليد</span></div>
 </div>
 
 <!-- Chat -->
@@ -139,13 +145,13 @@
     <div class="chat-messages" id="chatMessages">
         <div class="welcome" id="welcomeScreen">
             <div class="welcome-icon">&#9889;</div>
-            <h1>Build your CV with <span>AI</span></h1>
-            <p>I'll ask you a few questions step by step and then generate a professional, ATS-optimized CV for you in seconds.</p>
+            <h1>ابنِ سيرتك الذاتية بـ <span>الذكاء الاصطناعي</span></h1>
+            <p>هسألك كام سؤال خطوة بخطوة، وبعدها هعملك سيرة ذاتية احترافية متوافقة مع أنظمة ATS في ثواني.</p>
             <div class="quick-prompts">
-                <div class="quick-prompt" onclick="startChat('I want to build a professional CV')"><div class="qp-icon">&#128188;</div><div class="qp-text">Build a professional CV</div></div>
-                <div class="quick-prompt" onclick="startChat('I need a CV for a software engineer role')"><div class="qp-icon">&#128187;</div><div class="qp-text">CV for tech role</div></div>
-                <div class="quick-prompt" onclick="startChat('Help me create my first CV')"><div class="qp-icon">&#127891;</div><div class="qp-text">First CV (fresh grad)</div></div>
-                <div class="quick-prompt" onclick="startChat('I want to update my existing CV')"><div class="qp-icon">&#9998;</div><div class="qp-text">Update existing CV</div></div>
+                <div class="quick-prompt" onclick="startChat('عايز أعمل سيرة ذاتية احترافية')"><div class="qp-icon">&#128188;</div><div class="qp-text">سيرة ذاتية احترافية</div></div>
+                <div class="quick-prompt" onclick="startChat('محتاج CV لوظيفة مهندس برمجيات')"><div class="qp-icon">&#128187;</div><div class="qp-text">CV لوظيفة تقنية</div></div>
+                <div class="quick-prompt" onclick="startChat('ساعدني أعمل أول سيرة ذاتية')"><div class="qp-icon">&#127891;</div><div class="qp-text">أول CV (خريج جديد)</div></div>
+                <div class="quick-prompt" onclick="startChat('عايز أحدث سيرتي الذاتية')"><div class="qp-icon">&#9998;</div><div class="qp-text">تحديث CV موجود</div></div>
             </div>
         </div>
     </div>
@@ -153,18 +159,20 @@
     <!-- Input -->
     <div class="chat-input-area">
         <div class="chat-input-wrap">
+            <button class="lang-toggle" id="langToggle" onclick="toggleLang()">AR</button>
             <textarea class="chat-input" id="chatInput" rows="1" placeholder="Type your answer..." onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+            <button class="btn-voice" id="btnVoice" onclick="toggleVoice()" title="Voice input">&#127908;</button>
             <button class="btn-send" id="btnSend" onclick="sendMessage()">&#10148;</button>
         </div>
-        <div class="input-hint">Press Enter to send &middot; Shift+Enter for new line</div>
+        <div class="input-hint" id="inputHint">Press Enter to send · Shift+Enter for new line · Click &#127908; to speak</div>
     </div>
 </div>
 
 <!-- Generating Overlay -->
 <div class="gen-overlay" id="genOverlay">
     <div class="gen-spinner"></div>
-    <div class="gen-text">Generating your CV...</div>
-    <div class="gen-sub">AI is crafting your professional resume</div>
+    <div class="gen-text">جاري توليد سيرتك الذاتية...</div>
+    <div class="gen-sub">الذكاء الاصطناعي بيحضرلك سيرة ذاتية احترافية</div>
 </div>
 
 <script type="module">
@@ -191,8 +199,11 @@
     let step = 0;
     let isGenerating = false;
     let generatedData = null;
+    let currentLang = 'en'; // 'en' or 'ar'
+    let recognition = null;
+    let isRecording = false;
 
-    const STEPS = [
+    const STEPS_EN = [
         { field: 'name', question: "Hi! I'm your AI CV assistant. Let's build your professional CV step by step.\n\n**What's your full name?**", key: 'name' },
         { field: 'title', question: "Great! **What's your job title or the role you're targeting?**\n(e.g. Senior Software Engineer, Marketing Manager, UI/UX Designer)", key: 'title' },
         { field: 'contact', question: "**How can employers reach you?**\nPlease share your:\n- Email\n- Phone number\n- Location (city, country)\n- LinkedIn (optional)\n\nExample: `ahmed@gmail.com | +20 123 456 789 | Cairo, Egypt | linkedin.com/in/ahmed`", key: 'contact' },
@@ -201,6 +212,18 @@
         { field: 'skills', question: "**What are your top technical/Professional skills?**\n\nList them separated by commas.\nExample: `JavaScript, React, Node.js, Python, AWS, Docker, Git`", key: 'skills' },
         { field: 'summary', question: "**Last one! Write a brief professional summary (2-3 sentences)** about yourself, or type `skip` and I'll write one for you.\n\nThis goes at the top of your CV and highlights your key strengths.", key: 'summary' }
     ];
+
+    const STEPS_AR = [
+        { field: 'name', question: "مرحباً! أنا مساعدك الذكي لبناء السيرة الذاتية. هنشتغل خطوة بخطوة.\n\n**ما هو اسمك الكامل؟**", key: 'name' },
+        { field: 'title', question: "ممتاز! **ما هو الوظيفة أو المنصب الذي تستهدفه؟**\n(مثال: مهندس برمجيات، مدير تسويق، مصمم واجهات)", key: 'title' },
+        { field: 'contact', question: "**ازاي يقدر أصحاب العمل يتواصلوا معاك؟**\nشاركنا:\n- البريد الإلكتروني\n- رقم التليفون\n- المدينة والبلد\n- حساب LinkedIn (اختياري)\n\nمثال: `ahmed@gmail.com | +20 123 456 789 | القاهرة, مصر | linkedin.com/in/ahmed`", key: 'contact' },
+        { field: 'experience', question: "**احكيلنا عن خبراتك العملية.**\n\nلكل وظيفة، اذكر:\n- المسمى الوظيفي\n- اسم الشركة\n- المدة (مثال: 2020 - 2023)\n- 2-3 إنجازات رئيسية (بأرقام!)\n\nمثال:\n```\nSenior Developer | TechCorp | 2021 - Present\n- قاد فريق من 5 مهندسين\n- حسّن الأداء بنسبة 40%\n\nJunior Developer | StartupX | 2019 - 2021\n- بنى APIs تخدم 10 آلاف مستخدم\n- قلل الأخطاء بنسبة 30%\n```", key: 'experience' },
+        { field: 'education', question: "**ما هو مؤهلك الدراسي؟**\n\nالتخصص، الجامعة، والسنة.\nمثال: `بكالوريوس هندسة计算机ات، جامعة القاهرة، 2015 - 2019`", key: 'education' },
+        { field: 'skills', question: "**ما هي أهم مهاراتك التقنية/المهنية؟**\n\nاكتبها مفصولة بفواصل.\nمثال: `JavaScript, React, Node.js, Python, AWS, Docker, Git`", key: 'skills' },
+        { field: 'summary', question: "**آخر حاجة! اكتب ملخص مهني قصير (2-3 جمل)** عن نفسك، أو اكتب `skip` وهكتبلك واحدة.\n\nده بيبقى في أعلى السيرة الذاتية ويوضح نقاط قوتك.", key: 'summary' }
+    ];
+
+    function getSteps() { return currentLang === 'ar' ? STEPS_AR : STEPS_EN; }
 
     function autoResize(el) {
         el.style.height = 'auto';
@@ -284,9 +307,102 @@
         }, 500);
     };
 
+    // Language Toggle
+    window.toggleLang = function() {
+        currentLang = currentLang === 'en' ? 'ar' : 'en';
+        const btn = document.getElementById('langToggle');
+                btn.textContent = currentLang === 'ar' ? 'EN' : 'AR';
+                btn.classList.toggle('active', currentLang === 'ar');
+                document.getElementById('chatInput').placeholder = currentLang === 'ar' ? 'اكتب إجابتك...' : 'Type your answer...';
+                document.getElementById('inputHint').innerHTML = currentLang === 'ar'
+                    ? 'اضغط Enter للإرسال · Shift+Enter لسطر جديد · اضغط &#127908; للتحدث'
+                    : 'Press Enter to send · Shift+Enter for new line · Click &#127908; to speak';
+                const editorBtnText = document.getElementById('editorBtnText');
+                if (editorBtnText) editorBtnText.textContent = currentLang === 'ar' ? 'فتح في المحرر' : 'Open in Editor';
+                const backText = document.getElementById('backText');
+                if (backText) backText.textContent = currentLang === 'ar' ? 'العودة للمحرر' : 'Back to Editor';
+                const editorBtnText2 = document.getElementById('editorBtnText2');
+                if (editorBtnText2) editorBtnText2.textContent = currentLang === 'ar' ? 'فتح في المحرر' : 'Open in Editor';
+        // Update welcome screen
+        const welcome = document.getElementById('welcomeScreen');
+        if (welcome) {
+            if (currentLang === 'ar') {
+                welcome.innerHTML = `
+                    <div class="welcome-icon">&#9889;</div>
+                    <h1>ابنِ سيرتك الذاتية بـ <span>الذكاء الاصطناعي</span></h1>
+                    <p>هسألك كام سؤال خطوة بخطوة، وبعدها هعملك سيرة ذاتية احترافية متوافقة مع أنظمة ATS في ثواني.</p>
+                    <div class="quick-prompts">
+                        <div class="quick-prompt" onclick="startChat('عايز أعمل سيرة ذاتية احترافية')"><div class="qp-icon">&#128188;</div><div class="qp-text">سيرة ذاتية احترافية</div></div>
+                        <div class="quick-prompt" onclick="startChat('محتاج CV لوظيفة مهندس برمجيات')"><div class="qp-icon">&#128187;</div><div class="qp-text">CV لوظيفة تقنية</div></div>
+                        <div class="quick-prompt" onclick="startChat('ساعدني أعمل أول سيرة ذاتية')"><div class="qp-icon">&#127891;</div><div class="qp-text">أول CV (خريج جديد)</div></div>
+                        <div class="quick-prompt" onclick="startChat('عايز أحدث سيرتي الذاتية')"><div class="qp-icon">&#9998;</div><div class="qp-text">تحديث CV موجود</div></div>
+                    </div>`;
+            } else {
+                welcome.innerHTML = `
+                    <div class="welcome-icon">&#9889;</div>
+                    <h1>Build your CV with <span>AI</span></h1>
+                    <p>I'll ask you a few questions step by step and then generate a professional, ATS-optimized CV for you in seconds.</p>
+                    <div class="quick-prompts">
+                        <div class="quick-prompt" onclick="startChat('I want to build a professional CV')"><div class="qp-icon">&#128188;</div><div class="qp-text">Build a professional CV</div></div>
+                        <div class="quick-prompt" onclick="startChat('I need a CV for a software engineer role')"><div class="qp-icon">&#128187;</div><div class="qp-text">CV for tech role</div></div>
+                        <div class="quick-prompt" onclick="startChat('Help me create my first CV')"><div class="qp-icon">&#127891;</div><div class="qp-text">First CV (fresh grad)</div></div>
+                        <div class="quick-prompt" onclick="startChat('I want to update my existing CV')"><div class="qp-icon">&#9998;</div><div class="qp-text">Update existing CV</div></div>
+                    </div>`;
+            }
+        }
+    };
+
+    // Voice Input (Web Speech API)
+    window.toggleVoice = function() {
+        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+            alert(currentLang === 'ar' ? 'المتصفح لا يدعم التعرف على الصوت' : 'Your browser does not support speech recognition');
+            return;
+        }
+        if (isRecording) {
+            recognition.stop();
+            return;
+        }
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        recognition = new SpeechRecognition();
+        recognition.lang = currentLang === 'ar' ? 'ar-EG' : 'en-US';
+        recognition.continuous = false;
+        recognition.interimResults = true;
+        const voiceBtn = document.getElementById('btnVoice');
+        const chatInput = document.getElementById('chatInput');
+
+        recognition.onstart = function() {
+            isRecording = true;
+            voiceBtn.classList.add('recording');
+            voiceBtn.innerHTML = '&#9632;';
+            chatInput.placeholder = currentLang ==='ar' ? 'جاري الاستماع...' : 'Listening...';
+        };
+        recognition.onresult = function(event) {
+            let transcript = '';
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                transcript += event.results[i][0].transcript;
+            }
+            chatInput.value = transcript;
+            autoResize(chatInput);
+        };
+        recognition.onend = function() {
+            isRecording = false;
+            voiceBtn.classList.remove('recording');
+            voiceBtn.innerHTML = '&#127908;';
+            chatInput.placeholder = currentLang === 'ar' ? 'اكتب إجابتك...' : 'Type your answer...';
+        };
+        recognition.onerror = function() {
+            isRecording = false;
+            voiceBtn.classList.remove('recording');
+            voiceBtn.innerHTML = '&#127908;';
+            chatInput.placeholder = currentLang === 'ar' ? 'اكتب إجابتك...' : 'Type your answer...';
+        };
+        recognition.start();
+    };
+
     function askNextStep() {
-        if (step < STEPS.length) {
-            const s = STEPS[step];
+        const steps = getSteps();
+        if (step < steps.length) {
+            const s = steps[step];
             updateProgress();
             addTyping();
             setTimeout(() => {
@@ -311,8 +427,8 @@
         input.value = '';
         input.style.height = 'auto';
 
-        if (step < STEPS.length) {
-            const s = STEPS[step];
+        if (step < getSteps().length) {
+            const s = getSteps()[step];
             userData[s.key] = text;
 
             if (s.key === 'contact') {
@@ -336,6 +452,7 @@
         const systemPrompt = `You are a professional CV/Resume writer. Given the user's information, generate a complete, ATS-optimized CV in JSON format.
 
 IMPORTANT: Return ONLY valid JSON, no markdown, no code blocks, no extra text.
+IMPORTANT: The user may write in Arabic or English. Always output the CV content in English (professional CVs should be in English). If the user provides info in Arabic, translate it professionally to English in the CV.
 
 JSON schema:
 {
@@ -415,7 +532,7 @@ Rules:
             document.getElementById('genOverlay').classList.remove('show');
             isGenerating = false;
 
-            addMessage("Your CV is ready! Here's a preview:", 'ai');
+            addMessage(currentLang === 'ar' ? "سيرتك الذاتية جاهزة! دي معاينة:" : "Your CV is ready! Here's a preview:", 'ai');
             showCVPreview(generatedData);
             document.getElementById('btnToEditor').classList.add('show');
             updateProgress();
@@ -424,7 +541,7 @@ Rules:
             console.error('AI Error:', e);
             document.getElementById('genOverlay').classList.remove('show');
             isGenerating = false;
-            addMessage("I generated your CV locally. Here's a preview:", 'ai');
+            addMessage(currentLang === 'ar' ? "عملتها محلية، دي معاينة:" : "I generated your CV locally. Here's a preview:", 'ai');
             generatedData = generateLocal(userData);
             showCVPreview(generatedData);
             document.getElementById('btnToEditor').classList.add('show');
@@ -500,7 +617,7 @@ Rules:
                 <div class="msg-bubble" style="padding:0;overflow:hidden;border:1px solid var(--border)">
                     <div class="cv-preview-wrap">
                         <div class="cv-preview-header">
-                            <span>&#128196; CV Preview — Classic</span>
+                            <span>&#128196; CV Preview</span>
                             <div class="cv-preview-actions">
                                 <button onclick="changePreviewTpl('modern')">Modern</button>
                                 <button onclick="changePreviewTpl('ats-safe')">ATS</button>
@@ -511,7 +628,7 @@ Rules:
                             <div class="cv-page tpl-classic" id="cvPreviewPage">${preview}</div>
                         </div>
                         <div style="padding:10px 14px">
-                            <button class="cv-apply-btn show" onclick="openEditorWithData()">&#10003; Open in Editor</button>
+                            <button class="cv-apply-btn show" onclick="openEditorWithData()">&#10003; <span id="editorBtnText">Open in Editor</span></button>
                         </div>
                     </div>
                 </div>
