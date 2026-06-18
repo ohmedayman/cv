@@ -1,0 +1,335 @@
+/* ============================================================
+   QCV Shared Components — FAB Menu + Google Translate + Dark/Light Mode
+   Include this file in every page: <link rel="stylesheet" href="components.css">
+   Then add the HTML + <script src="components.js"></script> before </body>
+   ============================================================ */
+
+/* ===== FAB MENU ===== */
+.qcv-fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 10000;
+    direction: ltr;
+}
+
+/* RTL: move FAB to left when page is Arabic */
+html[dir="rtl"] .qcv-fab,
+body[dir="rtl"] .qcv-fab {
+    right: auto;
+    left: 24px;
+}
+
+[lang="ar"] ~ .qcv-fab,
+.qcv-fab:dir(rtl) {
+    right: auto;
+    left: 24px;
+}
+
+.qcv-fab-toggle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #94a3b8;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.qcv-fab-toggle:hover {
+    background: rgba(30, 41, 59, 0.95);
+    color: #f1f5f9;
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.qcv-fab.open .qcv-fab-toggle {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: #10b981;
+    transform: rotate(45deg);
+}
+
+.qcv-fab-options {
+    position: absolute;
+    bottom: 56px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px) scale(0.9);
+    transition: all 0.25s ease;
+}
+
+.qcv-fab.open .qcv-fab-options {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(0) scale(1);
+}
+
+.qcv-fab-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.qcv-fab-btn:hover {
+    background: rgba(30, 41, 59, 0.95);
+    color: #f1f5f9;
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: scale(1.08);
+}
+
+.qcv-fab-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.qcv-fab-label {
+    position: absolute;
+    left: 52px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(12px);
+    color: #f1f5f9;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.qcv-fab-btn:hover .qcv-fab-label {
+    opacity: 1;
+}
+
+/* ===== FAB DROPDOWN ===== */
+.qcv-fab-dropdown {
+    position: absolute;
+    bottom: 56px;
+    left: 0;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 6px;
+    min-width: 170px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+    display: none;
+}
+
+.qcv-fab-dropdown.show {
+    display: block;
+    animation: fabDropDown 0.2s ease;
+}
+
+@keyframes fabDropDown {
+    from { opacity: 0; transform: translateY(8px) scale(0.96); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.qcv-lang-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #94a3b8;
+    transition: all 0.15s;
+}
+
+.qcv-lang-option:hover {
+    background: rgba(255,255,255,0.06);
+    color: #f1f5f9;
+}
+
+.qcv-lang-option.active {
+    color: #10b981;
+    background: rgba(16,185,129,0.1);
+}
+
+.qcv-lang-flag {
+    font-size: 1.05rem;
+    width: 22px;
+    text-align: center;
+}
+
+/* ===== LIGHT MODE ===== */
+body.light-mode {
+    --bg: #f8fafc;
+    --bg2: #f1f5f9;
+    --card: #ffffff;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --muted: #64748b;
+    --light: #475569;
+    --input: #f1f5f9;
+    --sidebar: #ffffff;
+    background: #f8fafc !important;
+    color: #1e293b !important;
+}
+
+body.light-mode .topbar,
+body.light-mode .navbar,
+body.light-mode .page-header,
+body.light-mode .portfolio-header {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+}
+
+body.light-mode .sidebar-nav,
+body.light-mode .sidebar {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+}
+
+body.light-mode .form-card,
+body.light-mode .feature-card,
+body.light-mode .price-card,
+body.light-mode .test-card,
+body.light-mode .faq-item,
+body.light-mode .login-box,
+body.light-mode .box {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+}
+
+body.light-mode .field input,
+body.light-mode .field textarea,
+body.light-mode .field select,
+body.light-mode .input-group input {
+    background: #f1f5f9 !important;
+    border-color: #e2e8f0 !important;
+    color: #1e293b !important;
+}
+
+body.light-mode .cv-page {
+    box-shadow: 0 4px 24px rgba(0,0,0,0.1) !important;
+}
+
+body.light-mode .nav-tab:hover,
+body.light-mode .nav-tab.active {
+    background: rgba(16,185,129,0.08) !important;
+}
+
+body.light-mode .preview-zone {
+    background: #e2e8f0 !important;
+}
+
+body.light-mode .qcv-fab-toggle,
+body.light-mode .qcv-fab-btn {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-color: #e2e8f0;
+    color: #64748b;
+}
+
+body.light-mode .qcv-fab-toggle:hover,
+body.light-mode .qcv-fab-btn:hover {
+    background: #ffffff;
+    color: #1e293b;
+    border-color: #cbd5e1;
+}
+
+body.light-mode .qcv-fab.open .qcv-fab-toggle {
+    background: rgba(16,185,129,0.1);
+    border-color: rgba(16,185,129,0.3);
+    color: #10b981;
+}
+
+body.light-mode .qcv-fab-dropdown {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-color: #e2e8f0;
+}
+
+body.light-mode .qcv-lang-option {
+    color: #64748b;
+}
+
+body.light-mode .qcv-lang-option:hover {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+body.light-mode .qcv-lang-option.active {
+    color: #10b981;
+    background: rgba(16,185,129,0.08);
+}
+
+body.light-mode .qcv-fab-label {
+    background: rgba(255, 255, 255, 0.95);
+    color: #1e293b;
+    border-color: #e2e8f0;
+}
+
+body.light-mode .dd-item:hover,
+body.light-mode .sidebar-feature:hover {
+    background: rgba(0,0,0,0.04) !important;
+}
+
+body.light-mode .repeater-block {
+    background: #f8fafc !important;
+    border-color: #e2e8f0 !important;
+}
+
+body.light-mode .empty-state,
+body.light-mode .stat-card {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+}
+
+body.light-mode .table-container {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+}
+
+body.light-mode table thead tr {
+    background: #f1f5f9 !important;
+}
+
+body.light-mode .modal {
+    background: #ffffff !important;
+}
+
+body.light-mode .toast-success { background: #10b981; }
+body.light-mode .toast-error { background: #ef4444; }
+
+/* Print: hide buttons */
+@media print {
+    .qcv-fab { display: none !important; }
+}

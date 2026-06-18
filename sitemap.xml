@@ -57,4 +57,22 @@
         <xhtml:link rel="alternate" hreflang="ar" href="https://qcv.vexonet.online/careers.html" />
     </url>
 
+    <!-- قوالب السيرة الذاتية -->
+    <url>
+        <loc>https://qcv.vexonet.online/templates.html</loc>
+        <lastmod>2026-06-17</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://qcv.vexonet.online/templates.html" />
+    </url>
+
+    <!-- الصفحة العامة للسيرة الذاتية -->
+    <url>
+        <loc>https://qcv.vexonet.online/portfolio.html</loc>
+        <lastmod>2026-06-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <xhtml:link rel="alternate" hreflang="ar" href="https://qcv.vexonet.online/portfolio.html" />
+    </url>
+
 </urlset>

@@ -11,71 +11,73 @@
         body{background:#060913;color:#fff;font-family:'Cairo',sans-serif;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}
         .box{background:#0f172a;border:1px solid #1e293b;border-radius:20px;padding:45px 40px;width:100%;max-width:460px;box-shadow:0 25px 60px rgba(0,0,0,0.5);text-align:center}
         .logo{font-size:2.5rem;font-weight:900;margin-bottom:8px}
-        .logo span{color:#00a3ff}
+        .logo span{color:#10b981}
         .sub{color:#64748b;font-size:0.85rem;margin-bottom:30px}
         .input-group{margin-bottom:18px;text-align:right}
         .input-group label{display:block;font-size:0.82rem;color:#64748b;margin-bottom:6px;font-weight:600}
         .input-group input{width:100%;padding:14px 16px;background:#060913;border:1px solid #1e293b;color:#fff;border-radius:12px;outline:none;font-family:'Cairo',sans-serif;font-size:0.9rem;transition:all 0.2s}
-        .input-group input:focus{border-color:#00a3ff;box-shadow:0 0 0 3px rgba(0,163,255,0.15)}
-        .btn{width:100%;padding:14px;background:#00a3ff;color:#000;border:none;border-radius:12px;font-weight:800;font-size:1rem;cursor:pointer;font-family:'Cairo',sans-serif;margin-top:10px;transition:all 0.2s}
-        .btn:hover{background:#00b8ff}
+        .input-group input:focus{border-color:#10b981;box-shadow:0 0 0 3px rgba(16,185,129,0.15)}
+        .btn{width:100%;padding:14px;background:#10b981;color:#000;border:none;border-radius:12px;font-weight:800;font-size:1rem;cursor:pointer;font-family:'Cairo',sans-serif;margin-top:10px;transition:all 0.2s}
+        .btn:hover{background:#34d399}
         .btn:disabled{opacity:0.5;cursor:not-allowed}
-        .btn-green{background:#10b981}.btn-green:hover{background:#059669}
         .msg{margin-top:15px;font-size:0.85rem;font-weight:600}
-        .ok{color:#10b981}.err{color:#ef4444}.info{color:#00a3ff}
-        .step{margin:25px 0;padding:20px;background:rgba(0,163,255,0.04);border:1px solid rgba(0,163,255,0.1);border-radius:12px;text-align:right}
-        .step h3{font-size:0.95rem;font-weight:800;color:#00a3ff;margin-bottom:8px}
-        .step p{font-size:0.82rem;color:#94a3b8;line-height:1.6}
+        .ok{color:#10b981}.err{color:#ef4444}
+        .blocked{display:none;padding:30px;text-align:center}
+        .blocked h2{font-size:1.3rem;color:#ef4444;margin-bottom:12px}
+        .blocked p{color:#94a3b8;font-size:0.9rem;line-height:1.7}
+        .blocked .icon{font-size:3rem;margin-bottom:16px}
         .links{margin-top:25px}
-        .links a{color:#00a3ff;text-decoration:none;font-weight:700;font-size:0.88rem}
-        .divider{border:none;border-top:1px solid #1e293b;margin:25px 0}
+        .links a{color:#10b981;text-decoration:none;font-weight:700;font-size:0.88rem}
+        .spinner{display:inline-block;width:20px;height:20px;border:3px solid rgba(255,255,255,0.2);border-top-color:#10b981;border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:12px}
+        @keyframes spin{to{transform:rotate(360deg)}}
     </style>
 </head>
 <body>
     <div class="box">
         <div class="logo">Q<span>CV</span></div>
-        <div class="sub">إعداد حساب المدير الأول</div>
+        <div class="sub">إعداد حساب المدير</div>
 
-        <div class="step">
-            <h3>الخطوة 1: إنشاء الحساب</h3>
-            <p>املأ البيانات واضغط "إنشاء حساب المدير"</p>
+        <!-- Loading -->
+        <div id="loadingState">
+            <div class="spinner"></div>
+            <p style="color:#64748b;font-size:0.85rem">جاري التحقق...</p>
         </div>
 
-        <div class="input-group">
-            <label>اسم المدير</label>
-            <input type="text" id="name" value="Mohamed Ayman" placeholder="الاسم الكامل">
-        </div>
-        <div class="input-group">
-            <label>البريد الإلكتروني</label>
-            <input type="email" id="email" value="admin@qcv-app.com" placeholder="admin@qcv-app.com">
-        </div>
-        <div class="input-group">
-            <label>كلمة المرور</label>
-            <input type="password" id="pass" placeholder="6 أحرف على الأقل">
+        <!-- Blocked state -->
+        <div class="blocked" id="blockedState">
+            <div class="icon">🔒</div>
+            <h2>تم إعداد المدير بالفعل</h2>
+            <p>تم إنشاء حساب المدير مسبقاً. لا يمكن إنشاء حساب مدير آخر.<br>استخدم حساب المدير الحالي للدخول من <a href="admin.html" style="color:#10b981">لوحة التحكم</a></p>
         </div>
 
-        <button class="btn" id="createBtn" onclick="createAdmin()">إنشاء حساب المدير</button>
-        <div class="msg" id="msg1"></div>
+        <!-- Form state -->
+        <div id="formState" style="display:none">
+            <div class="input-group">
+                <label>اسم المدير</label>
+                <input type="text" id="name" placeholder="الاسم الكامل">
+            </div>
+            <div class="input-group">
+                <label>البريد الإلكتروني</label>
+                <input type="email" id="email" placeholder="admin@example.com">
+            </div>
+            <div class="input-group">
+                <label>كلمة المرور</label>
+                <input type="password" id="pass" placeholder="6 أحرف على الأقل">
+            </div>
 
-        <hr class="divider">
+            <button class="btn" id="createBtn" onclick="createAdmin()">إنشاء حساب المدير</button>
+            <div class="msg" id="msg1"></div>
 
-        <div class="step">
-            <h3>الخطوة 2: تفعيل الصلاحيات</h3>
-            <p>بعد الإنشاء، سجل دخول بالحساب وافعال صلاحيات المدير</p>
-        </div>
-
-        <button class="btn btn-green" id="activateBtn" onclick="activateAdmin()">تفعيل صلاحيات المدير</button>
-        <div class="msg" id="msg2"></div>
-
-        <div class="links">
-            <a href="admin.html">الذهاب للوحة التحكم ←</a>
+            <div class="links">
+                <a href="admin.html">الذهاب للوحة التحكم ←</a>
+            </div>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+        import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",
@@ -91,6 +93,26 @@
         const auth = getAuth(app);
         const db = getDatabase(app);
 
+        // Check if admin already exists
+        async function checkAdminExists() {
+            try {
+                const snap = await get(ref(db, 'admins'));
+                return snap.exists() && Object.keys(snap.val() || {}).length > 0;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        const adminExists = await checkAdminExists();
+
+        if (adminExists) {
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('blockedState').style.display = 'block';
+        } else {
+            document.getElementById('loadingState').style.display = 'none';
+            document.getElementById('formState').style.display = 'block';
+        }
+
         window.createAdmin = async function() {
             const name = document.getElementById('name').value.trim();
             const email = document.getElementById('email').value.trim();
@@ -105,11 +127,26 @@
                 msg.className = 'msg err'; msg.textContent = 'كلمة المرور 6 أحرف على الأقل'; return;
             }
 
+            // Double-check no admin exists before creating
+            const exists = await checkAdminExists();
+            if (exists) {
+                msg.className = 'msg err'; msg.textContent = 'تم إنشاء حساب المدير بالفعل';
+                document.getElementById('formState').style.display = 'none';
+                document.getElementById('blockedState').style.display = 'block';
+                return;
+            }
+
             btn.textContent = 'جاري الإنشاء...'; btn.disabled = true;
 
             try {
                 const cred = await createUserWithEmailAndPassword(auth, email, pass);
-                await updateProfile(cred.user, { displayName: name });
+
+                await set(ref(db, 'admins/' + cred.user.uid), {
+                    uid: cred.user.uid,
+                    name: name,
+                    email: email,
+                    createdAt: Date.now()
+                });
 
                 await set(ref(db, 'users/' + cred.user.uid), {
                     uid: cred.user.uid,
@@ -122,21 +159,17 @@
                     lastLogin: Date.now()
                 });
 
-                await set(ref(db, 'admins/' + cred.user.uid), {
-                    uid: cred.user.uid,
-                    name: name,
-                    email: email,
-                    createdAt: Date.now()
-                });
-
                 await signOut(auth);
 
                 msg.className = 'msg ok';
-                msg.textContent = 'تم إنشاء حساب المدير وتفعيل الصلاحيات بنجاح!';
+                msg.textContent = 'تم إنشاء حساب المدير بنجاح! يمكنك الدخول من admin.html';
+                document.getElementById('formState').style.display = 'none';
+                document.getElementById('blockedState').innerHTML = '<div class="icon">✅</div><h2 style="color:#10b981">تم إنشاء حساب المدير بنجاح!</h2><p>يمكنك الآن الدخول إلى لوحة التحكم</p><div class="links"><a href="admin.html">الدخول للوحة التحكم ←</a></div>';
+                document.getElementById('blockedState').style.display = 'block';
             } catch (err) {
                 msg.className = 'msg err';
                 const m = {
-                    'auth/email-already-in-use': 'البريد مستخدم بالفعل - اضغط "تفعيل الصلاحيات"',
+                    'auth/email-already-in-use': 'البريد مستخدم بالفعل',
                     'auth/weak-password': 'كلمة المرور ضعيفة',
                     'auth/invalid-email': 'البريد غير صالح'
                 };
@@ -144,44 +177,6 @@
             }
 
             btn.textContent = 'إنشاء حساب المدير'; btn.disabled = false;
-        };
-
-        window.activateAdmin = async function() {
-            const email = document.getElementById('email').value.trim();
-            const pass = document.getElementById('pass').value;
-            const msg = document.getElementById('msg2');
-            const btn = document.getElementById('activateBtn');
-
-            if (!email || !pass) {
-                msg.className = 'msg err'; msg.textContent = 'املأ الإيميل والباسورد'; return;
-            }
-
-            btn.textContent = 'جاري التفعيل...'; btn.disabled = true;
-
-            try {
-                const cred = await signInWithEmailAndPassword(auth, email, pass);
-                const uid = cred.user.uid;
-
-                await set(ref(db, 'admins/' + uid), {
-                    uid: uid,
-                    name: cred.user.displayName || 'Admin',
-                    email: email,
-                    createdAt: Date.now()
-                });
-
-                await set(ref(db, 'users/' + uid + '/role'), 'admin');
-                await set(ref(db, 'users/' + uid + '/plan'), 'unlimited');
-
-                await signOut(auth);
-
-                msg.className = 'msg ok';
-                msg.textContent = 'تم تفعيل صلاحيات المدير بنجاح! يمكنك الدخول من admin.html';
-            } catch (err) {
-                msg.className = 'msg err';
-                msg.textContent = 'خطأ: ' + err.message;
-            }
-
-            btn.textContent = 'تفعيل صلاحيات المدير'; btn.disabled = false;
         };
     </script>
 </body>

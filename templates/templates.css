@@ -1,0 +1,195 @@
+/* ============================================================
+   QCV TEMPLATE STYLES — 15 ATS-Friendly CV Templates
+   Based on Wozber, Canva, Enhancv professional formats
+   ============================================================ */
+
+/* ============ SHARED BASE ============ */
+.cv-page {
+    width: 210mm;
+    min-height: 297mm;
+    background: #fff;
+    color: var(--cv-text-color, #1a1a1a);
+    font-size: var(--cv-font-size, 11px);
+    line-height: var(--cv-line-height, 1.5);
+    padding: var(--cv-page-padding, 40px);
+    margin: 0 auto;
+    font-family: var(--cv-font-family, 'Inter', 'Cairo', sans-serif);
+    direction: ltr;
+    text-align: left;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* ---- Shared section/item helpers ---- */
+.tpl-section { margin-bottom: 18px; }
+.tpl-section-title {
+    font-size: 12px; font-weight: 800; color: var(--cv-heading-color, #111);
+    border-bottom: 1.5px solid var(--cv-heading-color, #111);
+    padding-bottom: 4px; margin-bottom: 10px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+}
+.tpl-text { font-size: 10.5px; line-height: 1.65; color: var(--cv-text-color, #333); }
+.tpl-item { margin-bottom: 14px; }
+.tpl-item-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; }
+.tpl-item-left { font-weight: 700; font-size: 11px; color: var(--cv-heading-color, #111); }
+.tpl-item-date { font-size: 9.5px; color: #666; white-space: nowrap; font-style: italic; margin-left: 12px; }
+.tpl-item-sub { font-size: 10px; color: #555; margin-bottom: 4px; font-style: italic; }
+.tpl-item-desc { font-size: 10px; color: var(--cv-text-color, #333); margin-top: 4px; line-height: 1.6; }
+.tpl-bullet { padding: 1px 0; line-height: 1.5; }
+.tpl-skills-text { font-size: 10.5px; color: var(--cv-text-color, #333); line-height: 1.7; }
+
+/* ============ 1. CLASSIC — ATS-Friendly ============ */
+.tpl-classic { padding: 40px 44px; }
+.tc-header { text-align: center; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid var(--cv-heading-color, #111); }
+.tc-name {
+    font-size: 26px; font-weight: 900; margin-bottom: 6px;
+    color: var(--cv-heading-color, #111); text-transform: uppercase; letter-spacing: 2px;
+    font-family: 'Montserrat', 'Inter', sans-serif;
+}
+.tc-title { font-size: 12px; color: #555; margin-bottom: 8px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+.tc-contact { font-size: 10px; color: var(--cv-text-color, #555); }
+
+/* ============ 2. MODERN ============ */
+.tpl-modern { padding: 0; }
+.tm-header { background: linear-gradient(135deg, var(--cv-accent, #0ea5e9), #0284c7); color: #fff; padding: 32px 40px; display: flex; align-items: center; gap: 20px; }
+.tm-avatar { width: 64px; height: 64px; border-radius: 50%; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 800; flex-shrink: 0; border: 2px solid rgba(255,255,255,0.3); }
+.tm-name { font-size: 22px; font-weight: 800; margin-bottom: 2px; }
+.tm-title { font-size: 12px; opacity: 0.9; margin-bottom: 6px; }
+.tm-contact { font-size: 10px; opacity: 0.85; margin-top: 4px; }
+.tm-body { padding: 24px 40px; }
+.tm-section-title { font-size: 12px; font-weight: 700; color: var(--cv-accent, #0ea5e9); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+.tm-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cv-accent, #0ea5e9); flex-shrink: 0; }
+
+/* ============ 3. PROFESSIONAL ============ */
+.tpl-professional { padding: 40px 48px; }
+.tp-header { text-align: center; margin-bottom: 8px; }
+.tp-name { font-size: 26px; font-weight: 800; color: var(--cv-heading-color, #111); letter-spacing: 0.5px; text-transform: uppercase; }
+.tp-title { font-size: 11px; color: #333; margin-top: 4px; font-weight: 500; }
+.tp-contact { font-size: 9.5px; color: var(--cv-text-color, #555); margin-top: 6px; }
+.tp-divider { border: none; border-top: 1.5px solid var(--cv-heading-color, #111); margin: 14px 0; }
+
+/* ============ 4. CREATIVE ============ */
+.tpl-creative { padding: 0; }
+.tc-header-creative { background: linear-gradient(135deg, var(--cv-accent, #6366f1), #8b5cf6, #a855f7); color: #fff; text-align: center; padding: 36px 40px 28px; border-radius: 0 0 40px 40px; }
+.tc-avatar-creative { width: 72px; height: 72px; border-radius: 50%; background: rgba(255,255,255,0.2); margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 800; border: 2px solid rgba(255,255,255,0.3); }
+.tc-name-creative { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+.tc-title-creative { font-size: 12px; opacity: 0.9; margin-bottom: 8px; }
+.tc-contact-creative { font-size: 10px; opacity: 0.8; }
+.tc-body-creative { padding: 24px 40px; }
+.tc-stitle-creative { font-size: 12px; font-weight: 700; color: var(--cv-accent, #7c3aed); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* ============ 5. EXECUTIVE ============ */
+.tpl-executive { padding: 40px 48px; font-family: 'Georgia', 'Times New Roman', serif; }
+.tex-header { text-align: center; margin-bottom: 20px; }
+.tex-name { font-size: 26px; font-weight: 800; color: #1e293b; letter-spacing: 2px; }
+.tex-title { font-size: 12px; color: #64748b; margin-top: 4px; }
+.tex-contact { font-size: 10px; color: #888; margin-top: 8px; }
+.tex-section-title { font-size: 11px; font-weight: 700; color: #1e293b; text-transform: uppercase; letter-spacing: 1.5px; border-bottom: 2px solid #1e293b; padding-bottom: 4px; margin-bottom: 10px; }
+
+/* ============ 6. TECHNICAL ============ */
+.tpl-technical { padding: 0; display: flex; flex-direction: column; min-height: 297mm; }
+.tt-header { background: #0f172a; color: #fff; padding: 28px 36px; display: flex; justify-content: space-between; align-items: center; }
+.tt-name { font-size: 22px; font-weight: 800; margin-bottom: 2px; }
+.tt-title { font-size: 12px; color: #06b6d4; }
+.tt-right { font-size: 10px; color: #94a3b8; text-align: right; }
+.tt-body { display: flex; flex: 1; }
+.tt-main { flex: 1; padding: 24px 36px; }
+.tt-sidebar { width: 200px; background: #f8fafc; padding: 24px 20px; border-right: 1px solid #e2e8f0; }
+.tt-stitle { font-size: 11px; font-weight: 700; color: #06b6d4; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; }
+
+/* ============ 7. MINIMALIST ============ */
+.tpl-minimalist { padding: 48px 56px; }
+.tmi-name { font-size: 26px; font-weight: 800; color: #111; margin-bottom: 4px; }
+.tmi-contact { font-size: 10px; color: #888; margin-bottom: 24px; border-bottom: 1px solid #eee; padding-bottom: 12px; }
+.tmi-stitle { font-size: 10px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; border-bottom: 1px dashed #ddd; padding-bottom: 4px; }
+
+/* ============ 8. SIDEBAR ============ */
+.tpl-sidebar { display: flex; min-height: 297mm; }
+.ts-left-panel { width: 220px; background: #1e40af; color: #fff; padding: 36px 24px; }
+.ts-avatar { width: 72px; height: 72px; border-radius: 50%; background: rgba(255,255,255,0.2); margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 800; border: 2px solid rgba(255,255,255,0.3); }
+.ts-name { font-size: 18px; font-weight: 800; text-align: center; margin-bottom: 4px; }
+.ts-title { font-size: 11px; text-align: center; opacity: 0.85; margin-bottom: 16px; }
+.ts-contact-panel { font-size: 9.5px; opacity: 0.8; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 16px; }
+.ts-contact-panel div { margin-bottom: 4px; }
+.ts-panel-section { margin-bottom: 16px; }
+.ts-panel-section h3 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; opacity: 0.9; }
+.ts-skills-panel { display: flex; flex-direction: column; gap: 4px; }
+.ts-skills-panel span { background: rgba(255,255,255,0.15); padding: 4px 10px; border-radius: 4px; font-size: 9.5px; }
+.ts-edu-item { margin-bottom: 10px; font-size: 10px; }
+.ts-right-panel { flex: 1; padding: 28px 32px; }
+.ts-stitle { font-size: 12px; font-weight: 700; color: #1e40af; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 8px; }
+
+/* ============ 9. TWO-COLUMN ============ */
+.tpl-twocol { padding: 0; }
+.ttc-header { background: #0d9488; color: #fff; padding: 28px 40px; }
+.ttc-header h1 { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+.ttc-header div { font-size: 12px; opacity: 0.85; }
+.ttc-contact-line { margin-top: 6px; font-size: 10px; opacity: 0.8; }
+.ttc-body { display: flex; }
+.ttc-col-main { flex: 1; padding: 24px 32px; }
+.ttc-col-side { width: 200px; background: #f0fdfa; padding: 24px 20px; border-right: 1px solid #ccfbf1; }
+.ttc-stitle { font-size: 11px; font-weight: 700; color: #0d9488; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; }
+.ttc-contact-side { margin-bottom: 16px; }
+.ttc-contact-side h2 { font-size: 11px; font-weight: 700; color: #0d9488; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; }
+.ttc-contact-side div { font-size: 10px; color: #555; margin-bottom: 4px; }
+
+/* ============ 10. BOLD ============ */
+.tpl-bold { padding: 0; }
+.tb-header { background: #f59e0b; color: #000; padding: 36px 40px; }
+.tb-big-name { font-size: 28px; font-weight: 900; letter-spacing: 1px; }
+.tb-tagline { font-size: 13px; font-weight: 600; margin-top: 2px; opacity: 0.8; }
+.tb-contact-row { margin-top: 10px; font-size: 10px; opacity: 0.75; }
+.tb-body { padding: 24px 40px; }
+.tb-stitle { font-size: 12px; font-weight: 700; color: #92400e; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* ============ 11. ELEGANT ============ */
+.tpl-elegant { padding: 40px 48px; font-family: 'Georgia', 'Times New Roman', serif; }
+.tel-header { text-align: center; margin-bottom: 20px; }
+.tel-name { font-size: 24px; font-weight: 800; color: #1e293b; letter-spacing: 2px; }
+.tel-rule { width: 60px; height: 2px; background: #b45309; margin: 8px auto; }
+.tel-title { font-size: 12px; color: #64748b; }
+.tel-contact { font-size: 10px; color: #888; margin-top: 6px; }
+.tel-stitle { font-size: 11px; font-weight: 700; color: #b45309; text-transform: uppercase; letter-spacing: 1.5px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 8px; }
+
+/* ============ 12. ATS-SAFE ============ */
+.tpl-ats { padding: 36px 40px; }
+.tats-name { font-size: 22px; font-weight: 800; color: #111; margin-bottom: 4px; }
+.tats-title { font-size: 11px; color: #555; margin-bottom: 6px; }
+.tats-contact { font-size: 10px; color: #666; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid #ddd; }
+.tats-stitle { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; border-bottom: 1px solid #ddd; padding-bottom: 3px; }
+
+/* ============ 13. ACADEMIC ============ */
+.tpl-academic { padding: 40px 48px; font-family: 'Georgia', 'Times New Roman', serif; }
+.ta-header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #7c3aed; padding-bottom: 12px; }
+.ta-header h1 { font-size: 24px; font-weight: 800; color: #1e293b; }
+.ta-title { font-size: 12px; color: #64748b; margin-top: 4px; }
+.ta-contact { font-size: 10px; color: #888; margin-top: 6px; }
+.tpl-academic .tpl-section h2 { font-size: 12px; font-weight: 700; color: #7c3aed; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 8px; }
+
+/* ============ 14. STARTUP ============ */
+.tpl-startup { padding: 28px 36px; }
+.tst-header { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+.tst-badge { width: 52px; height: 52px; border-radius: 12px; background: linear-gradient(135deg, #10b981, #059669); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; flex-shrink: 0; }
+.tpl-startup h1 { font-size: 20px; font-weight: 800; }
+.tst-title { font-size: 11px; color: #10b981; font-weight: 600; }
+.tst-contact { font-size: 10px; color: #666; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #eee; }
+.tpl-startup .tpl-section h2 { font-size: 12px; font-weight: 700; color: #10b981; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* ============ 15. INTERNATIONAL ============ */
+.tpl-intl { padding: 0; }
+.ti-header { background: #2563eb; color: #fff; padding: 32px 40px; }
+.ti-name { font-size: 24px; font-weight: 800; margin-bottom: 4px; }
+.ti-title { font-size: 12px; opacity: 0.85; margin-bottom: 6px; }
+.ti-contact { font-size: 10px; opacity: 0.8; }
+.ti-grid { display: flex; }
+.ti-main { flex: 1; padding: 24px 36px; }
+.ti-side { width: 200px; background: #eff6ff; padding: 24px 20px; border-right: 1px solid #dbeafe; }
+.ti-stitle { font-size: 11px; font-weight: 700; color: #2563eb; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; }
+
+/* ============ PRINT STYLES ============ */
+@media print {
+    .cv-page { box-shadow: none !important; margin: 0 !important; }
+    body { background: #fff !important; }
+}
