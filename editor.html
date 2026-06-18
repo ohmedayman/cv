@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="templates/templates.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        :root{--bg:#080d1a;--sidebar:#0c1222;--card:#111a2e;--border:#1c2844;--accent:#10b981;--sky:#0ea5e9;--glow:rgba(16,185,129,0.25);--green:#10b981;--red:#ef4444;--yellow:#f59e0b;--text:#f1f5f9;--muted:#5a6a85;--light:#8494ad;--input:#0a0f1e}
+        :root{--bg:#080d1a;--sidebar:#0c1222;--card:#111a2e;--border:#1c2844;--accent:#38bdf8;--sky:#2563eb;--glow:rgba(56,189,248,0.25);--green:#38bdf8;--red:#ef4444;--yellow:#f59e0b;--text:#f1f5f9;--muted:#5a6a85;--light:#8494ad;--input:#0a0f1e}
         *{box-sizing:border-box;margin:0;padding:0}
         body{background:var(--bg);color:var(--text);font-family:'Inter','Cairo',sans-serif;height:100vh;overflow:hidden}
 
@@ -34,11 +34,11 @@
         .btn-save{background:transparent;color:var(--light);border:1px solid var(--border);padding:7px 14px;border-radius:7px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;transition:all 0.2s}
         .btn-save:hover{border-color:var(--accent);color:var(--accent)}
         .btn-export{background:var(--accent);color:#000;border:none;padding:7px 16px;border-radius:7px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:5px;transition:all 0.2s}
-        .btn-export:hover{background:#34d399;transform:translateY(-1px)}
+        .btn-export:hover{background:#60a5fa;transform:translateY(-1px)}
         .btn-export .spinner{display:none;width:13px;height:13px;border:2px solid rgba(0,0,0,0.2);border-top-color:#000;border-radius:50%;animation:spin 0.7s linear infinite}
         .btn-export.loading .spinner{display:block}.btn-export.loading .exp-text{display:none}
-        .btn-ai-gen{background:linear-gradient(135deg,rgba(139,92,246,0.2),rgba(14,165,233,0.2));color:#a78bfa;border:1px solid rgba(139,92,246,0.3);padding:7px 14px;border-radius:7px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:none}
-        .btn-ai-gen:hover{background:linear-gradient(135deg,rgba(139,92,246,0.3),rgba(14,165,233,0.3));border-color:rgba(139,92,246,0.5);transform:translateY(-1px)}
+        .btn-ai-gen{background:linear-gradient(135deg,rgba(139,92,246,0.2),rgba(37,99,235,0.2));color:#a78bfa;border:1px solid rgba(139,92,246,0.3);padding:7px 14px;border-radius:7px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:none}
+        .btn-ai-gen:hover{background:linear-gradient(135deg,rgba(139,92,246,0.3),rgba(37,99,235,0.3));border-color:rgba(139,92,246,0.5);transform:translateY(-1px)}
         @keyframes spin{to{transform:rotate(360deg)}}
         .profile-area{position:relative}
         .profile-trigger{display:flex;align-items:center;gap:8px;cursor:pointer;padding:4px 8px;border-radius:8px;transition:background 0.2s}
@@ -51,14 +51,14 @@
         .profile-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:0;min-width:260px;box-shadow:0 20px 60px rgba(0,0,0,0.5);display:none;z-index:200;overflow:hidden}
         .profile-dropdown.show{display:block;animation:dropIn 0.2s ease}
         @keyframes dropIn{from{opacity:0;transform:translateY(-8px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
-        .dd-header{padding:20px 18px;display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(16,185,129,0.08),rgba(14,165,233,0.06))}
+        .dd-header{padding:20px 18px;display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(56,189,248,0.08),rgba(37,99,235,0.06))}
         .dd-avatar{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--sky));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;color:#fff;flex-shrink:0}
         .dd-info{flex:1;min-width:0}
         .dd-info .d-name{font-weight:800;font-size:0.88rem;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
         .dd-info .d-email{color:var(--muted);font-size:0.72rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-        .dd-plan{margin:10px 14px;padding:10px 14px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.15);border-radius:10px;display:flex;justify-content:space-between;align-items:center}
+        .dd-plan{margin:10px 14px;padding:10px 14px;background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.15);border-radius:10px;display:flex;justify-content:space-between;align-items:center}
         .dd-plan .pl{font-size:0.72rem;color:var(--muted);font-weight:500}
-        .dd-plan .pn{font-weight:800;font-size:0.82rem;color:var(--accent);background:rgba(16,185,129,0.12);padding:3px 10px;border-radius:6px}
+        .dd-plan .pn{font-weight:800;font-size:0.82rem;color:var(--accent);background:rgba(56,189,248,0.12);padding:3px 10px;border-radius:6px}
         .dd-section{padding:6px 8px}
         .dd-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;font-size:0.82rem;font-weight:600;color:var(--light);cursor:pointer;transition:all 0.15s}
         .dd-item:hover{background:rgba(255,255,255,0.06);color:#fff}
@@ -68,6 +68,13 @@
         .dd-item.danger:hover{background:rgba(239,68,68,0.1)}
         .dd-item.danger .dd-icon{background:rgba(239,68,68,0.1)}
         .dd-divider{height:1px;background:var(--border);margin:2px 14px}
+        .dd-subscription{margin:0 14px 10px;padding:12px 14px;background:rgba(37,99,235,0.06);border:1px solid rgba(37,99,235,0.15);border-radius:10px}
+        .dd-sub-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+        .dd-sub-row:last-of-type{margin-bottom:0}
+        .dd-sub-label{font-size:0.72rem;color:var(--muted);font-weight:500}
+        .dd-sub-value{font-size:0.78rem;font-weight:700;color:var(--sky)}
+        .dd-upgrade-btn{width:100%;margin-top:10px;padding:10px;background:linear-gradient(135deg,var(--accent),var(--sky));border:none;color:#000;border-radius:8px;font-weight:800;font-size:0.8rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s}
+        .dd-upgrade-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(56,189,248,0.3)}
 
         /* ===== LAYOUT ===== */
         .editor-layout{display:flex;height:calc(100vh - 56px)}
@@ -81,9 +88,9 @@
         .nav-tabs{flex:1;padding:12px}
         .nav-tab{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;font-weight:600;font-size:0.82rem;color:var(--light);cursor:pointer;transition:all 0.2s;margin-bottom:4px;position:relative}
         .nav-tab:hover{background:rgba(255,255,255,0.04);color:var(--text)}
-        .nav-tab.active{background:rgba(16,185,129,0.12);color:var(--accent);font-weight:700}
+        .nav-tab.active{background:rgba(56,189,248,0.12);color:var(--accent);font-weight:700}
         .nav-tab .icon{width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0}
-        .nav-tab.active .icon{background:rgba(16,185,129,0.2)}
+        .nav-tab.active .icon{background:rgba(56,189,248,0.2)}
         .nav-tab .tab-label{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
         .nav-tab .tab-dots{width:22px;height:22px;border:none;background:transparent;color:var(--muted);border-radius:4px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.15s;flex-shrink:0;opacity:0}
         .nav-tab:hover .tab-dots{opacity:1}
@@ -99,7 +106,7 @@
         .nav-tab-custom.active .icon{background:rgba(139,92,246,0.3) !important}
 
         .add-section-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 14px;margin:4px 12px 12px;border:2px dashed var(--border);border-radius:8px;font-size:0.78rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.2s;font-family:inherit;background:transparent}
-        .add-section-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(16,185,129,0.05)}
+        .add-section-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(56,189,248,0.05)}
 
         .sidebar-bottom{padding:12px;border-top:1px solid var(--border)}
         .sidebar-feature{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:7px;font-size:0.78rem;color:var(--light);cursor:pointer;transition:all 0.2s;margin-bottom:3px}
@@ -137,7 +144,7 @@
         .form-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px;display:none}
         .form-card.active{display:block}
         .form-card-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
-        .form-card-header .icon{width:36px;height:36px;border-radius:8px;background:rgba(16,185,129,0.12);display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--accent)}
+        .form-card-header .icon{width:36px;height:36px;border-radius:8px;background:rgba(56,189,248,0.12);display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--accent)}
         .form-card-header h3{font-size:0.95rem;font-weight:800}
         .field{margin-bottom:14px}
         .field label{display:flex;align-items:center;justify-content:space-between;font-size:0.72rem;color:var(--muted);margin-bottom:6px;font-weight:600}
@@ -152,7 +159,7 @@
         .btn-rb-delete{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);color:var(--red);border-radius:5px;padding:3px 8px;font-size:0.65rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.15s}
         .btn-rb-delete:hover{background:var(--red);color:#fff}
         .btn-add{width:100%;padding:9px;background:transparent;border:1px dashed var(--accent);color:var(--accent);border-radius:7px;font-weight:700;font-size:0.75rem;cursor:pointer;font-family:inherit;transition:all 0.2s}
-        .btn-add:hover{background:rgba(16,185,129,0.1)}
+        .btn-add:hover{background:rgba(56,189,248,0.1)}
 
         /* AI Score Widget */
         .ai-score-widget{padding:14px;border-bottom:1px solid var(--border);display:none}
@@ -175,14 +182,14 @@
         .ai-rec{padding:8px;border-radius:6px;font-size:0.68rem;margin-bottom:4px;background:rgba(255,255,255,0.03);border:1px solid var(--border)}
         .ai-rec.warning{border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.05)}
         .ai-rec.critical{border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.05)}
-        .ai-rec.success{border-color:rgba(16,185,129,0.3);background:rgba(16,185,129,0.05)}
+        .ai-rec.success{border-color:rgba(56,189,248,0.3);background:rgba(56,189,248,0.05)}
         .ai-rec .rec-title{font-weight:700;margin-bottom:2px}
 
         /* Job Match Tab */
         .job-match-input{width:100%;min-height:100px;padding:10px;background:var(--input);border:1px solid var(--border);color:#fff;border-radius:8px;font-family:inherit;font-size:0.82rem;resize:vertical;outline:none}
         .job-match-input:focus{border-color:var(--accent)}
         .btn-match{width:100%;padding:10px;background:var(--accent);color:#000;border:none;border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;margin-top:8px;transition:all 0.2s}
-        .btn-match:hover{background:#34d399}
+        .btn-match:hover{background:#60a5fa}
         .match-results{margin-top:12px;display:none}
         .match-results.show{display:block}
         .match-score-big{text-align:center;padding:16px;background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:12px}
@@ -194,11 +201,11 @@
         .match-bar-fill{height:100%;border-radius:3px;transition:width 0.5s ease}
         .match-keywords{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
         .match-kw{padding:3px 8px;border-radius:4px;font-size:0.65rem;font-weight:600}
-        .match-kw.found{background:rgba(16,185,129,0.15);color:var(--accent)}
+        .match-kw.found{background:rgba(56,189,248,0.15);color:var(--accent)}
         .match-kw.missing{background:rgba(239,68,68,0.1);color:var(--red)}
 
         /* Portfolio Link */
-        .portfolio-link-box{margin-top:10px;padding:10px;background:rgba(14,165,233,0.06);border:1px solid rgba(14,165,233,0.15);border-radius:8px}
+        .portfolio-link-box{margin-top:10px;padding:10px;background:rgba(37,99,235,0.06);border:1px solid rgba(37,99,235,0.15);border-radius:8px}
         .portfolio-link-box .pl-title{font-size:0.72rem;font-weight:700;color:var(--sky);margin-bottom:6px}
         .portfolio-url{display:flex;gap:6px}
         .portfolio-url input{flex:1;padding:6px 8px;background:var(--input);border:1px solid var(--border);color:#fff;border-radius:5px;font-size:0.7rem;font-family:monospace}
@@ -207,7 +214,7 @@
         /* Right - Preview */
         .preview-zone{flex:1;background:#080c16;display:flex;flex-direction:column;align-items:center;overflow:hidden}
         .preview-container{flex:1;display:flex;justify-content:center;align-items:flex-start;padding:24px;overflow-y:auto;width:100%;position:relative}
-        .ai-cv-badge{position:absolute;top:10px;right:10px;background:linear-gradient(135deg,rgba(139,92,246,0.2),rgba(14,165,233,0.2));border:1px solid rgba(139,92,246,0.3);color:#a78bfa;font-size:0.7rem;font-weight:700;padding:5px 12px;border-radius:20px;z-index:5;display:flex;align-items:center;gap:4px;backdrop-filter:blur(8px)}
+        .ai-cv-badge{position:absolute;top:10px;right:10px;background:linear-gradient(135deg,rgba(139,92,246,0.2),rgba(37,99,235,0.2));border:1px solid rgba(139,92,246,0.3);color:#a78bfa;font-size:0.7rem;font-weight:700;padding:5px 12px;border-radius:20px;z-index:5;display:flex;align-items:center;gap:4px;backdrop-filter:blur(8px)}
         .zoom-controls{display:flex;align-items:center;gap:8px;padding:10px 20px;background:var(--sidebar);border-top:1px solid var(--border);width:100%;justify-content:center;position:sticky;bottom:0;z-index:10}
         .zoom-btn{width:36px;height:36px;border-radius:8px;background:var(--card);border:1px solid var(--border);color:var(--light);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;font-size:1rem}
         .zoom-btn:hover{border-color:var(--accent);color:var(--accent)}
@@ -227,7 +234,7 @@
         .section-modal-close:hover{background:rgba(255,255,255,0.1);color:#fff}
         .section-modal-body{padding:16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
         .section-option{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 12px;border:2px solid var(--border);border-radius:12px;cursor:pointer;transition:all 0.2s;background:transparent;color:var(--text);font-family:inherit}
-        .section-option:hover{border-color:var(--accent);background:rgba(16,185,129,0.05);transform:translateY(-2px)}
+        .section-option:hover{border-color:var(--accent);background:rgba(56,189,248,0.05);transform:translateY(-2px)}
         .section-option .sec-icon{font-size:1.5rem}
         .section-option .sec-name{font-size:0.82rem;font-weight:700}
         .section-option .sec-desc{font-size:0.68rem;color:var(--muted);text-align:center}
@@ -249,13 +256,13 @@
         .panel-field input:focus,.panel-field textarea:focus{border-color:var(--accent)}
         .panel-btn{padding:10px 20px;border-radius:7px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;border:none;width:100%;transition:all 0.2s}
         .panel-btn-primary{background:var(--accent);color:#000}
-        .panel-btn-primary:hover{background:#34d399}
+        .panel-btn-primary:hover{background:#60a5fa}
 
         /* Multiple CVs Panel */
         .cvs-list{display:flex;flex-direction:column;gap:6px}
         .cv-list-item{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all 0.2s}
         .cv-list-item:hover{border-color:var(--accent)}
-        .cv-list-item.active{border-color:var(--accent);background:rgba(16,185,129,0.05)}
+        .cv-list-item.active{border-color:var(--accent);background:rgba(56,189,248,0.05)}
         .cv-list-item .cv-icon{width:36px;height:36px;border-radius:8px;background:var(--input);display:flex;align-items:center;justify-content:center;font-size:1rem}
         .cv-list-item .cv-info{flex:1}
         .cv-list-item .cv-info .cv-title{font-weight:700;font-size:0.82rem}
@@ -345,7 +352,15 @@
                         <div class="d-email" id="ddEmail">user@email.com</div>
                     </div>
                 </div>
-                <div class="dd-plan"><span class="pl">Current Plan</span><span class="pn" id="ddPlan">Free</span></div>
+                <div class="dd-plan">
+                    <span class="pl">Current Plan</span>
+                    <span class="pn" id="ddPlan">Free</span>
+                </div>
+                <div class="dd-subscription" id="ddSubscription" style="display:none">
+                    <div class="dd-sub-row"><span class="dd-sub-label">Downloads</span><span class="dd-sub-value" id="ddDownloads">0 / 1</span></div>
+                    <div class="dd-sub-row"><span class="dd-sub-label">Expires</span><span class="dd-sub-value" id="ddExpiry">-</span></div>
+                    <button class="dd-upgrade-btn" onclick="window.location.href='pay.html'">&#11088; Upgrade Plan</button>
+                </div>
                 <div class="dd-section">
                     <div class="dd-item" onclick="openPanel('profile')"><span class="dd-icon">&#128100;</span> Profile</div>
                     <div class="dd-item" onclick="openPanel('cvs')"><span class="dd-icon">&#128196;</span> My CVs</div>
@@ -369,6 +384,13 @@
 <div class="editor-layout">
     <!-- Left Nav -->
     <div class="sidebar-nav">
+
+        <!-- My CVs Button -->
+        <div style="padding:12px 14px 8px">
+            <button onclick="openPanel('cvs')" style="width:100%;padding:11px 16px;background:linear-gradient(135deg,rgba(56,189,248,0.12),rgba(37,99,235,0.12));border:1px solid rgba(56,189,248,0.2);color:#fff;border-radius:12px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:'Cairo',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.2s" onmouseover="this.style.borderColor='rgba(56,189,248,0.4)';this.style.transform='translateY(-1px)'" onmouseout="this.style.borderColor='rgba(56,189,248,0.2)';this.style.transform='none'">
+                <span style="font-size:1.1rem">&#128196;</span> My CVs
+            </button>
+        </div>
 
         <!-- AI Score Widget (paid only) -->
         <div class="ai-score-widget" id="aiScoreWidget">
@@ -593,8 +615,35 @@
         ['userName','ddName'].forEach(id=>{if(document.getElementById(id))document.getElementById(id).textContent=userData.name||user.displayName||'User'});
         if(document.getElementById('ddEmail'))document.getElementById('ddEmail').textContent=userData.email||user.email||'';
         const plan=userData.plan||'free';
-        const planLabel=plan==='pro'?'Pro':plan==='unlimited'?'Unlimited':'Free';
+        // Check if domain-based plan has expired
+        if(userData.planExpiry && (plan==='pro'||plan==='unlimited') && Date.now() > userData.planExpiry) {
+            userData.plan='free';
+            set(ref(db,'users/'+user.uid+'/plan'),'free').catch(()=>{});
+        }
+        const planLabel=(userData.plan||'free')==='pro'?'Pro':(userData.plan||'free')==='unlimited'?'Unlimited':'Free';
         if(document.getElementById('ddPlan'))document.getElementById('ddPlan').textContent=planLabel;
+        // Subscription info
+        const subEl = document.getElementById('ddSubscription');
+        if(subEl) {
+            const isFree = (userData.plan||'free') === 'free';
+            subEl.style.display = 'block';
+            const dlEl = document.getElementById('ddDownloads');
+            if(dlEl) dlEl.textContent = isFree ? (userData.downloads||0) + ' / 1' : (userData.downloads||0) + ' / ∞';
+            const expEl = document.getElementById('ddExpiry');
+            if(expEl) {
+                if(userData.planExpiry) {
+                    const d = new Date(userData.planExpiry);
+                    expEl.textContent = d.toLocaleDateString('en',{year:'numeric',month:'short',day:'numeric'});
+                    if(Date.now() > userData.planExpiry) expEl.textContent += ' (Expired)';
+                } else if(!isFree) {
+                    expEl.textContent = 'Lifetime';
+                } else {
+                    expEl.textContent = '-';
+                }
+            }
+            const upgBtn = subEl.querySelector('.dd-upgrade-btn');
+            if(upgBtn) upgBtn.style.display = isFree ? '' : 'none';
+        }
         window.currentUid=user.uid;
 
         // Set portfolio URL
@@ -602,7 +651,7 @@
         document.getElementById('portfolioUrl').value = `https://qcv.vexonet.online/portfolio.html?uid=${user.uid}`;
 
         await loadSavedData();
-        togglePaidFeatures(plan);
+        togglePaidFeatures(userData.plan||'free');
         onValue(ref(db,'users/'+user.uid+'/plan'),s=>{const p=s.val()||'free';const l=p==='pro'?'Pro':p==='unlimited'?'Unlimited':'Free';if(document.getElementById('ddPlan'))document.getElementById('ddPlan').textContent=l;userData.plan=p;if(window._userData)window._userData.plan=p;togglePaidFeatures(p)});
     });
 
@@ -702,7 +751,7 @@
             const cid = window.currentCvId || 'default';
             const path = cid === 'default' ? 'users/'+window.currentUid+'/cvData' : 'users/'+window.currentUid+'/cvs/'+cid+'/data';
             set(ref(db, path), data).then(()=>{
-                if(btn){const o=btn.innerHTML;btn.innerHTML='&#10003; تم الحفظ';btn.style.color='#10b981';btn.style.borderColor='#10b981';setTimeout(()=>{btn.innerHTML=o;btn.style.color='';btn.style.borderColor=''},2000)}
+                if(btn){const o=btn.innerHTML;btn.innerHTML='&#10003; تم الحفظ';btn.style.color='#38bdf8';btn.style.borderColor='#38bdf8';setTimeout(()=>{btn.innerHTML=o;btn.style.color='';btn.style.borderColor=''},2000)}
             }).catch(e=>{console.error('Firebase save error:',e); if(btn){btn.innerHTML='&#10007; حفظ فشل';btn.style.color='#ef4444';btn.style.borderColor='#ef4444';setTimeout(()=>{btn.innerHTML='&#128190; Save';btn.style.color='';btn.style.borderColor=''},2000)}});
         } catch(e) { console.error('saveToFirebase exception:', e); }
     };
@@ -953,7 +1002,24 @@
         container.innerHTML = html;
     };
 
-    window.exportPDF = function() {
+    window.exportPDF = async function() {
+        const paid = isPaidPlan();
+        // Free plan: 1 download limit
+        if(!paid && window.currentUid) {
+            const userSnap = await get(ref(db, 'users/' + window.currentUid));
+            const ud = userSnap.val() || {};
+            const downloads = ud.downloads || 0;
+            if(downloads >= 1) {
+                const msg = document.createElement('div');
+                msg.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--card);border:1px solid var(--border);border-radius:16px;padding:30px 40px;z-index:99999;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.5);max-width:380px;width:90%';
+                msg.innerHTML = '<div style="font-size:2rem;margin-bottom:12px">&#128274;</div><h3 style="margin-bottom:8px;font-size:1.1rem">Download Limit Reached</h3><p style="color:var(--muted);font-size:0.85rem;margin-bottom:20px;line-height:1.6">Free plan allows 1 PDF download. Upgrade to Pro for unlimited exports.</p><button onclick="this.parentElement.remove()" style="margin-right:8px;padding:10px 24px;background:var(--accent);border:none;color:#000;border-radius:10px;font-weight:700;cursor:pointer;font-family:Cairo,sans-serif">Upgrade to Pro</button><button onclick="this.parentElement.remove()" style="padding:10px 24px;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:10px;cursor:pointer;font-family:Cairo,sans-serif">Cancel</button>';
+                msg.querySelector('button').onclick = () => { window.location.href = 'pay.html'; };
+                document.body.appendChild(msg);
+                return;
+            }
+            // Increment download count
+            set(ref(db, 'users/' + window.currentUid + '/downloads'), downloads + 1).catch(() => {});
+        }
         const nameVal = document.getElementById('inputName').value.trim() || 'cv';
         const defaultName = nameVal + '_CV';
         const fileName = prompt('File name:', defaultName);
@@ -964,7 +1030,6 @@
         b.classList.add('loading');
 
         const el = document.getElementById('cvPage');
-        const paid = isPaidPlan();
         const opt = {
             margin: 0,
             filename: finalName + '.pdf',
@@ -1101,7 +1166,7 @@
         const grid = document.getElementById('templateGrid');
         const templates = QCVTemplates.getAll();
         const paid = isPaidPlan();
-        const catColors = {ats:'#10b981',modern:'#0ea5e9',creative:'#8b5cf6',classic:'#f59e0b',executive:'#1e293b'};
+        const catColors = {ats:'#38bdf8',modern:'#2563eb',creative:'#8b5cf6',classic:'#f59e0b',executive:'#1e293b'};
         const sampleData = {name:'Ahmad Mostafa',title:'Senior UI/UX Designer',email:'ahmad@example.com',phone:'+20 123 456 789',location:'Cairo, Egypt',linkedin:'linkedin.com/in/ahmadmostafa',summary:'Product designer with 6+ years of experience specializing in resume systems and candidate experiences.',skills:['UI Design','Figma','Prototyping','User Research','CSS','Design Systems'],experience:[{role:'Senior Product Designer',company:'TechCorp Inc.',duration:'2022 - Present',description:'- Redesigned application flows, lifting completion by 28%\n- Led design system overhaul for 5 products'},{role:'UX Designer',company:'StartupX',duration:'2019 - 2022',description:'- Built recruiter dashboards and scoring tools\n- Improved onboarding conversion by 35%'}],education:[{degree:'B.Sc. Computer Science',school:'Cairo University',duration:'2015 - 2019',description:'- GPA: 3.7/4.0'}],languages:[{name:'Arabic',level:'Native'},{name:'English',level:'Fluent'}]};
         grid.innerHTML = templates.map(t => {
             const locked = !paid && !FREE_TEMPLATES.includes(t.id);
@@ -1386,11 +1451,6 @@
 
 </script>
 
-<!-- Google Translate -->
-<div id="google_translate_element" style="display:none"></div>
-<script>function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'en',includedLanguages:'ar,en',autoDisplay:false,layout:google.translate.TranslateElement.InlineLayout.SIMPLE},'google_translate_element')}</script>
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
 <!-- Add Section Modal -->
 <div class="section-modal-overlay" id="sectionModal">
     <div class="section-modal">
@@ -1409,18 +1469,5 @@
     </div>
 </div>
 
-<!-- FAB Menu -->
-<div class="qcv-fab" id="qcvFab">
-    <div class="qcv-fab-dropdown" id="translateDropdown">
-        <div class="qcv-lang-option" onclick="translatePage('en')"><span class="qcv-lang-flag">&#127482;&#127480;</span> English</div>
-        <div class="qcv-lang-option" onclick="translatePage('ar')"><span class="qcv-lang-flag">&#127480;&#127462;</span> Arabic</div>
-    </div>
-    <div class="qcv-fab-options">
-        <button class="qcv-fab-btn" onclick="toggleTranslate()" title="Translate"><span class="qcv-fab-label">Translate</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg></button>
-        <button class="qcv-fab-btn" onclick="toggleTheme()" title="Toggle theme" id="qcvThemeIcon"><span class="qcv-fab-label">Theme</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button>
-    </div>
-    <button class="qcv-fab-toggle" onclick="toggleFab()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></button>
-</div>
-<script src="components.js"></script>
 </body>
 </html>

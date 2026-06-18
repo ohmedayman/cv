@@ -14,9 +14,9 @@
             --bg-card: #0f172a;
             --bg-hover: #1a2336;
             --border: #1e293b;
-            --accent: #10b981;
-            --accent-glow: rgba(16,185,129,0.3);
-            --green: #10b981;
+            --accent: #38bdf8;
+            --accent-glow: rgba(56,189,248,0.3);
+            --green: #38bdf8;
             --red: #ef4444;
             --yellow: #f59e0b;
             --purple: #8b5cf6;
@@ -55,7 +55,7 @@
             font-weight:800;font-size:1rem;cursor:pointer;font-family:'Cairo',sans-serif;margin-top:5px;
             transition:all 0.2s;
         }
-        .login-box .btn:hover{background:#34d399;transform:translateY(-1px)}
+        .login-box .btn:hover{background:#60a5fa;transform:translateY(-1px)}
         .login-box .btn:disabled{opacity:0.5;cursor:not-allowed}
         .login-box .error{color:var(--red);font-size:0.82rem;text-align:center;margin-top:12px;display:none}
         .login-box .back-link{text-align:center;margin-top:18px;font-size:0.82rem;color:var(--muted)}
@@ -78,7 +78,7 @@
             cursor:pointer;font-weight:700;font-size:0.9rem;color:var(--light);
             transition:all 0.2s;margin-bottom:6px;
         }
-        .nav-item:hover,.nav-item.active{background:rgba(16,185,129,0.1);color:#fff}
+        .nav-item:hover,.nav-item.active{background:rgba(56,189,248,0.1);color:#fff}
         .nav-item.active{border-right:3px solid var(--accent)}
         .nav-item .icon{font-size:1.2rem;width:24px;text-align:center}
         .nav-item .badge{
@@ -119,8 +119,8 @@
             width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;
             font-size:1.4rem;margin-bottom:15px;
         }
-        .stat-card .stat-icon.blue{background:rgba(16,185,129,0.1);color:var(--accent)}
-        .stat-card .stat-icon.green{background:rgba(16,185,129,0.1);color:var(--green)}
+        .stat-card .stat-icon.blue{background:rgba(56,189,248,0.1);color:var(--accent)}
+        .stat-card .stat-icon.green{background:rgba(56,189,248,0.1);color:var(--green)}
         .stat-card .stat-icon.yellow{background:rgba(245,158,11,0.1);color:var(--yellow)}
         .stat-card .stat-icon.purple{background:rgba(139,92,246,0.1);color:var(--purple)}
         .stat-card .stat-value{font-size:1.8rem;font-weight:900;margin-bottom:4px}
@@ -154,7 +154,7 @@
             text-transform:uppercase;letter-spacing:0.5px;
         }
         th,td{padding:14px 18px;text-align:right;border-bottom:1px solid var(--border)}
-        tr:hover td{background:rgba(16,185,129,0.03)}
+        tr:hover td{background:rgba(56,189,248,0.03)}
         td{font-size:0.88rem}
         .user-cell{display:flex;align-items:center;gap:10px}
         .user-avatar{
@@ -169,10 +169,10 @@
             display:inline-block;padding:4px 12px;border-radius:20px;font-size:0.72rem;font-weight:700;
         }
         .badge-free{background:rgba(100,116,139,0.15);color:var(--muted)}
-        .badge-pro{background:rgba(16,185,129,0.15);color:var(--accent)}
+        .badge-pro{background:rgba(56,189,248,0.15);color:var(--accent)}
         .badge-unlimited{background:rgba(139,92,246,0.15);color:var(--purple)}
         .badge-pending{background:rgba(245,158,11,0.15);color:var(--yellow)}
-        .badge-approved{background:rgba(16,185,129,0.15);color:var(--green)}
+        .badge-approved{background:rgba(56,189,248,0.15);color:var(--green)}
         .badge-rejected{background:rgba(239,68,68,0.15);color:var(--red)}
         .badge-banned{background:rgba(239,68,68,0.15);color:var(--red)}
 
@@ -182,17 +182,17 @@
             padding:6px 12px;border-radius:8px;border:none;font-weight:700;font-size:0.72rem;
             cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s;
         }
-        .btn-approve{background:rgba(16,185,129,0.15);color:var(--green);border:1px solid rgba(16,185,129,0.3)}
+        .btn-approve{background:rgba(56,189,248,0.15);color:var(--green);border:1px solid rgba(56,189,248,0.3)}
         .btn-approve:hover{background:var(--green);color:#fff}
         .btn-reject{background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.3)}
         .btn-reject:hover{background:var(--red);color:#fff}
         .btn-ban{background:rgba(245,158,11,0.15);color:var(--yellow);border:1px solid rgba(245,158,11,0.3)}
         .btn-ban:hover{background:var(--yellow);color:#000}
-        .btn-unban{background:rgba(16,185,129,0.15);color:var(--accent);border:1px solid rgba(16,185,129,0.3)}
+        .btn-unban{background:rgba(56,189,248,0.15);color:var(--accent);border:1px solid rgba(56,189,248,0.3)}
         .btn-unban:hover{background:var(--accent);color:#000}
         .btn-delete{background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.3)}
         .btn-delete:hover{background:var(--red);color:#fff}
-        .btn-view{background:rgba(16,185,129,0.15);color:var(--accent);border:1px solid rgba(16,185,129,0.3)}
+        .btn-view{background:rgba(56,189,248,0.15);color:var(--accent);border:1px solid rgba(56,189,248,0.3)}
         .btn-view:hover{background:var(--accent);color:#000}
         .btn-change-plan{background:rgba(139,92,246,0.15);color:var(--purple);border:1px solid rgba(139,92,246,0.3)}
         .btn-change-plan:hover{background:var(--purple);color:#fff}
@@ -235,7 +235,7 @@
             transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);
         }
         .toast.show{transform:translateX(-50%) translateY(0)}
-        .toast-success{background:var(--green);color:#fff;box-shadow:0 8px 25px rgba(16,185,129,0.3)}
+        .toast-success{background:var(--green);color:#fff;box-shadow:0 8px 25px rgba(56,189,248,0.3)}
         .toast-error{background:var(--red);color:#fff;box-shadow:0 8px 25px rgba(239,68,68,0.3)}
 
         /* Responsive */
@@ -298,6 +298,9 @@
                 </div>
                 <div class="nav-item" data-panel="settings" onclick="switchPanel('settings')">
                     <span class="icon">&#9881;</span><span>الإعدادات</span>
+                </div>
+                <div class="nav-item" data-panel="domains" onclick="switchPanel('domains')">
+                    <span class="icon">&#127760;</span><span>النطاقات المعتمدة</span>
                 </div>
             </nav>
             <div class="sidebar-footer">
@@ -469,6 +472,34 @@
                 </div>
             </div>
 
+            <!-- ===== DOMAINS PANEL ===== -->
+            <div class="panel" id="panel-domains">
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>النطاقات المعتمدة (Approved Domains)</h3>
+                        <button class="btn-action btn-approve" onclick="showAddDomain()">+ إضافة نطاق</button>
+                    </div>
+                    <div style="padding:15px 20px;background:rgba(37,99,235,0.05);border:1px solid rgba(37,99,235,0.15);border-radius:10px;margin:15px 20px;font-size:0.8rem;color:var(--muted)">
+                        أي مستخدم يسجل بـ email من النطاق المعتمد يحصل على الباقة المحددة تلقائياً. مثال: لو أضفت <strong>edu.alexu.edu.eg</strong> بباقة <strong>Pro لمدة 6 شهور</strong>، أي حد يسجل بـ user@edu.alexu.edu.eg يحصل على Pro تلقائياً.
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>النطاق (Domain)</th>
+                                <th>الباقة</th>
+                                <th>المدة (بالأشهر)</th>
+                                <th>عدد المستخدمين</th>
+                                <th>الحالة</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="domainsList">
+                            <tr><td colspan="6" class="empty-state"><div class="icon">&#127760;</div><p>لا توجد نطاقات معتمدة بعد</p></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </main>
     </div>
 
@@ -486,7 +517,7 @@
 
     <!-- ===== BLOCK SCREEN (shows until admin is verified) ===== -->
     <div id="blockScreen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#060913;z-index:99999;display:flex;justify-content:center;align-items:center;flex-direction:column">
-        <div style="font-size:3rem;font-weight:900;margin-bottom:15px">Q<span style="color:#10b981">CV</span></div>
+        <div style="font-size:3rem;font-weight:900;margin-bottom:15px">Q<span style="color:#38bdf8">CV</span></div>
         <div style="color:#64748b;font-size:0.9rem" id="blockMsg">جاري التحقق...</div>
     </div>
 
@@ -568,6 +599,7 @@
             listenUsers();
             listenSubscriptions();
             listenJobs();
+            listenDomains();
         }
 
         // ===== USERS LISTENER =====
@@ -599,7 +631,7 @@
                 const planText = plan === 'pro' ? 'احترافية' : plan === 'unlimited' ? 'غير محدودة' : 'مجانية';
                 const isBanned = u.banned === true;
                 const statusBadge = isBanned ? '<span class="badge badge-banned">محظور</span>' : '<span class="badge badge-approved">نشط</span>';
-                const avatarColors = ['#10b981','#10b981','#8b5cf6','#f59e0b','#ef4444'];
+                const avatarColors = ['#38bdf8','#38bdf8','#8b5cf6','#f59e0b','#ef4444'];
                 const color = avatarColors[uid.charCodeAt(0) % avatarColors.length];
 
                 return `
@@ -647,7 +679,7 @@
                 const planText = plan === 'pro' ? 'احترافية' : plan === 'unlimited' ? 'غير محدودة' : 'مجانية';
                 const isBanned = u.banned === true;
                 const status = isBanned ? '<span class="badge badge-banned">محظور</span>' : '<span class="badge badge-approved">نشط</span>';
-                const avatarColors = ['#10b981','#10b981','#8b5cf6','#f59e0b','#ef4444'];
+                const avatarColors = ['#38bdf8','#38bdf8','#8b5cf6','#f59e0b','#ef4444'];
                 const color = avatarColors[uid.charCodeAt(0) % avatarColors.length];
 
                 return `
@@ -708,7 +740,7 @@
                 const planText = s.plan === 'pro' ? 'احترافية' : s.plan === 'unlimited' ? 'غير محدودة' : 'مجانية';
                 const statusBadge = s.status === 'pending' ? 'badge-pending' : s.status === 'approved' ? 'badge-approved' : 'badge-rejected';
                 const statusText = s.status === 'pending' ? 'معلق' : s.status === 'approved' ? 'مقبول' : 'مرفوض';
-                const avatarColors = ['#10b981','#10b981','#8b5cf6','#f59e0b','#ef4444'];
+                const avatarColors = ['#38bdf8','#38bdf8','#8b5cf6','#f59e0b','#ef4444'];
                 const color = avatarColors[(s.userEmail||'').charCodeAt(0) % avatarColors.length];
 
                 return `
@@ -976,6 +1008,107 @@
             showToast('تم حفظ الإعدادات بنجاح', 'success');
         };
 
+        // ===== DOMAINS =====
+        let allDomainsData = {};
+
+        function listenDomains() {
+            onValue(ref(database, 'approvedDomains'), (snap) => {
+                allDomainsData = snap.val() || {};
+                renderDomains(allDomainsData);
+            });
+        }
+
+        function renderDomains(data) {
+            const tbody = document.getElementById('domainsList');
+            const entries = Object.entries(data);
+            if (entries.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><div class="icon">&#127760;</div><p>لا توجد نطاقات معتمدة بعد</p></td></tr>';
+                return;
+            }
+            tbody.innerHTML = entries.map(([id, d]) => {
+                const planText = d.plan === 'pro' ? 'احترافية' : d.plan === 'unlimited' ? 'غير محدودة' : 'مجانية';
+                const statusBadge = d.active !== false ? 'badge-approved' : 'badge-rejected';
+                const statusText = d.active !== false ? 'نشط' : 'معطل';
+                return `
+                    <tr>
+                        <td><strong style="color:var(--accent)">${d.domain}</strong></td>
+                        <td>${planText}</td>
+                        <td>${d.duration || '∞'}</td>
+                        <td>${d.userCount || 0}</td>
+                        <td><span class="status-badge ${statusBadge}">${statusText}</span></td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-action btn-approve" onclick="toggleDomain('${id}', ${d.active !== false})">${d.active !== false ? 'تعطيل' : 'تفعيل'}</button>
+                                <button class="btn-action btn-reject" onclick="deleteDomain('${id}')">حذف</button>
+                            </div>
+                        </td>
+                    </tr>`;
+            }).join('');
+        }
+
+        window.showAddDomain = function() {
+            document.getElementById('modalTitle').textContent = 'إضافة نطاق معتمد';
+            document.getElementById('modalBody').innerHTML = `
+                <div style="text-align:center">
+                    <div class="input-group" style="margin-bottom:15px;text-align:right">
+                        <label style="display:block;font-size:0.85rem;color:var(--muted);margin-bottom:6px;font-weight:600">النطاق (Domain)</label>
+                        <input type="text" id="domainInput" placeholder="مثال: edu.alexu.edu.eg" style="width:100%;padding:12px 16px;background:var(--bg-main);border:1px solid var(--border);color:#fff;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none">
+                        <div style="font-size:0.72rem;color:var(--muted);margin-top:4px">بدون @ — مثال: gmail.com أو edu.alexu.edu.eg</div>
+                    </div>
+                    <div class="input-group" style="margin-bottom:15px;text-align:right">
+                        <label style="display:block;font-size:0.85rem;color:var(--muted);margin-bottom:6px;font-weight:600">الباقة الممنوحة</label>
+                        <select id="domainPlan" style="width:100%;padding:12px 16px;background:var(--bg-main);border:1px solid var(--border);color:#fff;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none">
+                            <option value="pro">احترافية (Pro)</option>
+                            <option value="unlimited">غير محدودة (Unlimited)</option>
+                        </select>
+                    </div>
+                    <div class="input-group" style="text-align:right">
+                        <label style="display:block;font-size:0.85rem;color:var(--muted);margin-bottom:6px;font-weight:600">المدة بالأشهر (اتركه فاضي = دائم)</label>
+                        <input type="number" id="domainDuration" placeholder="مثال: 6" min="1" style="width:100%;padding:12px 16px;background:var(--bg-main);border:1px solid var(--border);color:#fff;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none">
+                    </div>
+                </div>
+            `;
+            document.getElementById('modalConfirm').style.display = 'block';
+            document.getElementById('modalConfirm').textContent = 'إضافة النطاق';
+            document.getElementById('modalConfirm').onclick = async () => {
+                const domain = document.getElementById('domainInput').value.trim().toLowerCase().replace(/^@/, '');
+                const plan = document.getElementById('domainPlan').value;
+                const duration = parseInt(document.getElementById('domainDuration').value) || null;
+                if (!domain || !domain.includes('.')) { showToast('أدخل نطاق صحيح', 'error'); return; }
+                try {
+                    await set(ref(database, 'approvedDomains/' + domain.replace(/\./g, '_')), { domain, plan, duration, active: true, userCount: 0, createdAt: Date.now() });
+                    showToast('تم إضافة النطاق بنجاح', 'success');
+                    closeModal();
+                } catch(err) {
+                    console.error(err);
+                    showToast('خطأ في الكتابة', 'error');
+                }
+            };
+            document.getElementById('modal').classList.add('show');
+        };
+
+        window.toggleDomain = async function(id, currentActive) {
+            try {
+                await update(ref(database, 'approvedDomains/' + id), { active: !currentActive });
+                showToast(currentActive ? 'تم تعطيل النطاق' : 'تم تفعيل النطاق', 'success');
+            } catch(err) {
+                showToast('خطأ في الكتابة', 'error');
+            }
+        };
+
+        window.deleteDomain = function(id) {
+            const d = allDomainsData[id];
+            if (!d) return;
+            showModal('حذف نطاق', `هل أنت متأكد من حذف "${d.domain}"؟`, async () => {
+                try {
+                    await remove(ref(database, 'approvedDomains/' + id));
+                    showToast('تم حذف النطاق', 'error');
+                } catch(err) {
+                    showToast('خطأ في الحذف', 'error');
+                }
+            });
+        };
+
         // ===== SEARCH & FILTER =====
         window.filterUsers = function() {
             const query = document.getElementById('searchUsers').value.toLowerCase();
@@ -998,7 +1131,7 @@
             document.getElementById('panel-' + panel).classList.add('active');
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.querySelector(`.nav-item[data-panel="${panel}"]`).classList.add('active');
-            const titles = { dashboard: 'لوحة التحكم', users: 'إدارة المستخدمين', subscriptions: 'طلبات الاشتراك', jobs: 'الوظائف', settings: 'الإعدادات' };
+            const titles = { dashboard: 'لوحة التحكم', users: 'إدارة المستخدمين', subscriptions: 'طلبات الاشتراك', jobs: 'الوظائف', settings: 'الإعدادات', domains: 'النطاقات المعتمدة' };
             document.getElementById('pageTitle').textContent = titles[panel];
         };
 
