@@ -421,6 +421,7 @@
         const text = input.value.trim();
         if (!text || isGenerating) return;
 
+        if(window.QCVNotify) QCVNotify.click();
         addMessage(text, 'user');
         chatHistory.push({ role: 'user', content: text });
 
@@ -532,6 +533,7 @@ Rules:
             document.getElementById('genOverlay').classList.remove('show');
             isGenerating = false;
 
+            if(window.QCVNotify) QCVNotify.success();
             addMessage(currentLang === 'ar' ? "سيرتك الذاتية جاهزة! دي معاينة:" : "Your CV is ready! Here's a preview:", 'ai');
             showCVPreview(generatedData);
             document.getElementById('btnToEditor').classList.add('show');
@@ -646,5 +648,6 @@ Rules:
     }
 </script>
 
+<script src="js/notify-sounds.js"></script>
 </body>
 </html>

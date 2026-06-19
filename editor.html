@@ -751,6 +751,7 @@
             const cid = window.currentCvId || 'default';
             const path = cid === 'default' ? 'users/'+window.currentUid+'/cvData' : 'users/'+window.currentUid+'/cvs/'+cid+'/data';
             set(ref(db, path), data).then(()=>{
+                if(window.QCVNotify){QCVNotify.save();QCVNotify.success()}
                 if(btn){const o=btn.innerHTML;btn.innerHTML='&#10003; تم الحفظ';btn.style.color='#38bdf8';btn.style.borderColor='#38bdf8';setTimeout(()=>{btn.innerHTML=o;btn.style.color='';btn.style.borderColor=''},2000)}
             }).catch(e=>{console.error('Firebase save error:',e); if(btn){btn.innerHTML='&#10007; حفظ فشل';btn.style.color='#ef4444';btn.style.borderColor='#ef4444';setTimeout(()=>{btn.innerHTML='&#128190; Save';btn.style.color='';btn.style.borderColor=''},2000)}});
         } catch(e) { console.error('saveToFirebase exception:', e); }
@@ -1039,6 +1040,7 @@
             pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
         };
 
+        if(window.QCVNotify) QCVNotify.download();
         html2pdf().set(opt).from(el).save().then(() => {
             b.classList.remove('loading');
         }).catch(() => {
@@ -1194,6 +1196,7 @@
             window.location.href = 'pay.html';
             return;
         }
+        if(window.QCVNotify) QCVNotify.click();
         currentTemplate = id;
         document.getElementById('templateSelect').value = id;
         document.getElementById('cvPage').className = 'cv-page tpl-' + id;
@@ -1469,5 +1472,6 @@
     </div>
 </div>
 
+<script src="js/notify-sounds.js"></script>
 </body>
 </html>

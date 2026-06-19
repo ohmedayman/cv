@@ -777,6 +777,7 @@
             try {
                 await update(ref(database, 'subscriptions/' + subId), { status: 'approved', approvedAt: Date.now() });
                 await update(ref(database, 'users/' + userId), { plan: plan });
+                if(window.QCVNotify) QCVNotify.notify();
                 showToast('تم قبول الاشتراك وتحديث الباقة', 'success');
             } catch(err) {
                 console.error(err);
@@ -787,6 +788,7 @@
         window.rejectSubscription = async function(subId) {
             try {
                 await update(ref(database, 'subscriptions/' + subId), { status: 'rejected', rejectedAt: Date.now() });
+                if(window.QCVNotify) QCVNotify.notify();
                 showToast('تم رفض طلب الاشتراك', 'error');
             } catch(err) {
                 console.error(err);
@@ -937,6 +939,7 @@
         window.toggleBan = async function(uid, ban) {
             try {
                 await update(ref(database, 'users/' + uid), { banned: ban });
+                if(window.QCVNotify) QCVNotify.notify();
                 showToast(ban ? 'تم حظر المستخدم' : 'تم فك حظر المستخدم', ban ? 'error' : 'success');
             } catch(err) {
                 console.error(err);
@@ -1160,6 +1163,7 @@
             const toast = document.getElementById('toast');
             toast.textContent = msg;
             toast.className = 'toast toast-' + type + ' show';
+            if(window.QCVNotify && type === 'success') QCVNotify.success();
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
@@ -1170,5 +1174,6 @@
             document.getElementById('adminLogin').classList.remove('hidden');
         });
     </script>
+<script src="js/notify-sounds.js"></script>
 </body>
 </html>

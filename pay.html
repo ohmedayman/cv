@@ -191,8 +191,9 @@
                 <div class="plan-period">للأبد</div>
                 <ul class="plan-features">
                     <li>سيرة ذاتية واحدة</li>
-                    <li>6 قوالب ATS</li>
+                    <li>قالب واحد أساسي</li>
                     <li>تصدير PDF</li>
+                    <li class="dis">قوالب متعددة</li>
                     <li class="dis">قوالب متقدمة</li>
                     <li class="dis">أولوية في الدعم</li>
                 </ul>
@@ -202,7 +203,7 @@
                 <div class="plan-popular">الأكثر شعبية</div>
                 <div class="plan-icon">&#11088;</div>
                 <div class="plan-name">Pro</div>
-                <div class="plan-price">299 <span class="curr">ج.م</span></div>
+                <div class="plan-price">99 <span class="curr">ج.م</span></div>
                 <div class="plan-period">شهرياً</div>
                 <ul class="plan-features">
                     <li>5 سير ذاتية</li>
@@ -372,6 +373,7 @@
     let selectedPlan = null;
 
     window.selectPlan = function(el, plan) {
+        if(window.QCVNotify) QCVNotify.click();
         document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
         el.classList.add('selected');
         selectedPlan = plan;
@@ -406,7 +408,7 @@
         });
 
         if (step === 2) {
-            const planLabels = { free: 'مجاني', pro: '299 ج.م/شهر', unlimited: '299 ج.م/شهر' };
+            const planLabels = { free: 'مجاني', pro: '99 ج.م/شهر', unlimited: '299 ج.م/شهر' };
             document.getElementById('planField').value = planLabels[selectedPlan] || '';
             if (currentUser && userData) {
                 document.getElementById('cardName').value = userData.name || '';
@@ -458,7 +460,7 @@
         btn.disabled = true;
         btn.classList.add('loading');
 
-        const planLabels = { free: 'Free', pro: 'Pro (299ج.م)', unlimited: 'Unlimited (299ج.م)' };
+        const planLabels = { free: 'Free', pro: 'Pro (99ج.م)', unlimited: 'Unlimited (299ج.م)' };
 
         const subData = {
             userId: currentUser.uid,
@@ -477,6 +479,7 @@
         try {
             await push(ref(db, 'subscriptions'), subData);
 
+            if(window.QCVNotify) QCVNotify.success();
             document.querySelectorAll('.step-content').forEach(s => s.classList.remove('active'));
             document.getElementById('step3').classList.add('active');
             document.querySelectorAll('.step').forEach((s, i) => {
@@ -526,5 +529,6 @@
 
 
 
+<script src="js/notify-sounds.js"></script>
 </body>
 </html>

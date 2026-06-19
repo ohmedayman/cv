@@ -1,776 +1,153 @@
 ﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QCV - تسجيل الدخول | أنشئ حسابك المجاني</title>
-    <meta name="description"
-        content="سجل دخولك في QCV أو أنشئ حساباً جديداً مجاناً. ابنِ سيرة ذاتية احترافية بالذكاء الاصطناعي في دقائق.">
-    <meta name="keywords" content="QCV تسجيل دخول, حساب QCV, تسجيل حساب مجاني, منشئ سيرة ذاتية">
-    <meta name="robots" content="noindex, follow">
+    <meta name="description" content="سجل دخولك في QCV أو أنشئ حساباً جديداً مجاناً. ابنِ سيرة ذاتية احترافية بالذكاء الاصطناعي في دقائق.">
+    <meta name="robots" content="noindex, nofollow">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qcv.vexonet.online/login.html">
+    <meta property="og:title" content="QCV - تسجيل الدخول | أنشئ حسابك المجاني">
+    <meta property="og:description" content="سجل دخولك في QCV أو أنشئ حساباً جديداً مجاناً. ابنِ سيرة ذاتية احترافية بالذكاء الاصطناعي في دقائق.">
+    <meta property="og:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <meta property="og:site_name" content="QCV">
+    <meta property="og:locale" content="ar_AR">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
-    <link rel="stylesheet" href="components.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #050810;
-            --card: rgba(15, 20, 35, 0.8);
-            --border: rgba(30, 45, 80, 0.5);
-            --accent: #38bdf8;
-            --glow: rgba(16, 185, 129, 0.3);
-            --green: #38bdf8;
-            --purple: #8b5cf6;
-            --text: #fff;
-            --muted: #62728d;
-            --input: rgba(8, 12, 25, 0.9)
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0
-        }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: 'Cairo', sans-serif;
-            min-height: 100vh;
-            overflow: hidden
-        }
-
-        /* ===== PARTICLES ===== */
-        #particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0
-        }
-
-        /* ===== ORBS ===== */
-        .orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.25;
-            pointer-events: none;
-            z-index: 0
-        }
-
-        .orb1 {
-            width: 450px;
-            height: 450px;
-            background: radial-gradient(circle, var(--accent), transparent 70%);
-            top: -12%;
-            right: -8%;
-            animation: o1 8s ease-in-out infinite
-        }
-
-        .orb2 {
-            width: 350px;
-            height: 350px;
-            background: radial-gradient(circle, var(--purple), transparent 70%);
-            bottom: -8%;
-            left: -8%;
-            animation: o2 10s ease-in-out infinite
-        }
-
-        @keyframes o1 {
-
-            0%,
-            100% {
-                transform: translate(0, 0) scale(1)
-            }
-
-            50% {
-                transform: translate(-25px, 25px) scale(1.1)
-            }
-        }
-
-        @keyframes o2 {
-
-            0%,
-            100% {
-                transform: translate(0, 0) scale(1)
-            }
-
-            50% {
-                transform: translate(25px, -25px) scale(1.1)
-            }
-        }
-
-        /* ===== WRAPPER ===== */
-        .wrapper {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            width: 100%;
-            min-height: 100vh
-        }
-
-        /* ===== BRAND ===== */
-        .brand {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 50px;
-            animation: fadeR 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0
-        }
-
-        @keyframes fadeR {
-            from {
-                opacity: 0;
-                transform: translateX(-40px)
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0)
-            }
-        }
-
-        .brand-inner {
-            max-width: 450px;
-            text-align: center
-        }
-
-        .brand-logo {
-            font-size: 3.5rem;
-            font-weight: 900;
-            letter-spacing: -2px;
-            margin-bottom: 25px;
-            animation: fadeU 0.5s 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0
-        }
-
-        .brand-logo span {
-            color: var(--accent);
-            text-shadow: 0 0 40px var(--glow)
-        }
-
-        .brand-icon {
-            font-size: 4.5rem;
-            margin-bottom: 20px;
-            display: inline-block;
-            animation: pulse 3s ease-in-out infinite, fadeU 0.5s 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                transform: scale(1) translateY(0)
-            }
-
-            50% {
-                transform: scale(1.08) translateY(-6px)
-            }
-        }
-
-        @keyframes fadeU {
-            from {
-                opacity: 0;
-                transform: translateY(25px)
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0)
-            }
-        }
-
-        .brand h2 {
-            font-size: 1.7rem;
-            font-weight: 800;
-            margin-bottom: 12px;
-            line-height: 1.3;
-            animation: fadeU 0.5s 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0
-        }
-
-        .brand p {
-            color: var(--muted);
-            font-size: 0.95rem;
-            line-height: 1.8;
-            animation: fadeU 0.5s 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0
-        }
-
-        .brand-features {
-            display: flex;
-            gap: 35px;
-            margin-top: 35px;
-            justify-content: center;
-            animation: fadeU 0.5s 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0
-        }
-
-        .bf {
-            text-align: center
-        }
-
-        .bf .ico {
-            font-size: 1.6rem;
-            margin-bottom: 6px
-        }
-
-        .bf .txt {
-            font-size: 0.78rem;
-            color: var(--muted);
-            font-weight: 600
-        }
-
-        /* ===== FORM PANEL ===== */
-        .form-panel {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 35px;
-            padding-top: 90px;
-            animation: fadeL 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
-            overflow-y: auto;
-            max-height: 100vh
-        }
-
-        @keyframes fadeL {
-            from {
-                opacity: 0;
-                transform: translateX(40px)
-            }
-
-            to {
-                opacity: 1;
-                transform: translateX(0)
-            }
-        }
-
-        /* ===== AUTH CARD ===== */
-        .auth-card {
-            background: var(--card);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
-            padding: 32px 30px;
-            border-radius: 22px;
-            width: 100%;
-            max-width: 400px;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-            position: relative;
-            overflow: visible;
-            animation: cardUp 0.6s 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0
-        }
-
-        @keyframes cardUp {
-            from {
-                opacity: 0;
-                transform: translateY(35px) scale(0.96)
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1)
-            }
-        }
-
-        .auth-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            animation: shimmer 3s infinite
-        }
-
-        @keyframes shimmer {
-            0% {
-                left: -100%
-            }
-
-            100% {
-                left: 100%
-            }
-        }
-
-        .card-logo {
-            text-align: center;
-            margin-bottom: 18px
-        }
-
-        .card-logo .txt {
-            font-size: 2.2rem;
-            font-weight: 900;
-            letter-spacing: -1px
-        }
-
-        .card-logo .txt span {
-            color: var(--accent)
-        }
-
-        .card-logo .sub {
-            font-size: 0.75rem;
-            color: var(--muted);
-            margin-top: 2px;
-            font-weight: 600
-        }
-
-        /* ===== GOOGLE BUTTON (PRIMARY) ===== */
-        .btn-google {
-            width: 100%;
-            background: #fff;
-            color: #1f1f1f;
-            border: none;
-            padding: 13px;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Cairo', sans-serif;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15)
-        }
-
-        .btn-google:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2)
-        }
-
-        .btn-google:active {
-            transform: translateY(0) scale(0.98)
-        }
-
-        .btn-google svg {
-            width: 22px;
-            height: 22px;
-            flex-shrink: 0
-        }
-
-        /* ===== DIVIDER ===== */
-        .or-divider {
-            display: flex;
-            align-items: center;
-            text-align: center;
-            margin: 18px 0;
-            color: var(--muted);
-            font-size: 0.82rem;
-            font-weight: 600
-        }
-
-        .or-divider::before,
-        .or-divider::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid var(--border)
-        }
-
-        .or-divider::before {
-            margin-left: 1em
-        }
-
-        .or-divider::after {
-            margin-right: 1em
-        }
-
-        /* ===== TABS ===== */
-        .auth-tabs {
-            display: flex;
-            background: rgba(8, 12, 25, 0.5);
-            border-radius: 12px;
-            padding: 3px;
-            margin-bottom: 18px
-        }
-
-        .tab {
-            flex: 1;
-            padding: 11px;
-            text-align: center;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            color: var(--muted);
-            position: relative;
-            z-index: 1
-        }
-
-        .tab.active {
-            background: var(--accent);
-            color: #000;
-            box-shadow: 0 4px 12px var(--glow)
-        }
-
-        .tab:not(.active):hover {
-            color: var(--text)
-        }
-
-        /* ===== INPUTS ===== */
-        .form {
-            display: flex;
-            flex-direction: column;
-            gap: 14px
-        }
-
-        .ig {
-            position: relative
-        }
-
-        .ig label {
-            display: block;
-            font-size: 0.78rem;
-            color: var(--muted);
-            margin-bottom: 6px;
-            font-weight: 600;
-            transition: color 0.2s
-        }
-
-        .ig.focused label {
-            color: var(--accent)
-        }
-
-        .iw {
-            position: relative
-        }
-
-        .ii {
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1rem;
-            color: var(--muted);
-            transition: color 0.2s;
-            pointer-events: none
-        }
-
-        .ig.focused .ii {
-            color: var(--accent)
-        }
-
-        .ig input {
-            width: 100%;
-            padding: 12px 12px 12px 42px;
-            background: var(--input);
-            border: 2px solid rgba(30, 45, 80, 0.3);
-            color: #fff;
-            border-radius: 12px;
-            outline: none;
-            font-family: 'Cairo', sans-serif;
-            font-size: 0.88rem;
-            transition: all 0.3s
-        }
-
-        .ig input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.08), 0 0 25px rgba(16, 185, 129, 0.08);
-            background: rgba(8, 12, 25, 1)
-        }
-
-        .ig input::placeholder {
-            color: #3a4560
-        }
-
-        .pw-toggle {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: var(--muted);
-            cursor: pointer;
-            font-size: 1rem;
-            transition: color 0.2s;
-            z-index: 2
-        }
-
-        .pw-toggle:hover {
-            color: var(--accent)
-        }
-
-        /* ===== FORGOT ===== */
-        .forgot {
-            text-align: left;
-            font-size: 0.78rem;
-            color: var(--accent);
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s;
-            align-self: flex-start;
-            margin-top: -4px
-        }
-
-        .forgot:hover {
-            text-shadow: 0 0 8px var(--glow)
-        }
-
-        /* ===== SUBMIT ===== */
-        .btn-submit {
-            width: 100%;
-            padding: 13px;
-            background: linear-gradient(135deg, var(--accent), #2563eb);
-            color: #000;
-            border: none;
-            border-radius: 12px;
-            font-weight: 800;
-            font-size: 0.9rem;
-            cursor: pointer;
-            font-family: 'Cairo', sans-serif;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
-            margin-top: 2px
-        }
-
-        .btn-submit::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s
-        }
-
-        .btn-submit:hover::before {
-            left: 100%
-        }
-
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px var(--glow)
-        }
-
-        .btn-submit:active {
-            transform: translateY(0) scale(0.98)
-        }
-
-        .btn-submit:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none
-        }
-
-        .btn-submit .spinner {
-            display: none;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(0, 0, 0, 0.15);
-            border-top-color: #000;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-            margin: 0 auto
-        }
-
-        .btn-submit.loading .btn-text {
-            display: none
-        }
-
-        .btn-submit.loading .spinner {
-            display: block
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg)
-            }
-        }
-
-        /* ===== TOGGLE ===== */
-        .auth-toggle {
-            text-align: center;
-            margin-top: 18px;
-            font-size: 0.82rem;
-            color: var(--muted)
-        }
-
-        .auth-toggle span {
-            color: var(--accent);
-            font-weight: 700;
-            cursor: pointer
-        }
-
-        .auth-toggle span:hover {
-            text-shadow: 0 0 8px var(--glow)
-        }
-
-        /* ===== TOAST ===== */
-        .toast {
-            position: fixed;
-            top: 25px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            padding: 14px 28px;
-            border-radius: 12px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            z-index: 9999;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)
-        }
-
-        .toast.show {
-            transform: translateX(-50%) translateY(0)
-        }
-
-        .toast-err {
-            background: #ef4444;
-            color: #fff;
-            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.3)
-        }
-
-        .toast-ok {
-            background: var(--green);
-            color: #fff;
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3)
-        }
+        :root{--bg:#060a18;--card:rgba(12,17,35,0.85);--card-border:rgba(30,45,80,0.4);--accent:#38bdf8;--accent-glow:rgba(56,189,248,0.15);--purple:#8b5cf6;--purple-glow:rgba(139,92,246,0.12);--green:#10b981;--text:#f1f5f9;--muted:#64748b;--light:#94a3b8;--input-bg:rgba(8,12,30,0.8);--input-border:rgba(30,45,80,0.5)}
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{background:var(--bg);color:var(--text);font-family:'Cairo',sans-serif;min-height:100vh;overflow-x:hidden}
+
+        /* ===== BACKGROUND GLOWS ===== */
+        .bg-glow{position:fixed;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0}
+        .glow-1{width:500px;height:500px;background:radial-gradient(circle,rgba(56,189,248,0.12),transparent 70%);top:-10%;right:-5%}
+        .glow-2{width:400px;height:400px;background:radial-gradient(circle,rgba(139,92,246,0.1),transparent 70%);bottom:-10%;left:-5%}
+        .glow-3{width:300px;height:300px;background:radial-gradient(circle,rgba(56,189,248,0.06),transparent 70%);top:40%;left:30%}
+
+        /* ===== NAVBAR ===== */
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;background:rgba(6,10,24,0.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(30,45,80,0.2)}
+        .nav-logo{font-size:1.5rem;font-weight:900;color:#fff;display:flex;align-items:center;gap:4px}
+        .nav-logo span{color:var(--accent)}
+        .nav-links{display:flex;align-items:center;gap:28px}
+        .nav-links a{color:var(--muted);text-decoration:none;font-size:0.85rem;font-weight:600;transition:color 0.2s}
+        .nav-links a:hover{color:var(--text)}
+        .nav-links a.active{color:var(--accent)}
+        .nav-cta{padding:8px 20px;background:transparent;border:1px solid var(--accent);color:var(--accent);border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:'Cairo',sans-serif;text-decoration:none;transition:all 0.2s}
+        .nav-cta:hover{background:var(--accent);color:#000}
+
+        /* ===== MAIN LAYOUT ===== */
+        .main{display:flex;min-height:100vh;padding-top:70px;position:relative;z-index:10}
+
+        /* ===== FORM SIDE (LEFT in RTL) ===== */
+        .form-side{flex:0 0 480px;display:flex;align-items:center;justify-content:center;padding:40px;position:relative}
+        .auth-card{background:var(--card);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid var(--card-border);border-radius:24px;padding:36px 32px;width:100%;max-width:420px;box-shadow:0 25px 60px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.03);position:relative;overflow:hidden}
+        .auth-card::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);animation:shimmer 3s infinite}
+        @keyframes shimmer{0%{left:-100%}100%{left:100%}}
+
+        .card-icon{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--accent),var(--purple));display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin:0 auto 20px;box-shadow:0 8px 24px rgba(56,189,248,0.25)}
+        .card-title{text-align:center;font-size:1.5rem;font-weight:900;margin-bottom:6px}
+        .card-subtitle{text-align:center;color:var(--muted);font-size:0.85rem;margin-bottom:28px}
+
+        /* Google Button */
+        .btn-google{width:100%;background:#fff;color:#1f1f1f;border:none;padding:13px;border-radius:12px;font-weight:700;font-size:0.88rem;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:10px;font-family:'Cairo',sans-serif;transition:all 0.3s;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+        .btn-google:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,0.15)}
+        .btn-google svg{width:20px;height:20px}
+
+        /* Divider */
+        .or-divider{display:flex;align-items:center;text-align:center;margin:20px 0;color:var(--muted);font-size:0.8rem;font-weight:600}
+        .or-divider::before,.or-divider::after{content:'';flex:1;border-bottom:1px solid var(--card-border)}
+        .or-divider::before{margin-left:1em}
+        .or-divider::after{margin-right:1em}
+
+        /* Inputs */
+        .ig{margin-bottom:16px}
+        .ig label{display:block;font-size:0.8rem;color:var(--light);margin-bottom:6px;font-weight:600}
+        .iw{position:relative}
+        .ii{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:1rem;color:var(--muted);pointer-events:none}
+        .ig input{width:100%;padding:13px 14px 13px 42px;background:var(--input-bg);border:1px solid var(--input-border);color:#fff;border-radius:12px;font-family:'Cairo',sans-serif;font-size:0.88rem;outline:none;transition:all 0.3s}
+        .ig input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+        .ig input::placeholder{color:#3a4560}
+        .pw-toggle{position:absolute;left:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;transition:color 0.2s}
+        .pw-toggle:hover{color:var(--accent)}
+
+        .forgot{text-align:left;font-size:0.78rem;color:var(--accent);cursor:pointer;font-weight:600;margin-bottom:16px;transition:all 0.2s}
+        .forgot:hover{text-shadow:0 0 8px var(--accent-glow)}
+
+        /* Submit */
+        .btn-submit{width:100%;padding:14px;background:linear-gradient(135deg,var(--accent),#2563eb);color:#000;border:none;border-radius:12px;font-weight:800;font-size:0.92rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.3s;position:relative;overflow:hidden}
+        .btn-submit:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(56,189,248,0.3)}
+        .btn-submit:active{transform:translateY(0) scale(0.98)}
+        .btn-submit:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+        .btn-submit .spinner{display:none;width:20px;height:20px;border:3px solid rgba(0,0,0,0.15);border-top-color:#000;border-radius:50%;animation:spin 0.7s linear infinite;margin:0 auto}
+        .btn-submit.loading .btn-text{display:none}
+        .btn-submit.loading .spinner{display:block}
+        @keyframes spin{to{transform:rotate(360deg)}}
+
+        .auth-toggle{text-align:center;margin-top:20px;font-size:0.85rem;color:var(--muted)}
+        .auth-toggle span{color:var(--accent);font-weight:700;cursor:pointer}
+
+        /* ===== BRAND SIDE (RIGHT in RTL) ===== */
+        .brand-side{flex:1;display:flex;flex-direction:column;justify-content:center;padding:50px 60px;position:relative}
+        .free-badge{position:absolute;top:30px;left:30px;background:rgba(56,189,248,0.1);border:1px solid rgba(56,189,248,0.2);border-radius:20px;padding:6px 16px;font-size:0.75rem;font-weight:700;color:var(--accent);display:flex;align-items:center;gap:6px;animation:fadeDown 0.6s 0.3s ease forwards;opacity:0}
+        @keyframes fadeDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+        .free-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse-dot 2s infinite}
+        @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:0.4}}
+
+        .brand-heading{font-size:3rem;font-weight:900;line-height:1.2;margin-bottom:20px;animation:fadeUp 0.6s 0.2s ease forwards;opacity:0}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        .brand-heading .highlight{background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+        .brand-desc{color:var(--muted);font-size:1rem;line-height:1.8;max-width:500px;margin-bottom:40px;animation:fadeUp 0.6s 0.35s ease forwards;opacity:0}
+
+        /* Feature Cards */
+        .features{display:flex;gap:16px;animation:fadeUp 0.6s 0.5s ease forwards;opacity:0}
+        .feature-card{flex:1;background:var(--card);border:1px solid var(--card-border);border-radius:16px;padding:20px;text-align:center;transition:all 0.3s}
+        .feature-card:hover{border-color:rgba(56,189,248,0.3);transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.3)}
+        .feature-icon{width:48px;height:48px;border-radius:12px;background:var(--accent-glow);display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin:0 auto 12px}
+        .feature-card h4{font-size:0.88rem;font-weight:800;margin-bottom:6px}
+        .feature-card p{font-size:0.75rem;color:var(--muted);line-height:1.5}
+
+        /* ===== FOOTER ===== */
+        .footer{position:fixed;bottom:0;left:0;right:0;text-align:center;padding:16px;color:var(--muted);font-size:0.75rem;z-index:10;background:rgba(6,10,24,0.5);backdrop-filter:blur(10px);border-top:1px solid rgba(30,45,80,0.2)}
+
+        /* ===== TOASTS ===== */
+        .toast{position:fixed;top:25px;left:50%;transform:translateX(-50%) translateY(-100px);padding:14px 28px;border-radius:12px;font-weight:700;font-size:0.85rem;z-index:9999;transition:transform 0.4s cubic-bezier(0.16,1,0.3,1)}
+        .toast.show{transform:translateX(-50%) translateY(0)}
+        .toast-err{background:#ef4444;color:#fff;box-shadow:0 8px 25px rgba(239,68,68,0.3)}
+        .toast-ok{background:var(--green);color:#fff;box-shadow:0 8px 25px rgba(16,185,129,0.3)}
 
         /* ===== SUCCESS OVERLAY ===== */
-        .success-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(5, 8, 16, 0.95);
-            z-index: 9999;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column
-        }
+        .success-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(6,10,24,0.95);z-index:9999;display:none;justify-content:center;align-items:center;flex-direction:column}
+        .success-overlay.show{display:flex;animation:fadeIn 0.2s ease}
+        .success-check{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,var(--green),#059669);display:flex;justify-content:center;align-items:center;font-size:2.5rem;margin-bottom:20px;animation:popIn 0.4s cubic-bezier(0.16,1,0.3,1);box-shadow:0 0 50px rgba(16,185,129,0.3)}
+        @keyframes popIn{0%{transform:scale(0);opacity:0}60%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+        .success-t{font-size:1.3rem;font-weight:800;animation:fadeUp 0.4s 0.15s ease forwards;opacity:0}
+        .success-s{color:var(--muted);font-size:0.88rem;margin-top:6px;animation:fadeUp 0.4s 0.25s ease forwards;opacity:0}
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
-        .success-overlay.show {
-            display: flex;
-            animation: fadeIn 0.2s ease
-        }
-
-        .success-check {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--green), #1d4ed8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            animation: popIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 0 50px rgba(16, 185, 129, 0.3)
-        }
-
-        @keyframes popIn {
-            0% {
-                transform: scale(0);
-                opacity: 0
-            }
-
-            60% {
-                transform: scale(1.15)
-            }
-
-            100% {
-                transform: scale(1);
-                opacity: 1
-            }
-        }
-
-        .success-t {
-            font-size: 1.3rem;
-            font-weight: 800;
-            animation: fadeU 0.4s 0.15s ease forwards;
-            opacity: 0
-        }
-
-        .success-s {
-            color: var(--muted);
-            font-size: 0.88rem;
-            margin-top: 6px;
-            animation: fadeU 0.4s 0.25s ease forwards;
-            opacity: 0
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0
-            }
-
-            to {
-                opacity: 1
-            }
-        }
-
-        .hidden {
-            display: none !important
-        }
-
-        /* ===== SHAKE ===== */
-        @keyframes shake {
-
-            0%,
-            100% {
-                transform: translateX(0)
-            }
-
-            20% {
-                transform: translateX(-7px)
-            }
-
-            40% {
-                transform: translateX(7px)
-            }
-
-            60% {
-                transform: translateX(-4px)
-            }
-
-            80% {
-                transform: translateX(4px)
-            }
-        }
-
-        .shake {
-            animation: shake 0.4s ease
-        }
+        .hidden{display:none!important}
+        @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(7px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
+        .shake{animation:shake 0.4s ease}
 
         /* ===== RESPONSIVE ===== */
-        @media(max-width:900px) {
-            .brand {
-                display: none
-            }
-
-            .form-panel {
-                padding: 20px;
-                padding-top: 30px
-            }
-
-            .auth-card {
-                padding: 28px 22px
-            }
+        @media(max-width:1000px){
+            .brand-side{display:none}
+            .form-side{flex:1;padding:20px}
+            .navbar{padding:12px 20px}
+            .nav-links{gap:16px}
+        }
+        @media(max-width:600px){
+            .auth-card{padding:28px 20px}
+            .brand-heading{font-size:2rem}
         }
     </style>
 </head>
-
 <body>
-
-    <canvas id="particles"></canvas>
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
+    <div class="bg-glow glow-1"></div>
+    <div class="bg-glow glow-2"></div>
+    <div class="bg-glow glow-3"></div>
 
     <div class="toast" id="errorToast"></div>
     <div class="toast" id="successToast"></div>
@@ -781,61 +158,39 @@
         <div class="success-s" id="successSub">جاري التحويل...</div>
     </div>
 
-    <div class="wrapper">
-
-        <!-- Brand -->
-        <div class="brand">
-            <div class="brand-inner">
-                <div class="brand-logo">Q<span>CV</span></div>
-                <div class="brand-icon">&#129302;</div>
-                <h2>ابنِ سيرتك الذاتية<br>بقوة الذكاء الاصطناعي</h2>
-                <p>منشئ سير ذاتية ذكي يساعدك في بناء سيرة ذاتية احترافية متوافقة مع أنظمة ATS في دقائق</p>
-                <div class="brand-features">
-                    <div class="bf">
-                        <div class="ico">&#9889;</div>
-                        <div class="txt">تحرير لحظي</div>
-                    </div>
-                    <div class="bf">
-                        <div class="ico">&#128202;</div>
-                        <div class="txt">تحليل ATS</div>
-                    </div>
-                    <div class="bf">
-                        <div class="ico">&#128274;</div>
-                        <div class="txt">حفظ سحابي</div>
-                    </div>
-                </div>
-            </div>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-logo">Q<span>CV</span></div>
+        <div class="nav-links">
+            <a href="index.html">الرئيسية</a>
+            <a href="templates.html">القوالب</a>
+            <a href="careers.html">الوظائف</a>
+            <a href="help.html">المساعدة</a>
+            <a href="login.html" class="active">تسجيل الدخول</a>
+            <a href="login.html" class="nav-cta">إنشاء حساب مجاني</a>
         </div>
+    </nav>
 
-        <!-- Form -->
-        <div class="form-panel">
+    <div class="main">
+        <!-- Form Side -->
+        <div class="form-side">
             <div class="auth-card">
-                <div class="card-logo">
-                    <div class="txt">Q<span>CV</span></div>
-                    <div class="sub">منشئ السير الذاتية الذكي</div>
-                </div>
+                <div class="card-icon">&#128221;</div>
+                <div class="card-title">تسجيل الدخول</div>
+                <div class="card-subtitle">لديك حساب già في QCV</div>
 
-                <!-- Google First -->
+                <!-- Google -->
                 <button class="btn-google" id="googleBtn">
-                    <svg viewBox="0 0 48 48">
-                        <path fill="#EA4335"
-                            d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
-                        <path fill="#4285F4"
-                            d="M46.5 24c0-1.55-.15-3.24-.47-4.75H24v9h12.75c-.55 3-2.25 5.54-4.75 7.22l7.37 5.72c4.3-3.97 7.13-9.82 7.13-17.19z" />
-                        <path fill="#FBBC05"
-                            d="M10.54 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.98-6.19z" />
-                        <path fill="#34A853"
-                            d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.37-5.72c-2.11 1.42-4.81 2.3-8.52 2.3-6.26 0-11.57-4.22-13.46-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
-                    </svg>
+                    <svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24c0-1.55-.15-3.24-.47-4.75H24v9h12.75c-.55 3-2.25 5.54-4.75 7.22l7.37 5.72c4.3-3.97 7.13-9.82 7.13-17.19z"/><path fill="#FBBC05" d="M10.54 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.98-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.37-5.72c-2.11 1.42-4.81 2.3-8.52 2.3-6.26 0-11.57-4.22-13.46-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
                     الدخول بحساب Google
                 </button>
 
                 <div class="or-divider">أو أكمل بالإيميل</div>
 
                 <!-- Tabs -->
-                <div class="auth-tabs">
-                    <div class="tab active" id="tabLogin" onclick="switchTab('login')">تسجيل الدخول</div>
-                    <div class="tab" id="tabSignup" onclick="switchTab('signup')">حساب جديد</div>
+                <div class="auth-tabs" style="display:flex;background:rgba(8,12,25,0.5);border-radius:12px;padding:3px;margin-bottom:20px">
+                    <div class="tab active" id="tabLogin" onclick="switchTab('login')" style="flex:1;padding:10px;text-align:center;border-radius:10px;font-weight:700;font-size:0.85rem;cursor:pointer;transition:all 0.3s;color:#fff;position:relative;z-index:1">تسجيل الدخول</div>
+                    <div class="tab" id="tabSignup" onclick="switchTab('signup')" style="flex:1;padding:10px;text-align:center;border-radius:10px;font-weight:700;font-size:0.85rem;cursor:pointer;transition:all 0.3s;color:var(--muted);position:relative;z-index:1">حساب جديد</div>
                 </div>
 
                 <!-- Form -->
@@ -851,15 +206,14 @@
                         <label>البريد الإلكتروني</label>
                         <div class="iw">
                             <span class="ii">&#9993;</span>
-                            <input type="email" id="email" placeholder="name@example.com" required autocomplete="email">
+                            <input type="email" id="email" placeholder="name@company.com" required autocomplete="email">
                         </div>
                     </div>
                     <div class="ig">
                         <label>كلمة المرور</label>
                         <div class="iw">
                             <span class="ii">&#128272;</span>
-                            <input type="password" id="password" placeholder="••••••••" required
-                                autocomplete="current-password">
+                            <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
                             <button type="button" class="pw-toggle" id="togglePassword">&#128065;</button>
                         </div>
                     </div>
@@ -873,14 +227,13 @@
                 <!-- Forgot Box -->
                 <div class="hidden" id="forgotBox">
                     <h3 style="text-align:center;margin-bottom:12px;font-size:1.1rem">استعادة كلمة المرور</h3>
-                    <p style="font-size:0.8rem;color:var(--muted);text-align:center;margin-bottom:22px;line-height:1.6">
-                        أدخل بريدك وسنرسل لك رابطاً لإعادة التعيين</p>
+                    <p style="font-size:0.8rem;color:var(--muted);text-align:center;margin-bottom:22px;line-height:1.6">أدخل بريدك وسنرسل لك رابطاً لإعادة التعيين</p>
                     <form class="form" id="resetForm">
                         <div class="ig">
                             <label>البريد الإلكتروني</label>
                             <div class="iw">
                                 <span class="ii">&#9993;</span>
-                                <input type="email" id="resetEmail" placeholder="name@example.com" required>
+                                <input type="email" id="resetEmail" placeholder="name@company.com" required>
                             </div>
                         </div>
                         <button type="submit" class="btn-submit" id="resetSubmitBtn">
@@ -888,8 +241,7 @@
                             <div class="spinner"></div>
                         </button>
                     </form>
-                    <div class="auth-toggle" style="margin-top:18px"><span onclick="showLoginBox()">← العودة</span>
-                    </div>
+                    <div class="auth-toggle" style="margin-top:18px"><span onclick="showLoginBox()">← العودة</span></div>
                 </div>
 
                 <div class="auth-toggle" id="toggleText">
@@ -898,7 +250,32 @@
             </div>
         </div>
 
+        <!-- Brand Side -->
+        <div class="brand-side">
+            <div class="free-badge"><span class="dot"></span> مجاناً لفترة محدودة — سجّل الآن</div>
+            <h1 class="brand-heading">ابنِ سيرتك الذاتية<br>ب力量 <span class="highlight">الذكاء الاصطناعي</span></h1>
+            <p class="brand-desc">مساعد سيرة ذاتية ذكي يساعدك في بناء سيرة ذاتية احترافية متوافقة مع أنظمة ATS في دقائق معدودة. تعرّف على فرصك في الحصول على وظيفة أحلامك.</p>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">&#9729;&#65039;</div>
+                    <h4>حفظ سحابي</h4>
+                    <p>حفظ بياناتك وتعدّل عليها في أي وقت</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">&#9889;</div>
+                    <h4>توليد فوري</h4>
+                    <p>سيرة ذاتية احترافية في ثوانٍ</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">&#9989;</div>
+                    <h4>توافق ATS</h4>
+                    <p>متوافقة مع أنظمة التوظيف الحديثة</p>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div class="footer">© 2024 جميع الحقوق محفوظة — QCV</div>
 
     <!-- ===== FIREBASE ===== -->
     <script type="module">
@@ -906,32 +283,19 @@
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
         import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",
-            authDomain: "qwcv-1cfad.firebaseapp.com",
-            projectId: "qwcv-1cfad",
-            storageBucket: "qwcv-1cfad.firebasestorage.app",
-            messagingSenderId: "792471802122",
-            appId: "1:792471802122:web:808e04099afc90315aaaf3",
-            databaseURL: "https://qwcv-1cfad-default-rtdb.firebaseio.com"
-        };
-
+        const firebaseConfig = {apiKey:"AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",authDomain:"qwcv-1cfad.firebaseapp.com",projectId:"qwcv-1cfad",storageBucket:"qwcv-1cfad.firebasestorage.app",messagingSenderId:"792471802122",appId:"1:792471802122:web:808e04099afc90315aaaf3",databaseURL:"https://qwcv-1cfad-default-rtdb.firebaseio.com"};
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getDatabase(app);
 
         let isSignUpMode = false, isResetting = false, blockRedirect = false;
 
-        // Check approved domain and return plan info
         async function checkApprovedDomain(email) {
             try {
                 const domain = email.split('@')[1]?.toLowerCase();
                 if (!domain) return null;
                 const snap = await get(child(ref(db), 'approvedDomains/' + domain.replace(/\./g, '_')));
-                if (snap.exists()) {
-                    const d = snap.val();
-                    if (d.active !== false) return d;
-                }
+                if (snap.exists()) { const d = snap.val(); if (d.active !== false) return d; }
             } catch(e) {}
             return null;
         }
@@ -943,38 +307,17 @@
             }
         });
 
-        function setLoading(btn, loading) {
-            btn.classList.toggle('loading', loading);
-            btn.disabled = loading;
-        }
+        function setLoading(btn, loading) { btn.classList.toggle('loading', loading); btn.disabled = loading; }
+        function showToast(id, msg) { const t = document.getElementById(id); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3500); }
+        function showSuccessOverlay(text, sub) { document.getElementById('successText').textContent = text; document.getElementById('successSub').textContent = sub; document.getElementById('successOverlay').classList.add('show'); }
 
-        function showToast(id, msg) {
-            const t = document.getElementById(id);
-            t.textContent = msg; t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 3500);
-        }
-
-        function showSuccessOverlay(text, sub) {
-            document.getElementById('successText').textContent = text;
-            document.getElementById('successSub').textContent = sub;
-            document.getElementById('successOverlay').classList.add('show');
-        }
-
-        // Login/Signup
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value.trim();
             const pass = document.getElementById('password').value;
             const name = document.getElementById('fullname').value.trim();
             const btn = document.getElementById('submitBtn');
-
-            if (isSignUpMode && !name) {
-                showToast('errorToast', 'أدخل اسمك الكامل');
-                document.getElementById('nameGroup').classList.add('shake');
-                setTimeout(() => document.getElementById('nameGroup').classList.remove('shake'), 400);
-                return;
-            }
-
+            if (isSignUpMode && !name) { showToast('errorToast', 'أدخل اسمك الكامل'); document.getElementById('nameGroup').classList.add('shake'); setTimeout(() => document.getElementById('nameGroup').classList.remove('shake'), 400); return; }
             setLoading(btn, true);
             try {
                 if (isSignUpMode) {
@@ -984,38 +327,23 @@
                     const domainInfo = await checkApprovedDomain(email);
                     const plan = domainInfo ? domainInfo.plan : 'free';
                     const planExpiry = domainInfo && domainInfo.duration ? Date.now() + domainInfo.duration * 30 * 24 * 60 * 60 * 1000 : null;
-                    await set(ref(db, 'users/' + res.user.uid), {
-                        uid: res.user.uid, name, email, plan, banned: false,
-                        registeredAt: Date.now(), lastLogin: Date.now(),
-                        ...(planExpiry && { planExpiry }),
-                        ...(domainInfo && { approvedDomain: email.split('@')[1] })
-                    });
-                    // Increment domain user count
-                    if (domainInfo) {
-                        const domainKey = email.split('@')[1].toLowerCase().replace(/\./g, '_');
-                        const currentCount = domainInfo.userCount || 0;
-                        set(ref(db, 'approvedDomains/' + domainKey + '/userCount'), currentCount + 1).catch(() => {});
-                    }
-                    await signOut(auth);
-                    blockRedirect = false;
+                    await set(ref(db, 'users/' + res.user.uid), { uid: res.user.uid, name, email, plan, banned: false, registeredAt: Date.now(), lastLogin: Date.now(), ...(planExpiry && { planExpiry }), ...(domainInfo && { approvedDomain: email.split('@')[1] }) });
+                    if (domainInfo) { const dk = email.split('@')[1].toLowerCase().replace(/\./g, '_'); set(ref(db, 'approvedDomains/' + dk + '/userCount'), (domainInfo.userCount || 0) + 1).catch(()=>{}); }
+                    await signOut(auth); blockRedirect = false;
+                    if(window.QCVNotify) QCVNotify.success();
                     showSuccessOverlay('تم إنشاء حسابك!', 'سجّل دخولك الآن');
                     setTimeout(() => { switchTab('login'); document.getElementById('email').value = email; }, 1200);
                 } else {
                     await signInWithEmailAndPassword(auth, email, pass);
-                    set(ref(db, 'users/' + auth.currentUser.uid + '/lastLogin'), Date.now()).catch(() => { });
+                    set(ref(db, 'users/' + auth.currentUser.uid + '/lastLogin'), Date.now()).catch(()=>{});
+                    if(window.QCVNotify) QCVNotify.success();
                     showSuccessOverlay('مرحباً!', 'جاري التحويل...');
                     setTimeout(() => location.replace("editor.html"), 800);
                 }
             } catch (err) {
                 setLoading(btn, false);
-                const m = {
-                    'auth/user-not-found': 'البريد غير مسجل',
-                    'auth/wrong-password': 'كلمة المرور خاطئة',
-                    'auth/email-already-in-use': 'البريد مستخدم بالفعل',
-                    'auth/weak-password': 'كلمة المرور ضعيفة (6 أحرف+)',
-                    'auth/invalid-email': 'البريد غير صالح',
-                    'auth/too-many-requests': 'محاولات كثيرة، حاول لاحقاً'
-                };
+                if(window.QCVNotify) QCVNotify.error();
+                const m = {'auth/user-not-found':'البريد غير مسجل','auth/wrong-password':'كلمة المرور خاطئة','auth/email-already-in-use':'البريد مستخدم بالفعل','auth/weak-password':'كلمة المرور ضعيفة (6 أحرف+)','auth/invalid-email':'البريد غير صالح','auth/too-many-requests':'محاولات كثيرة، حاول لاحقاً'};
                 showToast('errorToast', m[err.code] || 'حدث خطأ');
                 document.querySelector('.auth-card').classList.add('shake');
                 setTimeout(() => document.querySelector('.auth-card').classList.remove('shake'), 400);
@@ -1023,65 +351,54 @@
             setLoading(btn, false);
         });
 
-        // Google
         document.getElementById('googleBtn').addEventListener('click', async () => {
+            if(window.QCVNotify) QCVNotify.click();
             try {
                 const res = await signInWithPopup(auth, new GoogleAuthProvider());
                 const gEmail = res.user.email;
                 const gDomainInfo = await checkApprovedDomain(gEmail);
                 const gPlan = gDomainInfo ? gDomainInfo.plan : 'free';
                 const gPlanExpiry = gDomainInfo && gDomainInfo.duration ? Date.now() + gDomainInfo.duration * 30 * 24 * 60 * 60 * 1000 : null;
-                set(ref(db, 'users/' + res.user.uid), {
-                    uid: res.user.uid, name: res.user.displayName || gEmail.split('@')[0],
-                    email: gEmail, photo: res.user.photoURL || "", plan: gPlan, banned: false,
-                    registeredAt: Date.now(), lastLogin: Date.now(),
-                    ...(gPlanExpiry && { planExpiry: gPlanExpiry }),
-                    ...(gDomainInfo && { approvedDomain: gEmail.split('@')[1] })
-                }).catch(() => { });
-                if (gDomainInfo) {
-                    const domainKey = gEmail.split('@')[1].toLowerCase().replace(/\./g, '_');
-                    const curCount = gDomainInfo.userCount || 0;
-                    set(ref(db, 'approvedDomains/' + domainKey + '/userCount'), curCount + 1).catch(() => {});
-                }
+                set(ref(db, 'users/' + res.user.uid), { uid: res.user.uid, name: res.user.displayName || gEmail.split('@')[0], email: gEmail, photo: res.user.photoURL || "", plan: gPlan, banned: false, registeredAt: Date.now(), lastLogin: Date.now(), ...(gPlanExpiry && { planExpiry: gPlanExpiry }), ...(gDomainInfo && { approvedDomain: gEmail.split('@')[1] }) }).catch(()=>{});
+                if (gDomainInfo) { const dk = gEmail.split('@')[1].toLowerCase().replace(/\./g, '_'); set(ref(db, 'approvedDomains/' + dk + '/userCount'), (gDomainInfo.userCount || 0) + 1).catch(()=>{}); }
                 showSuccessOverlay('مرحباً ' + (res.user.displayName || ''), 'جاري التحويل...');
                 setTimeout(() => location.replace("editor.html"), 800);
-            } catch (err) {
-                showToast('errorToast', err.code === 'auth/unauthorized-domain' ? 'خطأ في النطاق' : 'خطأ: ' + err.message);
-            }
+            } catch (err) { showToast('errorToast', err.code === 'auth/unauthorized-domain' ? 'خطأ في النطاق' : 'خطأ: ' + err.message); }
         });
 
-        // Reset
         document.getElementById('resetForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('resetEmail').value.trim();
             if (!email) return;
             const btn = document.getElementById('resetSubmitBtn');
             setLoading(btn, true);
-            try {
-                await sendPasswordResetEmail(auth, email);
-                showToast('successToast', 'تم إرسال رابط الاستعادة');
-                setTimeout(showLoginBox, 1500);
-            } catch (err) { showToast('errorToast', err.message); }
+            try { await sendPasswordResetEmail(auth, email); showToast('successToast', 'تم إرسال رابط الاستعادة'); setTimeout(showLoginBox, 1500); } catch (err) { showToast('errorToast', err.message); }
             setLoading(btn, false);
         });
     </script>
 
     <!-- ===== UI ===== -->
     <script>
-        window.switchTab = function (mode) {
+        window.switchTab = function(mode) {
             isSignUpMode = mode === 'signup';
-            document.getElementById('tabLogin').classList.toggle('active', mode !== 'signup');
-            document.getElementById('tabSignup').classList.toggle('active', mode === 'signup');
+            const tl = document.getElementById('tabLogin');
+            const ts = document.getElementById('tabSignup');
+            tl.classList.toggle('active', mode !== 'signup');
+            tl.style.background = mode !== 'signup' ? 'var(--accent)' : 'transparent';
+            tl.style.color = mode !== 'signup' ? '#000' : 'var(--muted)';
+            ts.classList.toggle('active', mode === 'signup');
+            ts.style.background = mode === 'signup' ? 'var(--accent)' : 'transparent';
+            ts.style.color = mode === 'signup' ? '#000' : 'var(--muted)';
             document.getElementById('nameGroup').style.display = mode === 'signup' ? 'block' : 'none';
             document.getElementById('submitBtn').querySelector('.btn-text').textContent = mode === 'signup' ? 'إنشاء حساب' : 'تسجيل الدخول';
             document.getElementById('forgotBtn').style.display = mode === 'signup' ? 'none' : 'block';
             document.getElementById('toggleText').innerHTML = mode === 'signup'
                 ? 'لديك حساب؟ <span onclick="switchTab(\'login\')">سجل دخولك</span>'
-                : 'ليس لديك حساب؟ <span onclick="switchTab(\'signup\')">أنشئ حساباً</span>';
+                : 'ليس لديك حساب؟ <span onclick="switchTab(\'signup\')">أنشئ حساباً الآن</span>';
             document.getElementById('loginForm').reset();
         };
 
-        window.showLoginBox = function () {
+        window.showLoginBox = function() {
             document.getElementById('forgotBox').classList.add('hidden');
             document.getElementById('loginForm').classList.remove('hidden');
             document.querySelector('.auth-tabs').classList.remove('hidden');
@@ -1099,33 +416,17 @@
             document.getElementById('forgotBox').classList.remove('hidden');
         });
 
-        document.getElementById('togglePassword').addEventListener('click', function () {
+        document.getElementById('togglePassword').addEventListener('click', function() {
             const inp = document.getElementById('password');
             const isPw = inp.type === 'password';
             inp.type = isPw ? 'text' : 'password';
             this.innerHTML = isPw ? '&#128064;' : '&#128065;';
         });
 
-        document.querySelectorAll('.ig input').forEach(inp => {
-            inp.addEventListener('focus', function () { this.closest('.ig').classList.add('focused'); });
-            inp.addEventListener('blur', function () { this.closest('.ig').classList.remove('focused'); });
-        });
-
-        // Particles
-        const c = document.getElementById('particles'), x = c.getContext('2d');
-        let pts = [];
-        function resize() { c.width = innerWidth; c.height = innerHeight }
-        class P { constructor() { this.r() } r() { this.x = Math.random() * c.width; this.y = Math.random() * c.height; this.s = Math.random() * 2 + 0.5; this.vx = (Math.random() - 0.5) * 0.4; this.vy = (Math.random() - 0.5) * 0.4; this.o = Math.random() * 0.4 + 0.1; this.clr = Math.random() > .5 ? '16,185,129' : '14,165,233' } u() { this.x += this.vx; this.y += this.vy; if (this.x < 0 || this.x > c.width || this.y < 0 || this.y > c.height) this.r() } d() { x.beginPath(); x.arc(this.x, this.y, this.s, 0, Math.PI * 2); x.fillStyle = `rgba(${this.clr},${this.o})`; x.fill() } }
-        function init() { pts = []; const n = Math.min(60, Math.floor(c.width * c.height / 18000)); for (let i = 0; i < n; i++)pts.push(new P()) }
-        function loop() {
-            x.clearRect(0, 0, c.width, c.height); pts.forEach(p => { p.u(); p.d() });
-            for (let i = 0; i < pts.length; i++)for (let j = i + 1; j < pts.length; j++) { const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y, d = Math.sqrt(dx * dx + dy * dy); if (d < 140) { x.beginPath(); x.strokeStyle = `rgba(56,189,248,${0.06 * (1 - d / 140)})`; x.lineWidth = 0.5; x.moveTo(pts[i].x, pts[i].y); x.lineTo(pts[j].x, pts[j].y); x.stroke() } }
-            requestAnimationFrame(loop)
-        }
-        resize(); init(); loop(); addEventListener('resize', () => { resize(); init() });
-</script>
-
-
-
+        // Init tab styles
+        document.getElementById('tabLogin').style.background = 'var(--accent)';
+        document.getElementById('tabLogin').style.color = '#000';
+    </script>
+<script src="js/notify-sounds.js"></script>
 </body>
 </html>

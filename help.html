@@ -4,9 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مركز المساعدة - QCV | منشئ سير ذاتية ذكي</title>
-    <meta name="description" content="مركز مساعدة QCV - إجابات جميع أسئلتك حول منشئ السير الذاتية بالذكاء الاصطناعي. تسجيل الدخول، الدفع، إعدادات الحساب، والمشاكل التقنية.">
-    <meta name="keywords" content="QCV مساعدة, مركز المساعدة, دعم QCV, أسئلة شائعة, منشئ سيرة ذاتية مساعدة">
+    <meta name="description" content="مركز مساعدة QCV - إجابات جميع أسئلتك حول منشئ السير الذاتية بالذكاء الاصطناعي.">
+    <meta name="keywords" content="QCV مساعدة, مركز المساعدة, دعم QCV, أسئلة شائعة">
     <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://qcv.vexonet.online/help.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qcv.vexonet.online/help.html">
+    <meta property="og:title" content="مركز المساعدة - QCV | أسئلة شائعة ودعم فني">
+    <meta property="og:description" content="مركز مساعدة QCV - إجابات جميع أسئلتك حول منشئ السير الذاتية بالذكاء الاصطناعي. دعم فني وأسئلة شائعة.">
+    <meta property="og:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <meta property="og:site_name" content="QCV">
+    <meta property="og:locale" content="ar_AR">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="مركز المساعدة - QCV">
+    <meta name="twitter:description" content="مركز مساعدة QCV - إجابات جميع أسئلتك حول منشئ السير الذاتية بالذكاء الاصطناعي.">
+    <meta name="twitter:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "كيف أسجل حساب جديد في QCV؟",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "ممكن تسجل حساب بالبريد الإلكتروني أو عن طريق حساب Google. اضغط على ابدأ مجاناً وأدخل بياناتك."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "هل QCV مجاني؟",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "نعم! عندنا باقة مجانية توفر بناء سيرة ذاتية واحدة مع قوالب ATS أساسية وتنزيل PDF."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "كيف أبني سيرة ذاتية احترافية؟",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "سجل دخولك وابدأ بإدخال معلوماتك الشخصية، الملخص الوظيفي، الخبرات، التعليم، والمهارات. كل التغييرات بتظهر مباشرة في المعاينة."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "إيه طرق الدفع المقبولة؟",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "بنقبل الدفع عن طريق فودافون كاش وفوري واستانبي. بعد الدفع طلبك هيتراجع من الإدارة."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "هل بياناتي آمنة في QCV؟",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "نعم! جميع بياناتك محفوظة بشكل آمن على سحابة Firebase مع تشفير متقدم."
+                }
+            }
+        ]
+    }
+    </script>
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link rel="stylesheet" href="components.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -50,9 +110,10 @@
         .section-header h2{font-size:2rem;font-weight:900;margin-bottom:10px}
         .section-header p{color:var(--muted);font-size:0.95rem;max-width:500px;margin:0 auto}
 
-        .categories-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1000px;margin:0 auto}
+        .categories-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;max-width:1100px;margin:0 auto}
         .cat-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:30px 20px;text-align:center;cursor:pointer;transition:all 0.3s;text-decoration:none;color:var(--text)}
         .cat-card:hover{border-color:var(--accent);transform:translateY(-5px);box-shadow:0 15px 40px rgba(0,0,0,0.3)}
+        .cat-card.active{border-color:var(--accent);background:rgba(56,189,248,0.08);box-shadow:0 0 20px rgba(56,189,248,0.15)}
         .cat-icon{width:60px;height:60px;background:rgba(56,189,248,0.1);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin:0 auto 16px}
         .cat-card h3{font-size:1rem;font-weight:800;margin-bottom:6px}
         .cat-card p{color:var(--muted);font-size:0.8rem}
@@ -98,7 +159,6 @@
         .btn-primary{background:var(--accent);color:#000}
         .btn-primary:hover{background:#60a5fa;transform:translateY(-2px);box-shadow:0 8px 25px rgba(56,189,248,0.3)}
         .btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border)}
-        .btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
 
         /* ===== FOOTER ===== */
         .footer{border-top:1px solid var(--border);padding:50px 60px 30px}
@@ -117,13 +177,13 @@
         @media(max-width:900px){
             .navbar{padding:0 20px}
             .nav-links{display:none}
-            .categories-grid{grid-template-columns:repeat(2,1fr)}
+            .categories-grid{grid-template-columns:repeat(3,1fr)}
             .contact-grid{grid-template-columns:1fr}
             .section{padding:60px 20px}
         }
         @media(max-width:600px){
             .hero h1{font-size:1.8rem}
-            .categories-grid{grid-template-columns:1fr}
+            .categories-grid{grid-template-columns:repeat(2,1fr)}
             .quick-links{grid-template-columns:1fr}
             .footer{padding:40px 20px 20px}
             .footer-content{flex-direction:column}
@@ -160,30 +220,36 @@
         <p>اختر القسم اللي يهمك</p>
     </div>
     <div class="categories-grid">
-        <a href="#getting-started" class="cat-card">
+        <div class="cat-card active" data-filter="all" onclick="filterByCategory(this,'all')">
+            <div class="cat-icon">&#127760;</div>
+            <h3>الكل</h3>
+            <p>كل الأسئلة والإجابات</p>
+            <div class="cat-count">16 سؤال</div>
+        </div>
+        <div class="cat-card" data-filter="getting-started" onclick="filterByCategory(this,'getting-started')">
             <div class="cat-icon">&#128640;</div>
             <h3>البدء</h3>
             <p>كيف تبدأ وتسجل حسابك</p>
             <div class="cat-count">5 أسئلة</div>
-        </a>
-        <a href="#account" class="cat-card">
+        </div>
+        <div class="cat-card" data-filter="account" onclick="filterByCategory(this,'account')">
             <div class="cat-icon">&#128100;</div>
             <h3>الحساب</h3>
             <p>إدارة حسابك وبياناتك</p>
             <div class="cat-count">4 أسئلة</div>
-        </a>
-        <a href="#billing" class="cat-card">
+        </div>
+        <div class="cat-card" data-filter="billing" onclick="filterByCategory(this,'billing')">
             <div class="cat-icon">&#128179;</div>
             <h3>الفواتير والاشتراكات</h3>
             <p>الدفع والباقات</p>
             <div class="cat-count">4 أسئلة</div>
-        </a>
-        <a href="#technical" class="cat-card">
+        </div>
+        <div class="cat-card" data-filter="technical" onclick="filterByCategory(this,'technical')">
             <div class="cat-icon">&#128295;</div>
             <h3>مشاكل تقنية</h3>
-            <p>حل المشاكل وال errors</p>
+            <p>حل المشاكل والأخطاء</p>
             <div class="cat-count">3 أسئلة</div>
-        </a>
+        </div>
     </div>
 </section>
 
@@ -485,6 +551,20 @@ function toggleFaq(el) {
     if (!wasActive) item.classList.add('active');
 }
 
+function filterByCategory(el, cat) {
+    document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    document.querySelectorAll('.faq-item').forEach(item => {
+        if (cat === 'all' || item.dataset.cat === cat) {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+    document.getElementById('faq').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if(window.QCVNotify) QCVNotify.click();
+}
+
 function filterFAQ() {
     const query = document.getElementById('searchInput').value.toLowerCase();
     document.querySelectorAll('.faq-item').forEach(item => {
@@ -499,7 +579,6 @@ function filterFAQ() {
 }
 </script>
 
-
-
+<script src="js/notify-sounds.js"></script>
 </body>
 </html>

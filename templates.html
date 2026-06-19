@@ -3,10 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QCV - CV Templates</title>
-    <meta name="description" content="Choose from 15+ professional CV templates. ATS-friendly free templates to build a standout resume.">
-    <meta name="keywords" content="قوالب سيرة ذاتية, CV templates, قوالب CV, تصميم سيرة ذاتية, QCV">
+    <title>قوالب سيرة ذاتية - QCV | 15+ قالب احترافي ATS مجاني</title>
+    <meta name="description" content="اختر من بين أكثر من 15 قالب سيرة ذاتية احترافي متوافق مع أنظمة ATS. قوالب مجانية واحترافية لبناء سيرة ذاتية مميزة تحصل على وظيفة أحلامك.">
+    <meta name="keywords" content="قوالب سيرة ذاتية, قوالب CV, تصميم سيرة ذاتية, سيرة ذاتية احترافية, قوالب ATS, سيرة ذاتية مجانية, بناء سيرة ذاتية, QCV, منشئ سيرة ذاتية, cv templates">
     <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://qcv.vexonet.online/templates.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qcv.vexonet.online/templates.html">
+    <meta property="og:title" content="قوالب سيرة ذاتية احترافية - QCV | 15+ قالب ATS">
+    <meta property="og:description" content="اختر من بين أكثر من 15 قالب سيرة ذاتية احترافي متوافق مع ATS. قوالب مجانية لبناء سيرة ذاتية مميزة.">
+    <meta property="og:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <meta property="og:site_name" content="QCV">
+    <meta property="og:locale" content="ar_AR">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="قوالب سيرة ذاتية احترافية - QCV">
+    <meta name="twitter:description" content="اختر من بين أكثر من 15 قالب سيرة ذاتية احترافي متوافق مع ATS.">
+    <meta name="twitter:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link rel="stylesheet" href="components.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -112,13 +124,42 @@
         const categories = {classic:'كلاسيكي',modern:'عصري',creative:'إبداعي',ats:'ATS'};
         const catColors = {classic:'#38bdf8',modern:'#2563eb',creative:'#8b5cf6',ats:'#1d4ed8'};
 
+        const FREE_TEMPLATES = ['classic'];
+        let userPlan = 'free';
+
+        // Check user plan from Firebase
+        (async () => {
+            try {
+                const { initializeApp } = await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js");
+                const { getAuth, onAuthStateChanged } = await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js");
+                const { getDatabase, ref, get } = await import("https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js");
+                const app = initializeApp({apiKey:"AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",authDomain:"qwcv-1cfad.firebaseapp.com",databaseURL:"https://qwcv-1cfad-default-rtdb.firebaseio.com"});
+                const auth = getAuth(app);
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        const snap = await get(ref(getDatabase(app), 'users/' + user.uid));
+                        const ud = snap.val() || {};
+                        userPlan = ud.plan || 'free';
+                        if (userPlan === 'pro' || userPlan === 'unlimited') {
+                            // Check expiry
+                            if (ud.planExpiry && Date.now() > ud.planExpiry) userPlan = 'free';
+                        }
+                        renderGrid('all');
+                    }
+                });
+            } catch(e) {}
+        })();
+
         function renderGrid(filter) {
             const templates = QCVTemplates.getAll();
             const grid = document.getElementById('tplGrid');
+            const paid = userPlan === 'pro' || userPlan === 'unlimited';
             grid.innerHTML = templates
                 .filter(t => filter === 'all' || t.category === filter)
-                .map(t => `
-                    <div class="tpl-card" data-cat="${t.category}">
+                .map(t => {
+                    const locked = !paid && !FREE_TEMPLATES.includes(t.id);
+                    return `
+                    <div class="tpl-card${locked ? ' locked' : ''}" data-cat="${t.category}">
                         <div class="tpl-preview">
                             <div class="tpl-preview-inner">${QCVTemplates.render(t.id, sampleData)}</div>
                         </div>
@@ -127,14 +168,18 @@
                             <div class="tpl-desc">${t.description}</div>
                             <div class="tpl-meta">
                                 <span class="tpl-badge" style="background:${catColors[t.category]}22;color:${catColors[t.category]}">${categories[t.category]}</span>
-                                <button class="tpl-use" onclick="useTemplate('${t.id}')">استخدم هذا القالب</button>
+                                ${locked
+                                    ? `<button class="tpl-use" style="background:var(--border);color:var(--muted)" onclick="window.location.href='pay.html'">&#128274; اشترك لفتح القالب</button>`
+                                    : `<button class="tpl-use" onclick="useTemplate('${t.id}')">استخدم هذا القالب</button>`
+                                }
                             </div>
                         </div>
-                    </div>
-                `).join('');
+                    </div>`;
+                }).join('');
         }
 
         function useTemplate(id) {
+            if(window.QCVNotify) QCVNotify.click();
             localStorage.setItem('qcv_selected_template', id);
             window.location.href = 'editor.html';
         }
@@ -150,5 +195,6 @@
 
 
 
+<script src="js/notify-sounds.js"></script>
 </body>
 </html>
