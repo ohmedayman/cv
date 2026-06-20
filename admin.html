@@ -7,22 +7,23 @@
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
-            --bg-main: #060913;
-            --bg-sidebar: #0b111e;
-            --bg-card: #0f172a;
-            --bg-hover: #1a2336;
-            --border: #1e293b;
-            --accent: #38bdf8;
-            --accent-glow: rgba(56,189,248,0.3);
-            --green: #38bdf8;
+            --bg-main: #f9fafb;
+            --bg-sidebar: #ffffff;
+            --bg-card: #ffffff;
+            --bg-hover: #f3f4f6;
+            --border: #e5e7eb;
+            --accent: #0003c9;
+            --accent-glow: rgba(0,3,201,0.15);
+            --green: #10b981;
             --red: #ef4444;
             --yellow: #f59e0b;
             --purple: #8b5cf6;
-            --text: #ffffff;
-            --muted: #64748b;
-            --light: #94a3b8;
+            --text: #1a1a2e;
+            --muted: #6b7280;
+            --light: #9ca3af;
         }
         *{box-sizing:border-box;margin:0;padding:0}
         body{background:var(--bg-main);color:var(--text);font-family:'Cairo',sans-serif;overflow-x:hidden}
@@ -45,8 +46,8 @@
         .login-box .input-group{margin-bottom:18px}
         .login-box label{display:block;font-size:0.8rem;color:var(--muted);margin-bottom:6px;font-weight:600}
         .login-box input{
-            width:100%;padding:14px 16px;background:var(--bg-main);border:1px solid var(--border);
-            color:#fff;border-radius:12px;outline:none;font-family:'Cairo',sans-serif;font-size:0.9rem;
+            width:100%;padding:14px 16px;background:#ffffff;border:1px solid var(--border);
+            color:#1a1a2e;border-radius:12px;outline:none;font-family:'Cairo',sans-serif;font-size:0.9rem;
             transition:all 0.2s;
         }
         .login-box input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
@@ -78,11 +79,11 @@
             cursor:pointer;font-weight:700;font-size:0.9rem;color:var(--light);
             transition:all 0.2s;margin-bottom:6px;
         }
-        .nav-item:hover,.nav-item.active{background:rgba(56,189,248,0.1);color:#fff}
+        .nav-item:hover,.nav-item.active{background:rgba(0,3,201,0.08);color:#1a1a2e}
         .nav-item.active{border-right:3px solid var(--accent)}
         .nav-item .icon{font-size:1.2rem;width:24px;text-align:center}
         .nav-item .badge{
-            margin-right:auto;background:var(--red);color:#fff;font-size:0.7rem;
+            margin-right:auto;background:var(--red);color:#ffffff;font-size:0.7rem;
             padding:2px 8px;border-radius:20px;font-weight:700;
         }
         .sidebar-footer{border-top:1px solid var(--border);padding-top:15px}
@@ -91,7 +92,7 @@
             color:var(--red);border-radius:12px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;
             font-size:0.85rem;transition:all 0.2s;
         }
-        .btn-logout:hover{background:var(--red);color:#fff}
+        .btn-logout:hover{background:var(--red);color:#ffffff}
 
         /* Main Content */
         .main-content{flex:1;margin-right:260px;padding:30px 35px}
@@ -140,21 +141,21 @@
         }
         .table-header h3{font-size:1rem;font-weight:800}
         .search-box{
-            display:flex;align-items:center;background:var(--bg-main);border:1px solid var(--border);
+            display:flex;align-items:center;background:#f9fafb;border:1px solid var(--border);
             border-radius:10px;padding:8px 14px;gap:8px;
         }
         .search-box input{
-            background:none;border:none;color:#fff;outline:none;font-family:'Cairo',sans-serif;
+            background:none;border:none;color:#1a1a2e;outline:none;font-family:'Cairo',sans-serif;
             font-size:0.85rem;width:200px;
         }
         .search-box .icon{color:var(--muted);font-size:0.9rem}
         table{width:100%;border-collapse:collapse}
         th{
-            background:rgba(30,41,59,0.5);color:var(--accent);font-weight:700;font-size:0.8rem;
+            background:rgba(229,231,235,0.5);color:var(--accent);font-weight:700;font-size:0.8rem;
             text-transform:uppercase;letter-spacing:0.5px;
         }
         th,td{padding:14px 18px;text-align:right;border-bottom:1px solid var(--border)}
-        tr:hover td{background:rgba(56,189,248,0.03)}
+        tr:hover td{background:rgba(0,3,201,0.03)}
         td{font-size:0.88rem}
         .user-cell{display:flex;align-items:center;gap:10px}
         .user-avatar{
@@ -216,7 +217,7 @@
         .modal .modal-body{margin-bottom:25px}
         .modal .modal-actions{display:flex;gap:10px;justify-content:center}
         .modal .btn-cancel{
-            padding:12px 24px;background:var(--bg-main);border:1px solid var(--border);
+            padding:12px 24px;background:#f9fafb;border:1px solid var(--border);
             color:var(--muted);border-radius:12px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;
         }
         .modal .btn-confirm{
@@ -224,8 +225,8 @@
             font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;
         }
         .modal select{
-            width:100%;padding:12px;background:var(--bg-main);border:1px solid var(--border);
-            color:#fff;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none;
+            width:100%;padding:12px;background:#ffffff;border:1px solid var(--border);
+            color:#1a1a2e;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none;
         }
 
         /* Toast */
@@ -235,7 +236,7 @@
             transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);
         }
         .toast.show{transform:translateX(-50%) translateY(0)}
-        .toast-success{background:var(--green);color:#fff;box-shadow:0 8px 25px rgba(56,189,248,0.3)}
+        .toast-success{background:var(--green);color:#fff;box-shadow:0 8px 25px rgba(16,185,129,0.3)}
         .toast-error{background:var(--red);color:#fff;box-shadow:0 8px 25px rgba(239,68,68,0.3)}
 
         /* Responsive */
@@ -284,23 +285,23 @@
             <div class="sidebar-brand">Q<span>CV</span></div>
             <nav class="sidebar-nav">
                 <div class="nav-item active" data-panel="dashboard" onclick="switchPanel('dashboard')">
-                    <span class="icon">&#128202;</span><span>الرئيسية</span>
+                    <span class="icon"><i class="fas fa-chart-bar"></i></span><span>الرئيسية</span>
                 </div>
                 <div class="nav-item" data-panel="users" onclick="switchPanel('users')">
-                    <span class="icon">&#128101;</span><span>المستخدمين</span>
+                    <span class="icon"><i class="fas fa-users"></i></span><span>المستخدمين</span>
                 </div>
                 <div class="nav-item" data-panel="subscriptions" onclick="switchPanel('subscriptions')">
-                    <span class="icon">&#128179;</span><span>الاشتراكات</span>
+                    <span class="icon"><i class="fas fa-credit-card"></i></span><span>الاشتراكات</span>
                     <span class="badge" id="pendingBadge" style="display:none">0</span>
                 </div>
                 <div class="nav-item" data-panel="jobs" onclick="switchPanel('jobs')">
-                    <span class="icon">&#128188;</span><span>الوظائف</span>
+                    <span class="icon"><i class="fas fa-briefcase"></i></span><span>الوظائف</span>
                 </div>
                 <div class="nav-item" data-panel="settings" onclick="switchPanel('settings')">
-                    <span class="icon">&#9881;</span><span>الإعدادات</span>
+                    <span class="icon"><i class="fas fa-cog"></i></span><span>الإعدادات</span>
                 </div>
                 <div class="nav-item" data-panel="domains" onclick="switchPanel('domains')">
-                    <span class="icon">&#127760;</span><span>النطاقات المعتمدة</span>
+                    <span class="icon"><i class="fas fa-globe"></i></span><span>النطاقات المعتمدة</span>
                 </div>
             </nav>
             <div class="sidebar-footer">
@@ -327,22 +328,22 @@
             <div class="panel active" id="panel-dashboard">
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-icon blue">&#128101;</div>
+                        <div class="stat-icon blue"><i class="fas fa-users"></i></div>
                         <div class="stat-value" id="statUsers">0</div>
                         <div class="stat-label">إجمالي المستخدمين</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon green">&#9989;</div>
+                        <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
                         <div class="stat-value" id="statActive">0</div>
                         <div class="stat-label">مستخدمين نشطين</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon yellow">&#128179;</div>
+                        <div class="stat-icon yellow"><i class="fas fa-credit-card"></i></div>
                         <div class="stat-value" id="statPending">0</div>
                         <div class="stat-label">طلبات معلقة</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon purple">&#128640;</div>
+                        <div class="stat-icon purple"><i class="fas fa-rocket"></i></div>
                         <div class="stat-value" id="statPro">0</div>
                         <div class="stat-label">اشتراكات مميزة</div>
                     </div>
@@ -363,7 +364,7 @@
                             </tr>
                         </thead>
                         <tbody id="recentUsers">
-                            <tr><td colspan="4" class="empty-state"><div class="icon">&#128100;</div><p>جاري التحميل...</p></td></tr>
+                            <tr><td colspan="4" class="empty-state"><div class="icon"><i class="fas fa-user"></i></div><p>جاري التحميل...</p></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -375,7 +376,7 @@
                     <div class="table-header">
                         <h3>جميع المستخدمين</h3>
                         <div class="search-box">
-                            <span class="icon">&#128269;</span>
+                            <span class="icon"><i class="fas fa-search"></i></span>
                             <input type="text" id="searchUsers" placeholder="بحث بالاسم أو الإيميل..." oninput="filterUsers()">
                         </div>
                     </div>
@@ -391,7 +392,7 @@
                             </tr>
                         </thead>
                         <tbody id="allUsers">
-                            <tr><td colspan="6" class="empty-state"><div class="icon">&#128100;</div><p>جاري تحميل المستخدمين...</p></td></tr>
+                            <tr><td colspan="6" class="empty-state"><div class="icon"><i class="fas fa-user"></i></div><p>جاري تحميل المستخدمين...</p></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -403,7 +404,7 @@
                     <div class="table-header">
                         <h3>طلبات الاشتراك</h3>
                         <div class="search-box">
-                            <select id="subFilter" onchange="filterSubscriptions()" style="background:var(--bg-main);border:1px solid var(--border);color:#fff;padding:8px 12px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.8rem;outline:none">
+                            <select id="subFilter" onchange="filterSubscriptions()" style="background:#f9fafb;border:1px solid var(--border);color:#1a1a2e;padding:8px 12px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.8rem;outline:none">
                                 <option value="all">الكل</option>
                                 <option value="pending">معلقة</option>
                                 <option value="approved">مقبولة</option>
@@ -422,7 +423,7 @@
                             </tr>
                         </thead>
                         <tbody id="subscriptionsList">
-                            <tr><td colspan="5" class="empty-state"><div class="icon">&#128179;</div><p>لا توجد طلبات بعد</p></td></tr>
+                            <tr><td colspan="5" class="empty-state"><div class="icon"><i class="fas fa-credit-card"></i></div><p>لا توجد طلبات بعد</p></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -446,7 +447,7 @@
                             </tr>
                         </thead>
                         <tbody id="jobsList">
-                            <tr><td colspan="5" class="empty-state"><div class="icon">&#128188;</div><p>لا توجد وظائف بعد</p></td></tr>
+                            <tr><td colspan="5" class="empty-state"><div class="icon"><i class="fas fa-briefcase"></i></div><p>لا توجد وظائف بعد</p></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -458,11 +459,11 @@
                     <h3 style="margin-bottom:25px;font-size:1.1rem">إعدادات لوحة التحكم</h3>
                     <div class="input-group" style="margin-bottom:20px">
                         <label style="display:block;font-size:0.85rem;color:var(--muted);margin-bottom:8px;font-weight:600">اسم المدير</label>
-                        <input type="text" id="settingsAdminName" style="width:100%;padding:12px 16px;background:var(--bg-main);border:1px solid var(--border);color:#fff;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none">
+                        <input type="text" id="settingsAdminName" style="width:100%;padding:12px 16px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none">
                     </div>
                     <div class="input-group" style="margin-bottom:20px">
                         <label style="display:block;font-size:0.85rem;color:var(--muted);margin-bottom:8px;font-weight:600">الباقة الافتراضية للمستخدمين الجدد</label>
-                        <select id="settingsDefaultPlan" style="width:100%;padding:12px 16px;background:var(--bg-main);border:1px solid var(--border);color:#fff;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none">
+                        <select id="settingsDefaultPlan" style="width:100%;padding:12px 16px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none">
                             <option value="free">مجانية</option>
                             <option value="pro">احترافية</option>
                             <option value="unlimited">غير محدودة</option>
@@ -494,7 +495,7 @@
                             </tr>
                         </thead>
                         <tbody id="domainsList">
-                            <tr><td colspan="6" class="empty-state"><div class="icon">&#127760;</div><p>لا توجد نطاقات معتمدة بعد</p></td></tr>
+                            <tr><td colspan="6" class="empty-state"><div class="icon"><i class="fas fa-globe"></i></div><p>لا توجد نطاقات معتمدة بعد</p></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -516,9 +517,9 @@
     </div>
 
     <!-- ===== BLOCK SCREEN (shows until admin is verified) ===== -->
-    <div id="blockScreen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#060913;z-index:99999;display:flex;justify-content:center;align-items:center;flex-direction:column">
-        <div style="font-size:3rem;font-weight:900;margin-bottom:15px">Q<span style="color:#38bdf8">CV</span></div>
-        <div style="color:#64748b;font-size:0.9rem" id="blockMsg">جاري التحقق...</div>
+    <div id="blockScreen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#f9fafb;z-index:99999;display:flex;justify-content:center;align-items:center;flex-direction:column">
+        <div style="font-size:3rem;font-weight:900;margin-bottom:15px">Q<span style="color:#0003c9">CV</span></div>
+        <div style="color:#6b7280;font-size:0.9rem" id="blockMsg">جاري التحقق...</div>
     </div>
 
     <!-- ===== ADMIN SCRIPT (Standalone — no Firebase Auth needed) ===== -->
@@ -612,8 +613,8 @@
                 updateStats(allUsersData);
             }, (err) => {
                 console.error('Firebase read error:', err);
-                document.getElementById('recentUsers').innerHTML = '<tr><td colspan="4" class="empty-state"><div class="icon">&#9888;</div><p>خطأ في الاتصال بقاعدة البيانات. تأكد من صلاحيات القراءة في Firebase Console.</p></td></tr>';
-                document.getElementById('allUsers').innerHTML = '<tr><td colspan="6" class="empty-state"><div class="icon">&#9888;</div><p>خطأ في الاتصال. افتح Firebase Console → Realtime Database → Rules وتأكد إن .read = true</p></td></tr>';
+                document.getElementById('recentUsers').innerHTML = '<tr><td colspan="4" class="empty-state"><div class="icon"><i class="fas fa-exclamation-triangle"></i></div><p>خطأ في الاتصال بقاعدة البيانات. تأكد من صلاحيات القراءة في Firebase Console.</p></td></tr>';
+                document.getElementById('allUsers').innerHTML = '<tr><td colspan="6" class="empty-state"><div class="icon"><i class="fas fa-exclamation-triangle"></i></div><p>خطأ في الاتصال. افتح Firebase Console → Realtime Database → Rules وتأكد إن .read = true</p></td></tr>';
             });
         }
 
@@ -621,7 +622,7 @@
             const tbody = document.getElementById('allUsers');
             const entries = Object.entries(data);
             if (entries.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><div class="icon">&#128100;</div><p>لا يوجد مستخدمين</p></td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><div class="icon"><i class="fas fa-user"></i></div><p>لا يوجد مستخدمين</p></td></tr>';
                 return;
             }
 
@@ -669,7 +670,7 @@
             const tbody = document.getElementById('recentUsers');
             const entries = Object.entries(data).sort((a,b) => (b[1].lastLogin||0) - (a[1].lastLogin||0)).slice(0, 5);
             if (entries.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" class="empty-state"><div class="icon">&#128100;</div><p>لا يوجد مستخدمين</p></td></tr>';
+                tbody.innerHTML = '<tr><td colspan="4" class="empty-state"><div class="icon"><i class="fas fa-user"></i></div><p>لا يوجد مستخدمين</p></td></tr>';
                 return;
             }
 
@@ -721,7 +722,7 @@
                 document.getElementById('statPending').textContent = pending;
             }, (err) => {
                 console.error('Firebase subscriptions read error:', err);
-                document.getElementById('subscriptionsList').innerHTML = '<tr><td colspan="5" class="empty-state"><div class="icon">&#9888;</div><p>خطأ في قراءة الاشتراكات</p></td></tr>';
+                document.getElementById('subscriptionsList').innerHTML = '<tr><td colspan="5" class="empty-state"><div class="icon"><i class="fas fa-exclamation-triangle"></i></div><p>خطأ في قراءة الاشتراكات</p></td></tr>';
             });
         }
 
@@ -732,7 +733,7 @@
             if (filter !== 'all') entries = entries.filter(([_,s]) => s.status === filter);
 
             if (entries.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" class="empty-state"><div class="icon">&#128179;</div><p>لا توجد طلبات</p></td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" class="empty-state"><div class="icon"><i class="fas fa-credit-card"></i></div><p>لا توجد طلبات</p></td></tr>';
                 return;
             }
 
@@ -828,7 +829,7 @@
             if (!tbody) return;
             const entries = Object.entries(jobs);
             if (!entries.length) {
-                tbody.innerHTML = '<tr><td colspan="5" class="empty-state"><div class="icon">&#128188;</div><p>لا توجد وظائف بعد</p></td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" class="empty-state"><div class="icon"><i class="fas fa-briefcase"></i></div><p>لا توجد وظائف بعد</p></td></tr>';
                 return;
             }
             tbody.innerHTML = entries.map(([id, j]) => `
@@ -851,11 +852,11 @@
             document.getElementById('modalTitle').textContent = 'إضافة وظيفة جديدة';
             document.getElementById('modalBody').innerHTML = `
                 <div style="display:flex;flex-direction:column;gap:12px">
-                    <input type="text" id="jobTitle" placeholder="اسم الوظيفة" style="padding:10px 14px;background:var(--bg-main);border:1px solid var(--border);color:#fff;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
-                    <input type="text" id="jobCategory" placeholder="الفئة (مثال: تقنية و الذكاء الاصطناعي)" style="padding:10px 14px;background:var(--bg-main);border:1px solid var(--border);color:#fff;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
-                    <input type="text" id="jobLocation" placeholder="الموقع (مثال: القاهرة - عن بُعد)" style="padding:10px 14px;background:var(--bg-main);border:1px solid var(--border);color:#fff;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
-                    <textarea id="jobDesc" placeholder="تفاصيل الوظيفة (المهام، المتطلبات، المزايا...)" rows="4" style="padding:10px 14px;background:var(--bg-main);border:1px solid var(--border);color:#fff;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none;resize:vertical"></textarea>
-                    <input type="text" id="jobEmail" placeholder="البريد للتقديم (اختياري)" style="padding:10px 14px;background:var(--bg-main);border:1px solid var(--border);color:#fff;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
+                    <input type="text" id="jobTitle" placeholder="اسم الوظيفة" style="padding:10px 14px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
+                    <input type="text" id="jobCategory" placeholder="الفئة (مثال: تقنية و الذكاء الاصطناعي)" style="padding:10px 14px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
+                    <input type="text" id="jobLocation" placeholder="الموقع (مثال: القاهرة - عن بُعد)" style="padding:10px 14px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
+                    <textarea id="jobDesc" placeholder="تفاصيل الوظيفة (المهام، المتطلبات، المزايا...)" rows="4" style="padding:10px 14px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none;resize:vertical"></textarea>
+                    <input type="text" id="jobEmail" placeholder="البريد للتقديم (اختياري)" style="padding:10px 14px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
                     <label style="display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--muted)">
                         <input type="checkbox" id="jobActive" checked> وظيفة نشطة
                     </label>
@@ -889,11 +890,11 @@
             document.getElementById('modalTitle').textContent = 'تعديل الوظيفة';
             document.getElementById('modalBody').innerHTML = `
                 <div style="display:flex;flex-direction:column;gap:12px">
-                    <input type="text" id="jobTitle" value="${j.title || ''}" placeholder="اسم الوظيفة" style="padding:10px 14px;background:var(--bg-main);border:1px solid var(--border);color:#fff;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
-                    <input type="text" id="jobCategory" value="${j.category || ''}" placeholder="الفئة" style="padding:10px 14px;background:var(--bg-main);border:1px solid var(--border);color:#fff;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
-                    <input type="text" id="jobLocation" value="${j.location || ''}" placeholder="الموقع" style="padding:10px 14px;background:var(--bg-main);border:1px solid var(--border);color:#fff;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
-                    <textarea id="jobDesc" placeholder="تفاصيل الوظيفة" rows="4" style="padding:10px 14px;background:var(--bg-main);border:1px solid var(--border);color:#fff;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none;resize:vertical">${j.description || ''}</textarea>
-                    <input type="text" id="jobEmail" value="${j.email || ''}" placeholder="البريد للتقديم" style="padding:10px 14px;background:var(--bg-main);border:1px solid var(--border);color:#fff;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
+                    <input type="text" id="jobTitle" value="${j.title || ''}" placeholder="اسم الوظيفة" style="padding:10px 14px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
+                    <input type="text" id="jobCategory" value="${j.category || ''}" placeholder="الفئة" style="padding:10px 14px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
+                    <input type="text" id="jobLocation" value="${j.location || ''}" placeholder="الموقع" style="padding:10px 14px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
+                    <textarea id="jobDesc" placeholder="تفاصيل الوظيفة" rows="4" style="padding:10px 14px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none;resize:vertical">${j.description || ''}</textarea>
+                    <input type="text" id="jobEmail" value="${j.email || ''}" placeholder="البريد للتقديم" style="padding:10px 14px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
                     <label style="display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--muted)">
                         <input type="checkbox" id="jobActive" ${j.active !== false ? 'checked' : ''}> وظيفة نشطة
                     </label>
@@ -1025,7 +1026,7 @@
             const tbody = document.getElementById('domainsList');
             const entries = Object.entries(data);
             if (entries.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><div class="icon">&#127760;</div><p>لا توجد نطاقات معتمدة بعد</p></td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><div class="icon"><i class="fas fa-globe"></i></div><p>لا توجد نطاقات معتمدة بعد</p></td></tr>';
                 return;
             }
             tbody.innerHTML = entries.map(([id, d]) => {
@@ -1055,19 +1056,19 @@
                 <div style="text-align:center">
                     <div class="input-group" style="margin-bottom:15px;text-align:right">
                         <label style="display:block;font-size:0.85rem;color:var(--muted);margin-bottom:6px;font-weight:600">النطاق (Domain)</label>
-                        <input type="text" id="domainInput" placeholder="مثال: edu.alexu.edu.eg" style="width:100%;padding:12px 16px;background:var(--bg-main);border:1px solid var(--border);color:#fff;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none">
+                        <input type="text" id="domainInput" placeholder="مثال: edu.alexu.edu.eg" style="width:100%;padding:12px 16px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none">
                         <div style="font-size:0.72rem;color:var(--muted);margin-top:4px">بدون @ — مثال: gmail.com أو edu.alexu.edu.eg</div>
                     </div>
                     <div class="input-group" style="margin-bottom:15px;text-align:right">
                         <label style="display:block;font-size:0.85rem;color:var(--muted);margin-bottom:6px;font-weight:600">الباقة الممنوحة</label>
-                        <select id="domainPlan" style="width:100%;padding:12px 16px;background:var(--bg-main);border:1px solid var(--border);color:#fff;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none">
+                        <select id="domainPlan" style="width:100%;padding:12px 16px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none">
                             <option value="pro">احترافية (Pro)</option>
                             <option value="unlimited">غير محدودة (Unlimited)</option>
                         </select>
                     </div>
                     <div class="input-group" style="text-align:right">
                         <label style="display:block;font-size:0.85rem;color:var(--muted);margin-bottom:6px;font-weight:600">المدة بالأشهر (اتركه فاضي = دائم)</label>
-                        <input type="number" id="domainDuration" placeholder="مثال: 6" min="1" style="width:100%;padding:12px 16px;background:var(--bg-main);border:1px solid var(--border);color:#fff;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none">
+                        <input type="number" id="domainDuration" placeholder="مثال: 6" min="1" style="width:100%;padding:12px 16px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none">
                     </div>
                 </div>
             `;

@@ -3,651 +3,431 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QCV AI — Build Your CV with AI</title>
+    <title>QCV — Build Your CV Step by Step</title>
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cairo:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        :root{--bg:#060a13;--bg2:#0c1220;--card:#111827;--border:#1e293b;--accent:#38bdf8;--sky:#2563eb;--purple:#8b5cf6;--text:#f1f5f9;--muted:#64748b;--light:#94a3b8;--input:#0f172a;--glow:rgba(56,189,248,0.15)}
+        :root{--bg:#f9fafb;--bg2:#ffffff;--card:#ffffff;--border:#e5e7eb;--accent:#0003c9;--green:#10b981;--red:#ef4444;--sky:#2563eb;--purple:#8b5cf6;--text:#1a1a2e;--muted:#6b7280;--light:#9ca3af;--input:#f3f4f6}
         *{box-sizing:border-box;margin:0;padding:0}
-        body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+        body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
 
-        /* Topbar */
-        .topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;z-index:10}
-        .topbar-left{display:flex;align-items:center;gap:16px}
-        .logo{font-size:1.4rem;font-weight:800;letter-spacing:-0.5px}
-        .logo span{color:var(--accent)}
-        .badge{background:linear-gradient(135deg,var(--purple),var(--sky));color:#fff;font-size:0.6rem;font-weight:700;padding:3px 8px;border-radius:6px;letter-spacing:0.5px}
+        .topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between}
+        .logo{font-size:1.4rem;font-weight:800;letter-spacing:-0.5px}.logo span{color:var(--accent)}
         .topbar-right{display:flex;align-items:center;gap:10px}
-        .btn-back{background:transparent;border:1px solid var(--border);color:var(--light);padding:8px 16px;border-radius:8px;font-weight:600;font-size:0.8rem;cursor:pointer;font-family:inherit;transition:all 0.2s;text-decoration:none;display:flex;align-items:center;gap:6px}
+        .btn-back{background:transparent;border:1px solid var(--border);color:var(--muted);padding:8px 16px;border-radius:8px;font-weight:600;font-size:0.8rem;cursor:pointer;font-family:inherit;text-decoration:none;display:flex;align-items:center;gap:6px;transition:all 0.2s}
         .btn-back:hover{border-color:var(--accent);color:var(--accent)}
-        .btn-editor{background:var(--accent);color:#000;border:none;padding:8px 16px;border-radius:8px;font-weight:700;font-size:0.8rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:none}
-        .btn-editor:hover{background:#60a5fa;transform:translateY(-1px)}
-        .btn-editor.show{display:flex}
 
-        /* Chat Area */
-        .chat-container{flex:1;display:flex;flex-direction:column;overflow:hidden}
-        .chat-messages{flex:1;overflow-y:auto;padding:24px;scroll-behavior:smooth}
-        .chat-messages::-webkit-scrollbar{width:6px}
-        .chat-messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+        .wizard-wrap{max-width:900px;margin:0 auto;padding:30px 20px}
 
-        /* Welcome Screen */
-        .welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:40px}
-        .welcome-icon{width:80px;height:80px;border-radius:20px;background:linear-gradient(135deg,var(--accent),var(--sky));display:flex;align-items:center;justify-content:center;font-size:2.2rem;margin-bottom:20px;box-shadow:0 8px 32px rgba(56,189,248,0.3)}
-        .welcome h1{font-size:1.8rem;font-weight:800;margin-bottom:8px}
-        .welcome h1 span{background:linear-gradient(135deg,var(--accent),var(--sky));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-        .welcome p{color:var(--muted);font-size:0.95rem;max-width:500px;line-height:1.6;margin-bottom:30px}
-        .quick-prompts{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:600px}
-        .quick-prompt{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 18px;font-size:0.82rem;color:var(--light);cursor:pointer;transition:all 0.2s;font-family:inherit;text-align:left}
-        .quick-prompt:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 12px rgba(56,189,248,0.15)}
-        .quick-prompt .qp-icon{font-size:1.1rem;margin-bottom:4px}
-        .quick-prompt .qp-text{font-weight:600}
+        .steps-bar{display:flex;align-items:center;gap:4px;margin-bottom:30px;padding:16px 20px;background:var(--card);border:1px solid var(--border);border-radius:14px}
+        .s-step{display:flex;align-items:center;gap:6px;font-size:0.72rem;color:var(--muted);font-weight:600;white-space:nowrap}
+        .s-step.active{color:var(--accent)}
+        .s-step.done{color:var(--green)}
+        .s-dot{width:24px;height:24px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;flex-shrink:0}
+        .s-step.active .s-dot{border-color:var(--accent);background:var(--accent);color:#fff}
+        .s-step.done .s-dot{border-color:var(--green);background:var(--green);color:#fff}
+        .s-line{width:20px;height:2px;background:var(--border);flex-shrink:0}
+        .s-step.done+.s-line{background:var(--green)}
 
-        /* Messages */
-        .msg{display:flex;gap:12px;margin-bottom:20px;max-width:800px;animation:fadeIn 0.3s ease}
-        .msg.user{flex-direction:row-reverse;margin-left:auto}
-        .msg-avatar{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700;flex-shrink:0}
-        .msg.ai .msg-avatar{background:linear-gradient(135deg,var(--accent),var(--sky))}
-        .msg.user .msg-avatar{background:var(--purple)}
-        .msg-bubble{max-width:85%;padding:14px 18px;border-radius:14px;font-size:0.88rem;line-height:1.7}
-        .msg.ai .msg-bubble{background:var(--card);border:1px solid var(--border);border-top-left-radius:4px}
-        .msg.user .msg-bubble{background:linear-gradient(135deg,var(--accent),#1d4ed8);color:#000;border-top-right-radius:4px}
-        .msg-typing{display:flex;gap:4px;padding:14px 18px;background:var(--card);border:1px solid var(--border);border-radius:14px;border-top-left-radius:4px}
-        .msg-typing span{width:8px;height:8px;border-radius:50%;background:var(--muted);animation:bounce 1.4s infinite ease-in-out}
-        .msg-typing span:nth-child(1){animation-delay:0s}
-        .msg-typing span:nth-child(2){animation-delay:0.2s}
-        .msg-typing span:nth-child(3){animation-delay:0.4s}
-        @keyframes bounce{0%,80%,100%{transform:translateY(0);opacity:0.4}40%{transform:translateY(-8px);opacity:1}}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+        .wizard-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;margin-bottom:20px}
+        .wizard-card h2{font-size:1.3rem;font-weight:800;margin-bottom:6px}
+        .wizard-card p{color:var(--muted);font-size:0.88rem;margin-bottom:24px}
 
-        /* Progress Steps */
-        .progress{display:flex;align-items:center;gap:8px;padding:12px 24px;border-bottom:1px solid var(--border);flex-shrink:0;background:var(--bg2)}
-        .step{display:flex;align-items:center;gap:6px;font-size:0.72rem;color:var(--muted);font-weight:600}
-        .step.active{color:var(--accent)}
-        .step.done{color:var(--accent)}
-        .step-dot{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.6rem}
-        .step.active .step-dot{border-color:var(--accent);background:rgba(56,189,248,0.15);color:var(--accent)}
-        .step.done .step-dot{border-color:var(--accent);background:var(--accent);color:#000}
-        .step-line{width:24px;height:2px;background:var(--border)}
-        .step.done+.step-line{background:var(--accent)}
+        .template-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+        .tpl-card{background:var(--bg);border:2px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;text-align:center;transition:all 0.2s}
+        .tpl-card:hover{border-color:var(--sky);transform:translateY(-2px)}
+        .tpl-card.selected{border-color:var(--accent);background:rgba(0,3,201,0.04)}
+        .tpl-card .tpl-icon{width:48px;height:48px;border-radius:10px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin:0 auto 10px}
+        .tpl-card.selected .tpl-icon{border-color:var(--accent);background:rgba(0,3,201,0.08)}
+        .tpl-card .tpl-name{font-weight:700;font-size:0.82rem}
+        .tpl-card .tpl-desc{font-size:0.72rem;color:var(--muted);margin-top:2px}
 
-        /* Input Area */
-        .chat-input-area{padding:16px 24px;border-top:1px solid var(--border);background:var(--bg2);flex-shrink:0}
-        .chat-input-wrap{display:flex;gap:10px;align-items:flex-end;max-width:800px;margin:0 auto}
-        .chat-input{flex:1;padding:14px 18px;background:var(--input);border:1px solid var(--border);color:var(--text);border-radius:12px;font-family:inherit;font-size:0.9rem;outline:none;resize:none;max-height:120px;min-height:48px;line-height:1.5;transition:border-color 0.2s}
-        .chat-input:focus{border-color:var(--accent)}
-        .chat-input::placeholder{color:var(--muted)}
-        .btn-send{width:48px;height:48px;border-radius:12px;background:var(--accent);border:none;color:#000;font-size:1.2rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-        .btn-send:hover{background:#60a5fa;transform:translateY(-1px)}
-        .btn-send:disabled{opacity:0.4;cursor:not-allowed;transform:none}
-        .btn-voice{width:48px;height:48px;border-radius:12px;background:var(--card);border:1px solid var(--border);color:var(--light);font-size:1.2rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-        .btn-voice:hover{border-color:var(--accent);color:var(--accent)}
-        .btn-voice.recording{background:rgba(239,68,68,0.15);border-color:#ef4444;color:#ef4444;animation:pulse-rec 1.2s ease-in-out infinite}
-        @keyframes pulse-rec{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.3)}50%{box-shadow:0 0 0 8px rgba(239,68,68,0)}} 
-        .lang-toggle{padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--light);font-size:0.72rem;font-weight:600;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s}
-        .lang-toggle:hover,.lang-toggle.active{border-color:var(--accent);color:var(--accent)}
-        .input-hint{font-size:0.7rem;color:var(--muted);text-align:center;margin-top:8px}
+        .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+        .form-group{display:flex;flex-direction:column;gap:6px}
+        .form-group.full{grid-column:1/-1}
+        .form-group label{font-size:0.78rem;font-weight:700;color:var(--text)}
+        .form-group input,.form-group textarea,.form-group select{padding:10px 14px;background:var(--input);border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:0.85rem;color:var(--text);outline:none;transition:border-color 0.2s}
+        .form-group input:focus,.form-group textarea:focus{border-color:var(--accent)}
+        .form-group textarea{resize:vertical;min-height:80px}
 
-        /* Loading overlay */
-        .gen-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(6,10,19,0.9);z-index:100;display:none;flex-direction:column;align-items:center;justify-content:center;gap:20px}
-        .gen-overlay.show{display:flex}
-        .gen-spinner{width:60px;height:60px;border-radius:50%;border:4px solid var(--border);border-top-color:var(--accent);animation:spin 0.8s linear infinite}
-        .gen-text{font-size:1.1rem;font-weight:700}
-        .gen-sub{font-size:0.85rem;color:var(--muted)}
-        @keyframes spin{to{transform:rotate(360deg)}}
+        .repeatable-block{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px;position:relative}
+        .repeatable-block .rb-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+        .repeatable-block .rb-title{font-weight:700;font-size:0.82rem;color:var(--accent)}
+        .rb-del{background:none;border:none;color:var(--red);cursor:pointer;font-size:0.78rem;font-weight:600;padding:4px 8px;border-radius:6px;transition:background 0.2s}
+        .rb-del:hover{background:rgba(239,68,68,0.1)}
+        .add-btn{width:100%;padding:10px;background:transparent;border:2px dashed var(--border);border-radius:10px;color:var(--muted);font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px}
+        .add-btn:hover{border-color:var(--accent);color:var(--accent)}
 
-        /* CV Preview in Chat */
-        .cv-preview-wrap{margin-top:12px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-        .cv-preview-header{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--border)}
-        .cv-preview-header span{font-size:0.75rem;font-weight:700;color:var(--accent)}
-        .cv-preview-actions{display:flex;gap:6px}
-        .cv-preview-actions button{padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--light);font-size:0.68rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.2s}
-        .cv-preview-actions button:hover{border-color:var(--accent);color:var(--accent)}
-        .cv-preview-actions .btn-primary{background:var(--accent);color:#000;border-color:var(--accent)}
-        .cv-preview-actions .btn-primary:hover{background:#60a5fa}
-        .cv-preview-frame{width:100%;height:400px;overflow-y:auto;background:#fff;padding:0}
-        .cv-preview-frame::-webkit-scrollbar{width:4px}
-        .cv-preview-frame::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-        .cv-preview-frame .cv-page{transform:scale(0.55);transform-origin:top center;width:182%;margin:0 auto;display:block}
-        .cv-apply-btn{width:100%;padding:12px;margin-top:10px;background:linear-gradient(135deg,var(--accent),var(--sky));color:#000;border:none;border-radius:10px;font-weight:800;font-size:0.9rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:none}
-        .cv-apply-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(56,189,248,0.3)}
+        .btns{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+        .btn{padding:10px 24px;border-radius:10px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:inherit;border:none;transition:all 0.2s;display:flex;align-items:center;gap:8px}
+        .btn-primary{background:var(--accent);color:#fff}
+        .btn-primary:hover{background:#0002a3}
+        .btn-outline{background:transparent;border:1px solid var(--border);color:var(--text)}
+        .btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+
+        .preview-frame{width:100%;height:500px;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff}
+        .preview-frame .cv-page{transform:scale(0.55);transform-origin:top center;width:182%;margin:0 auto;display:block}
+
+        .done-card{text-align:center;padding:50px 30px}
+        .done-icon{width:80px;height:80px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:2rem;color:#fff;margin:0 auto 20px}
+        .done-card h2{font-size:1.5rem;margin-bottom:8px}
+        .done-card p{color:var(--muted);margin-bottom:24px}
+        .done-btns{display:flex;gap:12px;justify-content:center}
+
+        .empty-msg{text-align:center;padding:30px;color:var(--muted);font-size:0.85rem}
+        .empty-msg i{font-size:2rem;margin-bottom:8px;display:block;color:var(--border)}
+
+        .skill-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+        .skill-tag{background:var(--input);border:1px solid var(--border);border-radius:20px;padding:5px 12px;font-size:0.78rem;font-weight:600;display:flex;align-items:center;gap:6px}
+        .skill-tag .skill-del{cursor:pointer;color:var(--red);font-size:0.9rem;line-height:1}
+
+        .hidden{display:none!important}
+
+        @media(max-width:768px){
+            .form-grid{grid-template-columns:1fr}
+            .template-grid{grid-template-columns:repeat(2,1fr)}
+            .steps-bar{overflow-x:auto}
+            .wizard-card{padding:20px}
+        }
+        @media(max-width:480px){
+            .template-grid{grid-template-columns:1fr}
+            .done-btns{flex-direction:column}
+        }
     </style>
 </head>
 <body>
 
-<!-- Topbar -->
 <div class="topbar">
-    <div class="topbar-left">
-        <div class="logo">Q<span>CV</span></div>
-        <span class="badge">AI</span>
-    </div>
+    <div class="logo">Q<span>CV</span></div>
     <div class="topbar-right">
-        <a href="editor.html" class="btn-back" id="btnBack">&#8592; <span id="backText">Back to Editor</span></a>
-        <button class="btn-editor" id="btnToEditor" onclick="openEditorWithData()"><span id="editorBtnText2">Open in Editor</span> &#8594;</button>
+        <a href="editor.html" class="btn-back"><i class="fas fa-arrow-left"></i> Back to Editor</a>
     </div>
 </div>
 
-<!-- Progress -->
-<div class="progress" id="progressBar">
-    <div class="step active" id="step1"><div class="step-dot">1</div> <span class="step-label" data-ar="الاسم" data-en="Name">الاسم</span></div>
-    <div class="step-line"></div>
-    <div class="step" id="step2"><div class="step-dot">2</div> <span class="step-label" data-ar="الوظيفة" data-en="Role">الوظيفة</span></div>
-    <div class="step-line"></div>
-    <div class="step" id="step3"><div class="step-dot">3</div> <span class="step-label" data-ar="الخبرة" data-en="Experience">الخبرة</span></div>
-    <div class="step-line"></div>
-    <div class="step" id="step4"><div class="step-dot">4</div> <span class="step-label" data-ar="المهارات" data-en="Skills">المهارات</span></div>
-    <div class="step-line"></div>
-    <div class="step" id="step5"><div class="step-dot">5</div> <span class="step-label" data-ar="التوليد" data-en="Generate">التوليد</span></div>
-</div>
+<div class="wizard-wrap">
+    <div class="steps-bar" id="stepsBar"></div>
 
-<!-- Chat -->
-<div class="chat-container">
-    <div class="chat-messages" id="chatMessages">
-        <div class="welcome" id="welcomeScreen">
-            <div class="welcome-icon">&#9889;</div>
-            <h1>ابنِ سيرتك الذاتية بـ <span>الذكاء الاصطناعي</span></h1>
-            <p>هسألك كام سؤال خطوة بخطوة، وبعدها هعملك سيرة ذاتية احترافية متوافقة مع أنظمة ATS في ثواني.</p>
-            <div class="quick-prompts">
-                <div class="quick-prompt" onclick="startChat('عايز أعمل سيرة ذاتية احترافية')"><div class="qp-icon">&#128188;</div><div class="qp-text">سيرة ذاتية احترافية</div></div>
-                <div class="quick-prompt" onclick="startChat('محتاج CV لوظيفة مهندس برمجيات')"><div class="qp-icon">&#128187;</div><div class="qp-text">CV لوظيفة تقنية</div></div>
-                <div class="quick-prompt" onclick="startChat('ساعدني أعمل أول سيرة ذاتية')"><div class="qp-icon">&#127891;</div><div class="qp-text">أول CV (خريج جديد)</div></div>
-                <div class="quick-prompt" onclick="startChat('عايز أحدث سيرتي الذاتية')"><div class="qp-icon">&#9998;</div><div class="qp-text">تحديث CV موجود</div></div>
+    <!-- STEP 1: Choose Template -->
+    <div class="wizard-card step-card" id="step1" style="display:none">
+        <h2><i class="fas fa-palette"></i> Choose Your Template</h2>
+        <p>Pick a style for your CV. You can change it later in the editor.</p>
+        <div class="template-grid" id="templateGrid"></div>
+        <div class="btns">
+            <button class="btn btn-primary" onclick="goStep(2)">Continue <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <!-- STEP 2: Personal Info -->
+    <div class="wizard-card step-card" id="step2" style="display:none">
+        <h2><i class="fas fa-user"></i> Personal Information</h2>
+        <p>Start with your basic details.</p>
+        <div class="form-grid">
+            <div class="form-group full"><label>Full Name *</label><input id="fName" placeholder="Ahmed Mohamed"></div>
+            <div class="form-group full"><label>Job Title *</label><input id="fTitle" placeholder="Senior Software Engineer"></div>
+            <div class="form-group"><label>Email</label><input id="fEmail" type="email" placeholder="ahmed@gmail.com"></div>
+            <div class="form-group"><label>Phone</label><input id="fPhone" placeholder="+20 123 456 789"></div>
+            <div class="form-group"><label>Location</label><input id="fLocation" placeholder="Cairo, Egypt"></div>
+            <div class="form-group"><label>LinkedIn</label><input id="fLinkedin" placeholder="linkedin.com/in/ahmed"></div>
+        </div>
+        <div class="btns">
+            <button class="btn btn-outline" onclick="goStep(1)"><i class="fas fa-arrow-left"></i> Back</button>
+            <button class="btn btn-primary" onclick="goStep(3)">Continue <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <!-- STEP 3: Experience -->
+    <div class="wizard-card step-card" id="step3" style="display:none">
+        <h2><i class="fas fa-briefcase"></i> Work Experience</h2>
+        <p>Add your work history. Use numbers and action verbs.</p>
+        <div id="expContainer"></div>
+        <button class="add-btn" onclick="addExp()"><i class="fas fa-plus"></i> Add Experience</button>
+        <div class="btns">
+            <button class="btn btn-outline" onclick="goStep(2)"><i class="fas fa-arrow-left"></i> Back</button>
+            <button class="btn btn-outline" onclick="goStep(4)">Skip</button>
+            <button class="btn btn-primary" onclick="goStep(4)">Continue <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <!-- STEP 4: Education -->
+    <div class="wizard-card step-card" id="step4" style="display:none">
+        <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+        <p>Add your educational background.</p>
+        <div id="eduContainer"></div>
+        <button class="add-btn" onclick="addEdu()"><i class="fas fa-plus"></i> Add Education</button>
+        <div class="btns">
+            <button class="btn btn-outline" onclick="goStep(3)"><i class="fas fa-arrow-left"></i> Back</button>
+            <button class="btn btn-outline" onclick="goStep(5)">Skip</button>
+            <button class="btn btn-primary" onclick="goStep(5)">Continue <i class="fas fa-arrow-right"></i></button>
+        </div>
+    </div>
+
+    <!-- STEP 5: Skills & Summary -->
+    <div class="wizard-card step-card" id="step5" style="display:none">
+        <h2><i class="fas fa-star"></i> Skills & Summary</h2>
+        <p>Add your top skills and a brief professional summary.</p>
+        <div class="form-group full" style="margin-bottom:16px">
+            <label>Skills (press Enter to add)</label>
+            <input id="fSkillInput" placeholder="e.g. JavaScript, React, Python" onkeydown="if(event.key==='Enter'){event.preventDefault();addSkill()}">
+            <div class="skill-tags" id="skillTags"></div>
+        </div>
+        <div class="form-group full">
+            <label>Professional Summary</label>
+            <textarea id="fSummary" rows="4" placeholder="Results-driven professional with 5+ years of experience..."></textarea>
+        </div>
+        <div class="form-group full">
+            <label>Languages</label>
+            <div id="langContainer"></div>
+            <button class="add-btn" onclick="addLang()" style="margin-top:8px"><i class="fas fa-plus"></i> Add Language</button>
+        </div>
+        <div class="btns">
+            <button class="btn btn-outline" onclick="goStep(4)"><i class="fas fa-arrow-left"></i> Back</button>
+            <button class="btn btn-primary" onclick="generateCV()"><i class="fas fa-magic"></i> Generate CV</button>
+        </div>
+    </div>
+
+    <!-- STEP 6: Preview & Done -->
+    <div class="wizard-card step-card" id="step6" style="display:none">
+        <div class="done-card">
+            <div class="done-icon"><i class="fas fa-check"></i></div>
+            <h2>Your CV is Ready!</h2>
+            <p>Preview it below, then open in the full editor to fine-tune.</p>
+            <div class="preview-frame" id="previewFrame">
+                <div class="cv-page" id="previewPage"></div>
+            </div>
+            <div class="done-btns" style="margin-top:20px">
+                <button class="btn btn-primary" onclick="openEditor()"><i class="fas fa-edit"></i> Open in Editor</button>
+                <button class="btn btn-outline" onclick="goStep(5)"><i class="fas fa-arrow-left"></i> Edit Data</button>
+                <button class="btn btn-outline" onclick="startOver()"><i class="fas fa-redo"></i> Start Over</button>
             </div>
         </div>
     </div>
-
-    <!-- Input -->
-    <div class="chat-input-area">
-        <div class="chat-input-wrap">
-            <button class="lang-toggle" id="langToggle" onclick="toggleLang()">AR</button>
-            <textarea class="chat-input" id="chatInput" rows="1" placeholder="Type your answer..." onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
-            <button class="btn-voice" id="btnVoice" onclick="toggleVoice()" title="Voice input">&#127908;</button>
-            <button class="btn-send" id="btnSend" onclick="sendMessage()">&#10148;</button>
-        </div>
-        <div class="input-hint" id="inputHint">Press Enter to send · Shift+Enter for new line · Click &#127908; to speak</div>
-    </div>
 </div>
 
-<!-- Generating Overlay -->
-<div class="gen-overlay" id="genOverlay">
-    <div class="gen-spinner"></div>
-    <div class="gen-text">جاري توليد سيرتك الذاتية...</div>
-    <div class="gen-sub">الذكاء الاصطناعي بيحضرلك سيرة ذاتية احترافية</div>
-</div>
-
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-
-    const firebaseConfig = {apiKey:"AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",authDomain:"qwcv-1cfad.firebaseapp.com",projectId:"qwcv-1cfad",storageBucket:"qwcv-1cfad.firebasestorage.app",messagingSenderId:"792471802122",appId:"1:792471802122:web:808e04099afc90315aaaf3",databaseURL:"https://qwcv-1cfad-default-rtdb.firebaseio.com"};
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    onAuthStateChanged(auth, (user) => {
-        if (!user) { location.replace("login.html"); return; }
-        window.currentUid = user.uid;
-    });
-</script>
 <script src="js/template-engine.js"></script>
-
+<script src="js/notify-sounds.js"></script>
 <script>
-    const API_KEY = '';  // Add your OpenAI API key here
-    const MODEL = 'gpt-4o-mini';
-
-    let chatHistory = [];
-    let userData = {};
-    let step = 0;
-    let isGenerating = false;
+    let currentStep = 1;
+    let selectedTemplate = 'classic';
+    let skills = [];
+    let expCount = 0;
+    let eduCount = 0;
+    let langCount = 0;
     let generatedData = null;
-    let currentLang = 'en'; // 'en' or 'ar'
-    let recognition = null;
-    let isRecording = false;
 
-    const STEPS_EN = [
-        { field: 'name', question: "Hi! I'm your AI CV assistant. Let's build your professional CV step by step.\n\n**What's your full name?**", key: 'name' },
-        { field: 'title', question: "Great! **What's your job title or the role you're targeting?**\n(e.g. Senior Software Engineer, Marketing Manager, UI/UX Designer)", key: 'title' },
-        { field: 'contact', question: "**How can employers reach you?**\nPlease share your:\n- Email\n- Phone number\n- Location (city, country)\n- LinkedIn (optional)\n\nExample: `ahmed@gmail.com | +20 123 456 789 | Cairo, Egypt | linkedin.com/in/ahmed`", key: 'contact' },
-        { field: 'experience', question: "**Tell me about your work experience.**\n\nFor each job, mention:\n- Job title\n- Company name\n- Duration (e.g. 2020 - 2023)\n- 2-3 key achievements (use numbers!)\n\nExample:\n```\nSenior Developer | TechCorp | 2021 - Present\n- Led team of 5 engineers\n- Improved performance by 40%\n\nJunior Developer | StartupX | 2019 - 2021\n- Built REST APIs serving 10K users\n- Reduced bugs by 30%\n```", key: 'experience' },
-        { field: 'education', question: "**What's your educational background?**\n\nDegree, school, and year.\nExample: `B.Sc. Computer Science, Cairo University, 2015 - 2019`", key: 'education' },
-        { field: 'skills', question: "**What are your top technical/Professional skills?**\n\nList them separated by commas.\nExample: `JavaScript, React, Node.js, Python, AWS, Docker, Git`", key: 'skills' },
-        { field: 'summary', question: "**Last one! Write a brief professional summary (2-3 sentences)** about yourself, or type `skip` and I'll write one for you.\n\nThis goes at the top of your CV and highlights your key strengths.", key: 'summary' }
+    const TEMPLATES = [
+        { id:'classic', name:'Classic', desc:'Clean & timeless', icon:'fa-file-alt' },
+        { id:'modern', name:'Modern', desc:'Bold & professional', icon:'fa-rocket' },
+        { id:'minimal', name:'Minimal', desc:'Simple & elegant', icon:'fa-minus' },
+        { id:'ats-safe', name:'ATS Safe', desc:'ATS-friendly', icon:'fa-shield-alt' },
+        { id:'creative', name:'Creative', desc:'Stand out', icon:'fa-paint-brush' },
+        { id:'executive', name:'Executive', desc:'Senior roles', icon:'fa-crown' }
     ];
 
-    const STEPS_AR = [
-        { field: 'name', question: "مرحباً! أنا مساعدك الذكي لبناء السيرة الذاتية. هنشتغل خطوة بخطوة.\n\n**ما هو اسمك الكامل؟**", key: 'name' },
-        { field: 'title', question: "ممتاز! **ما هو الوظيفة أو المنصب الذي تستهدفه؟**\n(مثال: مهندس برمجيات، مدير تسويق، مصمم واجهات)", key: 'title' },
-        { field: 'contact', question: "**ازاي يقدر أصحاب العمل يتواصلوا معاك؟**\nشاركنا:\n- البريد الإلكتروني\n- رقم التليفون\n- المدينة والبلد\n- حساب LinkedIn (اختياري)\n\nمثال: `ahmed@gmail.com | +20 123 456 789 | القاهرة, مصر | linkedin.com/in/ahmed`", key: 'contact' },
-        { field: 'experience', question: "**احكيلنا عن خبراتك العملية.**\n\nلكل وظيفة، اذكر:\n- المسمى الوظيفي\n- اسم الشركة\n- المدة (مثال: 2020 - 2023)\n- 2-3 إنجازات رئيسية (بأرقام!)\n\nمثال:\n```\nSenior Developer | TechCorp | 2021 - Present\n- قاد فريق من 5 مهندسين\n- حسّن الأداء بنسبة 40%\n\nJunior Developer | StartupX | 2019 - 2021\n- بنى APIs تخدم 10 آلاف مستخدم\n- قلل الأخطاء بنسبة 30%\n```", key: 'experience' },
-        { field: 'education', question: "**ما هو مؤهلك الدراسي؟**\n\nالتخصص، الجامعة، والسنة.\nمثال: `بكالوريوس هندسة计算机ات، جامعة القاهرة، 2015 - 2019`", key: 'education' },
-        { field: 'skills', question: "**ما هي أهم مهاراتك التقنية/المهنية؟**\n\nاكتبها مفصولة بفواصل.\nمثال: `JavaScript, React, Node.js, Python, AWS, Docker, Git`", key: 'skills' },
-        { field: 'summary', question: "**آخر حاجة! اكتب ملخص مهني قصير (2-3 جمل)** عن نفسك، أو اكتب `skip` وهكتبلك واحدة.\n\nده بيبقى في أعلى السيرة الذاتية ويوضح نقاط قوتك.", key: 'summary' }
-    ];
-
-    function getSteps() { return currentLang === 'ar' ? STEPS_AR : STEPS_EN; }
-
-    function autoResize(el) {
-        el.style.height = 'auto';
-        el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+    function init() {
+        renderStepsBar();
+        renderTemplates();
+        goStep(1);
+        addLang('Arabic', 'Native');
+        addLang('English', 'Fluent');
     }
 
-    function handleKey(e) {
-        if (e.key === 'Enter' && !e.shiftKey) {
-            e.preventDefault();
-            sendMessage();
-        }
+    function renderStepsBar() {
+        const labels = ['Template','Info','Experience','Education','Skills','Done'];
+        const bar = document.getElementById('stepsBar');
+        bar.innerHTML = labels.map((l,i) => {
+            const num = i+1;
+            let cls = num < currentStep ? 'done' : num === currentStep ? 'active' : '';
+            return `<div class="s-step ${cls}"><div class="s-dot">${num < currentStep ? '<i class="fas fa-check" style="font-size:0.5rem"></i>' : num}</div> ${l}</div>${i < labels.length-1 ? '<div class="s-line"></div>' : ''}`;
+        }).join('');
     }
 
-    function updateProgress() {
-        for (let i = 1; i <= 5; i++) {
-            const el = document.getElementById('step' + i);
-            el.classList.remove('active', 'done');
-        }
-        const progress = Math.min(step, STEPS.length);
-        const mappedStep = Math.min(Math.ceil(progress / 1.5), 5);
-        for (let i = 1; i <= mappedStep; i++) {
-            const el = document.getElementById('step' + i);
-            if (i < mappedStep) el.classList.add('done');
-            else el.classList.add('active');
-        }
+    function renderTemplates() {
+        document.getElementById('templateGrid').innerHTML = TEMPLATES.map(t =>
+            `<div class="tpl-card ${t.id===selectedTemplate?'selected':''}" onclick="selectTemplate('${t.id}')">
+                <div class="tpl-icon"><i class="fas ${t.icon}"></i></div>
+                <div class="tpl-name">${t.name}</div>
+                <div class="tpl-desc">${t.desc}</div>
+            </div>`
+        ).join('');
     }
 
-    function addMessage(text, sender) {
-        const welcome = document.getElementById('welcomeScreen');
-        if (welcome) welcome.remove();
-
-        const msgDiv = document.createElement('div');
-        msgDiv.className = 'msg ' + sender;
-
-        const avatar = document.createElement('div');
-        avatar.className = 'msg-avatar';
-        avatar.textContent = sender === 'ai' ? '&#9889;' : 'You';
-
-        const bubble = document.createElement('div');
-        bubble.className = 'msg-bubble';
-        bubble.innerHTML = formatText(text);
-
-        msgDiv.appendChild(avatar);
-        msgDiv.appendChild(bubble);
-
-        const container = document.getElementById('chatMessages');
-        container.appendChild(msgDiv);
-        container.scrollTop = container.scrollHeight;
-        return bubble;
-    }
-
-    function addTyping() {
-        const msgDiv = document.createElement('div');
-        msgDiv.className = 'msg ai';
-        msgDiv.id = 'typingMsg';
-        msgDiv.innerHTML = '<div class="msg-avatar">&#9889;</div><div class="msg-typing"><span></span><span></span><span></span></div>';
-        document.getElementById('chatMessages').appendChild(msgDiv);
-        document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
-    }
-
-    function removeTyping() {
-        const t = document.getElementById('typingMsg');
-        if (t) t.remove();
-    }
-
-    function formatText(text) {
-        return text
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-            .replace(/`([^`]+)`/g, '<code style="background:rgba(56,189,248,0.15);padding:2px 6px;border-radius:4px;font-size:0.82rem">$1</code>')
-            .replace(/```([\s\S]*?)```/g, '<pre style="background:var(--input);padding:10px;border-radius:8px;margin:8px 0;font-size:0.82rem;overflow-x:auto;border:1px solid var(--border)">$1</pre>')
-            .replace(/\n/g, '<br>');
-    }
-
-    window.startChat = function(text) {
-        addMessage(text, 'user');
-        chatHistory.push({ role: 'user', content: text });
-        step = 0;
-        userData.initialRequest = text;
-        setTimeout(() => {
-            askNextStep();
-        }, 500);
-    };
-
-    // Language Toggle
-    window.toggleLang = function() {
-        currentLang = currentLang === 'en' ? 'ar' : 'en';
-        const btn = document.getElementById('langToggle');
-                btn.textContent = currentLang === 'ar' ? 'EN' : 'AR';
-                btn.classList.toggle('active', currentLang === 'ar');
-                document.getElementById('chatInput').placeholder = currentLang === 'ar' ? 'اكتب إجابتك...' : 'Type your answer...';
-                document.getElementById('inputHint').innerHTML = currentLang === 'ar'
-                    ? 'اضغط Enter للإرسال · Shift+Enter لسطر جديد · اضغط &#127908; للتحدث'
-                    : 'Press Enter to send · Shift+Enter for new line · Click &#127908; to speak';
-                const editorBtnText = document.getElementById('editorBtnText');
-                if (editorBtnText) editorBtnText.textContent = currentLang === 'ar' ? 'فتح في المحرر' : 'Open in Editor';
-                const backText = document.getElementById('backText');
-                if (backText) backText.textContent = currentLang === 'ar' ? 'العودة للمحرر' : 'Back to Editor';
-                const editorBtnText2 = document.getElementById('editorBtnText2');
-                if (editorBtnText2) editorBtnText2.textContent = currentLang === 'ar' ? 'فتح في المحرر' : 'Open in Editor';
-        // Update welcome screen
-        const welcome = document.getElementById('welcomeScreen');
-        if (welcome) {
-            if (currentLang === 'ar') {
-                welcome.innerHTML = `
-                    <div class="welcome-icon">&#9889;</div>
-                    <h1>ابنِ سيرتك الذاتية بـ <span>الذكاء الاصطناعي</span></h1>
-                    <p>هسألك كام سؤال خطوة بخطوة، وبعدها هعملك سيرة ذاتية احترافية متوافقة مع أنظمة ATS في ثواني.</p>
-                    <div class="quick-prompts">
-                        <div class="quick-prompt" onclick="startChat('عايز أعمل سيرة ذاتية احترافية')"><div class="qp-icon">&#128188;</div><div class="qp-text">سيرة ذاتية احترافية</div></div>
-                        <div class="quick-prompt" onclick="startChat('محتاج CV لوظيفة مهندس برمجيات')"><div class="qp-icon">&#128187;</div><div class="qp-text">CV لوظيفة تقنية</div></div>
-                        <div class="quick-prompt" onclick="startChat('ساعدني أعمل أول سيرة ذاتية')"><div class="qp-icon">&#127891;</div><div class="qp-text">أول CV (خريج جديد)</div></div>
-                        <div class="quick-prompt" onclick="startChat('عايز أحدث سيرتي الذاتية')"><div class="qp-icon">&#9998;</div><div class="qp-text">تحديث CV موجود</div></div>
-                    </div>`;
-            } else {
-                welcome.innerHTML = `
-                    <div class="welcome-icon">&#9889;</div>
-                    <h1>Build your CV with <span>AI</span></h1>
-                    <p>I'll ask you a few questions step by step and then generate a professional, ATS-optimized CV for you in seconds.</p>
-                    <div class="quick-prompts">
-                        <div class="quick-prompt" onclick="startChat('I want to build a professional CV')"><div class="qp-icon">&#128188;</div><div class="qp-text">Build a professional CV</div></div>
-                        <div class="quick-prompt" onclick="startChat('I need a CV for a software engineer role')"><div class="qp-icon">&#128187;</div><div class="qp-text">CV for tech role</div></div>
-                        <div class="quick-prompt" onclick="startChat('Help me create my first CV')"><div class="qp-icon">&#127891;</div><div class="qp-text">First CV (fresh grad)</div></div>
-                        <div class="quick-prompt" onclick="startChat('I want to update my existing CV')"><div class="qp-icon">&#9998;</div><div class="qp-text">Update existing CV</div></div>
-                    </div>`;
-            }
-        }
-    };
-
-    // Voice Input (Web Speech API)
-    window.toggleVoice = function() {
-        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-            alert(currentLang === 'ar' ? 'المتصفح لا يدعم التعرف على الصوت' : 'Your browser does not support speech recognition');
-            return;
-        }
-        if (isRecording) {
-            recognition.stop();
-            return;
-        }
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        recognition = new SpeechRecognition();
-        recognition.lang = currentLang === 'ar' ? 'ar-EG' : 'en-US';
-        recognition.continuous = false;
-        recognition.interimResults = true;
-        const voiceBtn = document.getElementById('btnVoice');
-        const chatInput = document.getElementById('chatInput');
-
-        recognition.onstart = function() {
-            isRecording = true;
-            voiceBtn.classList.add('recording');
-            voiceBtn.innerHTML = '&#9632;';
-            chatInput.placeholder = currentLang ==='ar' ? 'جاري الاستماع...' : 'Listening...';
-        };
-        recognition.onresult = function(event) {
-            let transcript = '';
-            for (let i = event.resultIndex; i < event.results.length; i++) {
-                transcript += event.results[i][0].transcript;
-            }
-            chatInput.value = transcript;
-            autoResize(chatInput);
-        };
-        recognition.onend = function() {
-            isRecording = false;
-            voiceBtn.classList.remove('recording');
-            voiceBtn.innerHTML = '&#127908;';
-            chatInput.placeholder = currentLang === 'ar' ? 'اكتب إجابتك...' : 'Type your answer...';
-        };
-        recognition.onerror = function() {
-            isRecording = false;
-            voiceBtn.classList.remove('recording');
-            voiceBtn.innerHTML = '&#127908;';
-            chatInput.placeholder = currentLang === 'ar' ? 'اكتب إجابتك...' : 'Type your answer...';
-        };
-        recognition.start();
-    };
-
-    function askNextStep() {
-        const steps = getSteps();
-        if (step < steps.length) {
-            const s = steps[step];
-            updateProgress();
-            addTyping();
-            setTimeout(() => {
-                removeTyping();
-                addMessage(s.question, 'ai');
-                chatHistory.push({ role: 'assistant', content: s.question });
-                document.getElementById('chatInput').focus();
-            }, 800);
-        } else {
-            generateCV();
-        }
-    }
-
-    window.sendMessage = function() {
-        const input = document.getElementById('chatInput');
-        const text = input.value.trim();
-        if (!text || isGenerating) return;
-
+    function selectTemplate(id) {
+        selectedTemplate = id;
+        renderTemplates();
         if(window.QCVNotify) QCVNotify.click();
-        addMessage(text, 'user');
-        chatHistory.push({ role: 'user', content: text });
-
-        input.value = '';
-        input.style.height = 'auto';
-
-        if (step < getSteps().length) {
-            const s = getSteps()[step];
-            userData[s.key] = text;
-
-            if (s.key === 'contact') {
-                const parts = text.split('|').map(p => p.trim());
-                userData.email = parts[0] || '';
-                userData.phone = parts[1] || '';
-                userData.location = parts[2] || '';
-                userData.linkedin = parts[3] || '';
-            }
-
-            step++;
-            setTimeout(() => askNextStep(), 500);
-        }
-    };
-
-    async function generateCV() {
-        isGenerating = true;
-        document.getElementById('genOverlay').classList.add('show');
-        document.getElementById('chatInput').disabled = true;
-
-        const systemPrompt = `You are a professional CV/Resume writer. Given the user's information, generate a complete, ATS-optimized CV in JSON format.
-
-IMPORTANT: Return ONLY valid JSON, no markdown, no code blocks, no extra text.
-IMPORTANT: The user may write in Arabic or English. Always output the CV content in English (professional CVs should be in English). If the user provides info in Arabic, translate it professionally to English in the CV.
-
-JSON schema:
-{
-    "name": "Full Name",
-    "title": "Job Title",
-    "email": "email",
-    "phone": "phone",
-    "location": "location",
-    "linkedin": "linkedin url",
-    "summary": "Professional summary (2-3 sentences, powerful and keyword-rich)",
-    "experience": [
-        {
-            "role": "Job Title",
-            "company": "Company Name",
-            "duration": "2020 - Present",
-            "description": "- Achievement with numbers\\n- Another achievement"
-        }
-    ],
-    "education": [
-        {
-            "degree": "Degree",
-            "school": "School Name",
-            "duration": "2016 - 2020",
-            "description": "- Details"
-        }
-    ],
-    "skills": ["Skill 1", "Skill 2", "Skill 3"],
-    "languages": [{"name": "Language", "level": "Level"}]
-}
-
-Rules:
-- Make summary impactful with keywords
-- Experience descriptions should start with action verbs and include metrics
-- Skills should be relevant to the target role
-- If user wrote "skip" for summary, write a compelling one based on their experience
-- Keep everything professional and concise
-- If experience or education details are thin, enhance them professionally`;
-
-        const userMsg = `Here's my CV information:\n\nName: ${userData.name || 'Not provided'}\nTarget Role: ${userData.title || 'Not provided'}\nEmail: ${userData.email || ''}\nPhone: ${userData.phone || ''}\nLocation: ${userData.location || ''}\nLinkedIn: ${userData.linkedin || ''}\nExperience: ${userData.experience || 'Not provided'}\nEducation: ${userData.education || 'Not provided'}\nSkills: ${userData.skills || 'Not provided'}\nSummary: ${userData.summary || 'Write one for me'}\n\nInitial request: ${userData.initialRequest || ''}\n\nGenerate my CV as JSON.`;
-
-        try {
-            let result;
-            if (API_KEY) {
-                const res = await fetch('https://api.openai.com/v1/chat/completions', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + API_KEY },
-                    body: JSON.stringify({
-                        model: MODEL,
-                        messages: [
-                            { role: 'system', content: systemPrompt },
-                            ...chatHistory,
-                            { role: 'user', content: userMsg }
-                        ],
-                        temperature: 0.7,
-                        max_tokens: 2000
-                    })
-                });
-                const data = await res.json();
-                result = data.choices[0].message.content;
-            } else {
-                result = generateLocal(userData);
-            }
-
-            let jsonStr = result.trim();
-            if (jsonStr.startsWith('```')) jsonStr = jsonStr.replace(/^```json?\n?/, '').replace(/\n?```$/, '');
-            generatedData = JSON.parse(jsonStr);
-
-            if (!generatedData.name) generatedData.name = userData.name;
-            if (!generatedData.title) generatedData.title = userData.title;
-            if (!generatedData.email) generatedData.email = userData.email;
-            if (!generatedData.phone) generatedData.phone = userData.phone;
-            if (!generatedData.location) generatedData.location = userData.location;
-            if (!generatedData.linkedin) generatedData.linkedin = userData.linkedin;
-            if (!generatedData.skills) generatedData.skills = (userData.skills || '').split(',').map(s => s.trim()).filter(Boolean);
-            if (!generatedData.languages) generatedData.languages = [{ name: 'Arabic', level: 'Native' }, { name: 'English', level: 'Fluent' }];
-
-            document.getElementById('genOverlay').classList.remove('show');
-            isGenerating = false;
-
-            if(window.QCVNotify) QCVNotify.success();
-            addMessage(currentLang === 'ar' ? "سيرتك الذاتية جاهزة! دي معاينة:" : "Your CV is ready! Here's a preview:", 'ai');
-            showCVPreview(generatedData);
-            document.getElementById('btnToEditor').classList.add('show');
-            updateProgress();
-
-        } catch (e) {
-            console.error('AI Error:', e);
-            document.getElementById('genOverlay').classList.remove('show');
-            isGenerating = false;
-            addMessage(currentLang === 'ar' ? "عملتها محلية، دي معاينة:" : "I generated your CV locally. Here's a preview:", 'ai');
-            generatedData = generateLocal(userData);
-            showCVPreview(generatedData);
-            document.getElementById('btnToEditor').classList.add('show');
-        }
     }
 
-    function generateLocal(d) {
-        const expLines = (d.experience || '').split('\n').filter(l => l.trim());
-        const experience = [];
-        let current = null;
-        expLines.forEach(line => {
-            line = line.trim();
-            if (!line) return;
-            if (line.includes('|')) {
-                const parts = line.split('|').map(p => p.trim());
-                current = { role: parts[0] || '', company: parts[1] || '', duration: parts[2] || '', description: '' };
-                experience.push(current);
-            } else if (current) {
-                current.description += (current.description ? '\n' : '') + (line.startsWith('-') ? line : '- ' + line);
-            } else {
-                experience.push({ role: line, company: '', duration: '', description: '' });
-            }
+    function goStep(n) {
+        currentStep = n;
+        document.querySelectorAll('.step-card').forEach(c => c.style.display = 'none');
+        document.getElementById('step'+n).style.display = '';
+        renderStepsBar();
+        window.scrollTo(0, 0);
+    }
+
+    function addExp() {
+        expCount++;
+        const id = 'exp_'+expCount;
+        document.getElementById('expContainer').insertAdjacentHTML('beforeend', `
+            <div class="repeatable-block" id="${id}">
+                <div class="rb-head"><span class="rb-title">Experience #${expCount}</span><button class="rb-del" onclick="document.getElementById('${id}').remove()"><i class="fas fa-trash"></i> Remove</button></div>
+                <div class="form-grid">
+                    <div class="form-group"><label>Job Title</label><input class="exp-role" placeholder="Software Engineer"></div>
+                    <div class="form-group"><label>Company</label><input class="exp-company" placeholder="Google"></div>
+                    <div class="form-group"><label>Duration</label><input class="exp-dur" placeholder="2020 - Present"></div>
+                    <div class="form-group full"><label>Description (one achievement per line, start with -)</label><textarea class="exp-desc" rows="3" placeholder="- Led team of 5 engineers\n- Improved performance by 40%"></textarea></div>
+                </div>
+            </div>
+        `);
+    }
+
+    function addEdu() {
+        eduCount++;
+        const id = 'edu_'+eduCount;
+        document.getElementById('eduContainer').insertAdjacentHTML('beforeend', `
+            <div class="repeatable-block" id="${id}">
+                <div class="rb-head"><span class="rb-title">Education #${eduCount}</span><button class="rb-del" onclick="document.getElementById('${id}').remove()"><i class="fas fa-trash"></i> Remove</button></div>
+                <div class="form-grid">
+                    <div class="form-group"><label>Degree</label><input class="edu-degree" placeholder="B.Sc. Computer Science"></div>
+                    <div class="form-group"><label>School</label><input class="edu-school" placeholder="Cairo University"></div>
+                    <div class="form-group"><label>Duration</label><input class="edu-dur" placeholder="2016 - 2020"></div>
+                    <div class="form-group full"><label>Details</label><textarea class="edu-desc" rows="2" placeholder="- GPA: 3.8/4.0"></textarea></div>
+                </div>
+            </div>
+        `);
+    }
+
+    function addLang(name, level) {
+        langCount++;
+        const id = 'lang_'+langCount;
+        document.getElementById('langContainer').insertAdjacentHTML('beforeend', `
+            <div class="repeatable-block" id="${id}" style="padding:10px 14px">
+                <div style="display:flex;gap:10px;align-items:end">
+                    <div class="form-group" style="flex:1"><label>Language</label><input class="lang-name" value="${name||''}"></div>
+                    <div class="form-group" style="flex:1"><label>Level</label><select class="lang-level">
+                        <option value="Native" ${level==='Native'?'selected':''}>Native</option>
+                        <option value="Fluent" ${level==='Fluent'?'selected':''}>Fluent</option>
+                        <option value="Advanced" ${level==='Advanced'?'selected':''}>Advanced</option>
+                        <option value="Intermediate" ${level==='Intermediate'?'selected':''}>Intermediate</option>
+                        <option value="Basic" ${level==='Basic'?'selected':''}>Basic</option>
+                    </select></div>
+                    <button class="rb-del" onclick="document.getElementById('${id}').remove()" style="margin-bottom:6px"><i class="fas fa-trash"></i></button>
+                </div>
+            </div>
+        `);
+    }
+
+    function addSkill() {
+        const input = document.getElementById('fSkillInput');
+        const val = input.value.trim();
+        if (!val) return;
+        val.split(',').forEach(s => {
+            s = s.trim();
+            if (s && !skills.includes(s)) skills.push(s);
+        });
+        input.value = '';
+        renderSkills();
+        if(window.QCVNotify) QCVNotify.click();
+    }
+
+    function removeSkill(i) {
+        skills.splice(i, 1);
+        renderSkills();
+    }
+
+    function renderSkills() {
+        document.getElementById('skillTags').innerHTML = skills.map((s,i) =>
+            `<span class="skill-tag">${s}<span class="skill-del" onclick="removeSkill(${i})">&times;</span></span>`
+        ).join('');
+    }
+
+    function collectData() {
+        const exps = [];
+        document.querySelectorAll('#expContainer .repeatable-block').forEach(b => {
+            const role = b.querySelector('.exp-role')?.value || '';
+            const company = b.querySelector('.exp-company')?.value || '';
+            const dur = b.querySelector('.exp-dur')?.value || '';
+            const desc = b.querySelector('.exp-desc')?.value || '';
+            if (role || company) exps.push({ role, company, duration: dur, description: desc });
         });
 
-        const eduLines = (d.education || '').split('\n').filter(l => l.trim());
-        const education = eduLines.map(line => {
-            const parts = line.split(',').map(p => p.trim());
-            return { degree: parts[0] || '', school: parts[1] || '', duration: parts[2] || '', description: '' };
+        const edus = [];
+        document.querySelectorAll('#eduContainer .repeatable-block').forEach(b => {
+            const degree = b.querySelector('.edu-degree')?.value || '';
+            const school = b.querySelector('.edu-school')?.value || '';
+            const dur = b.querySelector('.edu-dur')?.value || '';
+            const desc = b.querySelector('.edu-desc')?.value || '';
+            if (degree || school) edus.push({ degree, school, duration: dur, description: desc });
         });
 
-        const skills = (d.skills || '').split(',').map(s => s.trim()).filter(Boolean);
-        const summary = d.summary && d.summary.toLowerCase() !== 'skip'
-            ? d.summary
-            : `Results-driven ${d.title || 'professional'} with experience delivering high-impact results. Skilled in ${skills.slice(0, 3).join(', ')}. Committed to continuous improvement and excellence.`;
+        const langs = [];
+        document.querySelectorAll('#langContainer .repeatable-block').forEach(b => {
+            const name = b.querySelector('.lang-name')?.value || '';
+            const level = b.querySelector('.lang-level')?.value || 'Fluent';
+            if (name) langs.push({ name, level });
+        });
 
         return {
-            name: d.name || 'Your Name',
-            title: d.title || 'Job Title',
-            email: d.email || '',
-            phone: d.phone || '',
-            location: d.location || '',
-            linkedin: d.linkedin || '',
-            summary: summary,
-            experience: experience.length ? experience : [{ role: d.title || '', company: '', duration: '', description: '- Key achievement' }],
-            education: education.length ? education : [{ degree: '', school: '', duration: '', description: '' }],
-            skills: skills.length ? skills : ['Skill 1', 'Skill 2'],
-            languages: [{ name: 'Arabic', level: 'Native' }, { name: 'English', level: 'Fluent' }]
+            name: document.getElementById('fName').value.trim(),
+            title: document.getElementById('fTitle').value.trim(),
+            email: document.getElementById('fEmail').value.trim(),
+            phone: document.getElementById('fPhone').value.trim(),
+            location: document.getElementById('fLocation').value.trim(),
+            linkedin: document.getElementById('fLinkedin').value.trim(),
+            summary: document.getElementById('fSummary').value.trim(),
+            experience: exps,
+            education: edus,
+            skills: skills,
+            languages: langs.length ? langs : [{ name: 'Arabic', level: 'Native' }, { name: 'English', level: 'Fluent' }]
         };
     }
 
-    window.openEditorWithData = function() {
+    function generateCV() {
+        const data = collectData();
+        if (!data.name || !data.title) {
+            alert('Please fill in at least your Name and Job Title.');
+            return;
+        }
+        generatedData = data;
+        if(window.QCVNotify) QCVNotify.success();
+
+        const preview = typeof QCVTemplates !== 'undefined' ? QCVTemplates.render(selectedTemplate, data) : '<div style="padding:40px;text-align:center;color:#999">Preview not available</div>';
+        document.getElementById('previewPage').className = 'cv-page tpl-' + selectedTemplate;
+        document.getElementById('previewPage').innerHTML = preview;
+        goStep(6);
+    }
+
+    function openEditor() {
         if (!generatedData) return;
         try {
             localStorage.setItem('qcv_ai_data', JSON.stringify(generatedData));
             window.location.href = 'editor.html?from=ai';
-        } catch (e) {
-            console.error(e);
-            alert('Error transferring data. Please try again.');
-        }
-    };
-
-    function showCVPreview(data) {
-        const container = document.getElementById('chatMessages');
-        const wrap = document.createElement('div');
-        wrap.className = 'msg ai';
-        wrap.style.maxWidth = '550px';
-
-        const preview = typeof QCVTemplates !== 'undefined' ? QCVTemplates.render('classic', data) : '<div style="padding:40px;text-align:center;color:#666">Preview not available</div>';
-
-        wrap.innerHTML = `
-            <div class="msg-avatar" style="background:linear-gradient(135deg,var(--accent),var(--sky))">&#9889;</div>
-            <div style="max-width:90%">
-                <div class="msg-bubble" style="padding:0;overflow:hidden;border:1px solid var(--border)">
-                    <div class="cv-preview-wrap">
-                        <div class="cv-preview-header">
-                            <span>&#128196; CV Preview</span>
-                            <div class="cv-preview-actions">
-                                <button onclick="changePreviewTpl('modern')">Modern</button>
-                                <button onclick="changePreviewTpl('ats-safe')">ATS</button>
-                                <button onclick="changePreviewTpl('professional')">Pro</button>
-                            </div>
-                        </div>
-                        <div class="cv-preview-frame" id="cvPreviewFrame">
-                            <div class="cv-page tpl-classic" id="cvPreviewPage">${preview}</div>
-                        </div>
-                        <div style="padding:10px 14px">
-                            <button class="cv-apply-btn show" onclick="openEditorWithData()">&#10003; <span id="editorBtnText">Open in Editor</span></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-        container.appendChild(wrap);
-        container.scrollTop = container.scrollHeight;
-
-        window.changePreviewTpl = function(tpl) {
-            if (typeof QCVTemplates === 'undefined') return;
-            const html = QCVTemplates.render(tpl, data);
-            document.getElementById('cvPreviewPage').className = 'cv-page tpl-' + tpl;
-            document.getElementById('cvPreviewPage').innerHTML = html;
-        };
+        } catch(e) { alert('Error. Please try again.'); }
     }
-</script>
 
-<script src="js/notify-sounds.js"></script>
+    function startOver() {
+        generatedData = null;
+        skills = [];
+        expCount = 0;
+        eduCount = 0;
+        document.getElementById('expContainer').innerHTML = '';
+        document.getElementById('eduContainer').innerHTML = '';
+        document.getElementById('fName').value = '';
+        document.getElementById('fTitle').value = '';
+        document.getElementById('fEmail').value = '';
+        document.getElementById('fPhone').value = '';
+        document.getElementById('fLocation').value = '';
+        document.getElementById('fLinkedin').value = '';
+        document.getElementById('fSummary').value = '';
+        renderSkills();
+        addLang('Arabic', 'Native');
+        addLang('English', 'Fluent');
+        goStep(1);
+    }
+
+    init();
+</script>
 </body>
 </html>

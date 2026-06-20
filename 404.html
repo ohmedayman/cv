@@ -7,13 +7,14 @@
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root{--bg:#060913;--card:#0f172a;--border:#1e293b;--accent:#38bdf8;--sky:#2563eb;--text:#fff;--muted:#64748b;--light:#94a3b8}
+        :root{--bg:#f9fafb;--card:#ffffff;--border:#e5e7eb;--accent:#0003c9;--sky:#2563eb;--text:#1a1a2e;--muted:#6b7280;--light:#9ca3af}
         *{box-sizing:border-box;margin:0;padding:0}
         body{background:var(--bg);color:var(--text);font-family:'Cairo',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;position:relative}
 
-        .bg-glow{position:fixed;width:500px;height:500px;border-radius:50%;filter:blur(120px);opacity:0.15;pointer-events:none}
+        .bg-glow{position:fixed;width:500px;height:500px;border-radius:50%;filter:blur(120px);opacity:0.08;pointer-events:none}
         .glow-1{background:var(--accent);top:-15%;right:-10%;animation:float1 8s ease-in-out infinite}
         .glow-2{background:var(--sky);bottom:-15%;left:-10%;animation:float2 10s ease-in-out infinite}
         @keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(-30px,30px)}}
@@ -49,12 +50,12 @@
 <div class="bg-glow glow-2"></div>
 
 <div class="container">
-    <div class="robot">&#129302;</div>
+    <div class="robot"><i class="fas fa-robot"></i></div>
     <div class="error-code">404</div>
     <div class="error-title">الصفحة غير موجودة!</div>
     <div class="error-msg">يبدو إنك وصلت لصفحة مش موجودة أو اتغير رابطها. تأكد من صحة الرابط أو رجع للصفحة الرئيسية.</div>
     <div class="btn-group">
-        <a href="index.html" class="btn btn-primary">&#127968; الصفحة الرئيسية</a>
+        <a href="index.html" class="btn btn-primary"><i class="fas fa-home"></i> الصفحة الرئيسية</a>
         <a href="javascript:history.back()" class="btn btn-ghost">&#8594; رجوع</a>
     </div>
     <div class="links">

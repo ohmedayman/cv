@@ -6,29 +6,30 @@
     <title>إعداد المدير | QCV</title>
     <meta name="robots" content="noindex, nofollow">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         *{box-sizing:border-box;margin:0;padding:0}
-        body{background:#060913;color:#fff;font-family:'Cairo',sans-serif;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}
-        .box{background:#0f172a;border:1px solid #1e293b;border-radius:20px;padding:45px 40px;width:100%;max-width:460px;box-shadow:0 25px 60px rgba(0,0,0,0.5);text-align:center}
+        body{background:#f9fafb;color:#1a1a2e;font-family:'Cairo',sans-serif;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px}
+        .box{background:#ffffff;border:1px solid #e5e7eb;border-radius:20px;padding:45px 40px;width:100%;max-width:460px;box-shadow:0 25px 60px rgba(0,0,0,0.08);text-align:center}
         .logo{font-size:2.5rem;font-weight:900;margin-bottom:8px}
-        .logo span{color:#38bdf8}
-        .sub{color:#64748b;font-size:0.85rem;margin-bottom:30px}
+        .logo span{color:#0003c9}
+        .sub{color:#6b7280;font-size:0.85rem;margin-bottom:30px}
         .input-group{margin-bottom:18px;text-align:right}
-        .input-group label{display:block;font-size:0.82rem;color:#64748b;margin-bottom:6px;font-weight:600}
-        .input-group input{width:100%;padding:14px 16px;background:#060913;border:1px solid #1e293b;color:#fff;border-radius:12px;outline:none;font-family:'Cairo',sans-serif;font-size:0.9rem;transition:all 0.2s}
-        .input-group input:focus{border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,248,0.15)}
-        .btn{width:100%;padding:14px;background:#38bdf8;color:#000;border:none;border-radius:12px;font-weight:800;font-size:1rem;cursor:pointer;font-family:'Cairo',sans-serif;margin-top:10px;transition:all 0.2s}
-        .btn:hover{background:#60a5fa}
+        .input-group label{display:block;font-size:0.82rem;color:#6b7280;margin-bottom:6px;font-weight:600}
+        .input-group input{width:100%;padding:14px 16px;background:#ffffff;border:1px solid #e5e7eb;color:#1a1a2e;border-radius:12px;outline:none;font-family:'Cairo',sans-serif;font-size:0.9rem;transition:all 0.2s}
+        .input-group input:focus{border-color:#0003c9;box-shadow:0 0 0 3px rgba(0,3,201,0.15)}
+        .btn{width:100%;padding:14px;background:#0003c9;color:#ffffff;border:none;border-radius:12px;font-weight:800;font-size:1rem;cursor:pointer;font-family:'Cairo',sans-serif;margin-top:10px;transition:all 0.2s}
+        .btn:hover{background:#0002a8}
         .btn:disabled{opacity:0.5;cursor:not-allowed}
         .msg{margin-top:15px;font-size:0.85rem;font-weight:600}
-        .ok{color:#38bdf8}.err{color:#ef4444}
+        .ok{color:#0003c9}.err{color:#ef4444}
         .blocked{display:none;padding:30px;text-align:center}
         .blocked h2{font-size:1.3rem;color:#ef4444;margin-bottom:12px}
-        .blocked p{color:#94a3b8;font-size:0.9rem;line-height:1.7}
+        .blocked p{color:#6b7280;font-size:0.9rem;line-height:1.7}
         .blocked .icon{font-size:3rem;margin-bottom:16px}
         .links{margin-top:25px}
-        .links a{color:#38bdf8;text-decoration:none;font-weight:700;font-size:0.88rem}
-        .spinner{display:inline-block;width:20px;height:20px;border:3px solid rgba(255,255,255,0.2);border-top-color:#38bdf8;border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:12px}
+        .links a{color:#0003c9;text-decoration:none;font-weight:700;font-size:0.88rem}
+        .spinner{display:inline-block;width:20px;height:20px;border:3px solid rgba(0,0,0,0.1);border-top-color:#0003c9;border-radius:50%;animation:spin 0.7s linear infinite;margin-bottom:12px}
         @keyframes spin{to{transform:rotate(360deg)}}
     </style>
 </head>
@@ -40,14 +41,14 @@
         <!-- Loading -->
         <div id="loadingState">
             <div class="spinner"></div>
-            <p style="color:#64748b;font-size:0.85rem">جاري التحقق...</p>
+            <p style="color:#6b7280;font-size:0.85rem">جاري التحقق...</p>
         </div>
 
         <!-- Blocked state -->
         <div class="blocked" id="blockedState">
-            <div class="icon">🔒</div>
+            <div class="icon"><i class="fas fa-lock"></i></div>
             <h2>تم إعداد المدير بالفعل</h2>
-            <p>تم إنشاء حساب المدير مسبقاً. لا يمكن إنشاء حساب مدير آخر.<br>استخدم حساب المدير الحالي للدخول من <a href="admin.html" style="color:#38bdf8">لوحة التحكم</a></p>
+            <p>تم إنشاء حساب المدير مسبقاً. لا يمكن إنشاء حساب مدير آخر.<br>استخدم حساب المدير الحالي للدخول من <a href="admin.html" style="color:#0003c9">لوحة التحكم</a></p>
         </div>
 
         <!-- Form state -->
@@ -164,7 +165,7 @@
                 msg.className = 'msg ok';
                 msg.textContent = 'تم إنشاء حساب المدير بنجاح! يمكنك الدخول من admin.html';
                 document.getElementById('formState').style.display = 'none';
-                document.getElementById('blockedState').innerHTML = '<div class="icon">✅</div><h2 style="color:#38bdf8">تم إنشاء حساب المدير بنجاح!</h2><p>يمكنك الآن الدخول إلى لوحة التحكم</p><div class="links"><a href="admin.html">الدخول للوحة التحكم ←</a></div>';
+                document.getElementById('blockedState').innerHTML = '<div class="icon">✅</div><h2 style="color:#0003c9">تم إنشاء حساب المدير بنجاح!</h2><p>يمكنك الآن الدخول إلى لوحة التحكم</p><div class="links"><a href="admin.html">الدخول للوحة التحكم ←</a></div>';
                 document.getElementById('blockedState').style.display = 'block';
             } catch (err) {
                 msg.className = 'msg err';

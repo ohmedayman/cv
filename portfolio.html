@@ -18,16 +18,17 @@
     <meta name="twitter:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="templates/templates.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        :root{--bg:#080d1a;--card:#111a2e;--border:#1c2844;--accent:#38bdf8;--sky:#2563eb;--text:#f1f5f9;--muted:#5a6a85}
+        :root{--bg:#f9fafb;--card:#ffffff;--border:#e5e7eb;--accent:#0003c9;--sky:#2563eb;--text:#1a1a2e;--muted:#6b7280;--light:#9ca3af}
         *{box-sizing:border-box;margin:0;padding:0}
         body{background:var(--bg);color:var(--text);font-family:'Inter','Cairo',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center}
 
         .portfolio-header{width:100%;background:var(--card);border-bottom:1px solid var(--border);padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
-        .logo{font-size:1.3rem;font-weight:900;color:#fff;display:flex;align-items:center;gap:6px}
+        .logo{font-size:1.3rem;font-weight:900;color:#1a1a2e;display:flex;align-items:center;gap:6px}
         .logo span{color:var(--accent)}
         .header-actions{display:flex;gap:10px;align-items:center}
         .btn-outline{padding:8px 16px;border:1px solid var(--border);background:transparent;color:var(--light);border-radius:8px;font-weight:600;font-size:0.82rem;cursor:pointer;font-family:inherit;text-decoration:none;transition:all 0.2s}
@@ -36,7 +37,7 @@
         .btn-accent:hover{background:#60a5fa}
 
         .portfolio-container{width:100%;max-width:900px;padding:30px 20px;flex:1;display:flex;justify-content:center;align-items:flex-start}
-        .cv-wrapper{width:210mm;min-height:297mm;background:#fff;color:#1a1a1a;font-size:11px;line-height:1.5;font-family:'Inter','Cairo',sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.5);direction:ltr;text-align:left}
+        .cv-wrapper{width:210mm;min-height:297mm;background:#fff;color:#1a1a1a;font-size:11px;line-height:1.5;font-family:'Inter','Cairo',sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.12);direction:ltr;text-align:left}
 
         .portfolio-footer{text-align:center;padding:30px;color:var(--muted);font-size:0.82rem;width:100%}
         .portfolio-footer a{color:var(--accent);text-decoration:none}
@@ -50,7 +51,16 @@
         .not-found p{color:var(--muted)}
 
         @media print{body{background:#fff}.portfolio-header,.portfolio-footer,.header-actions{display:none!important}.cv-wrapper{box-shadow:none;width:100%}}
-        @media(max-width:800px){.cv-wrapper{width:100%;min-height:auto;transform:none}}
+        @media(max-width:900px){
+            .portfolio-header{padding:12px 16px}
+            .portfolio-container{padding:16px 10px}
+            .cv-wrapper{width:100%;min-height:auto;font-size:10px}
+        }
+        @media(max-width:600px){
+            .cv-wrapper{font-size:9px;padding:12px}
+            .portfolio-header{flex-direction:column;gap:8px;text-align:center}
+            .header-actions{justify-content:center}
+        }
     </style>
 </head>
 <body>
@@ -58,7 +68,7 @@
         <div class="logo">Q<span>CV</span></div>
         <div class="header-actions">
             <a href="index.html" class="btn-outline">الرئيسية</a>
-            <button class="btn-accent" id="downloadBtn" onclick="downloadPDF()">&#11015; تحميل PDF</button>
+            <button class="btn-accent" id="downloadBtn" onclick="downloadPDF()"><i class="fas fa-download"></i> تحميل PDF</button>
         </div>
     </div>
 

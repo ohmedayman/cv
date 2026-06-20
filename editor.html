@@ -7,27 +7,28 @@
     <meta name="robots" content="noindex, nofollow">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="templates/templates.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        :root{--bg:#080d1a;--sidebar:#0c1222;--card:#111a2e;--border:#1c2844;--accent:#38bdf8;--sky:#2563eb;--glow:rgba(56,189,248,0.25);--green:#38bdf8;--red:#ef4444;--yellow:#f59e0b;--text:#f1f5f9;--muted:#5a6a85;--light:#8494ad;--input:#0a0f1e}
+        :root{--bg:#f9fafb;--sidebar:#ffffff;--card:#ffffff;--border:#e5e7eb;--accent:#0003c9;--sky:#2563eb;--glow:rgba(0,3,201,0.25);--green:#0003c9;--red:#ef4444;--yellow:#f59e0b;--text:#1a1a2e;--muted:#6b7280;--light:#9ca3af;--input:#f9fafb}
         *{box-sizing:border-box;margin:0;padding:0}
         body{background:var(--bg);color:var(--text);font-family:'Inter','Cairo',sans-serif;height:100vh;overflow:hidden}
 
         /* ===== TOP BAR ===== */
         .topbar{height:56px;background:var(--sidebar);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:12px;z-index:100;position:relative;direction:ltr}
-        .topbar-logo{font-size:1.4rem;font-weight:900;color:#fff;display:flex;align-items:center;gap:6px;flex-shrink:0}
+        .topbar-logo{font-size:1.4rem;font-weight:900;color:#1a1a2e;display:flex;align-items:center;gap:6px;flex-shrink:0}
         .topbar-logo span{color:var(--accent)}
         .topbar-nav{display:flex;align-items:center;gap:6px;margin-left:16px}
         .topbar-nav a{color:var(--muted);text-decoration:none;font-weight:600;font-size:0.8rem;padding:6px 12px;border-radius:6px;transition:all 0.2s}
-        .topbar-nav a:hover,.topbar-nav a.active{color:var(--text);background:rgba(255,255,255,0.05)}
+        .topbar-nav a:hover,.topbar-nav a.active{color:var(--text);background:rgba(0,0,0,0.05)}
         .topbar-nav a.active{color:var(--accent)}
         .topbar-center{display:flex;align-items:center;gap:10px;flex:1;justify-content:center}
         .ctrl-group{display:flex;align-items:center;gap:5px}
         .ctrl-group label{font-size:0.68rem;color:var(--muted);font-weight:600;white-space:nowrap}
         .ctrl-group input[type="range"]{width:60px;accent-color:var(--accent);cursor:pointer}
-        .ctrl-group select{background:var(--card);border:1px solid var(--border);color:#fff;padding:5px 8px;border-radius:6px;font-size:0.72rem;font-family:inherit;cursor:pointer;outline:none}
+        .ctrl-group select{background:var(--card);border:1px solid var(--border);color:#1a1a2e;padding:5px 8px;border-radius:6px;font-size:0.72rem;font-family:inherit;cursor:pointer;outline:none}
         .ctrl-group select:focus{border-color:var(--accent)}
         .ctrl-group input[type="color"]{width:24px;height:24px;border:1px solid var(--border);border-radius:6px;cursor:pointer;background:none;padding:2px}
         .topbar-left{display:flex;align-items:center;gap:10px;flex-shrink:0}
@@ -37,18 +38,20 @@
         .btn-export:hover{background:#60a5fa;transform:translateY(-1px)}
         .btn-export .spinner{display:none;width:13px;height:13px;border:2px solid rgba(0,0,0,0.2);border-top-color:#000;border-radius:50%;animation:spin 0.7s linear infinite}
         .btn-export.loading .spinner{display:block}.btn-export.loading .exp-text{display:none}
+        .btn-html-export{background:transparent;color:var(--accent);border:1px solid var(--accent);padding:7px 16px;border-radius:7px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:5px;transition:all 0.2s}
+        .btn-html-export:hover{background:rgba(56,189,248,0.1);transform:translateY(-1px)}
         .btn-ai-gen{background:linear-gradient(135deg,rgba(139,92,246,0.2),rgba(37,99,235,0.2));color:#a78bfa;border:1px solid rgba(139,92,246,0.3);padding:7px 14px;border-radius:7px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:none}
         .btn-ai-gen:hover{background:linear-gradient(135deg,rgba(139,92,246,0.3),rgba(37,99,235,0.3));border-color:rgba(139,92,246,0.5);transform:translateY(-1px)}
         @keyframes spin{to{transform:rotate(360deg)}}
         .profile-area{position:relative}
         .profile-trigger{display:flex;align-items:center;gap:8px;cursor:pointer;padding:4px 8px;border-radius:8px;transition:background 0.2s}
-        .profile-trigger:hover{background:rgba(255,255,255,0.05)}
+        .profile-trigger:hover{background:rgba(0,0,0,0.05)}
         .profile-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--sky));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8rem;color:#fff;flex-shrink:0}
-        .profile-name{font-size:0.78rem;font-weight:700;color:#fff}
-        .profile-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:6px;min-width:240px;box-shadow:0 20px 50px rgba(0,0,0,0.6);display:none;z-index:200}
+        .profile-name{font-size:0.78rem;font-weight:700;color:#1a1a2e}
+        .profile-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:6px;min-width:240px;box-shadow:0 20px 50px rgba(0,0,0,0.15);display:none;z-index:200}
         .profile-dropdown.show{display:block;animation:dropIn 0.2s ease}
         @keyframes dropIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-        .profile-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:0;min-width:260px;box-shadow:0 20px 60px rgba(0,0,0,0.5);display:none;z-index:200;overflow:hidden}
+        .profile-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:0;min-width:260px;box-shadow:0 20px 60px rgba(0,0,0,0.12);display:none;z-index:200;overflow:hidden}
         .profile-dropdown.show{display:block;animation:dropIn 0.2s ease}
         @keyframes dropIn{from{opacity:0;transform:translateY(-8px) scale(0.97)}to{opacity:1;transform:translateY(0) scale(1)}}
         .dd-header{padding:20px 18px;display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(56,189,248,0.08),rgba(37,99,235,0.06))}
@@ -61,9 +64,9 @@
         .dd-plan .pn{font-weight:800;font-size:0.82rem;color:var(--accent);background:rgba(56,189,248,0.12);padding:3px 10px;border-radius:6px}
         .dd-section{padding:6px 8px}
         .dd-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;font-size:0.82rem;font-weight:600;color:var(--light);cursor:pointer;transition:all 0.15s}
-        .dd-item:hover{background:rgba(255,255,255,0.06);color:#fff}
-        .dd-item .dd-icon{width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0}
-        .dd-item:hover .dd-icon{background:rgba(255,255,255,0.08)}
+        .dd-item:hover{background:rgba(0,0,0,0.05);color:#1a1a2e}
+        .dd-item .dd-icon{width:30px;height:30px;border-radius:8px;background:rgba(0,0,0,0.04);display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0}
+        .dd-item:hover .dd-icon{background:rgba(0,0,0,0.08)}
         .dd-item.danger{color:var(--red)}
         .dd-item.danger:hover{background:rgba(239,68,68,0.1)}
         .dd-item.danger .dd-icon{background:rgba(239,68,68,0.1)}
@@ -87,18 +90,18 @@
         /* Nav Tabs */
         .nav-tabs{flex:1;padding:12px}
         .nav-tab{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;font-weight:600;font-size:0.82rem;color:var(--light);cursor:pointer;transition:all 0.2s;margin-bottom:4px;position:relative}
-        .nav-tab:hover{background:rgba(255,255,255,0.04);color:var(--text)}
+        .nav-tab:hover{background:rgba(0,0,0,0.04);color:var(--text)}
         .nav-tab.active{background:rgba(56,189,248,0.12);color:var(--accent);font-weight:700}
-        .nav-tab .icon{width:28px;height:28px;border-radius:7px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0}
+        .nav-tab .icon{width:28px;height:28px;border-radius:7px;background:rgba(0,0,0,0.05);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0}
         .nav-tab.active .icon{background:rgba(56,189,248,0.2)}
         .nav-tab .tab-label{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
         .nav-tab .tab-dots{width:22px;height:22px;border:none;background:transparent;color:var(--muted);border-radius:4px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.15s;flex-shrink:0;opacity:0}
         .nav-tab:hover .tab-dots{opacity:1}
-        .nav-tab .tab-dots:hover{background:rgba(255,255,255,0.1);color:var(--text)}
-        .nav-tab-menu{position:absolute;right:0;top:100%;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:6px;z-index:200;min-width:160px;box-shadow:0 10px 30px rgba(0,0,0,0.4);display:none}
+        .nav-tab .tab-dots:hover{background:rgba(0,0,0,0.1);color:var(--text)}
+        .nav-tab-menu{position:absolute;right:0;top:100%;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:6px;z-index:200;min-width:160px;box-shadow:0 10px 30px rgba(0,0,0,0.12);display:none}
         .nav-tab-menu.show{display:block;animation:panelUp 0.15s ease}
         .nav-tab-menu button{display:flex;align-items:center;gap:8px;width:100%;padding:8px 12px;border:none;background:transparent;color:var(--text);font-size:0.78rem;font-weight:600;border-radius:6px;cursor:pointer;font-family:inherit;transition:all 0.15s;text-align:left}
-        .nav-tab-menu button:hover{background:rgba(255,255,255,0.06)}
+        .nav-tab-menu button:hover{background:rgba(0,0,0,0.05)}
         .nav-tab-menu button.danger{color:#ef4444}
         .nav-tab-menu button.danger:hover{background:rgba(239,68,68,0.1)}
         .nav-tab-menu .menu-divider{height:1px;background:var(--border);margin:4px 0}
@@ -110,7 +113,7 @@
 
         .sidebar-bottom{padding:12px;border-top:1px solid var(--border)}
         .sidebar-feature{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:7px;font-size:0.78rem;color:var(--light);cursor:pointer;transition:all 0.2s;margin-bottom:3px}
-        .sidebar-feature:hover{background:rgba(255,255,255,0.04)}
+        .sidebar-feature:hover{background:rgba(0,0,0,0.04)}
         .sidebar-feature .pro-badge{background:var(--accent);color:#000;font-size:0.55rem;padding:1px 5px;border-radius:4px;font-weight:700;margin-right:auto}
 
         /* Template Gallery Panel */
@@ -119,14 +122,14 @@
         .tpl-panel-header{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
         .tpl-panel-header h2{font-size:1.1rem;font-weight:800}
         .tpl-close{background:none;border:1px solid var(--border);color:var(--light);width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center}
-        .tpl-close:hover{background:rgba(255,255,255,0.05)}
+        .tpl-close:hover{background:rgba(0,0,0,0.05)}
         .tpl-filters{display:flex;gap:8px;padding:12px 24px;border-bottom:1px solid var(--border);flex-wrap:wrap}
         .tpl-filter{padding:6px 14px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:0.75rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.2s}
         .tpl-filter:hover{border-color:var(--accent);color:var(--accent)}
         .tpl-filter.active{background:var(--accent);color:#000;border-color:var(--accent)}
         .tpl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;padding:20px 24px;overflow-y:auto;flex:1}
         .tpl-card{background:var(--card);border:2px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;transition:all 0.25s ease;position:relative;overflow:hidden}
-        .tpl-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+        .tpl-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.1)}
         .tpl-card.selected{border-color:var(--accent);box-shadow:0 0 20px var(--glow)}
         .tpl-card.locked{opacity:0.5;cursor:pointer}
         .tpl-card.locked:hover{opacity:0.7;border-color:#f59e0b;transform:translateY(-4px)}
@@ -149,11 +152,11 @@
         .field{margin-bottom:14px}
         .field label{display:flex;align-items:center;justify-content:space-between;font-size:0.72rem;color:var(--muted);margin-bottom:6px;font-weight:600}
         .field label .char-count{font-size:0.62rem;color:var(--muted);font-weight:400}
-        .field input,.field textarea,.field select{width:100%;padding:10px 12px;background:var(--input);border:1px solid var(--border);color:#fff;border-radius:8px;font-family:inherit;font-size:0.85rem;outline:none;transition:border-color 0.2s}
+        .field input,.field textarea,.field select{width:100%;padding:10px 12px;background:var(--input);border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:inherit;font-size:0.85rem;outline:none;transition:border-color 0.2s}
         .field input:focus,.field textarea:focus{border-color:var(--accent)}
         .field textarea{resize:vertical;min-height:80px;line-height:1.6}
         .field-hint{font-size:0.65rem;color:var(--muted);margin-top:4px;font-style:italic}
-        .repeater-block{background:rgba(0,0,0,0.2);border:1px dashed var(--border);border-radius:7px;padding:10px;margin-bottom:8px}
+        .repeater-block{background:rgba(0,0,0,0.04);border:1px dashed var(--border);border-radius:7px;padding:10px;margin-bottom:8px}
         .rb-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
         .rb-title{font-size:0.72rem;font-weight:700;color:var(--light)}
         .btn-rb-delete{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);color:var(--red);border-radius:5px;padding:3px 8px;font-size:0.65rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.15s}
@@ -179,14 +182,14 @@
         .ai-detail-row .label{color:var(--muted)}
         .ai-detail-row .value{font-weight:700}
         .ai-recs{margin-top:10px;max-height:150px;overflow-y:auto}
-        .ai-rec{padding:8px;border-radius:6px;font-size:0.68rem;margin-bottom:4px;background:rgba(255,255,255,0.03);border:1px solid var(--border)}
+        .ai-rec{padding:8px;border-radius:6px;font-size:0.68rem;margin-bottom:4px;background:rgba(0,0,0,0.03);border:1px solid var(--border)}
         .ai-rec.warning{border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.05)}
         .ai-rec.critical{border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.05)}
         .ai-rec.success{border-color:rgba(56,189,248,0.3);background:rgba(56,189,248,0.05)}
         .ai-rec .rec-title{font-weight:700;margin-bottom:2px}
 
         /* Job Match Tab */
-        .job-match-input{width:100%;min-height:100px;padding:10px;background:var(--input);border:1px solid var(--border);color:#fff;border-radius:8px;font-family:inherit;font-size:0.82rem;resize:vertical;outline:none}
+        .job-match-input{width:100%;min-height:100px;padding:10px;background:var(--input);border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:inherit;font-size:0.82rem;resize:vertical;outline:none}
         .job-match-input:focus{border-color:var(--accent)}
         .btn-match{width:100%;padding:10px;background:var(--accent);color:#000;border:none;border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;margin-top:8px;transition:all 0.2s}
         .btn-match:hover{background:#60a5fa}
@@ -208,11 +211,11 @@
         .portfolio-link-box{margin-top:10px;padding:10px;background:rgba(37,99,235,0.06);border:1px solid rgba(37,99,235,0.15);border-radius:8px}
         .portfolio-link-box .pl-title{font-size:0.72rem;font-weight:700;color:var(--sky);margin-bottom:6px}
         .portfolio-url{display:flex;gap:6px}
-        .portfolio-url input{flex:1;padding:6px 8px;background:var(--input);border:1px solid var(--border);color:#fff;border-radius:5px;font-size:0.7rem;font-family:monospace}
+        .portfolio-url input{flex:1;padding:6px 8px;background:var(--input);border:1px solid var(--border);color:#1a1a2e;border-radius:5px;font-size:0.7rem;font-family:monospace}
         .portfolio-url button{padding:6px 12px;background:var(--sky);color:#fff;border:none;border-radius:5px;font-size:0.7rem;font-weight:700;cursor:pointer;font-family:inherit}
 
         /* Right - Preview */
-        .preview-zone{flex:1;background:#080c16;display:flex;flex-direction:column;align-items:center;overflow:hidden}
+        .preview-zone{flex:1;background:#e5e7eb;display:flex;flex-direction:column;align-items:center;overflow:hidden}
         .preview-container{flex:1;display:flex;justify-content:center;align-items:flex-start;padding:24px;overflow-y:auto;width:100%;position:relative}
         .ai-cv-badge{position:absolute;top:10px;right:10px;background:linear-gradient(135deg,rgba(139,92,246,0.2),rgba(37,99,235,0.2));border:1px solid rgba(139,92,246,0.3);color:#a78bfa;font-size:0.7rem;font-weight:700;padding:5px 12px;border-radius:20px;z-index:5;display:flex;align-items:center;gap:4px;backdrop-filter:blur(8px)}
         .zoom-controls{display:flex;align-items:center;gap:8px;padding:10px 20px;background:var(--sidebar);border-top:1px solid var(--border);width:100%;justify-content:center;position:sticky;bottom:0;z-index:10}
@@ -230,8 +233,8 @@
         .section-modal{background:var(--card);border:1px solid var(--border);border-radius:18px;width:100%;max-width:420px;animation:panelUp 0.25s cubic-bezier(0.16,1,0.3,1)}
         .section-modal-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
         .section-modal-header h2{font-size:1rem;font-weight:800}
-        .section-modal-close{width:30px;height:30px;border-radius:7px;background:rgba(255,255,255,0.05);border:none;color:var(--light);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
-        .section-modal-close:hover{background:rgba(255,255,255,0.1);color:#fff}
+        .section-modal-close{width:30px;height:30px;border-radius:7px;background:rgba(0,0,0,0.05);border:none;color:var(--light);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+        .section-modal-close:hover{background:rgba(0,0,0,0.1);color:#1a1a2e}
         .section-modal-body{padding:16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
         .section-option{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 12px;border:2px solid var(--border);border-radius:12px;cursor:pointer;transition:all 0.2s;background:transparent;color:var(--text);font-family:inherit}
         .section-option:hover{border-color:var(--accent);background:rgba(56,189,248,0.05);transform:translateY(-2px)}
@@ -247,12 +250,12 @@
         @keyframes panelUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
         .panel-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
         .panel-header h2{font-size:1rem;font-weight:800}
-        .panel-close{width:30px;height:30px;border-radius:7px;background:rgba(255,255,255,0.05);border:none;color:var(--light);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
-        .panel-close:hover{background:rgba(255,255,255,0.1);color:#fff}
+        .panel-close{width:30px;height:30px;border-radius:7px;background:rgba(0,0,0,0.05);border:none;color:var(--light);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+        .panel-close:hover{background:rgba(0,0,0,0.1);color:#1a1a2e}
         .panel-body{padding:20px;overflow-y:auto;flex:1}
         .panel-field{margin-bottom:14px}
         .panel-field label{display:block;font-size:0.72rem;color:var(--muted);margin-bottom:5px;font-weight:600}
-        .panel-field input,.panel-field textarea{width:100%;padding:9px 10px;background:var(--input);border:1px solid var(--border);color:#fff;border-radius:7px;font-family:inherit;font-size:0.82rem;outline:none}
+        .panel-field input,.panel-field textarea{width:100%;padding:9px 10px;background:var(--input);border:1px solid var(--border);color:#1a1a2e;border-radius:7px;font-family:inherit;font-size:0.82rem;outline:none}
         .panel-field input:focus,.panel-field textarea:focus{border-color:var(--accent)}
         .panel-btn{padding:10px 20px;border-radius:7px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;border:none;width:100%;transition:all 0.2s}
         .panel-btn-primary{background:var(--accent);color:#000}
@@ -270,8 +273,38 @@
         .cv-list-item .cv-delete{background:none;border:none;color:var(--red);cursor:pointer;font-size:0.8rem;padding:4px}
 
         @media print{body,.topbar,.sidebar-nav,.editor-forms,.mobile-overlay,.template-panel,.zoom-controls{display:none!important}.preview-zone{padding:0;background:#fff}.preview-container{padding:0}.cv-page{box-shadow:none!important;margin:0!important}}
-        @media(max-width:1200px){.topbar-center{display:none}.editor-forms{width:360px;min-width:360px}}
-        @media(max-width:900px){.sidebar-nav{display:none}.editor-forms{width:100%;min-width:100%}.preview-zone{display:none}}
+        /* ===== RESPONSIVE ===== */
+        @media(max-width:1200px){
+            .sidebar-nav{width:220px;min-width:220px}
+            .preview-zone{flex:1}
+        }
+        @media(max-width:900px){
+            .editor-layout{flex-direction:column}
+            .sidebar-nav{width:100%;max-height:50vh;border-right:none;border-bottom:1px solid var(--border);min-width:auto}
+            .preview-zone{min-height:50vh}
+            .topbar{padding:0 12px}
+            .topbar-nav{display:none}
+            .topbar-center{flex:1}
+            .topbar-left{gap:6px}
+            .btn-export,.btn-html-export{padding:6px 10px;font-size:0.72rem}
+        }
+        @media(max-width:600px){
+            .sidebar-nav{max-height:40vh;overflow-y:auto}
+            .nav-tabs{padding:12px}
+            .nav-tab{font-size:0.75rem}
+            .field input,.field textarea,.field select{font-size:0.82rem;padding:8px 10px}
+            .preview-zone{padding:8px}
+            .cv-page{transform:scale(0.5);transform-origin:top center}
+            .topbar-logo{font-size:1.1rem}
+            .topbar-center select{font-size:0.72rem;max-width:100px}
+            .add-section-btn{font-size:0.7rem;padding:5px 8px}
+            .profile-dropdown{width:280px;right:-20px}
+        }
+        @media(max-width:400px){
+            .cv-page{transform:scale(0.4)}
+            .topbar{flex-wrap:wrap;height:auto;padding:8px 12px;gap:8px}
+            .topbar-center{order:3;width:100%}
+        }
     </style>
 </head>
 <body>
@@ -336,9 +369,10 @@
         </div>
     </div>
     <div class="topbar-left">
-        <button class="btn-save" onclick="saveToFirebase()">&#128190; Save</button>
-        <button class="btn-ai-gen" id="btnAiGen" onclick="window.open('ai.html')" style="display:none">&#10024; AI Generate</button>
-        <button class="btn-export" id="exportBtn" onclick="exportPDF()"><span class="exp-text">&#128196; Export PDF</span><div class="spinner"></div></button>
+        <button class="btn-save" onclick="saveToFirebase()"><i class="fas fa-save"></i> Save</button>
+        <button class="btn-ai-gen" id="btnAiGen" onclick="window.open('ai.html')" style="display:none"><i class="fas fa-robot"></i> AI Generate</button>
+        <button class="btn-export" id="exportBtn" onclick="exportPDF()"><span class="exp-text"><i class="fas fa-file-pdf"></i> Export PDF</span><div class="spinner"></div></button>
+
         <div class="profile-area">
             <div class="profile-trigger" onclick="toggleProfile()">
                 <div class="profile-avatar" id="userAvatar">U</div>
@@ -359,21 +393,21 @@
                 <div class="dd-subscription" id="ddSubscription" style="display:none">
                     <div class="dd-sub-row"><span class="dd-sub-label">Downloads</span><span class="dd-sub-value" id="ddDownloads">0 / 1</span></div>
                     <div class="dd-sub-row"><span class="dd-sub-label">Expires</span><span class="dd-sub-value" id="ddExpiry">-</span></div>
-                    <button class="dd-upgrade-btn" onclick="window.location.href='pay.html'">&#11088; Upgrade Plan</button>
+                    <button class="dd-upgrade-btn" onclick="window.location.href='pay.html'"><i class="fas fa-star"></i> Upgrade Plan</button>
                 </div>
                 <div class="dd-section">
-                    <div class="dd-item" onclick="openPanel('profile')"><span class="dd-icon">&#128100;</span> Profile</div>
-                    <div class="dd-item" onclick="openPanel('cvs')"><span class="dd-icon">&#128196;</span> My CVs</div>
-                    <div class="dd-item" onclick="openPanel('settings')"><span class="dd-icon">&#9881;</span> Settings</div>
-                </div>
-                <div class="dd-divider"></div>
-                <div class="dd-section">
-                    <div class="dd-item" onclick="window.open('help.html')"><span class="dd-icon">&#10067;</span> Help Center</div>
-                    <div class="dd-item" onclick="window.open('index.html')"><span class="dd-icon">&#127968;</span> Home</div>
+                    <div class="dd-item" onclick="openPanel('profile')"><span class="dd-icon"><i class="fas fa-user"></i></span> Profile</div>
+                    <div class="dd-item" onclick="openPanel('cvs')"><span class="dd-icon"><i class="fas fa-file-alt"></i></span> My CVs</div>
+                    <div class="dd-item" onclick="openPanel('settings')"><span class="dd-icon"><i class="fas fa-cog"></i></span> Settings</div>
                 </div>
                 <div class="dd-divider"></div>
                 <div class="dd-section">
-                    <div class="dd-item danger" onclick="logout()"><span class="dd-icon">&#128682;</span> Logout</div>
+                    <div class="dd-item" onclick="window.open('help.html')"><span class="dd-icon"><i class="fas fa-question-circle"></i></span> Help Center</div>
+                    <div class="dd-item" onclick="window.open('index.html')"><span class="dd-icon"><i class="fas fa-home"></i></span> Home</div>
+                </div>
+                <div class="dd-divider"></div>
+                <div class="dd-section">
+                    <div class="dd-item danger" onclick="logout()"><span class="dd-icon"><i class="fas fa-sign-out-alt"></i></span> Logout</div>
                 </div>
             </div>
         </div>
@@ -387,14 +421,14 @@
 
         <!-- My CVs Button -->
         <div style="padding:12px 14px 8px">
-            <button onclick="openPanel('cvs')" style="width:100%;padding:11px 16px;background:linear-gradient(135deg,rgba(56,189,248,0.12),rgba(37,99,235,0.12));border:1px solid rgba(56,189,248,0.2);color:#fff;border-radius:12px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:'Cairo',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.2s" onmouseover="this.style.borderColor='rgba(56,189,248,0.4)';this.style.transform='translateY(-1px)'" onmouseout="this.style.borderColor='rgba(56,189,248,0.2)';this.style.transform='none'">
-                <span style="font-size:1.1rem">&#128196;</span> My CVs
+            <button onclick="openPanel('cvs')" style="width:100%;padding:11px 16px;background:linear-gradient(135deg,rgba(56,189,248,0.12),rgba(37,99,235,0.12));border:1px solid rgba(56,189,248,0.2);color:#1a1a2e;border-radius:12px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:'Cairo',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.2s" onmouseover="this.style.borderColor='rgba(56,189,248,0.4)';this.style.transform='translateY(-1px)'" onmouseout="this.style.borderColor='rgba(56,189,248,0.2)';this.style.transform='none'">
+                <span style="font-size:1.1rem"><i class="fas fa-file-alt"></i></span> My CVs
             </button>
         </div>
 
         <!-- AI Score Widget (paid only) -->
         <div class="ai-score-widget" id="aiScoreWidget">
-            <div class="ai-score-header"><h3>&#9889; CV Score</h3></div>
+            <div class="ai-score-header"><h3><i class="fas fa-bolt"></i> CV Score</h3></div>
             <div class="ai-score-ring">
                 <svg viewBox="0 0 100 100"><circle class="ring-bg" cx="50" cy="50" r="42"/><circle class="ring-fill" id="scoreRing" cx="50" cy="50" r="42" stroke-dasharray="264" stroke-dashoffset="264"/></svg>
                 <div class="ai-score-value" id="scoreValue">0</div>
@@ -406,7 +440,7 @@
 
         <div class="nav-tabs" id="navTabs">
             <div class="nav-tab active" data-section="personal" onclick="switchTab('personal',this)">
-                <span class="icon">&#128100;</span><span class="tab-label">Personal Info</span>
+                <span class="icon"><i class="fas fa-user"></i></span><span class="tab-label">Personal Info</span>
                 <button class="tab-dots" onclick="event.stopPropagation();toggleTabMenu(this)">&#8942;</button>
                 <div class="nav-tab-menu">
                     <button onclick="renameTabPrompt('personal')">&#9998; Rename</button>
@@ -417,7 +451,7 @@
                 </div>
             </div>
             <div class="nav-tab" data-section="experience" onclick="switchTab('experience',this)">
-                <span class="icon">&#128188;</span><span class="tab-label">Work Experience</span>
+                <span class="icon"><i class="fas fa-briefcase"></i></span><span class="tab-label">Work Experience</span>
                 <button class="tab-dots" onclick="event.stopPropagation();toggleTabMenu(this)">&#8942;</button>
                 <div class="nav-tab-menu">
                     <button onclick="renameTabPrompt('experience')">&#9998; Rename</button>
@@ -428,7 +462,7 @@
                 </div>
             </div>
             <div class="nav-tab" data-section="education" onclick="switchTab('education',this)">
-                <span class="icon">&#127891;</span><span class="tab-label">Education</span>
+                <span class="icon"><i class="fas fa-graduation-cap"></i></span><span class="tab-label">Education</span>
                 <button class="tab-dots" onclick="event.stopPropagation();toggleTabMenu(this)">&#8942;</button>
                 <div class="nav-tab-menu">
                     <button onclick="renameTabPrompt('education')">&#9998; Rename</button>
@@ -439,7 +473,7 @@
                 </div>
             </div>
             <div class="nav-tab" data-section="skills" onclick="switchTab('skills',this)">
-                <span class="icon">&#128736;</span><span class="tab-label">Skills</span>
+                <span class="icon"><i class="fas fa-tools"></i></span><span class="tab-label">Skills</span>
                 <button class="tab-dots" onclick="event.stopPropagation();toggleTabMenu(this)">&#8942;</button>
                 <div class="nav-tab-menu">
                     <button onclick="renameTabPrompt('skills')">&#9998; Rename</button>
@@ -450,7 +484,7 @@
                 </div>
             </div>
             <div class="nav-tab" data-section="languages" onclick="switchTab('languages',this)">
-                <span class="icon">&#127760;</span><span class="tab-label">Languages</span>
+                <span class="icon"><i class="fas fa-globe"></i></span><span class="tab-label">Languages</span>
                 <button class="tab-dots" onclick="event.stopPropagation();toggleTabMenu(this)">&#8942;</button>
                 <div class="nav-tab-menu">
                     <button onclick="renameTabPrompt('languages')">&#9998; Rename</button>
@@ -461,7 +495,7 @@
                 </div>
             </div>
             <div class="nav-tab paid-only" data-section="jobmatch" id="jobmatchTab" onclick="switchTab('jobmatch',this)" style="display:none">
-                <span class="icon">&#127919;</span><span class="tab-label">Job Match</span>
+                <span class="icon"><i class="fas fa-crosshairs"></i></span><span class="tab-label">Job Match</span>
                 <button class="tab-dots" onclick="event.stopPropagation();toggleTabMenu(this)">&#8942;</button>
                 <div class="nav-tab-menu">
                     <button onclick="renameTabPrompt('jobmatch')">&#9998; Rename</button>
@@ -484,9 +518,9 @@
         </div>
 
         <div class="sidebar-bottom">
-            <div class="sidebar-feature" onclick="showTemplates()"><span class="icon">&#128196;</span> Change Template</div>
-            <div class="sidebar-feature paid-only" id="aiAssistantBtn" onclick="window.open('ai.html')" style="display:none"><span class="icon">&#10024;</span> AI Assistant</div>
-            <div class="sidebar-feature" onclick="window.open('help.html')"><span class="icon">&#10067;</span> Help</div>
+            <div class="sidebar-feature" onclick="showTemplates()"><span class="icon"><i class="fas fa-file-alt"></i></span> Change Template</div>
+            <div class="sidebar-feature paid-only" id="aiAssistantBtn" onclick="window.open('ai.html')" style="display:none"><span class="icon"><i class="fas fa-brain"></i></span> AI Assistant</div>
+            <div class="sidebar-feature" onclick="window.open('help.html')"><span class="icon"><i class="fas fa-question-circle"></i></span> Help</div>
         </div>
     </div>
 
@@ -494,7 +528,7 @@
     <div class="editor-forms">
         <!-- Personal Info -->
         <div class="form-card active" id="tab-personal">
-            <div class="form-card-header"><span class="icon">&#128100;</span><h3>Personal Info</h3></div>
+            <div class="form-card-header"><span class="icon"><i class="fas fa-user"></i></span><h3>Personal Info</h3></div>
             <div class="field"><label>Full Name</label><input type="text" id="inputName" oninput="renderCV()" placeholder="John Doe"></div>
             <div class="field"><label>Job Title</label><input type="text" id="inputTitle" oninput="renderCV()" placeholder="UI/UX Designer"></div>
             <div class="field"><label>Email</label><input type="email" id="inputEmail" oninput="renderCV()" placeholder="john@example.com"></div>
@@ -506,34 +540,34 @@
 
         <!-- Experience -->
         <div class="form-card" id="tab-experience">
-            <div class="form-card-header"><span class="icon">&#128188;</span><h3>Work Experience</h3></div>
+            <div class="form-card-header"><span class="icon"><i class="fas fa-briefcase"></i></span><h3>Work Experience</h3></div>
             <div id="expContainer"></div>
             <button class="btn-add" onclick="addExp()">+ Add Experience</button>
         </div>
 
         <!-- Education -->
         <div class="form-card" id="tab-education">
-            <div class="form-card-header"><span class="icon">&#127891;</span><h3>Education</h3></div>
+            <div class="form-card-header"><span class="icon"><i class="fas fa-graduation-cap"></i></span><h3>Education</h3></div>
             <div id="eduContainer"></div>
             <button class="btn-add" onclick="addEdu()">+ Add Education</button>
         </div>
 
         <!-- Skills -->
         <div class="form-card" id="tab-skills">
-            <div class="form-card-header"><span class="icon">&#128736;</span><h3>Skills</h3></div>
+            <div class="form-card-header"><span class="icon"><i class="fas fa-tools"></i></span><h3>Skills</h3></div>
             <div class="field"><label>Skills <span class="char-count">(one per line)</span></label><textarea id="inputSkills" oninput="renderCV()" placeholder="UI Design, Figma, Prototyping&#10;User Research, Wireframing&#10;Design Systems, CSS" style="min-height:150px"></textarea></div>
         </div>
 
         <!-- Languages -->
         <div class="form-card" id="tab-languages">
-            <div class="form-card-header"><span class="icon">&#127760;</span><h3>Languages</h3></div>
+            <div class="form-card-header"><span class="icon"><i class="fas fa-globe"></i></span><h3>Languages</h3></div>
             <div id="langContainer"></div>
             <button class="btn-add" onclick="addLang()">+ Add Language</button>
         </div>
 
         <!-- Job Match (paid only) -->
         <div class="form-card paid-only" id="tab-jobmatch" style="display:none">
-            <div class="form-card-header"><span class="icon">&#127919;</span><h3>Job Match</h3></div>
+            <div class="form-card-header"><span class="icon"><i class="fas fa-crosshairs"></i></span><h3>Job Match</h3></div>
             <div class="field"><label>Paste job posting here</label>
                 <textarea class="job-match-input" id="jobDescInput" placeholder="Paste the job posting here...\n\nExample: We are looking for a frontend developer with experience in React and Angular..."></textarea>
             </div>
@@ -545,7 +579,7 @@
     <!-- Preview -->
     <div class="preview-zone">
         <div class="preview-container" id="previewContainer">
-            <div class="ai-cv-badge" id="aiCvBadge" style="display:none">&#10024; AI Enhanced</div>
+            <div class="ai-cv-badge" id="aiCvBadge" style="display:none"><i class="fas fa-magic"></i> AI Enhanced</div>
             <div class="cv-page tpl-classic" id="cvPage"></div>
             <div class="add-page-btn" onclick="addNewPage()" title="Add Section">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -593,7 +627,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-    import { getDatabase, ref, get, set, push, onValue } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
+    import { getDatabase, ref, get, set, push, onValue, query, orderByValue, equalTo } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
 
     const firebaseConfig = {apiKey:"AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",authDomain:"qwcv-1cfad.firebaseapp.com",projectId:"qwcv-1cfad",storageBucket:"qwcv-1cfad.firebasestorage.app",messagingSenderId:"792471802122",appId:"1:792471802122:web:808e04099afc90315aaaf3",databaseURL:"https://qwcv-1cfad-default-rtdb.firebaseio.com"};
     const app = initializeApp(firebaseConfig);
@@ -646,9 +680,35 @@
         }
         window.currentUid=user.uid;
 
-        // Set portfolio URL
-        const username = (userData.name || user.displayName || '').replace(/\s+/g,'').toLowerCase() || user.uid.substring(0,8);
-        document.getElementById('portfolioUrl').value = `https://qcv.vexonet.online/portfolio.html?uid=${user.uid}`;
+        // Generate portfolio code — stored directly under users/{uid}/portfolioCode
+        const getOrCreatePortfolioCode = async (uid) => {
+            try {
+                // 1. Check if user already has a code saved in their profile
+                const savedSnap = await get(ref(db, 'users/' + uid + '/portfolioCode'));
+                if (savedSnap.exists()) {
+                    return savedSnap.val();
+                }
+                // 2. Generate a new code from name or uid
+                const name = (userData.name || user.displayName || '').replace(/\s+/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                let code = name ? name.substring(0, 6) : uid.substring(0, 6);
+                // 3. Make sure code is unique in portfolioLinks
+                const taken = await get(ref(db, 'portfolioLinks/' + code));
+                if (taken.exists() && taken.val() !== uid) {
+                    code = uid.substring(0, 8);
+                }
+                // 4. Save code in both places
+                await set(ref(db, 'portfolioLinks/' + code), uid);
+                await set(ref(db, 'users/' + uid + '/portfolioCode'), code);
+                return code;
+            } catch (e) {
+                console.error('Portfolio code error:', e);
+                // Fallback: just use first 8 chars of uid
+                return uid.substring(0, 8);
+            }
+        };
+
+        const shortCode = await getOrCreatePortfolioCode(user.uid);
+        document.getElementById('portfolioUrl').value = `https://qcv.vexonet.online/u/${shortCode}`;
 
         await loadSavedData();
         togglePaidFeatures(userData.plan||'free');
@@ -717,7 +777,7 @@
         const list = snap.val() || {};
         const container = document.getElementById('cvsListPanel');
         if(!container) return;
-        let html = `<div class="cv-list-item ${currentCvId==='default'?'active':''}" onclick="switchToCV('default')"><div class="cv-icon">&#128196;</div><div class="cv-info"><div class="cv-title">Main CV</div><div class="cv-date">Default</div></div></div>`;
+        let html = `<div class="cv-list-item ${currentCvId==='default'?'active':''}" onclick="switchToCV('default')"><div class="cv-icon"><i class="fas fa-file-alt"></i></div><div class="cv-info"><div class="cv-title">Main CV</div><div class="cv-date">Default</div></div></div>`;
         Object.entries(list).forEach(([id, cv]) => {
             html += `<div class="cv-list-item ${currentCvId===id?'active':''}" onclick="switchToCV('${id}')"><div class="cv-icon">&#128196;</div><div class="cv-info"><div class="cv-title">${cv.name||'Untitled'}</div><div class="cv-date">${new Date(cv.createdAt).toLocaleDateString('en')}</div></div><button class="cv-delete" onclick="event.stopPropagation();deleteCV('${id}')">&#128465;</button></div>`;
         });
@@ -1005,7 +1065,8 @@
 
     window.exportPDF = async function() {
         const paid = isPaidPlan();
-        // Free plan: 1 download limit
+
+        // Free plan: 1 download limit check
         if(!paid && window.currentUid) {
             const userSnap = await get(ref(db, 'users/' + window.currentUid));
             const ud = userSnap.val() || {};
@@ -1013,7 +1074,7 @@
             if(downloads >= 1) {
                 const msg = document.createElement('div');
                 msg.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--card);border:1px solid var(--border);border-radius:16px;padding:30px 40px;z-index:99999;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.5);max-width:380px;width:90%';
-                msg.innerHTML = '<div style="font-size:2rem;margin-bottom:12px">&#128274;</div><h3 style="margin-bottom:8px;font-size:1.1rem">Download Limit Reached</h3><p style="color:var(--muted);font-size:0.85rem;margin-bottom:20px;line-height:1.6">Free plan allows 1 PDF download. Upgrade to Pro for unlimited exports.</p><button onclick="this.parentElement.remove()" style="margin-right:8px;padding:10px 24px;background:var(--accent);border:none;color:#000;border-radius:10px;font-weight:700;cursor:pointer;font-family:Cairo,sans-serif">Upgrade to Pro</button><button onclick="this.parentElement.remove()" style="padding:10px 24px;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:10px;cursor:pointer;font-family:Cairo,sans-serif">Cancel</button>';
+                msg.innerHTML = '<div style="font-size:2rem;margin-bottom:12px">&#128274;</div><h3 style="margin-bottom:8px;font-size:1.1rem">Download Limit Reached</h3><p style="color:var(--muted);font-size:0.85rem;margin-bottom:20px;line-height:1.6">Free plan allows 1 PDF download. Upgrade to Pro for unlimited exports.</p><button style="margin-right:8px;padding:10px 24px;background:var(--accent);border:none;color:#000;border-radius:10px;font-weight:700;cursor:pointer;font-family:Cairo,sans-serif">Upgrade to Pro</button><button onclick="this.parentElement.remove()" style="padding:10px 24px;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:10px;cursor:pointer;font-family:Cairo,sans-serif">Cancel</button>';
                 msg.querySelector('button').onclick = () => { window.location.href = 'pay.html'; };
                 document.body.appendChild(msg);
                 return;
@@ -1021,6 +1082,7 @@
             // Increment download count
             set(ref(db, 'users/' + window.currentUid + '/downloads'), downloads + 1).catch(() => {});
         }
+
         const nameVal = document.getElementById('inputName').value.trim() || 'cv';
         const defaultName = nameVal + '_CV';
         const fileName = prompt('File name:', defaultName);
@@ -1031,22 +1093,89 @@
         b.classList.add('loading');
 
         const el = document.getElementById('cvPage');
+
+        // ── FREE PLAN: clip to 1 A4 page ────────────────────────────────────
+        // A4 at 96dpi = 794px wide × 1122px tall
+        const A4_HEIGHT_PX = 1122;
+        let clonedEl = null;
+        let wrapper = null;
+
+        if (!paid) {
+            // Show a notice before downloading
+            const notice = document.createElement('div');
+            notice.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#f59e0b;color:#000;padding:10px 22px;border-radius:10px;font-weight:700;font-size:0.85rem;z-index:99999;box-shadow:0 4px 15px rgba(0,0,0,0.3)';
+            notice.textContent = '⚠️ Free plan: exporting page 1 only. Upgrade for full CV.';
+            document.body.appendChild(notice);
+            setTimeout(() => notice.remove(), 4000);
+
+            // Clone the element and clip its height to one A4 page
+            clonedEl = el.cloneNode(true);
+            clonedEl.style.overflow = 'hidden';
+            clonedEl.style.maxHeight = A4_HEIGHT_PX + 'px';
+            clonedEl.style.height = A4_HEIGHT_PX + 'px';
+            clonedEl.style.position = 'absolute';
+            clonedEl.style.left = '-9999px';
+            clonedEl.style.top = '0';
+            clonedEl.style.width = el.offsetWidth + 'px';
+            clonedEl.style.zIndex = '-1';
+
+            wrapper = document.createElement('div');
+            wrapper.style.cssText = 'position:fixed;left:-9999px;top:0;';
+            wrapper.appendChild(clonedEl);
+            document.body.appendChild(wrapper);
+        }
+
+        const targetEl = paid ? el : clonedEl;
+
         const opt = {
             margin: 0,
             filename: finalName + '.pdf',
-            image: { type: 'jpeg', quality: paid ? 0.98 : 0.55 },
-            html2canvas: { scale: paid ? 2 : 1, useCORS: true, letterRendering: true },
-            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            image: { type: 'jpeg', quality: paid ? 0.98 : 0.75 },
+            html2canvas: { scale: paid ? 2 : 1.5, useCORS: true, letterRendering: true },
+            jsPDF: {
+                unit: 'mm',
+                format: 'a4',
+                orientation: 'portrait'
+            },
+            pagebreak: paid ? { mode: ['avoid-all', 'css', 'legacy'] } : { mode: [] }
         };
 
         if(window.QCVNotify) QCVNotify.download();
-        html2pdf().set(opt).from(el).save().then(() => {
+        html2pdf().set(opt).from(targetEl).save().then(() => {
             b.classList.remove('loading');
+            if(wrapper) wrapper.remove();
         }).catch(() => {
             b.classList.remove('loading');
+            if(wrapper) wrapper.remove();
             window.print();
         });
+    };
+
+
+    window.exportHTML = function() {
+        const nameVal = document.getElementById('inputName').value.trim() || 'cv';
+        const defaultName = nameVal + '_CV';
+        const fileName = prompt('File name:', defaultName);
+        if (fileName === null) return;
+        const finalName = (fileName.trim() || defaultName).replace(/[^a-zA-Z0-9\u0600-\u06FF_-]/g, '_');
+
+        const el = document.getElementById('cvPage');
+        const closeStyle = '</' + 'style>';
+        const closeHead = '</' + 'head>';
+        const closeBody = '</' + 'body>';
+        const closeHtml = '</' + 'html>';
+        const htmlContent = '<!DOCTYPE html>\n<html lang="en" dir="ltr">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>' + defaultName + ' - QCV</title>\n<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">\n<link rel="stylesheet" href="https://qcv.vexonet.online/templates/templates.css">\n' + closeStyle + '\n' + closeHead + '\n<body>\n<div class="cv-wrapper">' + el.innerHTML + '</div>\n' + closeBody + '\n' + closeHtml;
+
+        const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = finalName + '.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        if(window.QCVNotify) QCVNotify.download();
     };
 
     function loadSampleData() {
