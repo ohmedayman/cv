@@ -781,7 +781,7 @@ function toggleFaq(el){
 </script>
 
 
-<script src="js/tutorial.js"></script>
+
 <script src="js/site-settings.js"></script>
 <script src="js/analytics.js"></script>
 <script src="js/notify-sounds.js"></script>
@@ -865,21 +865,35 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
+<script src="js/tutorial.js"></script>
 <script>
-// Tutorial for index page
 document.addEventListener('DOMContentLoaded', () => {
+    // Add guide button to hero
+    const heroBtns = document.querySelector('.hero-btns');
+    if (heroBtns) {
+        const guideBtn = document.createElement('a');
+        guideBtn.className = 'btn btn-ghost';
+        guideBtn.innerHTML = '<i class="fas fa-question-circle"></i> عرض الدليل';
+        guideBtn.href = '#';
+        guideBtn.onclick = (e) => { e.preventDefault(); startIndexTutorial(); };
+        heroBtns.appendChild(guideBtn);
+    }
+    // Auto-show on first visit
     if (QCVTutorial.shouldShow()) {
-        setTimeout(() => {
-            QCVTutorial.start([
-                { target: '.hero h1', title: 'Welcome to QCV!', message: 'QCV helps you build a professional, ATS-optimized CV in minutes using AI.', tip: 'Click "Get Started" to begin building your CV for free!' },
-                { target: '#features', title: 'Powerful Features', message: 'We offer AI assistant, CV scoring, ATS templates, and cloud storage — everything you need to land your dream job.', tip: 'All features work together to maximize your chances of getting hired.' },
-                { target: '#how', title: 'How It Works', message: 'Just 3 simple steps: Sign up, enter your info, and download your professional CV as PDF.', tip: 'It takes less than 5 minutes to create your first CV!' },
-                { target: '#pricing', title: 'Flexible Pricing', message: 'Start free! Upgrade to Pro (99 EGP/mo) for unlimited templates and AI features.', tip: 'Free plan includes 1 CV with 1 template.' },
-                { target: '.footer', title: 'Need Help?', message: 'Visit our Help Center or contact support anytime. We are here to help!', tip: 'You can always come back to this tour from the Help page.' }
-            ]);
-        }, 1500);
+        setTimeout(() => startIndexTutorial(), 2000);
     }
 });
+
+function startIndexTutorial() {
+    QCVTutorial.start([
+        { target: '.hero h1', title: '!مرحباً بك في QCV', message: 'منشئ سير ذاتية ذكي مدعوم بالذكاء الاصطناعي. هيساعدك تبني سيرة ذاتية احترافية تتجاوز أنظمة الفرز الآلي.', tip: 'ابدأ مجاناً من غير ما تحتاج بطاقة ائتمان!' },
+        { target: '#features', title: 'مميزات متقدمة', message: 'مساعد ذكاء اصطناعي لكتابة الملخص، تحليل قوة الـ CV فوراً، أكثر من 15 قالب ATS، وحفظ سحابي آمن.', tip: 'كل المميزات مصممة تساعدك تحصل على مقابلة عمل.' },
+        { target: '#how', title: '3 خطوات بسيطة', message: '1. سجل حسابك مجاناً  2. أدخل بياناتك والذكاء الاصطناعي هيساعدك  3. حمّل سيرتك الذاتية PDF جاهزة للإرسال', tip: 'خلال 5 دقائق بس هتكون عندك سيرة ذاتية احترافية!' },
+        { target: '#pricing', title: 'خطط مرنة', message: 'ابدأ مجاناً، أو ا_upgrade للباقة الاحترافية (99 ج.م/شهر) لوصول كامل لجميع القوالب والذكاء الاصطناعي.', tip: 'الباقة المجانية تشمل سيرة ذاتية واحدة وقالب واحد.' },
+        { target: '.test-section', title: 'عملاء يثقون بنا', message: 'أكثر من 10,000 مستخدم حصلوا على وظائف أحلامهم باستخدام QCV.', tip: 'انضم لآلاف المستخدمين الناجحين.' }
+    ]);
+}
 </script>
+
 </body>
 </html>

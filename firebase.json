@@ -8,8 +8,8 @@
     ],
     "rewrites": [
       {
-        "source": "/u/:code",
-        "destination": "/u.html"
+        "source": "/portfolio/:code",
+        "destination": "/portfolio-view.html"
       },
       {
         "source": "/p/:code",

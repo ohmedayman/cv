@@ -34,6 +34,8 @@
         .ctrl-group select:focus{border-color:var(--accent)}
         .ctrl-group input[type="color"]{width:24px;height:24px;border:1px solid var(--border);border-radius:6px;cursor:pointer;background:none;padding:2px}
         .topbar-left{display:flex;align-items:center;gap:10px;flex-shrink:0}
+        .theme-toggle{width:36px;height:36px;border-radius:10px;background:var(--card);border:1px solid var(--border);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all 0.25s}
+        .theme-toggle:hover{border-color:var(--accent);transform:scale(1.05);box-shadow:0 2px 8px rgba(0,3,201,0.15)}
         .btn-save{background:var(--card);color:var(--text);border:1px solid var(--border);padding:7px 16px;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:flex;align-items:center;gap:5px}
         .btn-save:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,3,201,0.04)}
         .btn-export{background:var(--accent);color:#fff;border:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,3,201,0.2)}
@@ -340,7 +342,7 @@
     <div class="topbar-nav">
         <a href="editor.html" class="active">Editor</a>
         <a href="templates.html">Templates</a>
-        <a href="portfolio.html" target="_blank">My Page</a>
+        <a href="portfolio.html" target="_blank" id="myPageLink">My Page</a>
     </div>
     <div class="topbar-center">
         <div class="ctrl-group">
@@ -394,9 +396,9 @@
         </div>
     </div>
     <div class="topbar-left">
-        <button class="theme-toggle" onclick="QCVTheme.toggle()" style="background:var(--card);border:1px solid var(--border);color:var(--text);width:34px;height:34px;border-radius:8px;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
-            <span class="icon-sun">&#9728;</span>
-            <span class="icon-moon" style="display:none">&#9790;</span>
+        <button class="theme-toggle" onclick="QCVTheme.toggle()" title="Toggle theme">
+            <i class="fas fa-sun icon-sun" style="color:#f59e0b"></i>
+            <i class="fas fa-moon icon-moon" style="display:none;color:#8b5cf6"></i>
         </button>
         <button class="btn-save" onclick="saveToFirebase()"><i class="fas fa-save"></i> Save</button>
         <button class="btn-ai-gen" id="btnAiGen" onclick="window.open('ai.html')" style="display:none"><i class="fas fa-robot"></i> AI Generate</button>
@@ -612,7 +614,7 @@
         <div class="preview-container" id="previewContainer">
             <div class="ai-cv-badge" id="aiCvBadge" style="display:none"><i class="fas fa-magic"></i> AI Enhanced</div>
             <div class="cv-page tpl-classic" id="cvPage"></div>
-            <div class="add-page-btn" onclick="addNewPage()" title="Add Section">
+            <div class="add-page-btn" onclick="addBlankPage()" title="صفحة جديدة">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             </div>
         </div>
@@ -739,7 +741,10 @@
         };
 
         const shortCode = await getOrCreatePortfolioCode(user.uid);
-        document.getElementById('portfolioUrl').value = `https://qcv.vexonet.online/u/${shortCode}`;
+        const portfolioUrl = `https://qcv.vexonet.online/portfolio/${shortCode}`;
+        document.getElementById('portfolioUrl').value = portfolioUrl;
+        const myPageLink = document.getElementById('myPageLink');
+        if (myPageLink) myPageLink.href = portfolioUrl;
 
         await loadSavedData();
         togglePaidFeatures(userData.plan||'free');
@@ -1338,6 +1343,37 @@
         if(d.education) d.education.forEach(e => addEdu(e.degree||'', e.school||'', e.duration||'', e.description||''));
         if(d.languages) d.languages.forEach(l => addLang(l.name||'', l.level||'Intermediate'));
 
+        // Restore custom sections
+        if(d.customSections && d.customSections.length) {
+            customSections = [];
+            sectionOrder = [];
+            document.getElementById('navTabs').querySelectorAll('.nav-tab-custom').forEach(t => t.remove());
+            document.querySelectorAll('.form-card').forEach(c => { if(c.id && c.id.startsWith('tab-sec_')) c.remove(); });
+            d.customSections.forEach(sec => {
+                customSections.push(sec);
+                sectionOrder.push(sec.id);
+                const navTabs = document.getElementById('navTabs');
+                const tab = document.createElement('div');
+                tab.className = 'nav-tab nav-tab-custom';
+                tab.id = 'nav-' + sec.id;
+                tab.dataset.section = sec.id;
+                tab.innerHTML = '<span class="icon">&#128196;</span><span class="tab-label" contenteditable="true" onblur="renameSection(\'' + sec.id + '\',this.textContent)">' + (sec.title || 'قسم') + '</span><span class="tab-move"><button onclick="event.stopPropagation();moveSection(\'' + sec.id + '\',-1)">&#9650;</button><button onclick="event.stopPropagation();moveSection(\'' + sec.id + '\',1)">&#9660;</button></span>';
+                tab.onclick = function() { switchTab(sec.id, this); };
+                navTabs.appendChild(tab);
+
+                const forms = document.querySelector('.editor-forms');
+                const card = document.createElement('div');
+                card.className = 'form-card';
+                card.id = 'tab-' + sec.id;
+                if (sec.content) {
+                    card.innerHTML = '<div class="form-card-header"><span class="icon">&#128196;</span><h3 contenteditable="true" onblur="renameSection(\'' + sec.id + '\',this.textContent)">' + (sec.title || 'قسم') + '</h3><button class="btn-rb-delete" onclick="removeCustomSection(\'' + sec.id + '\')" style="margin-left:auto">حذف</button></div><textarea id="blank-' + sec.id + '" placeholder="اكتب هنا..." style="width:100%;min-height:200px;padding:14px;background:var(--input);border:1px solid var(--border);border-radius:10px;font-family:inherit;font-size:0.88rem;line-height:1.8;resize:vertical;outline:none;color:var(--text);direction:rtl" oninput="updateBlankContent(\'' + sec.id + '\',this.value)">' + (sec.content || '') + '</textarea>';
+                } else {
+                    card.innerHTML = '<div class="form-card-header"><span class="icon">&#128196;</span><h3 contenteditable="true" onblur="renameSection(\'' + sec.id + '\',this.textContent)">' + (sec.title || 'قسم') + '</h3><button class="btn-rb-delete" onclick="removeCustomSection(\'' + sec.id + '\')" style="margin-left:auto">حذف</button></div><div id="' + sec.id + '-items"></div><button class="btn-add" onclick="addCustomItem(\'' + sec.id + '\')">+ إضافة عنصر</button>';
+                }
+                forms.appendChild(card);
+            });
+        }
+
         // Restore design settings
         if(d.designSettings) {
             Object.assign(designSettings, d.designSettings);
@@ -1528,16 +1564,48 @@
         document.getElementById('sectionModal').classList.remove('show');
     };
 
+    window.addBlankPage = function() {
+        const id = 'sec_' + Date.now();
+        const section = { id, type: 'custom', title: 'قسم جديد', content: '' };
+        customSections.push(section);
+        sectionOrder.push(id);
+
+        const navTabs = document.getElementById('navTabs');
+        const tab = document.createElement('div');
+        tab.className = 'nav-tab nav-tab-custom';
+        tab.id = 'nav-' + id;
+        tab.dataset.section = id;
+        tab.innerHTML = '<span class="icon">&#128196;</span><span class="tab-label" contenteditable="true" onblur="renameSection(\'' + id + '\',this.textContent)">قسم جديد</span><span class="tab-move"><button onclick="event.stopPropagation();moveSection(\'' + id + '\',-1)" title="&#9650;">&#9650;</button><button onclick="event.stopPropagation();moveSection(\'' + id + '\',1)" title="&#9660;">&#9660;</button></span>';
+        tab.onclick = function() { switchTab(id, this); };
+        navTabs.appendChild(tab);
+
+        const forms = document.querySelector('.editor-forms');
+        const card = document.createElement('div');
+        card.className = 'form-card';
+        card.id = 'tab-' + id;
+        card.innerHTML = '<div class="form-card-header"><span class="icon">&#128196;</span><h3 contenteditable="true" onblur="renameSection(\'' + id + '\',this.textContent)">قسم جديد</h3><button class="btn-rb-delete" onclick="removeCustomSection(\'' + id + '\')" style="margin-left:auto">حذف</button></div><textarea id="blank-' + id + '" placeholder="اكتب هنا..." style="width:100%;min-height:200px;padding:14px;background:var(--input);border:1px solid var(--border);border-radius:10px;font-family:inherit;font-size:0.88rem;line-height:1.8;resize:vertical;outline:none;color:var(--text);direction:rtl" oninput="updateBlankContent(\'' + id + '\',this.value)"></textarea>';
+        forms.appendChild(card);
+
+        switchTab(id, tab);
+        if (window.QCVNotify) QCVNotify.click();
+    };
+
+    window.updateBlankContent = function(id, value) {
+        const section = customSections.find(s => s.id === id);
+        if (section) section.content = value;
+        renderCV();
+    };
+
     window.addCustomSection = function(type) {
         closeSectionModal();
         const id = 'sec_' + Date.now();
         const labels = {
-            certifications: 'Certifications',
-            projects: 'Projects',
-            awards: 'Awards',
-            volunteer: 'Volunteer Experience',
-            interests: 'Interests',
-            custom: 'Custom Section'
+            certifications: 'الشهادات',
+            projects: 'المشاريع',
+            awards: 'الجوائز',
+            volunteer: 'التطوع',
+            interests: 'الاهتمامات',
+            custom: 'قسم مخصص'
         };
         const icons = {
             certifications: '&#127942;',
@@ -1547,7 +1615,7 @@
             interests: '&#127775;',
             custom: '&#9998;'
         };
-        const section = { id, type, title: labels[type] || 'Section', items: [] };
+        const section = { id, type, title: labels[type] || 'قسم', items: [] };
         customSections.push(section);
         sectionOrder.push(id);
 
@@ -1570,10 +1638,10 @@
             <div class="form-card-header">
                 <span class="icon">${icons[type] || '&#128196;'}</span>
                 <h3 contenteditable="true" onblur="renameSection('${id}',this.textContent)">${section.title}</h3>
-                <button class="btn-rb-delete" onclick="removeCustomSection('${id}')" style="margin-left:auto">Delete</button>
+                <button class="btn-rb-delete" onclick="removeCustomSection('${id}')" style="margin-left:auto">حذف</button>
             </div>
             <div id="${id}-items"></div>
-            <button class="btn-add" onclick="addCustomItem('${id}')">+ Add Item</button>
+            <button class="btn-add" onclick="addCustomItem('${id}')">+ إضافة عنصر</button>
         `;
         forms.appendChild(card);
 
@@ -1669,16 +1737,16 @@
 <div class="section-modal-overlay" id="sectionModal">
     <div class="section-modal">
         <div class="section-modal-header">
-            <h2>Add Section</h2>
+            <h2>إضافة قسم</h2>
             <button class="section-modal-close" onclick="closeSectionModal()">&times;</button>
         </div>
         <div class="section-modal-body">
-            <button class="section-option" onclick="addCustomSection('certifications')"><span class="sec-icon">&#127942;</span><span class="sec-name">Certifications</span><span class="sec-desc">Licenses & certificates</span></button>
-            <button class="section-option" onclick="addCustomSection('projects')"><span class="sec-icon">&#128194;</span><span class="sec-name">Projects</span><span class="sec-desc">Portfolio & projects</span></button>
-            <button class="section-option" onclick="addCustomSection('awards')"><span class="sec-icon">&#127941;</span><span class="sec-name">Awards</span><span class="sec-desc">Honors & awards</span></button>
-            <button class="section-option" onclick="addCustomSection('volunteer')"><span class="sec-icon">&#129309;</span><span class="sec-name">Volunteer</span><span class="sec-desc">Volunteer experience</span></button>
-            <button class="section-option" onclick="addCustomSection('interests')"><span class="sec-icon">&#127775;</span><span class="sec-name">Interests</span><span class="sec-desc">Hobbies & interests</span></button>
-            <button class="section-option" onclick="addCustomSection('custom')"><span class="sec-icon">&#9998;</span><span class="sec-name">Custom</span><span class="sec-desc">Your own section</span></button>
+            <button class="section-option" onclick="addCustomSection('certifications')"><span class="sec-icon">&#127942;</span><span class="sec-name">الشهادات</span><span class="sec-desc">رخص وشهادات مهنية</span></button>
+            <button class="section-option" onclick="addCustomSection('projects')"><span class="sec-icon">&#128194;</span><span class="sec-name">المشاريع</span><span class="sec-desc">أعمال ومعرض أعمال</span></button>
+            <button class="section-option" onclick="addCustomSection('awards')"><span class="sec-icon">&#127941;</span><span class="sec-name">الجوائز</span><span class="sec-desc">تقديرات وجوائز</span></button>
+            <button class="section-option" onclick="addCustomSection('volunteer')"><span class="sec-icon">&#129309;</span><span class="sec-name">التطوع</span><span class="sec-desc">خبرات تطوعية</span></button>
+            <button class="section-option" onclick="addCustomSection('interests')"><span class="sec-icon">&#127775;</span><span class="sec-name">الاهتمامات</span><span class="sec-desc">هوايات واهتمامات</span></button>
+            <button class="section-option" onclick="addCustomSection('custom')"><span class="sec-icon">&#9998;</span><span class="sec-name">قسم مخصص</span><span class="sec-desc">أضف قسمك الخاص</span></button>
         </div>
     </div>
 </div>
@@ -1688,20 +1756,34 @@
 <script src="js/analytics.js"></script>
 <script src="js/notify-sounds.js"></script>
 <script>
-// Tutorial for editor page
+// Arabic tutorial for editor page
 document.addEventListener('DOMContentLoaded', () => {
-    if (QCVTutorial.shouldShow()) {
-        setTimeout(() => {
-            QCVTutorial.start([
-                { target: '.sidebar-nav', title: 'Navigation Sidebar', message: 'Use this sidebar to switch between different sections of your CV: Personal info, Experience, Education, Skills, and more.', tip: 'Click any tab to edit that section. Your changes appear instantly in the preview!' },
-                { target: '.btn-export', title: 'Download PDF', message: 'When your CV is ready, click here to download it as a professional PDF file.', tip: 'Free plan: 1 download with basic quality. Pro plan: unlimited high-quality downloads.' },
-                { target: '.preview-zone', title: 'Live Preview', message: 'Your CV updates in real-time as you type. See exactly how it will look before downloading.', tip: 'You can zoom in/out using the controls above the preview.' },
-                { target: '.nav-tab', title: 'CV Sections', message: 'Add or remove sections like Summary, Languages, Certifications, and Custom sections.', tip: 'Use the ⋯ menu on each tab to Rename, Move, or Delete sections.' },
-                { target: '.btn-save', title: 'Save Your Work', message: 'Your CV auto-saves to the cloud. You can also click here to save manually.', tip: 'Your data is safe and synced across all your devices!' }
-            ]);
-        }, 1500);
+    // Add guide button in topbar-left
+    const topbar = document.querySelector('.topbar-left');
+    if (topbar) {
+        const guideBtn = document.createElement('button');
+        guideBtn.className = 'btn-save';
+        guideBtn.innerHTML = '<i class="fas fa-question-circle"></i> الدليل';
+        guideBtn.style.cssText = 'background:rgba(0,3,201,0.06);color:var(--accent);border-color:rgba(0,3,201,0.15)';
+        guideBtn.onclick = () => startEditorTutorial();
+        topbar.insertBefore(guideBtn, topbar.firstChild);
+    }
+    // Auto-show only if user hasn't seen editor tutorial specifically
+    if (!localStorage.getItem('qcv_editor_tutorial_done')) {
+        setTimeout(() => startEditorTutorial(), 2000);
     }
 });
+
+function startEditorTutorial() {
+    QCVTutorial.start([
+        { target: '.sidebar-nav', title: 'التنقل بين الأقسام', message: 'من هنا تتنقل بين أقسام السيرة الذاتية: المعلومات الشخصية، الخبرة، التعليم، المهارات، وغيرها.', tip: 'اضغط على أي قسم عشان تعدّل فيه. التغييرات بتظهر فوراً في المعاينة!' },
+        { target: '.editor-forms', title: 'إدخال البيانات', message: 'اكتب معلوماتك في كل قسم. الذكاء الاصطناعي هيساعدك في كتابة الملخص الوظيفي واختيار المهارات.', tip: 'كل ما بياناتك كانت أكمل، كل ما السيرة الذاتية كانت أقوى.' },
+        { target: '.preview-zone', title: 'معاينة مباشرة', message: 'السيرة الذاتية بتتحدث لحظة ما تكتب. شوف شكلها النهائي قبل ما تحمّلها.', tip: 'تقدر تكبّر وتصغّر باستخدام الأزرار فوق المعاينة.' },
+        { target: '.topbar', title: 'حفظ وتصدير', message: 'اضغط "Save" عشان تحفظ شغلك، أو "Export PDF" عشان تحمل السيرة الذاتية بصيغة PDF.', tip: 'الحفظ التلقائي شغال على طول. بياناتك آمنة في السحابة!' },
+        { target: '.portfolio-link-box', title: 'رابط المحفظة', message: 'من هنا تنسخ رابط صفحتك الشخصية. شاركه مع أصحاب العمل عشان يشوفوا سيرتك الذاتية أونلاين.', tip: 'الرابط بيشتغل على أي جهاز وموبايل.' }
+    ]);
+    localStorage.setItem('qcv_editor_tutorial_done', '1');
+}
 </script>
 </body>
 </html>

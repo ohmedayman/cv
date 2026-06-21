@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QCV - Portfolio</title>
+    <meta name="robots" content="index, follow">
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="templates/templates.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root{--bg:#f9fafb;--card:#ffffff;--border:#e5e7eb;--accent:#0003c9;--sky:#2563eb;--text:#1a1a2e;--muted:#6b7280;--light:#9ca3af}
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{background:var(--bg);color:var(--text);font-family:'Inter','Cairo',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center}
+
+        .portfolio-header{width:100%;background:var(--card);border-bottom:1px solid var(--border);padding:16px 32px;display:flex;align-items:center;justify-content:space-between}
+        .logo{font-size:1.3rem;font-weight:900;color:#1a1a2e;display:flex;align-items:center;gap:6px}
+        .logo span{color:var(--accent)}
+        .header-actions{display:flex;gap:10px;align-items:center}
+        .btn-outline{padding:8px 16px;border:1px solid var(--border);background:transparent;color:var(--light);border-radius:8px;font-weight:600;font-size:0.82rem;cursor:pointer;font-family:inherit;text-decoration:none;transition:all 0.2s}
+        .btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+        .btn-accent{padding:8px 16px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;text-decoration:none;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px}
+        .btn-accent:hover{background:#0002a3}
+        .btn-whatsapp{padding:8px 16px;background:#25d366;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;text-decoration:none;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px}
+        .btn-whatsapp:hover{background:#1da851}
+
+        .portfolio-container{width:100%;max-width:900px;padding:30px 20px;flex:1;display:flex;justify-content:center;align-items:flex-start}
+        .cv-wrapper{width:210mm;min-height:297mm;background:#fff;color:#1a1a1a;font-size:11px;line-height:1.5;font-family:'Inter','Cairo',sans-serif;box-shadow:0 20px 60px rgba(0,0,0,0.12);direction:ltr;text-align:left}
+
+        .portfolio-footer{text-align:center;padding:30px;color:var(--muted);font-size:0.82rem;width:100%}
+        .portfolio-footer a{color:var(--accent);text-decoration:none}
+
+        .loading{text-align:center;padding:80px 20px;color:var(--muted)}
+        .loading .spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px}
+        @keyframes spin{to{transform:rotate(360deg)}}
+
+        .not-found{text-align:center;padding:80px 20px}
+        .not-found h2{font-size:1.5rem;margin-bottom:8px}
+        .not-found p{color:var(--muted)}
+
+        @media print{body{background:#fff}.portfolio-header,.portfolio-footer,.header-actions{display:none!important}.cv-wrapper{box-shadow:none;width:100%}}
+        @media(max-width:900px){
+            .portfolio-header{padding:12px 16px}
+            .portfolio-container{padding:16px 10px}
+            .cv-wrapper{width:100%;min-height:auto;font-size:10px}
+        }
+        @media(max-width:600px){
+            .cv-wrapper{font-size:9px;padding:12px}
+            .portfolio-header{flex-direction:column;gap:8px;text-align:center}
+            .header-actions{justify-content:center;flex-wrap:wrap}
+        }
+    </style>
+</head>
+<body>
+    <div class="portfolio-header">
+        <div class="logo">Q<span>CV</span></div>
+        <div class="header-actions">
+            <a href="index.html" class="btn-outline">الرئيسية</a>
+            <button class="btn-whatsapp" id="whatsappBtn" style="display:none"><i class="fab fa-whatsapp"></i> واتساب</button>
+            <button class="btn-accent" id="downloadBtn" onclick="downloadPDF()"><i class="fas fa-download"></i> تحميل PDF</button>
+        </div>
+    </div>
+
+    <div class="portfolio-container">
+        <div id="portfolioContent">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>جاري تحميل السيرة الذاتية...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="portfolio-footer">
+        <p>أنشأ بهذه السيرة الذاتية بواسطة <a href="https://qcv.vexonet.online">QCV</a> — منشئ سير ذاتية ذكي</p>
+    </div>
+
+    <script src="js/template-engine.js"></script>
+    <script>
+    (function() {
+        var firebaseConfig = {apiKey:"AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",authDomain:"qwcv-1cfad.firebaseapp.com",databaseURL:"https://qwcv-1cfad-default-rtdb.firebaseio.com",projectId:"qwcv-1cfad",storageBucket:"qwcv-1cfad.appspot.com",messagingSenderId:"792471802122",appId:"1:792471802122:web:808e04099afc90315aaaf3"};
+        firebase.initializeApp(firebaseConfig);
+        var db = firebase.database();
+
+        var params = new URLSearchParams(window.location.search);
+        var uid = params.get('uid');
+        var template = params.get('tpl') || 'classic';
+        var content = document.getElementById('portfolioContent');
+
+        // PDF Download
+        window.downloadPDF = function() {
+            var el = document.getElementById('cvPage');
+            if (!el) return;
+            var btn = document.getElementById('downloadBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحميل...';
+            btn.disabled = true;
+            var opt = {
+                margin: 0,
+                filename: (document.title.split(' - ')[0] || 'CV') + '.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+            html2pdf().set(opt).from(el).save().then(function() {
+                btn.innerHTML = '<i class="fas fa-download"></i> تحميل PDF';
+                btn.disabled = false;
+            }).catch(function() {
+                btn.innerHTML = '<i class="fas fa-download"></i> تحميل PDF';
+                btn.disabled = false;
+            });
+        };
+
+        // Make phone/email/LinkedIn clickable
+        function makeLinksClickable() {
+            var wrapper = document.getElementById('cvPage');
+            if (!wrapper) return;
+            wrapper.querySelectorAll('*').forEach(function(el) {
+                if (el.children.length > 0) return;
+                var text = el.textContent.trim();
+                if (/^[\+]?[\d\s\-\(\)]{7,20}$/.test(text)) {
+                    var clean = text.replace(/[^\d+]/g, '');
+                    el.innerHTML = '<a href="https://wa.me/' + clean.replace(/^\+/, '') + '" target="_blank" style="color:#1a1a1a;text-decoration:none;border-bottom:1px dashed #999">' + text + '</a>';
+                }
+                if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)) {
+                    el.innerHTML = '<a href="mailto:' + text + '" style="color:#1a1a1a;text-decoration:none;border-bottom:1px dashed #999">' + text + '</a>';
+                }
+                if (text.includes('linkedin.com')) {
+                    var url = text.startsWith('http') ? text : 'https://' + text;
+                    el.innerHTML = '<a href="' + url + '" target="_blank" style="color:#1a1a1a;text-decoration:none;border-bottom:1px dashed #999">' + text + '</a>';
+                }
+            });
+        }
+
+        function showError(title, msg) {
+            content.innerHTML = '<div class="not-found"><h2>' + title + '</h2><p>' + msg + '</p></div>';
+        }
+
+        function renderPortfolio(cvData, userName) {
+            var phone = cvData.phone || '';
+            var cleanPhone = phone.replace(/[^\d]/g, '');
+
+            // WhatsApp button
+            if (cleanPhone) {
+                var waBtn = document.getElementById('whatsappBtn');
+                waBtn.style.display = 'inline-flex';
+                waBtn.onclick = function() { window.open('https://wa.me/' + cleanPhone.replace(/^\+/, ''), '_blank'); };
+            }
+
+            document.title = (userName || 'CV') + ' - QCV Portfolio';
+            var html = QCVTemplates.render(template, cvData);
+            content.innerHTML = '<div class="cv-wrapper"><div id="cvPage" class="cv-page tpl-' + template + '">' + html + '</div></div>';
+            makeLinksClickable();
+        }
+
+        // If uid is provided directly (from query param)
+        if (uid) {
+            db.ref('users/' + uid + '/cvData').once('value').then(function(snap) {
+                var data = snap.val();
+                if (!data) { showError('السيرة الذاتية غير موجودة', 'لم يتم العثور على بيانات لهذه السيرة الذاتية.'); return; }
+                var cvData = Object.assign({}, data, { skills: Array.isArray(data.skills) ? data.skills : (data.skills || '').split('\n').filter(function(l) { return l.trim(); }) });
+                renderPortfolio(cvData, cvData.name);
+            }).catch(function() { showError('خطأ في التحميل', 'حدث خطأ أثناء تحميل البيانات. حاول مرة أخرى.'); });
+            return;
+        }
+
+        // Extract code from URL path: /portfolio/{code}
+        var pathMatch = window.location.pathname.match(/\/portfolio\/([a-zA-Z0-9]+)/);
+        var code = pathMatch ? pathMatch[1] : '';
+        if (!code) { code = params.get('code') || params.get('id') || ''; }
+
+        if (!code) {
+            showError('الرابط غير صالح', 'تأكد من صحة الرابط.');
+            return;
+        }
+
+        db.ref('portfolioLinks/' + code).once('value').then(function(snap) {
+            var foundUid = snap.val();
+            if (!foundUid) { showError('الرابط غير موجود', 'لم يتم العثور على سيرة ذاتية بهذا الرابط.'); return; }
+
+            db.ref('users/' + foundUid + '/cvData').once('value').then(function(snap2) {
+                var data = snap2.val();
+                if (!data) { showError('السيرة الذاتية غير موجودة', 'لم يتم العثور على بيانات لهذه السيرة الذاتية.'); return; }
+                var cvData = Object.assign({}, data, { skills: Array.isArray(data.skills) ? data.skills : (data.skills || '').split('\n').filter(function(l) { return l.trim(); }) });
+                renderPortfolio(cvData, cvData.name);
+            }).catch(function() { showError('خطأ في التحميل', 'حدث خطأ أثناء تحميل البيانات.'); });
+        }).catch(function() { showError('خطأ', 'حدث خطأ. حاول مرة أخرى.'); });
+    })();
+    </script>
+
+    <script src="js/site-settings.js"></script>
+    <script src="js/analytics.js"></script>
+    <script src="js/notify-sounds.js"></script>
+</body>
+</html>

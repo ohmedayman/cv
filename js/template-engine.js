@@ -32,6 +32,10 @@ const QCVTemplates = {
 function _customSections(sections) {
     if (!sections || !sections.length) return '';
     return sections.map(sec => {
+        // Blank page with free content
+        if (sec.content) {
+            return `<div class="tpl-section"><h2 class="tpl-section-title">${sec.title.toUpperCase()}</h2><div style="white-space:pre-wrap;line-height:1.8">${sec.content}</div></div>`;
+        }
         const items = (sec.items || []).filter(i => i.title || i.description);
         if (!items.length) return '';
         let h = `<div class="tpl-section"><h2 class="tpl-section-title">${sec.title.toUpperCase()}</h2>`;
