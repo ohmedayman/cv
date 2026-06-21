@@ -1155,21 +1155,28 @@
             return null;
         }
 
-        async function saveUserData(user, extra = {}) {
-            const domainInfo = await checkApprovedDomain(user.email);
-            const plan = domainInfo ? domainInfo.plan : 'free';
-            const planExpiry = domainInfo && domainInfo.duration ? Date.now() + domainInfo.duration * 30 * 24 * 60 * 60 * 1000 : null;
-            await set(ref(db, 'users/' + user.uid), {
-                uid: user.uid, name: user.displayName || extra.name || user.email.split('@')[0],
-                email: user.email, photo: user.photoURL || "", plan, banned: false,
-                registeredAt: Date.now(), lastLogin: Date.now(),
-                ...(planExpiry && { planExpiry }), ...(domainInfo && { approvedDomain: user.email.split('@')[1] }),
-                ...extra
+        function saveUserData(user, extra = {}) {
+            checkApprovedDomain(user.email).then(domainInfo => {
+                const plan = domainInfo ? domainInfo.plan : 'free';
+                const planExpiry = domainInfo && domainInfo.duration ? Date.now() + domainInfo.duration * 30 * 24 * 60 * 60 * 1000 : null;
+                set(ref(db, 'users/' + user.uid), {
+                    uid: user.uid, name: user.displayName || extra.name || user.email.split('@')[0],
+                    email: user.email, photo: user.photoURL || "", plan, banned: false,
+                    registeredAt: Date.now(), lastLogin: Date.now(),
+                    ...(planExpiry && { planExpiry }), ...(domainInfo && { approvedDomain: user.email.split('@')[1] }),
+                    ...extra
+                });
+                if (domainInfo) {
+                    const dk = user.email.split('@')[1].toLowerCase().replace(/\./g, '_');
+                    set(ref(db, 'approvedDomains/' + dk + '/userCount'), (domainInfo.userCount || 0) + 1).catch(() => { });
+                }
+            }).catch(() => {
+                set(ref(db, 'users/' + user.uid), {
+                    uid: user.uid, name: user.displayName || extra.name || user.email.split('@')[0],
+                    email: user.email, photo: user.photoURL || "", plan: 'free', banned: false,
+                    registeredAt: Date.now(), lastLogin: Date.now(), ...extra
+                });
             });
-            if (domainInfo) {
-                const dk = user.email.split('@')[1].toLowerCase().replace(/\./g, '_');
-                set(ref(db, 'approvedDomains/' + dk + '/userCount'), (domainInfo.userCount || 0) + 1).catch(() => { });
-            }
         }
 
         onAuthStateChanged(auth, (user) => {
@@ -1277,18 +1284,17 @@
 
             setLoading(btn, true);
             try {
-                const remember = document.getElementById('rememberMe').checked;
-                await setPersistence(auth, remember ? browserLocalPersistence : browserSessionPersistence);
+                setPersistence(auth, browserLocalPersistence).catch(()=>{});
 
                 if (isSignUpMode) {
                     blockRedirect = true;
                     const res = await createUserWithEmailAndPassword(auth, email, pass);
-                    await updateProfile(res.user, { displayName: name });
-                    await saveUserData(res.user, { name });
-                    await signOut(auth); blockRedirect = false;
+                    updateProfile(res.user, { displayName: name }).catch(()=>{});
+                    saveUserData(res.user, { name });
+                    signOut(auth).catch(()=>{}); blockRedirect = false;
                     if (window.QCVNotify) QCVNotify.success();
                     showSuccessOverlay('تم إنشاء حسابك!', 'سجّل دخولك الآن');
-                    setTimeout(() => { switchAuthMode('login'); document.getElementById('email').value = email; }, 1600);
+                    setTimeout(() => { switchAuthMode('login'); document.getElementById('email').value = email; }, 1200);
                 } else {
                     await signInWithEmailAndPassword(auth, email, pass);
                     set(ref(db, 'users/' + auth.currentUser.uid + '/lastLogin'), Date.now()).catch(() => { });

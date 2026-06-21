@@ -224,7 +224,8 @@
         /* ===== SECTIONS ===== */
         .section{padding:90px 60px}
         .section-header{text-align:center;margin-bottom:50px}
-        .section-header h2{font-size:2rem;font-weight:900;margin-bottom:12px;color:var(--text)}
+        .section-header h2{font-size:2.2rem;font-weight:900;margin-bottom:12px;color:var(--text);letter-spacing:-0.5px}
+        .section-header .subtitle{color:var(--muted);font-size:0.95rem;max-width:500px;margin:0 auto;font-variant:small-caps;text-transform:lowercase}
         .section-header p{color:var(--muted);font-size:0.95rem;max-width:500px;margin:0 auto}
 
         /* ===== FEATURES ===== */
@@ -272,28 +273,37 @@
         .btn-plan-unlim:hover{background:var(--accent);color:#fff}
 
         /* ===== TESTIMONIALS ===== */
-        .test-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-        .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1050px;margin:0 auto}
-        .test-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;transition:all 0.3s}
-        .test-card:hover{box-shadow:0 8px 25px rgba(0,0,0,0.05)}
-        .test-stars{color:var(--yellow);margin-bottom:12px;font-size:0.9rem}
-        .test-card p{color:var(--text);font-size:0.88rem;line-height:1.7;margin-bottom:18px;font-style:italic}
+        .test-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden}
+        .test-track-wrap{overflow:hidden;padding:20px 0;margin:0 auto;max-width:1200px}
+        .test-track{display:flex;gap:24px;animation:scrollTestimonials 25s linear infinite;width:max-content}
+        .test-track:hover{animation-play-state:paused}
+        @keyframes scrollTestimonials{0%{transform:translateX(0)}100%{transform:translateX(calc(-50% - 12px))}}
+        .test-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;transition:all 0.3s;flex-shrink:0;width:340px;min-width:340px}
+        .test-card:hover{box-shadow:0 8px 25px rgba(0,0,0,0.06);border-color:rgba(0,3,201,0.15)}
+        .test-stars{color:var(--yellow);margin-bottom:12px;font-size:0.9rem;letter-spacing:2px}
+        .test-card p{color:var(--text);font-size:0.88rem;line-height:1.7;margin-bottom:18px;font-style:italic;position:relative;padding-right:20px}
+        .test-card p::before{content:'"';position:absolute;right:0;top:-4px;font-size:2rem;color:var(--accent);opacity:0.2;font-family:Georgia,serif;line-height:1}
         .test-author{display:flex;align-items:center;gap:12px}
-        .test-avatar{width:42px;height:42px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.85rem;flex-shrink:0;color:#fff}
+        .test-avatar{width:42px;height:42px;background:linear-gradient(135deg,var(--accent),var(--sky));border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.85rem;flex-shrink:0;color:#fff}
         .test-name{font-weight:700;font-size:0.88rem;color:var(--text)}
         .test-role{color:var(--muted);font-size:0.75rem}
+        @media(max-width:768px){
+            .test-card{width:280px;min-width:280px;padding:20px}
+            .test-track{gap:16px}
+        }
 
         /* ===== FAQ ===== */
         .faq-list{max-width:750px;margin:0 auto}
-        .faq-item{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:10px;overflow:hidden;transition:all 0.3s}
-        .faq-item:hover{border-color:var(--accent)}
-        .faq-q{padding:18px 22px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:0.95rem;transition:color 0.2s;color:var(--text)}
+        .faq-item{background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:12px;overflow:hidden;transition:all 0.3s}
+        .faq-item:hover{border-color:rgba(0,3,201,0.2);box-shadow:0 4px 15px rgba(0,0,0,0.04)}
+        .faq-item.active{border-color:var(--accent);box-shadow:0 4px 20px rgba(0,3,201,0.08)}
+        .faq-q{padding:20px 24px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:0.95rem;transition:color 0.2s;color:var(--text);gap:12px}
         .faq-q:hover{color:var(--accent)}
-        .faq-q .arrow{transition:transform 0.3s;font-size:0.75rem;color:var(--muted)}
-        .faq-item.active .faq-q .arrow{transform:rotate(180deg)}
-        .faq-a{max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease}
-        .faq-item.active .faq-a{max-height:200px}
-        .faq-a p{padding:0 22px 18px;color:var(--muted);font-size:0.88rem;line-height:1.7}
+        .faq-q .arrow{transition:transform 0.3s;font-size:0.7rem;color:var(--muted);flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center}
+        .faq-item.active .faq-q .arrow{transform:rotate(180deg);background:var(--accent-light);color:var(--accent)}
+        .faq-a{max-height:0;overflow:hidden;transition:max-height 0.4s ease,padding 0.4s ease}
+        .faq-item.active .faq-a{max-height:300px}
+        .faq-a p{padding:0 24px 20px;color:var(--muted);font-size:0.88rem;line-height:1.8}
 
         /* ===== CTA ===== */
         .cta-section{text-align:center;padding:90px 20px}
@@ -326,40 +336,63 @@
             .features-grid{grid-template-columns:repeat(2,1fr);gap:20px}
             .pricing-grid{grid-template-columns:repeat(2,1fr);gap:20px}
             .steps-grid{grid-template-columns:repeat(2,1fr);gap:20px}
-            .test-grid{grid-template-columns:repeat(2,1fr)}
+            .test-track-wrap{padding:10px 0}
             .footer-content{flex-direction:column;gap:30px}
         }
         @media(max-width:768px){
             .nav-mobile-toggle{display:flex}
-            .nav-center{display:none;position:fixed;top:70px;left:0;right:0;background:rgba(255,255,255,0.98);backdrop-filter:blur(20px);flex-direction:column;padding:20px;gap:16px;border-bottom:1px solid var(--border);z-index:999}
+            .nav-center{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(255,255,255,0.98);backdrop-filter:blur(20px);flex-direction:column;padding:20px;gap:12px;border-bottom:1px solid var(--border);z-index:999;box-shadow:0 8px 24px rgba(0,0,0,0.06)}
             .nav-center.show{display:flex}
+            .nav-center li{width:100%}
+            .nav-center a{display:block;padding:10px 16px;border-radius:10px;font-size:0.95rem;transition:background 0.2s}
+            .nav-center a:hover{background:var(--bg2)}
             .nav-right .login{display:none}
-            .hero{flex-direction:column-reverse;padding:120px 20px 60px;text-align:center}
-            .hero-right h1{font-size:2rem}
+            .hero{flex-direction:column-reverse;padding:100px 20px 60px;text-align:center;min-height:auto;gap:30px}
+            .hero-right h1{font-size:1.8rem;line-height:1.3}
             .hero-right p{font-size:0.88rem;margin-left:auto;margin-right:auto}
-            .hero-btns{justify-content:center}
-            .hero-left{margin-top:30px}
-            .section{padding:50px 20px}
-            .section-header h2{font-size:1.6rem}
+            .hero-btns{justify-content:center;flex-direction:column;align-items:center}
+            .hero-btns .btn{width:100%;max-width:280px;justify-content:center}
+            .hero-left{margin-top:0;width:100%}
+            .hero-visual{max-width:100%;padding:16px}
+            .section{padding:60px 20px}
+            .section-header h2{font-size:1.5rem}
             .features-grid{grid-template-columns:1fr}
-            .pricing-grid{grid-template-columns:1fr}
+            .feature-card{text-align:right;padding:24px 20px}
+            .f-icon{margin:0 0 14px auto}
+            .pricing-grid{grid-template-columns:1fr;max-width:400px}
+            .price-card.popular{transform:none}
+            .price-card.popular:hover{transform:translateY(-5px)}
             .steps-grid{grid-template-columns:1fr}
-            .test-grid{grid-template-columns:1fr}
-            .faq-list{grid-template-columns:1fr}
-            .cta-box{padding:30px 20px}
-            .cta-box h2{font-size:1.4rem}
-            .footer{padding:30px 20px 20px}
-            .footer-content{flex-direction:column}
-            .footer-links{margin-bottom:20px}
-            .stats-bar{gap:30px;flex-wrap:wrap}
-            .trust-bar{flex-direction:column;gap:8px}
+            .step{text-align:center;padding:0 10px}
+            .test-track-wrap{padding:10px 0}
+            .faq-list{padding:0}
+            .cta-box{padding:40px 24px;border-radius:20px;margin:0 10px}
+            .cta-box h2{font-size:1.3rem}
+            .footer{padding:40px 20px 20px}
+            .footer-content{flex-direction:column;gap:30px}
+            .footer-links{margin-bottom:10px}
+            .footer-links h4{margin-bottom:10px}
+            .stats-bar{gap:20px;flex-wrap:wrap;padding:40px 20px}
+            .stat{min-width:40%}
+            .stat-num{font-size:1.6rem}
+            .stat-label{font-size:0.75rem}
+            .trust-bar{flex-direction:column;gap:8px;padding:30px 20px}
+            .trust-bar p{font-size:0.85rem}
+            .grid-bg{display:none}
         }
         @media(max-width:480px){
-            .hero-right h1{font-size:1.6rem}
-            .hero-btns{flex-direction:column;gap:12px}
-            .hero-btns .btn{width:100%;justify-content:center}
-            .stat-num{font-size:1.4rem}
-            .stats-bar{padding:40px 20px}
+            .hero-right h1{font-size:1.5rem}
+            .hero-badge{font-size:0.7rem;padding:5px 12px}
+            .hero-btns .btn{font-size:0.88rem;padding:12px 24px}
+            .stat-num{font-size:1.3rem}
+            .stats-bar{gap:16px;padding:30px 16px}
+            .stat{min-width:45%}
+            .pricing-grid{padding:0}
+            .price-card{padding:28px 20px}
+            .cta-box h2{font-size:1.15rem}
+            .cta-box p{font-size:0.88rem}
+            .section-header h2{font-size:1.35rem}
+            .footer-bottom{font-size:0.72rem}
         }
     </style>
 </head>
@@ -551,29 +584,104 @@
         <h2>ماذا يقول عملاؤنا؟</h2>
         <p>آلاف المستخدمين حصلوا على وظائف أحلامهم باستخدام QCV</p>
     </div>
-    <div class="test-grid">
-        <div class="test-card">
-            <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-            <p>"QCV غيّر حياتي! حصلت على مقابلة عمل في شركة كبيرة بعد ما كنت بنبّع سيرتي الذاتية من غير رد. الذكاء الاصطناعي ساعدني أكتب ملخص احترافي."</p>
-            <div class="test-author">
-                <div class="test-avatar">أم</div>
-                <div><div class="test-name">أحمد محمد</div><div class="test-role">مطور ويب</div></div>
+    <div class="test-track-wrap">
+        <div class="test-track" id="testTrack">
+            <div class="test-card">
+                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p>QCV غيّر حياتي! حصلت على مقابلة عمل في شركة كبيرة بعد ما كنت بنبّع سيرتي الذاتية من غير رد. الذكاء الاصطناعي ساعدني أكتب ملخص احترافي.</p>
+                <div class="test-author">
+                    <div class="test-avatar">أم</div>
+                    <div><div class="test-name">أحمد محمد</div><div class="test-role">مطور ويب</div></div>
+                </div>
             </div>
-        </div>
-        <div class="test-card">
-            <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-            <p>"القوالب احترافية جداً والتحليل الـ ATS فادني أفهم ليه سيرتي الذاتية كانت بترفض. الآن صار 95% وبنصح كل حد يجربها."</p>
-            <div class="test-author">
-                <div class="test-avatar">سخ</div>
-                <div><div class="test-name">سارة خالد</div><div class="test-role">مهندسة برمجيات</div></div>
+            <div class="test-card">
+                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p>القوالب احترافية جداً والتحليل الـ ATS فادني أفهم ليه سيرتي الذاتية كانت بترفض. الآن صار 95% وبنصح كل حد يجربها.</p>
+                <div class="test-author">
+                    <div class="test-avatar">سخ</div>
+                    <div><div class="test-name">سارة خالد</div><div class="test-role">مهندسة برمجيات</div></div>
+                </div>
             </div>
-        </div>
-        <div class="test-card">
-            <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-            <p>"أفضل منشئ سير ذاتية جربته. سهل الاستخدام والنتائج مبهرة. حصلت على 3 مقابلات في أسبوع واحد بعد ما استخدمت QCV."</p>
-            <div class="test-author">
-                <div class="test-avatar">مع</div>
-                <div><div class="test-name">محمد عبدالله</div><div class="test-role">مدير مشاريع</div></div>
+            <div class="test-card">
+                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p>أفضل منشئ سير ذاتية جربته. سهل الاستخدام والنتائج مبهرة. حصلت على 3 مقابلات في أسبوع واحد بعد ما استخدمت QCV.</p>
+                <div class="test-author">
+                    <div class="test-avatar">مع</div>
+                    <div><div class="test-name">محمد عبدالله</div><div class="test-role">مدير مشاريع</div></div>
+                </div>
+            </div>
+            <div class="test-card">
+                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p>كنت مش عارف أكتب إيه في الملخص الوظيفي. QCV ساعدني أكتب ملخص احترافي في ثواني. أنصح بيهم جداً!</p>
+                <div class="test-author">
+                    <div class="test-avatar">فط</div>
+                    <div><div class="test-name">فاطمة أحمد</div><div class="test-role">مصممة UI/UX</div></div>
+                </div>
+            </div>
+            <div class="test-card">
+                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p>بعد ما استخدمت QCV، سيرتي الذاتية بقت أول حاجة الموظف بيشوفها. حصلت على عرض وظيفة في أسبوع واحد!</p>
+                <div class="test-author">
+                    <div class="test-avatar">خع</div>
+                    <div><div class="test-name">خالد عادل</div><div class="test-role">مهندس بيانات</div></div>
+                </div>
+            </div>
+            <div class="test-card">
+                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p>القوالب الـ ATS فادتني جداً. كنت بنبّع سيرتي لـ 50 شركة ومفيش رد. بعد QCV، بدأت أקבל ردود فورية.</p>
+                <div class="test-author">
+                    <div class="test-avatar">نمر</div>
+                    <div><div class="test-name">نور محمد</div><div class="test-role">محللة بيانات</div></div>
+                </div>
+            </div>
+            <!-- Duplicate set for infinite scroll -->
+            <div class="test-card">
+                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p>QCV غيّر حياتي! حصلت على مقابلة عمل في شركة كبيرة بعد ما كنت بنبّع سيرتي الذاتية من غير رد. الذكاء الاصطناعي ساعدني أكتب ملخص احترافي.</p>
+                <div class="test-author">
+                    <div class="test-avatar">أم</div>
+                    <div><div class="test-name">أحمد محمد</div><div class="test-role">مطور ويب</div></div>
+                </div>
+            </div>
+            <div class="test-card">
+                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p>القوالب احترافية جداً والتحليل الـ ATS فادني أفهم ليه سيرتي الذاتية كانت بترفض. الآن صار 95% وبنصح كل حد يجربها.</p>
+                <div class="test-author">
+                    <div class="test-avatar">سخ</div>
+                    <div><div class="test-name">سارة خالد</div><div class="test-role">مهندسة برمجيات</div></div>
+                </div>
+            </div>
+            <div class="test-card">
+                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p>أفضل منشئ سير ذاتية جربته. سهل الاستخدام والنتائج مبهرة. حصلت على 3 مقابلات في أسبوع واحد بعد ما استخدمت QCV.</p>
+                <div class="test-author">
+                    <div class="test-avatar">مع</div>
+                    <div><div class="test-name">محمد عبدالله</div><div class="test-role">مدير مشاريع</div></div>
+                </div>
+            </div>
+            <div class="test-card">
+                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p>كنت مش عارف أكتب إيه في الملخص الوظيفي. QCV ساعدني أكتب ملخص احترافي في ثواني. أنصح بيهم جداً!</p>
+                <div class="test-author">
+                    <div class="test-avatar">فط</div>
+                    <div><div class="test-name">فاطمة أحمد</div><div class="test-role">مصممة UI/UX</div></div>
+                </div>
+            </div>
+            <div class="test-card">
+                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p>بعد ما استخدمت QCV، سيرتي الذاتية بقت أول حاجة الموظف بيشوفها. حصلت على عرض وظيفة في أسبوع واحد!</p>
+                <div class="test-author">
+                    <div class="test-avatar">خع</div>
+                    <div><div class="test-name">خالد عادل</div><div class="test-role">مهندس بيانات</div></div>
+                </div>
+            </div>
+            <div class="test-card">
+                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p>القوالب الـ ATS فادتني جداً. كنت بنبّع سيرتي لـ 50 شركة ومفيش رد. بعد QCV، بدأت أتلقى ردود فورية.</p>
+                <div class="test-author">
+                    <div class="test-avatar">نمر</div>
+                    <div><div class="test-name">نور محمد</div><div class="test-role">محللة بيانات</div></div>
+                </div>
             </div>
         </div>
     </div>

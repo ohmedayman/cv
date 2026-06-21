@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html><head>
+<meta charset="UTF-8">
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
 <script>
-const firebaseConfig = {apiKey:"AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",authDomain:"qwcv-1cfad.firebaseapp.com",databaseURL:"https://qwcv-1cfad-default-rtdb.firebaseio.com",projectId:"qwcv-1cfad",storageBucket:"qwcv-1cfad.appspot.com",messagingSenderId:"792471802122",appId:"1:792471802122:web:808e04099afc90315aaaf3"};
+const firebaseConfig={apiKey:"AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",authDomain:"qwcv-1cfad.firebaseapp.com",databaseURL:"https://qwcv-1cfad-default-rtdb.firebaseio.com",projectId:"qwcv-1cfad",storageBucket:"qwcv-1cfad.appspot.com",messagingSenderId:"792471802122",appId:"1:792471802122:web:808e04099afc90315aaaf3"};
 firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-const path = window.location.pathname;
-const match = path.match(/\/u\/([a-zA-Z0-9]+)/);
-const code = match ? match[1] : '';
-if(code) {
-    db.ref('portfolioLinks/' + code).once('value').then(snap => {
-        const uid = snap.val();
-        if(uid) {
-            window.location.replace('https://qcv.vexonet.online/portfolio.html?uid=' + uid);
-        } else {
-            window.location.replace('https://qcv.vexonet.online/');
-        }
-    }).catch(() => {
-        window.location.replace('https://qcv.vexonet.online/');
-    });
-} else {
-    window.location.replace('https://qcv.vexonet.online/');
-}
+const db=firebase.database();
+const base='https://qcv.vexonet.online';
+let code='';
+const pathMatch=window.location.pathname.match(/\/u\/([a-zA-Z0-9]+)/);
+if(pathMatch){code=pathMatch[1];}
+if(!code){const q=new URLSearchParams(window.location.search);code=q.get('code')||q.get('id')||'';}
+if(code){
+    db.ref('portfolioLinks/'+code).once('value').then(snap=>{
+        const uid=snap.val();
+        if(uid){window.location.replace(base+'/portfolio.html?uid='+uid);}
+        else{window.location.replace(base+'/');}
+    }).catch(()=>{window.location.replace(base+'/');});
+}else{window.location.replace(base+'/');}
 </script>
-</head><body></body></html>
+</head><body>
+<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;color:#666">
+<div style="text-align:center"><div style="font-size:2rem;margin-bottom:10px">🔗</div><div>جاري التحويل...</div></div>
+</div>
+</body></html>
