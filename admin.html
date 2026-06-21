@@ -216,6 +216,20 @@
         .bar-fill.yellow{background:linear-gradient(135deg,var(--yellow),#d97706)}
         .bar-fill.red{background:linear-gradient(135deg,var(--red),#dc2626)}
 
+        /* Analytics Panel */
+        .analytics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:25px}
+        .analytics-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center}
+        .analytics-card .icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-size:1.2rem}
+        .analytics-card .num{font-size:1.8rem;font-weight:900;line-height:1}
+        .analytics-card .label{font-size:0.78rem;color:var(--muted);margin-top:6px;font-weight:600}
+        .analytics-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:25px}
+        .analytics-mini-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:18px}
+        .analytics-mini-card h4{font-size:0.85rem;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+        .analytics-bar{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+        .analytics-bar .day{width:50px;font-size:0.72rem;font-weight:700;color:var(--muted);text-align:left;flex-shrink:0}
+        .analytics-bar .track{flex:1;height:22px;background:#f3f4f6;border-radius:6px;overflow:hidden}
+        .analytics-bar .fill{height:100%;border-radius:6px;background:linear-gradient(135deg,var(--accent),#3b82f6);display:flex;align-items:center;padding:0 8px;font-size:0.68rem;font-weight:700;color:#fff;min-width:20px;transition:width 0.8s}
+
         /* Donut Chart */
         .donut-chart{display:flex;align-items:center;gap:20px;justify-content:center;flex-wrap:wrap}
         .donut-visual{width:120px;height:120px;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center}
@@ -237,6 +251,8 @@
         .sub-tab{padding:8px 18px;border-radius:10px;border:1px solid var(--border);background:#fff;font-weight:700;font-size:0.82rem;cursor:pointer;transition:all 0.2s;font-family:'Cairo',sans-serif;color:var(--muted)}
         .sub-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
         .sub-tab:hover:not(.active){border-color:var(--accent);color:var(--accent)}
+        .affiliate-section{display:none;padding-top:10px}
+        .affiliate-section.active{display:block}
 
         /* Link generator */
         .link-output{background:#f3f4f6;border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:12px;display:flex;align-items:center;gap:10px}
@@ -334,6 +350,9 @@
                 </div>
                 <div class="nav-item" data-panel="reports" onclick="switchPanel('reports')">
                     <span class="icon"><i class="fas fa-chart-bar"></i></span><span>التقارير</span>
+                </div>
+                <div class="nav-item" data-panel="analytics" onclick="switchPanel('analytics')">
+                    <span class="icon"><i class="fas fa-chart-line"></i></span><span>التحليلات</span>
                 </div>
                 <div class="nav-item" data-panel="jobs" onclick="switchPanel('jobs')">
                     <span class="icon"><i class="fas fa-briefcase"></i></span><span>الوظائف</span>
@@ -609,6 +628,49 @@
                 </div>
             </div>
 
+            <!-- ===== ANALYTICS PANEL ===== -->
+            <div class="panel" id="panel-analytics">
+                <h2 style="font-size:1.3rem;font-weight:900;margin-bottom:25px"><i class="fas fa-chart-line" style="color:var(--accent)"></i> تحليلات الموقع</h2>
+                
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <div class="icon" style="background:rgba(0,3,201,0.1);color:var(--accent)"><i class="fas fa-users"></i></div>
+                        <div class="num" id="a-total-users">0</div>
+                        <div class="label">إجمالي المستخدمين</div>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="icon" style="background:rgba(16,185,129,0.1);color:var(--green)"><i class="fas fa-eye"></i></div>
+                        <div class="num" id="a-total-visits">0</div>
+                        <div class="label">إجمالي الزيارات</div>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="icon" style="background:rgba(139,92,246,0.15);color:var(--purple)"><i class="fas fa-clock"></i></div>
+                        <div class="num" id="a-today-visits">0</div>
+                        <div class="label">زيارات اليوم</div>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="icon" style="background:rgba(245,158,11,0.15);color:var(--yellow)"><i class="fas fa-signal"></i></div>
+                        <div class="num" id="a-active-now">0</div>
+                        <div class="label">نشطون الآن</div>
+                    </div>
+                </div>
+                
+                <div class="analytics-mini">
+                    <div class="analytics-mini-card">
+                        <h4><i class="fas fa-file-alt" style="color:var(--accent)"></i> زيارات آخر 7 أيام</h4>
+                        <div id="a-visits-chart"></div>
+                    </div>
+                    <div class="analytics-mini-card">
+                        <h4><i class="fas fa-chart-bar" style="color:var(--green)"></i> أكثر الصفحات زيارة</h4>
+                        <div id="a-pages-chart"></div>
+                    </div>
+                    <div class="analytics-mini-card">
+                        <h4><i class="fas fa-stopwatch" style="color:var(--purple)"></i> متوسط الوقت بالموقع</h4>
+                        <div id="a-time-chart"></div>
+                    </div>
+                </div>
+            </div>
+
             <!-- ===== JOBS PANEL ===== -->
             <div class="panel" id="panel-jobs">
                 <div class="table-container">
@@ -856,6 +918,7 @@
             subscriptions: 'الاشتراكات',
             affiliate: 'التسويق بالعمولة',
             reports: 'التقارير',
+            analytics: 'التحليلات',
             jobs: 'الوظائف',
             domains: 'النطاقات المعتمدة',
             settings: 'الإعدادات'
@@ -868,6 +931,7 @@
             document.querySelector(`.nav-item[data-panel="${panel}"]`).classList.add('active');
             document.getElementById('pageTitle').textContent = panelTitles[panel] || panel;
             if (panel === 'reports') renderReports();
+            if (panel === 'analytics') loadAnalytics();
         };
 
         // ===== INIT DASHBOARD =====
@@ -882,6 +946,7 @@
             listenCampaigns();
             listenCommissions();
             checkExpiredPlans();
+            loadAnalytics();
         }
 
         // ===== EXPIRED PLANS CHECK =====
@@ -1926,10 +1991,15 @@
             });
         }
 
-        window.toggleMaintenance = function() {
+        window.toggleMaintenance = async function() {
             const el = document.getElementById('settingsMaintenance');
             el.classList.toggle('active');
-            document.getElementById('maintenanceLabel').textContent = el.classList.contains('active') ? 'مفعّل' : 'معطّل';
+            const isActive = el.classList.contains('active');
+            document.getElementById('maintenanceLabel').textContent = isActive ? 'مفعّل' : 'معطّل';
+            try {
+                await update(ref(db, 'settings'), { maintenance: isActive, updatedAt: Date.now() });
+                showToast(isActive ? 'تم تفعيل وضع الصيانة' : 'تم تعطيل وضع الصيانة', 'success');
+            } catch(err) { showToast('خطأ', 'error'); }
         };
 
         window.saveSettings = async function() {
@@ -1942,7 +2012,7 @@
                     maintenance: document.getElementById('settingsMaintenance').classList.contains('active'),
                     updatedAt: Date.now()
                 };
-                await set(ref(db, 'settings'), settings);
+                await update(ref(db, 'settings'), settings);
                 addActivity('success', 'تم تحديث الإعدادات');
                 if(window.QCVNotify) QCVNotify.save();
                 showToast('تم حفظ الإعدادات', 'success');
@@ -2054,6 +2124,90 @@
                 <div class="bar-label">${m.label}</div>
                 <div class="bar-track"><div class="bar-fill purple" style="width:${(m.count/maxDl)*100}%">${m.count}</div></div>
             </div>`).join('');
+        }
+
+        // ===== ANALYTICS =====
+        function loadAnalytics(){
+            const DB = 'https://qwcv-1cfad-default-rtdb.firebaseio.com';
+            
+            // Total users
+            fetch(DB + '/users.json?shallow=true').then(r=>r.json()).then(data=>{
+                document.getElementById('a-total-users').textContent = data ? Object.keys(data).length : 0;
+            }).catch(()=>{});
+            
+            // Total visits
+            fetch(DB + '/analytics/totalVisits.json').then(r=>r.json()).then(v=>{
+                document.getElementById('a-total-visits').textContent = (v||0).toLocaleString();
+            }).catch(()=>{});
+            
+            // Today visits
+            const today = new Date().toISOString().slice(0,10);
+            fetch(DB + '/analytics/visits/' + today + '.json').then(r=>r.json()).then(v=>{
+                document.getElementById('a-today-visits').textContent = (v||0).toLocaleString();
+            }).catch(()=>{});
+            
+            // Active now (clean stale sessions)
+            fetch(DB + '/analytics/activeSessions.json').then(r=>r.json()).then(data=>{
+                if(!data){ document.getElementById('a-active-now').textContent = '0'; return; }
+                const cutoff = Date.now() - 60000;
+                const active = Object.values(data).filter(s => s.lastSeen > cutoff);
+                document.getElementById('a-active-now').textContent = active.length;
+                // Clean stale
+                const stale = Object.keys(data).filter(k => data[k].lastSeen < cutoff);
+                if(stale.length > 0){
+                    const updates = {};
+                    stale.forEach(k => updates[k] = null);
+                    fetch(DB + '/analytics/activeSessions.json', {method:'PATCH', body:JSON.stringify(updates)}).catch(()=>{});
+                }
+            }).catch(()=>{});
+            
+            // Visits last 7 days chart
+            const visitsChart = document.getElementById('a-visits-chart');
+            const days = [];
+            for(let i=6; i>=0; i--){
+                const d = new Date(Date.now() - i*86400000).toISOString().slice(0,10);
+                days.push(d);
+            }
+            Promise.all(days.map(d => 
+                fetch(DB + '/analytics/visits/' + d + '.json').then(r=>r.json()).then(v=>v||0).catch(()=>0)
+            )).then(values => {
+                const max = Math.max(...values, 1);
+                visitsChart.innerHTML = days.map((d,i) => `
+                    <div class="analytics-bar">
+                        <div class="day">${d.slice(5)}</div>
+                        <div class="track"><div class="fill" style="width:${(values[i]/max)*100}%">${values[i]}</div></div>
+                    </div>
+                `).join('');
+            }).catch(()=>{});
+            
+            // Page views chart
+            fetch(DB + '/analytics/pageViews.json').then(r=>r.json()).then(data=>{
+                if(!data){ document.getElementById('a-pages-chart').innerHTML = '<p style="color:var(--muted);font-size:0.82rem">لا توجد بيانات</p>'; return; }
+                const pages = Object.keys(data).map(p => ({
+                    name: p.replace(/_/g,'.'),
+                    views: Object.values(data[p]).reduce((a,b)=>a+b,0)
+                })).sort((a,b) => b.views - a.views).slice(0,5);
+                const max = Math.max(...pages.map(p=>p.views), 1);
+                document.getElementById('a-pages-chart').innerHTML = pages.map(p => `
+                    <div class="analytics-bar">
+                        <div class="day">${p.name}</div>
+                        <div class="track"><div class="fill" style="width:${(p.views/max)*100}%">${p.views}</div></div>
+                    </div>
+                `).join('');
+            }).catch(()=>{});
+            
+            // Time on site chart
+            Promise.all(days.map(d =>
+                fetch(DB + '/analytics/timeOnSite/' + d + '.json').then(r=>r.json()).then(v=>v||0).catch(()=>0)
+            )).then(values => {
+                const max = Math.max(...values, 1);
+                document.getElementById('a-time-chart').innerHTML = days.map((d,i) => `
+                    <div class="analytics-bar">
+                        <div class="day">${d.slice(5)}</div>
+                        <div class="track"><div class="fill" style="width:${(values[i]/max)*100}%">${Math.floor(values[i]/60)}m</div></div>
+                    </div>
+                `).join('');
+            }).catch(()=>{});
         }
 
     </script>

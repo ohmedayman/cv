@@ -53,9 +53,30 @@
         .tpl-preview{width:100%;height:100%;overflow:hidden;display:flex;align-items:flex-start;justify-content:center;transition:transform 0.4s cubic-bezier(0.16,1,0.3,1)}
         .tpl-preview-inner{transform:scale(0.34);transform-origin:top center;width:294%;position:absolute;top:0;left:50%;transform:translateX(-50%) scale(0.34)}
 
-        .tpl-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg,transparent 40%,rgba(0,3,201,0.85) 100%);opacity:0;transition:opacity 0.35s;display:flex;align-items:flex-end;justify-content:center;padding:20px}
-        .tpl-use-btn{background:#fff;color:var(--accent);border:none;padding:10px 28px;border-radius:10px;font-weight:800;font-size:0.88rem;cursor:pointer;font-family:inherit;opacity:0;transform:translateY(10px);transition:all 0.35s 0.05s;display:flex;align-items:center;gap:8px}
-        .tpl-use-btn:hover{background:var(--accent);color:#fff}
+        .tpl-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(180deg,transparent 40%,rgba(0,3,201,0.85) 100%);opacity:0;transition:opacity 0.35s;display:flex;align-items:flex-end;justify-content:center;padding:20px;gap:10px}
+        .tpl-overlay .tpl-btn{background:#fff;color:var(--accent);border:none;padding:10px 20px;border-radius:10px;font-weight:800;font-size:0.82rem;cursor:pointer;font-family:inherit;opacity:0;transform:translateY(10px);transition:all 0.35s 0.05s;display:flex;align-items:center;gap:6px}
+        .tpl-overlay .tpl-btn.preview-btn{background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.4)}
+        .tpl-overlay .tpl-btn.preview-btn:hover{background:rgba(255,255,255,0.3);color:#fff}
+        .tpl-overlay .tpl-btn:hover{background:var(--accent);color:#fff}
+        .tpl-card:hover .tpl-overlay .tpl-btn{opacity:1;transform:translateY(0)}
+        .tpl-card:hover .tpl-overlay .tpl-btn:nth-child(2){transition-delay:0.08s}
+
+        .preview-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:10000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+        .preview-modal.show{display:flex}
+        .preview-modal-inner{background:var(--card);border-radius:20px;width:90%;max-width:800px;max-height:90vh;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.3);animation:modalIn 0.3s ease}
+        @keyframes modalIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
+        .preview-modal-header{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-bottom:1px solid var(--border)}
+        .preview-modal-header h3{font-size:1.1rem;font-weight:800}
+        .preview-modal-close{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:var(--bg2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all 0.2s}
+        .preview-modal-close:hover{background:var(--red);color:#fff;border-color:var(--red)}
+        .preview-modal-body{padding:24px;overflow-y:auto;max-height:70vh;display:flex;justify-content:center;background:#f0f0f0}
+        .preview-modal-body .tpl-preview-full{width:594px;min-height:840px;background:#fff;box-shadow:0 2px 20px rgba(0,0,0,0.1);border-radius:4px;overflow:hidden}
+        .preview-modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px}
+        .preview-modal-footer .btn{padding:10px 24px;border-radius:10px;font-weight:700;font-size:0.85rem;cursor:pointer;border:none;font-family:inherit;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px}
+        .preview-modal-footer .btn-use{background:var(--accent);color:#fff}
+        .preview-modal-footer .btn-use:hover{background:#0002a3}
+        .preview-modal-footer .btn-close{background:var(--bg2);color:var(--muted);border:1px solid var(--border)}
+        .preview-modal-footer .btn-close:hover{background:var(--border)}
 
         .tpl-badge-locked{position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.7);color:#f59e0b;padding:5px 12px;border-radius:8px;font-size:0.72rem;font-weight:700;display:flex;align-items:center;gap:5px;backdrop-filter:blur(8px)}
         .tpl-badge-free{position:absolute;top:14px;right:14px;background:rgba(16,185,129,0.9);color:#fff;padding:5px 12px;border-radius:8px;font-size:0.72rem;font-weight:700;display:flex;align-items:center;gap:5px}
@@ -116,6 +137,22 @@
 
     <div class="footer">
         <p>&copy; 2026 QCV &mdash; All rights reserved | <a href="index.html">Back to Home</a></p>
+    </div>
+
+    <div class="preview-modal" id="previewModal" onclick="if(event.target===this)closePreview()">
+        <div class="preview-modal-inner">
+            <div class="preview-modal-header">
+                <h3 id="previewTitle">معاينة القالب</h3>
+                <button class="preview-modal-close" onclick="closePreview()">&times;</button>
+            </div>
+            <div class="preview-modal-body">
+                <div class="tpl-preview-full" id="previewContent"></div>
+            </div>
+            <div class="preview-modal-footer">
+                <button class="btn btn-close" onclick="closePreview()">إغلاق</button>
+                <button class="btn btn-use" id="previewUseBtn" onclick="closePreview()"><i class="fas fa-arrow-left"></i> استخدام القالب</button>
+            </div>
+        </div>
     </div>
 
     <script src="js/template-engine.js"></script>
@@ -198,9 +235,12 @@
                                 <div class="tpl-preview-inner">${QCVTemplates.render(t.id, sampleData)}</div>
                             </div>
                             <div class="tpl-overlay">
-                                <button class="tpl-use-btn" onclick="${locked ? "window.location.href='pay.html'" : `useTemplate('${t.id}')`}">
+                                <button class="tpl-btn preview-btn" onclick="event.stopPropagation();previewTemplate('${t.id}','${t.nameAr} - ${t.name}')">
+                                    <i class="fas fa-eye"></i> معاينة
+                                </button>
+                                <button class="tpl-btn" onclick="${locked ? "window.location.href='pay.html'" : `useTemplate('${t.id}')`}">
                                     <i class="fas ${locked ? 'fa-lock' : 'fa-arrow-left'}"></i>
-                                    ${locked ? 'Unlock Template' : 'Use This Template'}
+                                    ${locked ? 'فتح القالب' : 'استخدام'}
                                 </button>
                             </div>
                             ${locked
@@ -219,9 +259,14 @@
                             </div>
                             <div class="tpl-meta" style="margin-top:12px">
                                 <span class="tpl-badge" style="background:${catColor}15;color:${catColor}"><i class="fas ${catIcons[t.category] || 'fa-file'}"></i> ${categories[t.category] || t.category}</span>
-                                <button class="tpl-use" onclick="${locked ? "window.location.href='pay.html'" : `useTemplate('${t.id}')`}" style="padding:7px 16px;background:${locked ? 'var(--border)' : 'var(--accent)'};color:${locked ? 'var(--muted)' : '#fff'};border:none;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;transition:all 0.2s">
-                                    ${locked ? '<i class="fas fa-lock"></i> Pro' : '<i class="fas fa-arrow-left"></i> Use'}
-                                </button>
+                                <div style="display:flex;gap:6px">
+                                    <button onclick="event.stopPropagation();previewTemplate('${t.id}','${t.nameAr} - ${t.name}')" style="padding:7px 12px;background:var(--bg2);color:var(--muted);border:1px solid var(--border);border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;transition:all 0.2s">
+                                        <i class="fas fa-eye"></i> معاينة
+                                    </button>
+                                    <button class="tpl-use" onclick="${locked ? "window.location.href='pay.html'" : `useTemplate('${t.id}')`}" style="padding:7px 16px;background:${locked ? 'var(--border)' : 'var(--accent)'};color:${locked ? 'var(--muted)' : '#fff'};border:none;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;transition:all 0.2s">
+                                        ${locked ? '<i class="fas fa-lock"></i> Pro' : '<i class="fas fa-arrow-left"></i> استخدام'}
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>`;
@@ -241,11 +286,39 @@
             renderGrid();
         }
 
+        let currentPreviewId = null;
+
+        function previewTemplate(id, name) {
+            currentPreviewId = id;
+            document.getElementById('previewTitle').textContent = name;
+            document.getElementById('previewContent').innerHTML = QCVTemplates.render(id, sampleData);
+            const useBtn = document.getElementById('previewUseBtn');
+            const locked = !paid && !FREE_TEMPLATES.includes(id);
+            if (locked) {
+                useBtn.onclick = function() { window.location.href = 'pay.html'; };
+                useBtn.innerHTML = '<i class="fas fa-lock"></i> فتح القالب';
+            } else {
+                useBtn.onclick = function() { useTemplate(id); };
+                useBtn.innerHTML = '<i class="fas fa-arrow-left"></i> استخدام القالب';
+            }
+            document.getElementById('previewModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closePreview() {
+            document.getElementById('previewModal').classList.remove('show');
+            document.body.style.overflow = '';
+            currentPreviewId = null;
+        }
+
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePreview(); });
+
         renderFilters();
         renderGrid();
     </script>
     <style>@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}</style>
 <script src="js/site-settings.js"></script>
+<script src="js/analytics.js"></script>
 <script src="js/notify-sounds.js"></script>
 </body>
 </html>

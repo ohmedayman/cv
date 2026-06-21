@@ -140,6 +140,27 @@
         .waiting-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(245,158,11,0.08);color:var(--orange);border:1px solid rgba(245,158,11,0.2);padding:8px 20px;border-radius:30px;font-size:0.85rem;font-weight:700;animation:pulse 2s ease-in-out infinite}
         @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
 
+        /* ===== RECEIPT ===== */
+        .receipt{background:var(--card);border:1px solid var(--border);border-radius:20px;max-width:480px;margin:0 auto 30px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.05)}
+        .receipt-header{background:linear-gradient(135deg,var(--accent),#2563eb);color:#fff;padding:24px;text-align:center}
+        .receipt-header .logo{font-size:1.6rem;font-weight:900;margin-bottom:4px}
+        .receipt-header .logo span{color:#fff}
+        .receipt-header p{font-size:0.82rem;opacity:0.85}
+        .receipt-body{padding:24px}
+        .receipt-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)}
+        .receipt-row:last-child{border-bottom:none}
+        .receipt-row .label{color:var(--muted);font-size:0.85rem}
+        .receipt-row .value{font-weight:800;font-size:0.9rem;color:var(--text)}
+        .receipt-row .value.price{font-size:1.2rem;color:var(--accent)}
+        .receipt-row .value.status{color:var(--orange);display:flex;align-items:center;gap:6px}
+        .receipt-footer{padding:16px 24px;background:var(--bg2);text-align:center;font-size:0.78rem;color:var(--muted);border-top:1px solid var(--border)}
+        .receipt-actions{display:flex;gap:10px;justify-content:center;max-width:480px;margin:0 auto}
+        .receipt-actions .btn{flex:1;justify-content:center;padding:12px 20px;border-radius:12px;font-weight:800;font-size:0.85rem;cursor:pointer;font-family:'Cairo',sans-serif;border:none;transition:all 0.25s;display:inline-flex;align-items:center;gap:8px;text-decoration:none}
+        .btn-download{background:var(--green);color:#fff}
+        .btn-download:hover{background:#059669;transform:translateY(-2px);box-shadow:0 4px 15px rgba(16,185,129,0.3)}
+        .btn-whatsapp{background:#25d366;color:#fff}
+        .btn-whatsapp:hover{background:#1da851;transform:translateY(-2px);box-shadow:0 4px 15px rgba(37,211,102,0.3)}
+
         /* ===== TOAST ===== */
         .toast{position:fixed;top:22px;left:50%;transform:translateX(-50%) translateY(-100px);padding:12px 24px;border-radius:12px;font-weight:700;font-size:0.85rem;z-index:9999;transition:transform 0.35s cubic-bezier(0.16,1,0.3,1)}
         .toast.show{transform:translateX(-50%) translateY(0)}
@@ -328,20 +349,62 @@
         </div>
     </div>
 
-    <!-- STEP 3: Success -->
+    <!-- STEP 3: Success / Receipt -->
     <div class="step-content" id="step3">
         <div class="success-box">
             <div class="success-icon">&#10003;</div>
-            <h2>تم التأكيد بنجاح!</h2>
-            <div class="plan-recap">
-                <span style="color:var(--muted);font-size:0.85rem">الباقة المطلوبة</span>
-                <span id="selectedPlanLabel" style="font-weight:800;color:var(--accent);font-size:1rem">Pro</span>
-            </div>
-            <p>تم إرسال التأكيد عبر البريد الإلكتروني أو الواتساب. سيتم مراجعة طلبك وتفعيل باقتك قريباً.</p>
+            <h2>تم الدفع بنجاح!</h2>
+            <p>شكراً لك! تم استلام طلبك بنجاح. يمكنك تحميل الإيصال أو مشاركته على واتساب.</p>
             <div class="waiting-badge">&#9203; بانتظار التفعيل</div>
-            <div class="btn-group" style="justify-content:center;margin-top:30px;max-width:320px;margin-left:auto;margin-right:auto">
-                <a href="editor.html" class="btn btn-primary" style="text-decoration:none">العودة للمحرر &#8592;</a>
+        </div>
+
+        <div class="receipt" id="paymentReceipt">
+            <div class="receipt-header">
+                <div class="logo">Q<span>CV</span></div>
+                <p>إيصال الدفع</p>
             </div>
+            <div class="receipt-body">
+                <div class="receipt-row">
+                    <span class="label">الاسم</span>
+                    <span class="value" id="receiptName">-</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="label">الباقة</span>
+                    <span class="value" id="receiptPlan">-</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="label">المبلغ</span>
+                    <span class="value price" id="receiptPrice">-</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="label">طريقة الدفع</span>
+                    <span class="value" id="receiptMethod">-</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="label">التاريخ</span>
+                    <span class="value" id="receiptDate">-</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="label">رقم المرجع</span>
+                    <span class="value" id="receiptRef">-</span>
+                </div>
+                <div class="receipt-row">
+                    <span class="label">الحالة</span>
+                    <span class="value status">&#9203; بانتظار التفعيل</span>
+                </div>
+            </div>
+            <div class="receipt-footer">
+                QCV &copy; 2026 - جميع الحقوق محفوظة | support@qcv.com
+            </div>
+        </div>
+
+        <div class="receipt-actions" style="max-width:480px;margin:0 auto">
+            <button class="btn btn-download" onclick="downloadReceipt()"><i class="fas fa-download"></i> تحميل الإيصال</button>
+            <button class="btn btn-whatsapp" onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i> مشاركة على واتساب</button>
+        </div>
+
+        <div class="btn-group" style="justify-content:center;margin-top:24px;max-width:320px;margin-left:auto;margin-right:auto">
+            <a href="editor.html" class="btn btn-primary" style="text-decoration:none">العودة للمحرر &#8592;</a>
         </div>
     </div>
 </div>
@@ -500,7 +563,21 @@
             });
             document.querySelectorAll('.step-connector').forEach(c => { c.classList.add('done'); c.classList.remove('active'); });
 
-            document.getElementById('selectedPlanLabel').textContent = planLabels[selectedPlan] || selectedPlan;
+            const planLabels = { free: 'Free (مجاني)', pro: 'Pro (99 ج.م/شهر)', unlimited: 'Unlimited (299 ج.م/شهر)' };
+            const planPrices = { free: 'مجاني', pro: '99 ج.م', unlimited: '299 ج.م' };
+            const methodLabels = { vodafone: 'فودافون كاش', fawry: 'فوري', instapay: 'استانبي' };
+            const refId = 'QCV-' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substring(2, 6).toUpperCase();
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' }) + ' - ' + now.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+
+            document.getElementById('receiptName').textContent = name;
+            document.getElementById('receiptPlan').textContent = planLabels[selectedPlan] || selectedPlan;
+            document.getElementById('receiptPrice').textContent = planPrices[selectedPlan] || '-';
+            document.getElementById('receiptMethod').textContent = methodLabels[selectedMethod] || selectedMethod;
+            document.getElementById('receiptDate').textContent = dateStr;
+            document.getElementById('receiptRef').textContent = refId;
+
+            window._receiptData = { name, plan: planLabels[selectedPlan], price: planPrices[selectedPlan], method: methodLabels[selectedMethod], date: dateStr, ref: refId };
 
             launchConfetti();
             showToast('تم إرسال طلبك بنجاح!', 'ok');
@@ -536,11 +613,63 @@
             }, i * 35);
         }
     }
+
+    window.downloadReceipt = function() {
+        const r = window._receiptData;
+        if (!r) return;
+        const receiptText = [
+            '═══════════════════════════════',
+            '           QCV - إيصال الدفع',
+            '═══════════════════════════════',
+            '',
+            'الاسم:         ' + r.name,
+            'الباقة:        ' + r.plan,
+            'المبلغ:        ' + r.price,
+            'طريقة الدفع:   ' + r.method,
+            'التاريخ:       ' + r.date,
+            'رقم المرجع:   ' + r.ref,
+            'الحالة:        بانتظار التفعيل',
+            '',
+            '═══════════════════════════════',
+            '   QCV © 2026 - جميع الحقوق محفوظة',
+            '   support@qcv.com',
+            '═══════════════════════════════'
+        ].join('\n');
+        const blob = new Blob(['\uFEFF' + receiptText], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'QCV-Receipt-' + r.ref + '.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showToast('تم تحميل الإيصال', 'ok');
+    };
+
+    window.shareWhatsApp = function() {
+        const r = window._receiptData;
+        if (!r) return;
+        const msg = encodeURIComponent(
+            '🧾 *QCV - إيصال الدفع*\n\n' +
+            'الاسم: ' + r.name + '\n' +
+            'الباقة: ' + r.plan + '\n' +
+            'المبلغ: ' + r.price + '\n' +
+            'طريقة الدفع: ' + r.method + '\n' +
+            'التاريخ: ' + r.date + '\n' +
+            'رقم المرجع: ' + r.ref + '\n' +
+            'الحالة: بانتظار التفعيل\n\n' +
+            'شكراً لك! 🙏'
+        );
+        window.open('https://wa.me/201028707543?text=' + msg, '_blank');
+        showToast('جاري فتح واتساب...', 'info');
+    };
 </script>
 
 
 
 <script src="js/site-settings.js"></script>
+<script src="js/analytics.js"></script>
 <script src="js/notify-sounds.js"></script>
 </body>
 </html>

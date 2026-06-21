@@ -86,6 +86,20 @@
         .job-apply{padding:8px 20px;background:transparent;border:1px solid var(--border);color:var(--text);border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s;text-decoration:none}
         .job-apply:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,3,201,0.03)}
 
+        .job-featured{background:linear-gradient(135deg,rgba(0,3,201,0.04),rgba(139,92,246,0.04));border:2px solid var(--accent);border-radius:18px;padding:30px;margin-bottom:24px;position:relative;overflow:hidden;transition:all 0.35s}
+        .job-featured::before{content:'';position:absolute;top:0;right:0;width:100%;height:4px;background:linear-gradient(90deg,var(--accent),var(--purple));border-radius:2px}
+        .job-featured:hover{box-shadow:0 12px 40px rgba(0,3,201,0.12);transform:translateY(-3px)}
+        .featured-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--accent),var(--purple));color:#fff;padding:5px 14px;border-radius:20px;font-size:0.72rem;font-weight:800;margin-bottom:14px}
+        .featured-header{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+        .featured-info{flex:1}
+        .featured-info h3{font-size:1.3rem;font-weight:900;margin-bottom:6px;color:var(--text)}
+        .featured-info p{color:var(--muted);font-size:0.88rem;margin-bottom:10px}
+        .featured-info .job-desc{color:var(--muted);font-size:0.82rem;line-height:1.7;margin-bottom:12px}
+        .featured-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+        .featured-tag{background:rgba(0,3,201,0.06);color:var(--accent);padding:4px 12px;border-radius:8px;font-size:0.72rem;font-weight:700}
+        .featured-apply{padding:12px 30px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-weight:800;font-size:0.88rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.25s;text-decoration:none;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+        .featured-apply:hover{background:#0005e6;transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,3,201,0.25)}
+
         /* ===== CTA ===== */
         .cta-section{text-align:center;padding:90px 20px}
         .cta-box{max-width:700px;margin:0 auto;background:linear-gradient(135deg,rgba(0,3,201,0.04),rgba(139,92,246,0.04));border:1px solid var(--border);border-radius:24px;padding:55px 40px}
@@ -319,11 +333,47 @@
         };
 
         var html = '';
+        var allJobs = [];
         Object.keys(cats).forEach(function(cat) {
+            cats[cat].forEach(function(j) { allJobs.push(j); });
+        });
+
+        if (allJobs.length > 0) {
+            var fj = allJobs[0];
+            var fEmail = fj.email || 'support@qcv.com';
+            var fDesc = fj.description || '';
+            html += '<div class="job-featured">';
+            html += '<div class="featured-badge"><i class="fas fa-star"></i> وظيفة مميزة</div>';
+            html += '<div class="featured-header">';
+            html += '<div class="featured-info">';
+            html += '<h3>' + fj.title + '</h3>';
+            html += '<p>' + (fj.location || '') + (fj.category ? ' &bull; ' + fj.category : '') + '</p>';
+            if (fDesc) {
+                html += '<div class="job-desc">' + fDesc.replace(/\n/g, '<br>') + '</div>';
+            }
+            html += '<div class="featured-tags">';
+            html += '<span class="featured-tag"><i class="fas fa-briefcase"></i> ' + (fj.category || 'وظيفة') + '</span>';
+            if (fj.location) html += '<span class="featured-tag"><i class="fas fa-map-marker-alt"></i> ' + fj.location + '</span>';
+            html += '<span class="featured-tag"><i class="fas fa-clock"></i> متاح الآن</span>';
+            html += '</div>';
+            html += '</div>';
+            html += '<a href="mailto:' + fEmail + '?subject=التقديم على وظيفة ' + encodeURIComponent(fj.title) + '" class="featured-apply"><i class="fas fa-paper-plane"></i> تقدم الآن</a>';
+            html += '</div></div>';
+        }
+
+        var displayed = allJobs.slice(1);
+        var catsRemaining = {};
+        displayed.forEach(function(j) {
+            var cat = j.category || 'أخرى';
+            if (!catsRemaining[cat]) catsRemaining[cat] = [];
+            catsRemaining[cat].push(j);
+        });
+
+        Object.keys(catsRemaining).forEach(function(cat) {
             var emoji = catEmojis[cat] || '<i class="fas fa-briefcase"></i>';
             html += '<div class="job-category">';
             html += '<div class="cat-title"><span class="emoji">' + emoji + '</span> ' + cat + '</div>';
-            cats[cat].forEach(function(j) {
+            catsRemaining[cat].forEach(function(j) {
                 var email = j.email || 'support@qcv.com';
                 var desc = j.description || '';
                 html += '<div class="job-card">';
@@ -345,6 +395,7 @@
 
 
 <script src="js/site-settings.js"></script>
+<script src="js/analytics.js"></script>
 <script src="js/notify-sounds.js"></script>
 </body>
 </html>

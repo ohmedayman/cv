@@ -31,6 +31,8 @@
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link rel="stylesheet" href="components.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="js/theme.js"></script>
+    <script src="js/lang.js"></script>
     <link rel="apple-touch-icon" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -215,12 +217,6 @@
         .trust-bar .trust-icons{display:flex;align-items:center;gap:8px}
         .trust-bar .trust-icons span{font-size:1.2rem}
 
-        /* ===== STATS BAR ===== */
-        .stats-bar{display:flex;justify-content:center;gap:80px;padding:50px 20px;border-bottom:1px solid var(--border)}
-        .stat{text-align:center}
-        .stat-num{font-size:2rem;font-weight:900;color:var(--accent)}
-        .stat-label{font-size:0.82rem;color:var(--muted);margin-top:4px}
-
         /* ===== SECTIONS ===== */
         .section{padding:90px 60px}
         .section-header{text-align:center;margin-bottom:50px}
@@ -275,7 +271,7 @@
         /* ===== TESTIMONIALS ===== */
         .test-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden}
         .test-track-wrap{overflow:hidden;padding:20px 0;margin:0 auto;max-width:1200px}
-        .test-track{display:flex;gap:24px;animation:scrollTestimonials 25s linear infinite;width:max-content}
+        .test-track{display:flex;gap:24px;animation:scrollTestimonials 35s linear infinite;width:max-content}
         .test-track:hover{animation-play-state:paused}
         @keyframes scrollTestimonials{0%{transform:translateX(0)}100%{transform:translateX(calc(-50% - 12px))}}
         .test-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;transition:all 0.3s;flex-shrink:0;width:340px;min-width:340px}
@@ -314,18 +310,31 @@
         .cta-box .btn-primary{background:var(--cyan);color:var(--text);box-shadow:0 4px 15px rgba(39,255,237,0.3)}
         .cta-box .btn-primary:hover{background:#20e5d5;transform:translateY(-2px);box-shadow:0 8px 25px rgba(39,255,237,0.4)}
 
+        /* ===== STATS BAR ===== */
+        .stats-bar{display:flex;justify-content:center;gap:60px;padding:60px 20px;border-bottom:1px solid var(--border)}
+        .stat{text-align:center;flex:1;max-width:220px}
+        .stat-icon{width:56px;height:56px;background:var(--accent-light);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin:0 auto 14px;color:var(--accent)}
+        .stat-num{font-size:2.8rem;font-weight:900;color:var(--accent);line-height:1.1}
+        .stat-label{font-size:0.85rem;color:var(--muted);margin-top:6px;font-weight:600}
+
         /* ===== FOOTER ===== */
-        .footer{border-top:1px solid var(--border);padding:50px 60px 30px;background:var(--bg)}
-        .footer-content{display:flex;justify-content:space-between;align-items:start;max-width:1200px;margin:0 auto;flex-wrap:wrap;gap:40px}
-        .footer-brand .logo{font-size:1.6rem;font-weight:900;margin-bottom:12px;color:var(--text)}
+        .footer{border-top:1px solid var(--border);padding:30px 60px 20px;background:var(--bg)}
+        .footer-content{display:flex;justify-content:space-between;align-items:start;max-width:1200px;margin:0 auto;flex-wrap:wrap;gap:30px}
+        .footer-brand .logo{font-size:1.5rem;font-weight:900;margin-bottom:8px;color:var(--text)}
         .footer-brand .logo span{color:var(--accent)}
-        .footer-brand p{color:var(--muted);font-size:0.85rem;max-width:280px;line-height:1.6}
-        .footer-links h4{font-size:0.95rem;font-weight:700;margin-bottom:15px;color:var(--text)}
+        .footer-brand p{color:var(--muted);font-size:0.82rem;max-width:280px;line-height:1.5}
+        .footer-links h4{font-size:0.9rem;font-weight:700;margin-bottom:10px;color:var(--text)}
         .footer-links ul{list-style:none}
-        .footer-links ul li{margin-bottom:10px}
-        .footer-links ul li a{color:var(--muted);text-decoration:none;font-size:0.85rem;transition:color 0.2s}
+        .footer-links ul li{margin-bottom:6px}
+        .footer-links ul li a{color:var(--muted);text-decoration:none;font-size:0.82rem;transition:color 0.2s;display:inline-flex;align-items:center;gap:6px}
         .footer-links ul li a:hover{color:var(--accent)}
-        .footer-bottom{text-align:center;margin-top:40px;padding-top:20px;border-top:1px solid var(--border);color:var(--muted);font-size:0.8rem}
+        .footer-bottom{text-align:center;margin-top:20px;padding-top:14px;border-top:1px solid var(--border);color:var(--muted);font-size:0.78rem}
+
+        /* ===== WHATSAPP BUTTON ===== */
+        .whatsapp-btn{position:fixed;bottom:28px;left:28px;z-index:9999;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.3s;animation:whatsappPulse 2s infinite}
+        .whatsapp-btn:hover{transform:scale(1.1)}
+        .whatsapp-btn i{color:#fff;font-size:1.8rem}
+        @keyframes whatsappPulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,0.5)}70%{box-shadow:0 0 0 18px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
 
         /* ===== RESPONSIVE ===== */
         @media(max-width:1024px){
@@ -368,14 +377,16 @@
             .faq-list{padding:0}
             .cta-box{padding:40px 24px;border-radius:20px;margin:0 10px}
             .cta-box h2{font-size:1.3rem}
-            .footer{padding:40px 20px 20px}
-            .footer-content{flex-direction:column;gap:30px}
-            .footer-links{margin-bottom:10px}
-            .footer-links h4{margin-bottom:10px}
-            .stats-bar{gap:20px;flex-wrap:wrap;padding:40px 20px}
+            .footer{padding:24px 20px 16px}
+            .footer-content{flex-direction:column;gap:20px}
+            .footer-links{margin-bottom:8px}
+            .footer-links h4{margin-bottom:8px}
+            .whatsapp-btn{width:52px;height:52px;bottom:20px;left:20px}
+            .whatsapp-btn i{font-size:1.5rem}
+            .stats-bar{gap:24px;flex-wrap:wrap;padding:40px 20px}
             .stat{min-width:40%}
-            .stat-num{font-size:1.6rem}
-            .stat-label{font-size:0.75rem}
+            .stat-num{font-size:2rem}
+            .stat-label{font-size:0.78rem}
             .trust-bar{flex-direction:column;gap:8px;padding:30px 20px}
             .trust-bar p{font-size:0.85rem}
             .grid-bg{display:none}
@@ -384,7 +395,7 @@
             .hero-right h1{font-size:1.5rem}
             .hero-badge{font-size:0.7rem;padding:5px 12px}
             .hero-btns .btn{font-size:0.88rem;padding:12px 24px}
-            .stat-num{font-size:1.3rem}
+            .stat-num{font-size:1.6rem}
             .stats-bar{gap:16px;padding:30px 16px}
             .stat{min-width:45%}
             .pricing-grid{padding:0}
@@ -409,6 +420,14 @@
         <li><a href="help.html">المساعدة</a></li>
     </ul>
     <div class="nav-right">
+        <button class="theme-toggle" onclick="QCVTheme.toggle()" style="background:none;border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+            <span class="icon-sun">&#9728;</span>
+            <span class="icon-moon" style="display:none">&#9790;</span>
+        </button>
+        <div class="lang-switch" style="display:flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:2px 4px">
+            <button class="lang-ar" onclick="QCVLang.set('ar')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;font-family:'Cairo',sans-serif;transition:all 0.2s">عربي</button>
+            <button class="lang-en" onclick="QCVLang.set('en')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;font-family:'Cairo',sans-serif;transition:all 0.2s">EN</button>
+        </div>
         <a href="login.html" class="login">تسجيل الدخول</a>
         <a href="login.html" class="btn-cta">ابدأ مجاناً</a>
     </div>
@@ -461,10 +480,10 @@
 
 <!-- ===== STATS ===== -->
 <div class="stats-bar">
-    <div class="stat"><div class="stat-num">+50</div><div class="stat-label">عدد السير</div></div>
-    <div class="stat"><div class="stat-num">4.9</div><div class="stat-label">تقييم المستخدمين</div></div>
-    <div class="stat"><div class="stat-num">95%</div><div class="stat-label">نسبة النجاح في المقابلات</div></div>
-    <div class="stat"><div class="stat-num">+10K</div><div class="stat-label">مستخدم نشط</div></div>
+    <div class="stat"><div class="stat-icon"><i class="fas fa-file-alt"></i></div><div class="stat-num" data-target="50" data-prefix="+">+50</div><div class="stat-label">قالب سيرة ذاتية</div></div>
+    <div class="stat"><div class="stat-icon"><i class="fas fa-star"></i></div><div class="stat-num" data-target="4.9">4.9</div><div class="stat-label">تقييم المستخدمين</div></div>
+    <div class="stat"><div class="stat-icon"><i class="fas fa-check-circle"></i></div><div class="stat-num" data-target="95" data-suffix="%">95%</div><div class="stat-label">نسبة النجاح في المقابلات</div></div>
+    <div class="stat"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-num" data-target="10000" data-prefix="+">+10K</div><div class="stat-label">مستخدم نشط</div></div>
 </div>
 
 <!-- ===== FEATURES ===== -->
@@ -591,31 +610,31 @@
                 <p>QCV غيّر حياتي! حصلت على مقابلة عمل في شركة كبيرة بعد ما كنت بنبّع سيرتي الذاتية من غير رد. الذكاء الاصطناعي ساعدني أكتب ملخص احترافي.</p>
                 <div class="test-author">
                     <div class="test-avatar">أم</div>
-                    <div><div class="test-name">أحمد محمد</div><div class="test-role">مطور ويب</div></div>
+                    <div><div class="test-name">أحمد مصطفى</div><div class="test-role">مطور ويب فرونت إند</div></div>
                 </div>
             </div>
             <div class="test-card">
                 <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
                 <p>القوالب احترافية جداً والتحليل الـ ATS فادني أفهم ليه سيرتي الذاتية كانت بترفض. الآن صار 95% وبنصح كل حد يجربها.</p>
                 <div class="test-author">
-                    <div class="test-avatar">سخ</div>
-                    <div><div class="test-name">سارة خالد</div><div class="test-role">مهندسة برمجيات</div></div>
+                    <div class="test-avatar">سن</div>
+                    <div><div class="test-name">سارة ناصر</div><div class="test-role">مهندسة برمجيات</div></div>
                 </div>
             </div>
             <div class="test-card">
                 <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
                 <p>أفضل منشئ سير ذاتية جربته. سهل الاستخدام والنتائج مبهرة. حصلت على 3 مقابلات في أسبوع واحد بعد ما استخدمت QCV.</p>
                 <div class="test-author">
-                    <div class="test-avatar">مع</div>
-                    <div><div class="test-name">محمد عبدالله</div><div class="test-role">مدير مشاريع</div></div>
+                    <div class="test-avatar">مح</div>
+                    <div><div class="test-name">محمد حسين</div><div class="test-role">مدير مشاريع تقنية</div></div>
                 </div>
             </div>
             <div class="test-card">
                 <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
                 <p>كنت مش عارف أكتب إيه في الملخص الوظيفي. QCV ساعدني أكتب ملخص احترافي في ثواني. أنصح بيهم جداً!</p>
                 <div class="test-author">
-                    <div class="test-avatar">فط</div>
-                    <div><div class="test-name">فاطمة أحمد</div><div class="test-role">مصممة UI/UX</div></div>
+                    <div class="test-avatar">فب</div>
+                    <div><div class="test-name">فاطمة بلال</div><div class="test-role">مصممة تجربة المستخدم</div></div>
                 </div>
             </div>
             <div class="test-card">
@@ -623,15 +642,15 @@
                 <p>بعد ما استخدمت QCV، سيرتي الذاتية بقت أول حاجة الموظف بيشوفها. حصلت على عرض وظيفة في أسبوع واحد!</p>
                 <div class="test-author">
                     <div class="test-avatar">خع</div>
-                    <div><div class="test-name">خالد عادل</div><div class="test-role">مهندس بيانات</div></div>
+                    <div><div class="test-name">خالد ربيع</div><div class="test-role">مهندس بيانات</div></div>
                 </div>
             </div>
             <div class="test-card">
                 <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p>القوالب الـ ATS فادتني جداً. كنت بنبّع سيرتي لـ 50 شركة ومفيش رد. بعد QCV، بدأت أקבל ردود فورية.</p>
+                <p>القوالب الـ ATS فادتني جداً. كنت بنبّع سيرتي لـ 50 شركة ومفيش رد. بعد QCV، بدأت أتلقى ردود فورية.</p>
                 <div class="test-author">
-                    <div class="test-avatar">نمر</div>
-                    <div><div class="test-name">نور محمد</div><div class="test-role">محللة بيانات</div></div>
+                    <div class="test-avatar">نع</div>
+                    <div><div class="test-name">نورا عادل</div><div class="test-role">محللة بيانات</div></div>
                 </div>
             </div>
             <!-- Duplicate set for infinite scroll -->
@@ -640,31 +659,31 @@
                 <p>QCV غيّر حياتي! حصلت على مقابلة عمل في شركة كبيرة بعد ما كنت بنبّع سيرتي الذاتية من غير رد. الذكاء الاصطناعي ساعدني أكتب ملخص احترافي.</p>
                 <div class="test-author">
                     <div class="test-avatar">أم</div>
-                    <div><div class="test-name">أحمد محمد</div><div class="test-role">مطور ويب</div></div>
+                    <div><div class="test-name">أحمد مصطفى</div><div class="test-role">مطور ويب فرونت إند</div></div>
                 </div>
             </div>
             <div class="test-card">
                 <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
                 <p>القوالب احترافية جداً والتحليل الـ ATS فادني أفهم ليه سيرتي الذاتية كانت بترفض. الآن صار 95% وبنصح كل حد يجربها.</p>
                 <div class="test-author">
-                    <div class="test-avatar">سخ</div>
-                    <div><div class="test-name">سارة خالد</div><div class="test-role">مهندسة برمجيات</div></div>
+                    <div class="test-avatar">سن</div>
+                    <div><div class="test-name">سارة ناصر</div><div class="test-role">مهندسة برمجيات</div></div>
                 </div>
             </div>
             <div class="test-card">
                 <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
                 <p>أفضل منشئ سير ذاتية جربته. سهل الاستخدام والنتائج مبهرة. حصلت على 3 مقابلات في أسبوع واحد بعد ما استخدمت QCV.</p>
                 <div class="test-author">
-                    <div class="test-avatar">مع</div>
-                    <div><div class="test-name">محمد عبدالله</div><div class="test-role">مدير مشاريع</div></div>
+                    <div class="test-avatar">مح</div>
+                    <div><div class="test-name">محمد حسين</div><div class="test-role">مدير مشاريع تقنية</div></div>
                 </div>
             </div>
             <div class="test-card">
                 <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
                 <p>كنت مش عارف أكتب إيه في الملخص الوظيفي. QCV ساعدني أكتب ملخص احترافي في ثواني. أنصح بيهم جداً!</p>
                 <div class="test-author">
-                    <div class="test-avatar">فط</div>
-                    <div><div class="test-name">فاطمة أحمد</div><div class="test-role">مصممة UI/UX</div></div>
+                    <div class="test-avatar">فب</div>
+                    <div><div class="test-name">فاطمة بلال</div><div class="test-role">مصممة تجربة المستخدم</div></div>
                 </div>
             </div>
             <div class="test-card">
@@ -672,15 +691,15 @@
                 <p>بعد ما استخدمت QCV، سيرتي الذاتية بقت أول حاجة الموظف بيشوفها. حصلت على عرض وظيفة في أسبوع واحد!</p>
                 <div class="test-author">
                     <div class="test-avatar">خع</div>
-                    <div><div class="test-name">خالد عادل</div><div class="test-role">مهندس بيانات</div></div>
+                    <div><div class="test-name">خالد ربيع</div><div class="test-role">مهندس بيانات</div></div>
                 </div>
             </div>
             <div class="test-card">
                 <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
                 <p>القوالب الـ ATS فادتني جداً. كنت بنبّع سيرتي لـ 50 شركة ومفيش رد. بعد QCV، بدأت أتلقى ردود فورية.</p>
                 <div class="test-author">
-                    <div class="test-avatar">نمر</div>
-                    <div><div class="test-name">نور محمد</div><div class="test-role">محللة بيانات</div></div>
+                    <div class="test-avatar">نع</div>
+                    <div><div class="test-name">نورا عادل</div><div class="test-role">محللة بيانات</div></div>
                 </div>
             </div>
         </div>
@@ -745,6 +764,7 @@
             <ul>
                 <li><a href="help.html">مركز المساعدة</a></li>
                 <li><a href="mailto:support@qcv.com">تواصل معنا</a></li>
+                <li><a href="https://wa.me/201028707543" target="_blank"><i class="fab fa-whatsapp" style="color:#25D366"></i> واتساب</a></li>
             </ul>
         </div>
         <div class="footer-links">
@@ -772,7 +792,88 @@ function toggleFaq(el){
 
 <script src="js/tutorial.js"></script>
 <script src="js/site-settings.js"></script>
+<script src="js/analytics.js"></script>
 <script src="js/notify-sounds.js"></script>
+
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/201028707543" target="_blank" rel="noopener" class="whatsapp-btn" aria-label="تواصل معنا عبر واتساب">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- Stats Counter Animation -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const counters = document.querySelectorAll('.stat-num[data-target]');
+    let animated = false;
+
+    function animateCounters() {
+        counters.forEach(counter => {
+            const target = parseFloat(counter.dataset.target);
+            const prefix = counter.dataset.prefix || '';
+            const suffix = counter.dataset.suffix || '';
+            const duration = 2000;
+            const startTime = performance.now();
+            const isFloat = target % 1 !== 0;
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = eased * target;
+                if (target >= 1000) {
+                    counter.textContent = prefix + Math.floor(current / 1000) + 'K' + suffix;
+                } else if (isFloat) {
+                    counter.textContent = prefix + current.toFixed(1) + suffix;
+                } else {
+                    counter.textContent = prefix + Math.floor(current) + suffix;
+                }
+                if (progress < 1) requestAnimationFrame(update);
+            }
+            requestAnimationFrame(update);
+        });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !animated) {
+                animated = true;
+                animateCounters();
+            }
+        });
+    }, { threshold: 0.3 });
+    const statsBar = document.querySelector('.stats-bar');
+    if (statsBar) observer.observe(statsBar);
+
+    async function loadRealStats() {
+        try {
+            const usersRes = await fetch('https://qwcv-1cfad-default-rtdb.firebaseio.com/users.json?shallow=true');
+            const usersData = await usersRes.json();
+            const userCount = usersData ? Object.keys(usersData).length : 0;
+
+            const fullRes = await fetch('https://qwcv-1cfad-default-rtdb.firebaseio.com/users.json');
+            const fullData = await fullRes.json();
+            let cvCount = 0;
+            if (fullData) {
+                for (const uid in fullData) {
+                    const user = fullData[uid];
+                    if (user.cvData || user.cvs) cvCount++;
+                }
+            }
+
+            if (userCount > 0) {
+                counters[counters.length - 1].dataset.target = userCount;
+            }
+            if (cvCount > 0) {
+                counters[0].dataset.target = cvCount;
+            }
+
+            if (animated) animateCounters();
+        } catch (e) {}
+    }
+
+    loadRealStats();
+});
+</script>
+
 <script>
 // Tutorial for index page
 document.addEventListener('DOMContentLoaded', () => {

@@ -8,9 +8,11 @@
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link rel="stylesheet" href="components.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="js/theme.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="templates/templates.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root{--bg:#f9fafb;--sidebar:#ffffff;--card:#ffffff;--border:#e5e7eb;--accent:#0003c9;--sky:#2563eb;--glow:rgba(0,3,201,0.25);--green:#0003c9;--red:#ef4444;--yellow:#f59e0b;--text:#1a1a2e;--muted:#6b7280;--light:#9ca3af;--input:#f9fafb}
         *{box-sizing:border-box;margin:0;padding:0}
@@ -392,6 +394,10 @@
         </div>
     </div>
     <div class="topbar-left">
+        <button class="theme-toggle" onclick="QCVTheme.toggle()" style="background:var(--card);border:1px solid var(--border);color:var(--text);width:34px;height:34px;border-radius:8px;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+            <span class="icon-sun">&#9728;</span>
+            <span class="icon-moon" style="display:none">&#9790;</span>
+        </button>
         <button class="btn-save" onclick="saveToFirebase()"><i class="fas fa-save"></i> Save</button>
         <button class="btn-ai-gen" id="btnAiGen" onclick="window.open('ai.html')" style="display:none"><i class="fas fa-robot"></i> AI Generate</button>
         <button class="btn-export" id="exportBtn" onclick="exportPDF()"><span class="exp-text"><i class="fas fa-file-pdf"></i> Export PDF</span><div class="spinner"></div></button>
@@ -1178,36 +1184,38 @@
 
         const el = document.getElementById('cvPage');
 
-        // ── 1-page PDF: use html2canvas height限制 to capture only A4 height ──
-        const A4_HEIGHT_PX = 1122;
-
-        const opt = {
-            margin: 0,
-            filename: finalName + '.pdf',
-            image: { type: 'jpeg', quality: paid ? 0.98 : 0.75 },
-            html2canvas: {
+        // Capture with html2canvas then create 1-page PDF
+        try {
+            const canvas = await html2canvas(el, {
                 scale: paid ? 2 : 1.5,
                 useCORS: true,
                 letterRendering: true,
-                height: A4_HEIGHT_PX,
-                windowHeight: A4_HEIGHT_PX
-            },
-            jsPDF: {
-                unit: 'mm',
-                format: 'a4',
-                orientation: 'portrait',
-                hotfixes: ['px_scaling']
-            },
-            pagebreak: { mode: [] }
-        };
+                logging: false,
+                width: el.scrollWidth,
+                height: Math.min(el.scrollHeight, 1122)
+            });
 
-        if(window.QCVNotify) QCVNotify.download();
-        html2pdf().set(opt).from(el).save().then(() => {
+            const imgData = canvas.toDataURL('image/jpeg', paid ? 0.98 : 0.75);
+            const pdf = new jspdf.jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
+
+            // Fit image to 1 A4 page
+            const imgWidth = pageWidth;
+            const imgHeight = (canvas.height * pageWidth) / canvas.width;
+            const finalHeight = Math.min(imgHeight, pageHeight);
+
+            pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, finalHeight);
+            pdf.save(finalName + '.pdf');
+
             b.classList.remove('loading');
-        }).catch(() => {
+            if(window.QCVNotify) QCVNotify.download();
+        } catch(err) {
+            console.error('PDF export error:', err);
             b.classList.remove('loading');
+            // Fallback: print
             window.print();
-        });
+        }
     };
 
 
@@ -1662,6 +1670,7 @@
 
 <script src="js/tutorial.js"></script>
 <script src="js/site-settings.js"></script>
+<script src="js/analytics.js"></script>
 <script src="js/notify-sounds.js"></script>
 <script>
 // Tutorial for editor page
