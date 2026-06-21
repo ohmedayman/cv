@@ -29,33 +29,17 @@
         body{background:var(--bg-main);color:var(--text);font-family:'Cairo',sans-serif;overflow-x:hidden}
 
         /* ===== ADMIN LOGIN ===== */
-        .admin-login{
-            position:fixed;top:0;left:0;width:100%;height:100%;
-            background:var(--bg-main);z-index:9999;
-            display:flex;justify-content:center;align-items:center;
-        }
+        .admin-login{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg-main);z-index:9999;display:flex;justify-content:center;align-items:center}
         .admin-login.hidden{display:none}
-        .login-box{
-            background:var(--bg-card);border:1px solid var(--border);
-            padding:45px 40px;border-radius:20px;width:100%;max-width:420px;
-            box-shadow:0 25px 60px rgba(0,0,0,0.5);
-        }
+        .login-box{background:var(--bg-card);border:1px solid var(--border);padding:45px 40px;border-radius:20px;width:100%;max-width:420px;box-shadow:0 25px 60px rgba(0,0,0,0.5)}
         .login-box .logo{text-align:center;font-size:2.5rem;font-weight:900;margin-bottom:8px}
         .login-box .logo span{color:var(--accent)}
         .login-box .subtitle{text-align:center;color:var(--muted);font-size:0.85rem;margin-bottom:30px}
         .login-box .input-group{margin-bottom:18px}
         .login-box label{display:block;font-size:0.8rem;color:var(--muted);margin-bottom:6px;font-weight:600}
-        .login-box input{
-            width:100%;padding:14px 16px;background:#ffffff;border:1px solid var(--border);
-            color:#1a1a2e;border-radius:12px;outline:none;font-family:'Cairo',sans-serif;font-size:0.9rem;
-            transition:all 0.2s;
-        }
+        .login-box input{width:100%;padding:14px 16px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:12px;outline:none;font-family:'Cairo',sans-serif;font-size:0.9rem;transition:all 0.2s}
         .login-box input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
-        .login-box .btn{
-            width:100%;padding:14px;background:var(--accent);color:#000;border:none;border-radius:12px;
-            font-weight:800;font-size:1rem;cursor:pointer;font-family:'Cairo',sans-serif;margin-top:5px;
-            transition:all 0.2s;
-        }
+        .login-box .btn{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-weight:800;font-size:1rem;cursor:pointer;font-family:'Cairo',sans-serif;margin-top:5px;transition:all 0.2s}
         .login-box .btn:hover{background:#60a5fa;transform:translateY(-1px)}
         .login-box .btn:disabled{opacity:0.5;cursor:not-allowed}
         .login-box .error{color:var(--red);font-size:0.82rem;text-align:center;margin-top:12px;display:none}
@@ -67,32 +51,18 @@
         .admin-layout.show{display:flex}
 
         /* Sidebar */
-        .sidebar{
-            width:260px;background:var(--bg-sidebar);border-left:1px solid var(--border);
-            padding:25px 18px;display:flex;flex-direction:column;position:fixed;top:0;bottom:0;right:0;z-index:100;
-        }
+        .sidebar{width:260px;background:var(--bg-sidebar);border-left:1px solid var(--border);padding:25px 18px;display:flex;flex-direction:column;position:fixed;top:0;bottom:0;right:0;z-index:100;overflow-y:auto}
         .sidebar-brand{font-size:1.8rem;font-weight:900;text-align:center;margin-bottom:35px;letter-spacing:-1px}
         .sidebar-brand span{color:var(--accent)}
         .sidebar-nav{flex:1}
-        .nav-item{
-            display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:12px;
-            cursor:pointer;font-weight:700;font-size:0.9rem;color:var(--light);
-            transition:all 0.2s;margin-bottom:6px;
-        }
+        .nav-item{display:flex;align-items:center;gap:12px;padding:13px 16px;border-radius:12px;cursor:pointer;font-weight:700;font-size:0.9rem;color:var(--light);transition:all 0.2s;margin-bottom:6px;position:relative}
         .nav-item:hover,.nav-item.active{background:rgba(0,3,201,0.08);color:#1a1a2e}
         .nav-item.active{border-right:3px solid var(--accent)}
         .nav-item .icon{font-size:1.2rem;width:24px;text-align:center}
-        .nav-item .badge{
-            margin-right:auto;background:var(--red);color:#ffffff;font-size:0.7rem;
-            padding:2px 8px;border-radius:20px;font-weight:700;
-        }
+        .nav-item .badge{margin-right:auto;background:var(--red);color:#ffffff;font-size:0.7rem;padding:2px 8px;border-radius:20px;font-weight:700}
         .sidebar-footer{border-top:1px solid var(--border);padding-top:15px}
-        .btn-logout{
-            width:100%;padding:12px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);
-            color:var(--red);border-radius:12px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;
-            font-size:0.85rem;transition:all 0.2s;
-        }
-        .btn-logout:hover{background:var(--red);color:#ffffff}
+        .btn-logout{width:100%;padding:12px;background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);color:var(--red);border-radius:12px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;font-size:0.85rem;transition:all 0.2s}
+        .btn-logout:hover{background:var(--red);color:#fff}
 
         /* Main Content */
         .main-content{flex:1;margin-right:260px;padding:30px 35px}
@@ -101,27 +71,17 @@
         .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px}
         .topbar h1{font-size:1.6rem;font-weight:900}
         .topbar .admin-info{display:flex;align-items:center;gap:12px}
-        .admin-avatar{
-            width:42px;height:42px;background:linear-gradient(135deg,var(--accent),var(--purple));
-            border-radius:12px;display:flex;align-items:center;justify-content:center;
-            font-weight:800;font-size:0.9rem;
-        }
+        .admin-avatar{width:42px;height:42px;background:linear-gradient(135deg,var(--accent),var(--purple));border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.9rem;color:#fff}
         .admin-name{font-weight:700;font-size:0.9rem}
         .admin-role{color:var(--muted);font-size:0.75rem}
 
         /* Stats Cards */
         .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:30px}
-        .stat-card{
-            background:var(--bg-card);border:1px solid var(--border);padding:22px;border-radius:16px;
-            transition:all 0.3s;position:relative;overflow:hidden;
-        }
-        .stat-card:hover{border-color:var(--accent);transform:translateY(-3px)}
-        .stat-card .stat-icon{
-            width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;
-            font-size:1.4rem;margin-bottom:15px;
-        }
-        .stat-card .stat-icon.blue{background:rgba(56,189,248,0.1);color:var(--accent)}
-        .stat-card .stat-icon.green{background:rgba(56,189,248,0.1);color:var(--green)}
+        .stat-card{background:var(--bg-card);border:1px solid var(--border);padding:22px;border-radius:16px;transition:all 0.3s;position:relative;overflow:hidden;cursor:default}
+        .stat-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 25px rgba(0,3,201,0.1)}
+        .stat-card .stat-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:15px}
+        .stat-card .stat-icon.blue{background:rgba(0,3,201,0.1);color:var(--accent)}
+        .stat-card .stat-icon.green{background:rgba(16,185,129,0.1);color:var(--green)}
         .stat-card .stat-icon.yellow{background:rgba(245,158,11,0.1);color:var(--yellow)}
         .stat-card .stat-icon.purple{background:rgba(139,92,246,0.1);color:var(--purple)}
         .stat-card .stat-value{font-size:1.8rem;font-weight:900;margin-bottom:4px}
@@ -132,71 +92,62 @@
         .panel.active{display:block}
 
         /* Tables */
-        .table-container{
-            background:var(--bg-card);border:1px solid var(--border);border-radius:16px;overflow:hidden;
-        }
-        .table-header{
-            display:flex;justify-content:space-between;align-items:center;padding:18px 22px;
-            border-bottom:1px solid var(--border);
-        }
+        .table-container{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+        .table-header{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:12px}
         .table-header h3{font-size:1rem;font-weight:800}
-        .search-box{
-            display:flex;align-items:center;background:#f9fafb;border:1px solid var(--border);
-            border-radius:10px;padding:8px 14px;gap:8px;
-        }
-        .search-box input{
-            background:none;border:none;color:#1a1a2e;outline:none;font-family:'Cairo',sans-serif;
-            font-size:0.85rem;width:200px;
-        }
+        .search-box{display:flex;align-items:center;background:#f9fafb;border:1px solid var(--border);border-radius:10px;padding:8px 14px;gap:8px}
+        .search-box input,.search-box select{background:none;border:none;color:#1a1a2e;outline:none;font-family:'Cairo',sans-serif;font-size:0.85rem}
+        .search-box input{width:200px}
         .search-box .icon{color:var(--muted);font-size:0.9rem}
         table{width:100%;border-collapse:collapse}
-        th{
-            background:rgba(229,231,235,0.5);color:var(--accent);font-weight:700;font-size:0.8rem;
-            text-transform:uppercase;letter-spacing:0.5px;
-        }
+        th{background:rgba(229,231,235,0.5);color:var(--accent);font-weight:700;font-size:0.8rem;text-transform:uppercase;letter-spacing:0.5px}
         th,td{padding:14px 18px;text-align:right;border-bottom:1px solid var(--border)}
         tr:hover td{background:rgba(0,3,201,0.03)}
         td{font-size:0.88rem}
         .user-cell{display:flex;align-items:center;gap:10px}
-        .user-avatar{
-            width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;
-            font-weight:800;font-size:0.8rem;flex-shrink:0;
-        }
+        .user-avatar{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8rem;flex-shrink:0;color:#fff}
         .user-info .name{font-weight:700;font-size:0.88rem}
         .user-info .email{color:var(--muted);font-size:0.75rem}
 
         /* Badges */
-        .badge{
-            display:inline-block;padding:4px 12px;border-radius:20px;font-size:0.72rem;font-weight:700;
-        }
+        .badge{display:inline-block;padding:4px 12px;border-radius:20px;font-size:0.72rem;font-weight:700}
         .badge-free{background:rgba(100,116,139,0.15);color:var(--muted)}
-        .badge-pro{background:rgba(56,189,248,0.15);color:var(--accent)}
+        .badge-pro{background:rgba(0,3,201,0.1);color:var(--accent)}
         .badge-unlimited{background:rgba(139,92,246,0.15);color:var(--purple)}
         .badge-pending{background:rgba(245,158,11,0.15);color:var(--yellow)}
-        .badge-approved{background:rgba(56,189,248,0.15);color:var(--green)}
+        .badge-approved{background:rgba(16,185,129,0.15);color:var(--green)}
         .badge-rejected{background:rgba(239,68,68,0.15);color:var(--red)}
         .badge-banned{background:rgba(239,68,68,0.15);color:var(--red)}
+        .badge-active{background:rgba(16,185,129,0.15);color:var(--green)}
+        .badge-inactive{background:rgba(100,116,139,0.15);color:var(--muted)}
+        .badge-super_admin{background:rgba(239,68,68,0.15);color:var(--red)}
+        .badge-admin{background:rgba(0,3,201,0.1);color:var(--accent)}
+        .badge-manager{background:rgba(139,92,246,0.15);color:var(--purple)}
+        .badge-support{background:rgba(16,185,129,0.15);color:var(--green)}
+        .badge-paid{background:rgba(16,185,129,0.15);color:var(--green)}
+        .badge-waiting{background:rgba(245,158,11,0.15);color:var(--yellow)}
 
         /* Action Buttons */
         .actions{display:flex;gap:6px;flex-wrap:wrap}
-        .btn-action{
-            padding:6px 12px;border-radius:8px;border:none;font-weight:700;font-size:0.72rem;
-            cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s;
-        }
-        .btn-approve{background:rgba(56,189,248,0.15);color:var(--green);border:1px solid rgba(56,189,248,0.3)}
+        .btn-action{padding:6px 12px;border-radius:8px;border:none;font-weight:700;font-size:0.72rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s}
+        .btn-approve{background:rgba(16,185,129,0.15);color:var(--green);border:1px solid rgba(16,185,129,0.3)}
         .btn-approve:hover{background:var(--green);color:#fff}
         .btn-reject{background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.3)}
         .btn-reject:hover{background:var(--red);color:#fff}
         .btn-ban{background:rgba(245,158,11,0.15);color:var(--yellow);border:1px solid rgba(245,158,11,0.3)}
         .btn-ban:hover{background:var(--yellow);color:#000}
-        .btn-unban{background:rgba(56,189,248,0.15);color:var(--accent);border:1px solid rgba(56,189,248,0.3)}
-        .btn-unban:hover{background:var(--accent);color:#000}
+        .btn-unban{background:rgba(0,3,201,0.1);color:var(--accent);border:1px solid rgba(0,3,201,0.3)}
+        .btn-unban:hover{background:var(--accent);color:#fff}
         .btn-delete{background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.3)}
         .btn-delete:hover{background:var(--red);color:#fff}
-        .btn-view{background:rgba(56,189,248,0.15);color:var(--accent);border:1px solid rgba(56,189,248,0.3)}
-        .btn-view:hover{background:var(--accent);color:#000}
+        .btn-view{background:rgba(0,3,201,0.1);color:var(--accent);border:1px solid rgba(0,3,201,0.3)}
+        .btn-view:hover{background:var(--accent);color:#fff}
         .btn-change-plan{background:rgba(139,92,246,0.15);color:var(--purple);border:1px solid rgba(139,92,246,0.3)}
         .btn-change-plan:hover{background:var(--purple);color:#fff}
+        .btn-edit{background:rgba(245,158,11,0.15);color:var(--yellow);border:1px solid rgba(245,158,11,0.3)}
+        .btn-edit:hover{background:var(--yellow);color:#000}
+        .btn-add{background:rgba(16,185,129,0.15);color:var(--green);border:1px solid rgba(16,185,129,0.3)}
+        .btn-add:hover{background:var(--green);color:#fff}
 
         /* Empty State */
         .empty-state{text-align:center;padding:60px 20px;color:var(--muted)}
@@ -204,43 +155,117 @@
         .empty-state p{font-size:0.9rem}
 
         /* Modal */
-        .modal-overlay{
-            position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);
-            z-index:1000;display:none;justify-content:center;align-items:center;backdrop-filter:blur(4px);
-        }
+        .modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:1000;display:none;justify-content:center;align-items:center;backdrop-filter:blur(4px)}
         .modal-overlay.show{display:flex}
-        .modal{
-            background:var(--bg-card);border:1px solid var(--border);border-radius:20px;
-            padding:35px;width:100%;max-width:480px;box-shadow:0 25px 60px rgba(0,0,0,0.5);
-        }
+        .modal{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:35px;width:100%;max-width:600px;box-shadow:0 25px 60px rgba(0,0,0,0.5);max-height:90vh;overflow-y:auto}
         .modal h3{font-size:1.2rem;font-weight:800;margin-bottom:20px;text-align:center}
         .modal .modal-body{margin-bottom:25px}
         .modal .modal-actions{display:flex;gap:10px;justify-content:center}
-        .modal .btn-cancel{
-            padding:12px 24px;background:#f9fafb;border:1px solid var(--border);
-            color:var(--muted);border-radius:12px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;
+        .modal .btn-cancel{padding:12px 24px;background:#f9fafb;border:1px solid var(--border);color:var(--muted);border-radius:12px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;font-size:0.85rem}
+        .modal .btn-confirm{padding:12px 24px;background:var(--accent);border:none;color:#fff;border-radius:12px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;font-size:0.85rem}
+        .modal select,.modal input[type="text"],.modal input[type="password"],.modal input[type="email"],.modal textarea{
+            width:100%;padding:10px 14px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none;margin-bottom:10px;
         }
-        .modal .btn-confirm{
-            padding:12px 24px;background:var(--accent);border:none;color:#000;border-radius:12px;
-            font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;
-        }
-        .modal select{
-            width:100%;padding:12px;background:#ffffff;border:1px solid var(--border);
-            color:#1a1a2e;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none;
-        }
+        .modal select:focus,.modal input:focus,.modal textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+        .modal textarea{resize:vertical;min-height:80px}
+        .modal label{display:block;font-size:0.8rem;color:var(--muted);margin-bottom:5px;font-weight:600}
+        .modal .form-row{display:flex;gap:12px}
+        .modal .form-row>*{flex:1}
+        .modal .checkbox-group{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+        .modal .checkbox-group label{display:flex;align-items:center;gap:5px;font-size:0.8rem;color:var(--text);font-weight:600;cursor:pointer;padding:5px 10px;border:1px solid var(--border);border-radius:8px;transition:all 0.2s}
+        .modal .checkbox-group label:hover{border-color:var(--accent)}
+        .modal .checkbox-group input[type="checkbox"]{accent-color:var(--accent)}
+
+        /* Profile Modal */
+        .profile-header{text-align:center;margin-bottom:20px}
+        .profile-avatar{width:80px;height:80px;border-radius:20px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:2rem;color:#fff}
+        .profile-header .name{font-size:1.3rem;font-weight:800}
+        .profile-header .email{color:var(--muted);font-size:0.85rem}
+        .profile-section{margin-bottom:18px;padding:15px;background:#f9fafb;border-radius:12px}
+        .profile-section h4{font-size:0.9rem;font-weight:800;margin-bottom:10px;color:var(--accent);display:flex;align-items:center;gap:8px}
+        .profile-row{display:flex;justify-content:space-between;padding:6px 0;font-size:0.85rem;border-bottom:1px solid var(--border)}
+        .profile-row:last-child{border-bottom:none}
+        .profile-row .label{color:var(--muted);font-weight:600}
+        .profile-row .value{font-weight:700}
+        .cv-item{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#fff;border-radius:8px;margin-bottom:6px;border:1px solid var(--border)}
+        .cv-item .cv-name{font-weight:700;font-size:0.85rem}
+        .cv-item .cv-date{color:var(--muted);font-size:0.75rem}
+        .timeline-item{display:flex;gap:12px;margin-bottom:12px;font-size:0.82rem}
+        .timeline-dot{width:10px;height:10px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:5px}
+        .timeline-content{flex:1}
+        .timeline-content .time{color:var(--muted);font-size:0.75rem}
 
         /* Toast */
-        .toast{
-            position:fixed;top:25px;left:50%;transform:translateX(-50%) translateY(-100px);
-            padding:14px 28px;border-radius:12px;font-weight:700;font-size:0.88rem;z-index:9999;
-            transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);
-        }
+        .toast{position:fixed;top:25px;left:50%;transform:translateX(-50%) translateY(-100px);padding:14px 28px;border-radius:12px;font-weight:700;font-size:0.88rem;z-index:9999;transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);white-space:nowrap}
         .toast.show{transform:translateX(-50%) translateY(0)}
         .toast-success{background:var(--green);color:#fff;box-shadow:0 8px 25px rgba(16,185,129,0.3)}
         .toast-error{background:var(--red);color:#fff;box-shadow:0 8px 25px rgba(239,68,68,0.3)}
 
+        /* Bar Charts */
+        .charts-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-bottom:30px}
+        .chart-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:22px;overflow:hidden}
+        .chart-card h3{font-size:0.95rem;font-weight:800;margin-bottom:18px;color:var(--text)}
+        .bar-chart{display:flex;flex-direction:column;gap:10px}
+        .bar-row{display:flex;align-items:center;gap:10px}
+        .bar-label{width:60px;font-size:0.78rem;font-weight:700;color:var(--muted);text-align:left;flex-shrink:0}
+        .bar-track{flex:1;height:28px;background:#f3f4f6;border-radius:8px;overflow:hidden;position:relative}
+        .bar-fill{height:100%;border-radius:8px;transition:width 0.8s ease;display:flex;align-items:center;padding:0 10px;font-size:0.72rem;font-weight:700;color:#fff;min-width:30px}
+        .bar-fill.blue{background:linear-gradient(135deg,var(--accent),#3b82f6)}
+        .bar-fill.green{background:linear-gradient(135deg,var(--green),#059669)}
+        .bar-fill.purple{background:linear-gradient(135deg,var(--purple),#7c3aed)}
+        .bar-fill.yellow{background:linear-gradient(135deg,var(--yellow),#d97706)}
+        .bar-fill.red{background:linear-gradient(135deg,var(--red),#dc2626)}
+
+        /* Donut Chart */
+        .donut-chart{display:flex;align-items:center;gap:20px;justify-content:center;flex-wrap:wrap}
+        .donut-visual{width:120px;height:120px;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center}
+        .donut-center{position:absolute;width:70px;height:70px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:900}
+        .donut-legend{display:flex;flex-direction:column;gap:8px}
+        .legend-item{display:flex;align-items:center;gap:8px;font-size:0.82rem;font-weight:600}
+        .legend-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+
+        /* Activity Feed */
+        .activity-feed{max-height:300px;overflow-y:auto}
+        .activity-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);font-size:0.85rem}
+        .activity-item:last-child{border-bottom:none}
+        .activity-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.8rem}
+        .activity-text{flex:1}
+        .activity-time{color:var(--muted);font-size:0.72rem}
+
+        /* Sub Tabs */
+        .sub-tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+        .sub-tab{padding:8px 18px;border-radius:10px;border:1px solid var(--border);background:#fff;font-weight:700;font-size:0.82rem;cursor:pointer;transition:all 0.2s;font-family:'Cairo',sans-serif;color:var(--muted)}
+        .sub-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+        .sub-tab:hover:not(.active){border-color:var(--accent);color:var(--accent)}
+
+        /* Link generator */
+        .link-output{background:#f3f4f6;border:1px solid var(--border);border-radius:10px;padding:14px;margin-top:12px;display:flex;align-items:center;gap:10px}
+        .link-output code{flex:1;font-size:0.82rem;word-break:break-all;font-family:monospace;color:var(--accent)}
+        .link-output button{padding:8px 16px;border-radius:8px;border:none;font-weight:700;font-size:0.75rem;cursor:pointer;font-family:'Cairo',sans-serif;background:var(--accent);color:#fff;transition:all 0.2s;white-space:nowrap}
+        .link-output button:hover{background:#3b82f6}
+
+        /* Settings form */
+        .settings-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:30px;margin-bottom:20px}
+        .settings-card h3{font-size:1rem;font-weight:800;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+        .settings-row{display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+        .settings-row .field{flex:1;min-width:200px}
+        .settings-row label{display:block;font-size:0.8rem;color:var(--muted);margin-bottom:6px;font-weight:600}
+        .settings-row input,.settings-row select{width:100%;padding:10px 14px;background:#f9fafb;border:1px solid var(--border);color:#1a1a2e;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none}
+        .settings-row input:focus,.settings-row select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+        .toggle-switch{display:flex;align-items:center;gap:10px}
+        .toggle{width:48px;height:26px;background:#d1d5db;border-radius:13px;position:relative;cursor:pointer;transition:all 0.3s}
+        .toggle.active{background:var(--green)}
+        .toggle::after{content:'';position:absolute;width:22px;height:22px;background:#fff;border-radius:50%;top:2px;right:2px;transition:all 0.3s;box-shadow:0 2px 4px rgba(0,0,0,0.2)}
+        .toggle.active::after{right:24px}
+
+        /* Filter Tabs */
+        .filter-tabs{display:flex;gap:6px;margin-bottom:16px}
+        .filter-tab{padding:6px 16px;border-radius:8px;border:1px solid var(--border);background:#fff;font-weight:700;font-size:0.78rem;cursor:pointer;transition:all 0.2s;font-family:'Cairo',sans-serif;color:var(--muted)}
+        .filter-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
         /* Responsive */
-        @media(max-width:1100px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+        @media(max-width:1200px){.stats-grid{grid-template-columns:repeat(3,1fr)}.charts-grid{grid-template-columns:1fr}}
+        @media(max-width:1000px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
         @media(max-width:900px){
             .sidebar{width:70px;padding:15px 8px}
             .sidebar-brand{font-size:1.2rem;margin-bottom:25px}
@@ -248,7 +273,15 @@
             .nav-item .badge{display:none}
             .main-content{margin-right:70px;padding:20px}
             .stats-grid{grid-template-columns:1fr}
+            .table-header{flex-direction:column;align-items:flex-start}
+            .search-box input{width:140px}
         }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar{width:6px}
+        ::-webkit-scrollbar-track{background:transparent}
+        ::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:3px}
+        ::-webkit-scrollbar-thumb:hover{background:#9ca3af}
     </style>
 </head>
 <body>
@@ -279,39 +312,46 @@
 
     <!-- ===== ADMIN DASHBOARD ===== -->
     <div class="admin-layout" id="adminLayout">
-
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-brand">Q<span>CV</span></div>
             <nav class="sidebar-nav">
                 <div class="nav-item active" data-panel="dashboard" onclick="switchPanel('dashboard')">
-                    <span class="icon"><i class="fas fa-chart-bar"></i></span><span>الرئيسية</span>
+                    <span class="icon"><i class="fas fa-chart-pie"></i></span><span>الرئيسية</span>
                 </div>
                 <div class="nav-item" data-panel="users" onclick="switchPanel('users')">
                     <span class="icon"><i class="fas fa-users"></i></span><span>المستخدمين</span>
+                </div>
+                <div class="nav-item" data-panel="staff" onclick="switchPanel('staff')">
+                    <span class="icon"><i class="fas fa-user-tie"></i></span><span>الموظفين</span>
                 </div>
                 <div class="nav-item" data-panel="subscriptions" onclick="switchPanel('subscriptions')">
                     <span class="icon"><i class="fas fa-credit-card"></i></span><span>الاشتراكات</span>
                     <span class="badge" id="pendingBadge" style="display:none">0</span>
                 </div>
+                <div class="nav-item" data-panel="affiliate" onclick="switchPanel('affiliate')">
+                    <span class="icon"><i class="fas fa-share-alt"></i></span><span>التسويق بالعمولة</span>
+                </div>
+                <div class="nav-item" data-panel="reports" onclick="switchPanel('reports')">
+                    <span class="icon"><i class="fas fa-chart-bar"></i></span><span>التقارير</span>
+                </div>
                 <div class="nav-item" data-panel="jobs" onclick="switchPanel('jobs')">
                     <span class="icon"><i class="fas fa-briefcase"></i></span><span>الوظائف</span>
+                </div>
+                <div class="nav-item" data-panel="domains" onclick="switchPanel('domains')">
+                    <span class="icon"><i class="fas fa-globe"></i></span><span>النطاقات</span>
                 </div>
                 <div class="nav-item" data-panel="settings" onclick="switchPanel('settings')">
                     <span class="icon"><i class="fas fa-cog"></i></span><span>الإعدادات</span>
                 </div>
-                <div class="nav-item" data-panel="domains" onclick="switchPanel('domains')">
-                    <span class="icon"><i class="fas fa-globe"></i></span><span>النطاقات المعتمدة</span>
-                </div>
             </nav>
             <div class="sidebar-footer">
-                <button class="btn-logout" id="logoutBtn">تسجيل الخروج</button>
+                <button class="btn-logout" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
             </div>
         </aside>
 
         <!-- Main Content -->
         <main class="main-content">
-
             <!-- Topbar -->
             <div class="topbar">
                 <h1 id="pageTitle">لوحة التحكم</h1>
@@ -335,17 +375,52 @@
                     <div class="stat-card">
                         <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
                         <div class="stat-value" id="statActive">0</div>
-                        <div class="stat-label">مستخدمين نشطين</div>
+                        <div class="stat-label">المستخدمين النشطين</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon yellow"><i class="fas fa-credit-card"></i></div>
+                        <div class="stat-icon yellow"><i class="fas fa-clock"></i></div>
                         <div class="stat-value" id="statPending">0</div>
                         <div class="stat-label">طلبات معلقة</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-icon purple"><i class="fas fa-rocket"></i></div>
+                        <div class="stat-icon purple"><i class="fas fa-crown"></i></div>
                         <div class="stat-value" id="statPro">0</div>
-                        <div class="stat-label">اشتراكات مميزة</div>
+                        <div class="stat-label">المشتركين المميزين</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i class="fas fa-money-bill-wave"></i></div>
+                        <div class="stat-value" id="statRevenue">0</div>
+                        <div class="stat-label">إجمالي الإيرادات (ج.م)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue"><i class="fas fa-share-alt"></i></div>
+                        <div class="stat-value" id="statCampaigns">0</div>
+                        <div class="stat-label">حملات التسويق</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon yellow"><i class="fas fa-user-tie"></i></div>
+                        <div class="stat-value" id="statStaff">0</div>
+                        <div class="stat-label">عدد الموظفين</div>
+                    </div>
+                </div>
+
+                <!-- Activity & Charts -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:30px">
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3><i class="fas fa-bolt" style="color:var(--yellow);margin-left:8px"></i> آخر النشاطات</h3>
+                        </div>
+                        <div style="padding:15px 22px">
+                            <div class="activity-feed" id="activityFeed">
+                                <div class="empty-state" style="padding:30px"><p>جاري التحميل...</p></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3><i class="fas fa-chart-bar" style="color:var(--accent);margin-left:8px"></i> مستخدمين جدد شهرياً</h3>
+                        <div class="bar-chart" id="dashBarChart">
+                            <div style="text-align:center;color:var(--muted);padding:20px">جاري التحميل...</div>
+                        </div>
                     </div>
                 </div>
 
@@ -356,15 +431,10 @@
                     </div>
                     <table>
                         <thead>
-                            <tr>
-                                <th>المستخدم</th>
-                                <th>الباقة</th>
-                                <th>آخر دخول</th>
-                                <th>الحالة</th>
-                            </tr>
+                            <tr><th>المستخدم</th><th>الباقة</th><th>آخر دخول</th><th>الحالة</th></tr>
                         </thead>
                         <tbody id="recentUsers">
-                            <tr><td colspan="4" class="empty-state"><div class="icon"><i class="fas fa-user"></i></div><p>جاري التحميل...</p></td></tr>
+                            <tr><td colspan="4" class="empty-state"><p>جاري التحميل...</p></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -382,17 +452,28 @@
                     </div>
                     <table>
                         <thead>
-                            <tr>
-                                <th>المستخدم</th>
-                                <th>الباقة</th>
-                                <th>تاريخ التسجيل</th>
-                                <th>آخر دخول</th>
-                                <th>الحالة</th>
-                                <th>إجراءات</th>
-                            </tr>
+                            <tr><th>المستخدم</th><th>الباقة</th><th>تاريخ التسجيل</th><th>آخر دخول</th><th>الحالة</th><th>إجراءات</th></tr>
                         </thead>
                         <tbody id="allUsers">
-                            <tr><td colspan="6" class="empty-state"><div class="icon"><i class="fas fa-user"></i></div><p>جاري تحميل المستخدمين...</p></td></tr>
+                            <tr><td colspan="6" class="empty-state"><p>جاري تحميل المستخدمين...</p></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ===== STAFF PANEL ===== -->
+            <div class="panel" id="panel-staff">
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>إدارة الموظفين</h3>
+                        <button class="btn-action btn-add" onclick="showAddStaff()"><i class="fas fa-plus"></i> إضافة موظف</button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr><th>الموظف</th><th>الدور</th><th>الصلاحيات</th><th>الحالة</th><th>إجراءات</th></tr>
+                        </thead>
+                        <tbody id="staffList">
+                            <tr><td colspan="5" class="empty-state"><p>جاري التحميل...</p></td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -400,32 +481,131 @@
 
             <!-- ===== SUBSCRIPTIONS PANEL ===== -->
             <div class="panel" id="panel-subscriptions">
+                <div class="filter-tabs">
+                    <button class="filter-tab active" onclick="setSubFilter('all',this)">الكل</button>
+                    <button class="filter-tab" onclick="setSubFilter('pending',this)">معلقة</button>
+                    <button class="filter-tab" onclick="setSubFilter('approved',this)">مقبولة</button>
+                    <button class="filter-tab" onclick="setSubFilter('rejected',this)">مرفوضة</button>
+                </div>
                 <div class="table-container">
                     <div class="table-header">
                         <h3>طلبات الاشتراك</h3>
-                        <div class="search-box">
-                            <select id="subFilter" onchange="filterSubscriptions()" style="background:#f9fafb;border:1px solid var(--border);color:#1a1a2e;padding:8px 12px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.8rem;outline:none">
-                                <option value="all">الكل</option>
-                                <option value="pending">معلقة</option>
-                                <option value="approved">مقبولة</option>
-                                <option value="rejected">مرفوضة</option>
-                            </select>
-                        </div>
                     </div>
                     <table>
                         <thead>
-                            <tr>
-                                <th>المستخدم</th>
-                                <th>الباقة المطلوبة</th>
-                                <th>تاريخ الطلب</th>
-                                <th>الحالة</th>
-                                <th>إجراءات</th>
-                            </tr>
+                            <tr><th>المستخدم</th><th>الباقة المطلوبة</th><th>تاريخ الطلب</th><th>طريقة الدفع</th><th>الحالة</th><th>إجراءات</th></tr>
                         </thead>
                         <tbody id="subscriptionsList">
-                            <tr><td colspan="5" class="empty-state"><div class="icon"><i class="fas fa-credit-card"></i></div><p>لا توجد طلبات بعد</p></td></tr>
+                            <tr><td colspan="6" class="empty-state"><p>لا توجد طلبات بعد</p></td></tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            <!-- ===== AFFILIATE PANEL ===== -->
+            <div class="panel" id="panel-affiliate">
+                <div class="sub-tabs">
+                    <button class="sub-tab active" onclick="switchAffiliateTab('overview',this)">نظرة عامة</button>
+                    <button class="sub-tab" onclick="switchAffiliateTab('marketers',this)">المسوقين</button>
+                    <button class="sub-tab" onclick="switchAffiliateTab('campaigns',this)">الحملات</button>
+                    <button class="sub-tab" onclick="switchAffiliateTab('commissions',this)">العمولات</button>
+                    <button class="sub-tab" onclick="switchAffiliateTab('linkgen',this)">إنشاء رابط</button>
+                </div>
+
+                <!-- Overview -->
+                <div class="affiliate-section active" id="aff-overview">
+                    <div class="stats-grid" style="grid-template-columns:repeat(4,1fr)">
+                        <div class="stat-card"><div class="stat-icon blue"><i class="fas fa-users"></i></div><div class="stat-value" id="affStatTotal">0</div><div class="stat-label">إجمالي المسوقين</div></div>
+                        <div class="stat-card"><div class="stat-icon green"><i class="fas fa-mouse-pointer"></i></div><div class="stat-value" id="affStatClicks">0</div><div class="stat-label">إجمالي النقرات</div></div>
+                        <div class="stat-card"><div class="stat-icon yellow"><i class="fas fa-user-plus"></i></div><div class="stat-value" id="affStatConversions">0</div><div class="stat-label">التحويلات</div></div>
+                        <div class="stat-card"><div class="stat-icon purple"><i class="fas fa-coins"></i></div><div class="stat-value" id="affStatCommissions">0</div><div class="stat-label">العمولات (ج.م)</div></div>
+                    </div>
+                </div>
+
+                <!-- Marketers -->
+                <div class="affiliate-section" id="aff-marketers" style="display:none">
+                    <div class="table-container">
+                        <div class="table-header"><h3>المسوقين بالعمولة</h3></div>
+                        <table>
+                            <thead><tr><th>المسوق</th><th>الكود</th><th>النقرات</th><th>التحويلات</th><th>الأرباح</th></tr></thead>
+                            <tbody id="marketersList"><tr><td colspan="5" class="empty-state"><p>جاري التحميل...</p></td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Campaigns -->
+                <div class="affiliate-section" id="aff-campaigns" style="display:none">
+                    <div class="table-container">
+                        <div class="table-header">
+                            <h3>الحملات التسويقية</h3>
+                            <button class="btn-action btn-add" onclick="showAddCampaign()"><i class="fas fa-plus"></i> إضافة حملة</button>
+                        </div>
+                        <table>
+                            <thead><tr><th>الحملة</th><th>الرابط</th><th>النقرات</th><th>التحويلات</th><th>الإيرادات</th><th>الحالة</th><th>إجراءات</th></tr></thead>
+                            <tbody id="campaignsList"><tr><td colspan="7" class="empty-state"><p>لا توجد حملات بعد</p></td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Commissions -->
+                <div class="affiliate-section" id="aff-commissions" style="display:none">
+                    <div class="table-container">
+                        <div class="table-header"><h3>سجل العمولات</h3></div>
+                        <table>
+                            <thead><tr><th>المسوق</th><th>المستخدم المحول</th><th>المبلغ</th><th>الباقة</th><th>الحالة</th><th>إجراءات</th></tr></thead>
+                            <tbody id="commissionsList"><tr><td colspan="6" class="empty-state"><p>لا توجد عمولات بعد</p></td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Link Generator -->
+                <div class="affiliate-section" id="aff-linkgen" style="display:none">
+                    <div class="settings-card">
+                        <h3><i class="fas fa-link" style="color:var(--accent)"></i> إنشاء رابط تابع</h3>
+                        <div class="settings-row">
+                            <div class="field">
+                                <label>اختر الحملة</label>
+                                <select id="linkCampaign"></select>
+                            </div>
+                        </div>
+                        <div class="settings-row">
+                            <div class="field">
+                                <label>أو أدخل كود المسوق يدوياً</label>
+                                <input type="text" id="linkCode" placeholder="مثال: AbCd1234">
+                            </div>
+                        </div>
+                        <button class="btn-action btn-approve" onclick="generateAffiliateLink()" style="padding:10px 24px;font-size:0.85rem;margin-top:10px"><i class="fas fa-magic"></i> إنشاء الرابط</button>
+                        <div class="link-output" id="linkOutput" style="display:none">
+                            <code id="generatedLink"></code>
+                            <button onclick="copyLink()"><i class="fas fa-copy"></i> نسخ</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== REPORTS PANEL ===== -->
+            <div class="panel" id="panel-reports">
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3><i class="fas fa-chart-line" style="color:var(--accent);margin-left:8px"></i> نمو المستخدمين</h3>
+                        <div class="bar-chart" id="reportGrowth"><div style="text-align:center;color:var(--muted);padding:20px">جاري التحميل...</div></div>
+                    </div>
+                    <div class="chart-card">
+                        <h3><i class="fas fa-chart-pie" style="color:var(--purple);margin-left:8px"></i> توزيع الباقة</h3>
+                        <div id="reportDistribution" style="text-align:center;padding:20px"><div style="color:var(--muted)">جاري التحميل...</div></div>
+                    </div>
+                    <div class="chart-card">
+                        <h3><i class="fas fa-dollar-sign" style="color:var(--green);margin-left:8px"></i> الإيرادات الشهرية</h3>
+                        <div class="bar-chart" id="reportRevenue"><div style="text-align:center;color:var(--muted);padding:20px">جاري التحميل...</div></div>
+                    </div>
+                    <div class="chart-card">
+                        <h3><i class="fas fa-trophy" style="color:var(--yellow);margin-left:8px"></i> أفضل الحملات</h3>
+                        <div class="bar-chart" id="reportCampaigns"><div style="text-align:center;color:var(--muted);padding:20px">جاري التحميل...</div></div>
+                    </div>
+                    <div class="chart-card">
+                        <h3><i class="fas fa-download" style="color:var(--green);margin-left:8px"></i> نشاط التحميلات</h3>
+                        <div class="bar-chart" id="reportDownloads"><div style="text-align:center;color:var(--muted);padding:20px">جاري التحميل...</div></div>
+                    </div>
                 </div>
             </div>
 
@@ -434,42 +614,16 @@
                 <div class="table-container">
                     <div class="table-header">
                         <h3>الوظائف الشاغرة</h3>
-                        <button class="btn-action btn-approve" onclick="addJob()">+ إضافة وظيفة</button>
+                        <button class="btn-action btn-add" onclick="addJob()"><i class="fas fa-plus"></i> إضافة وظيفة</button>
                     </div>
                     <table>
                         <thead>
-                            <tr>
-                                <th>الوظيفة</th>
-                                <th>الفئة</th>
-                                <th>الموقع</th>
-                                <th>الحالة</th>
-                                <th>إجراءات</th>
-                            </tr>
+                            <tr><th>الوظيفة</th><th>الفئة</th><th>الموقع</th><th>الحالة</th><th>التاريخ</th><th>إجراءات</th></tr>
                         </thead>
                         <tbody id="jobsList">
-                            <tr><td colspan="5" class="empty-state"><div class="icon"><i class="fas fa-briefcase"></i></div><p>لا توجد وظائف بعد</p></td></tr>
+                            <tr><td colspan="6" class="empty-state"><p>لا توجد وظائف بعد</p></td></tr>
                         </tbody>
                     </table>
-                </div>
-            </div>
-
-            <!-- ===== SETTINGS PANEL ===== -->
-            <div class="panel" id="panel-settings">
-                <div class="table-container" style="padding:30px">
-                    <h3 style="margin-bottom:25px;font-size:1.1rem">إعدادات لوحة التحكم</h3>
-                    <div class="input-group" style="margin-bottom:20px">
-                        <label style="display:block;font-size:0.85rem;color:var(--muted);margin-bottom:8px;font-weight:600">اسم المدير</label>
-                        <input type="text" id="settingsAdminName" style="width:100%;padding:12px 16px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none">
-                    </div>
-                    <div class="input-group" style="margin-bottom:20px">
-                        <label style="display:block;font-size:0.85rem;color:var(--muted);margin-bottom:8px;font-weight:600">الباقة الافتراضية للمستخدمين الجدد</label>
-                        <select id="settingsDefaultPlan" style="width:100%;padding:12px 16px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none">
-                            <option value="free">مجانية</option>
-                            <option value="pro">احترافية</option>
-                            <option value="unlimited">غير محدودة</option>
-                        </select>
-                    </div>
-                    <button onclick="saveSettings()" style="padding:12px 30px;background:var(--accent);border:none;color:#000;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;font-size:0.9rem">حفظ الإعدادات</button>
                 </div>
             </div>
 
@@ -477,27 +631,61 @@
             <div class="panel" id="panel-domains">
                 <div class="table-container">
                     <div class="table-header">
-                        <h3>النطاقات المعتمدة (Approved Domains)</h3>
-                        <button class="btn-action btn-approve" onclick="showAddDomain()">+ إضافة نطاق</button>
+                        <h3>النطاقات المعتمدة</h3>
+                        <button class="btn-action btn-add" onclick="showAddDomain()"><i class="fas fa-plus"></i> إضافة نطاق</button>
                     </div>
-                    <div style="padding:15px 20px;background:rgba(37,99,235,0.05);border:1px solid rgba(37,99,235,0.15);border-radius:10px;margin:15px 20px;font-size:0.8rem;color:var(--muted)">
-                        أي مستخدم يسجل بـ email من النطاق المعتمد يحصل على الباقة المحددة تلقائياً. مثال: لو أضفت <strong>edu.alexu.edu.eg</strong> بباقة <strong>Pro لمدة 6 شهور</strong>، أي حد يسجل بـ user@edu.alexu.edu.eg يحصل على Pro تلقائياً.
+                    <div style="padding:15px 20px;background:rgba(0,3,201,0.05);border:1px solid rgba(0,3,201,0.15);border-radius:10px;margin:15px 20px;font-size:0.8rem;color:var(--muted)">
+                        أي مستخدم يسجل بـ email من النطاق المعتمد يحصل على الباقة المحددة تلقائياً.
                     </div>
                     <table>
                         <thead>
-                            <tr>
-                                <th>النطاق (Domain)</th>
-                                <th>الباقة</th>
-                                <th>المدة (بالأشهر)</th>
-                                <th>عدد المستخدمين</th>
-                                <th>الحالة</th>
-                                <th>إجراءات</th>
-                            </tr>
+                            <tr><th>النطاق</th><th>الباقة</th><th>المدة (أشهر)</th><th>عدد المستخدمين</th><th>الحالة</th><th>إجراءات</th></tr>
                         </thead>
                         <tbody id="domainsList">
-                            <tr><td colspan="6" class="empty-state"><div class="icon"><i class="fas fa-globe"></i></div><p>لا توجد نطاقات معتمدة بعد</p></td></tr>
+                            <tr><td colspan="6" class="empty-state"><p>لا توجد نطاقات معتمدة بعد</p></td></tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+
+            <!-- ===== SETTINGS PANEL ===== -->
+            <div class="panel" id="panel-settings">
+                <div class="settings-card">
+                    <h3><i class="fas fa-cog" style="color:var(--accent)"></i> الإعدادات العامة</h3>
+                    <div class="settings-row">
+                        <div class="field">
+                            <label>الباقة الافتراضية للمستخدمين الجدد</label>
+                            <select id="settingsDefaultPlan">
+                                <option value="free">مجانية</option>
+                                <option value="pro">احترافية</option>
+                                <option value="unlimited">غير محدودة</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="settings-row">
+                        <div class="field">
+                            <label>نسبة العمولة للمسوقين (%)</label>
+                            <input type="text" id="settingsCommission" value="20">
+                        </div>
+                        <div class="field">
+                            <label>سعر الباقة الاحترافية (ج.م)</label>
+                            <input type="text" id="settingsProPrice" value="99">
+                        </div>
+                        <div class="field">
+                            <label>سعر الباقة غير المحدودة (ج.م)</label>
+                            <input type="text" id="settingsUnlimitedPrice" value="299">
+                        </div>
+                    </div>
+                    <div class="settings-row">
+                        <div class="field">
+                            <label>وضع الصيانة</label>
+                            <div class="toggle-switch">
+                                <div class="toggle" id="settingsMaintenance" onclick="toggleMaintenance()"></div>
+                                <span id="maintenanceLabel" style="font-size:0.85rem;font-weight:700">معطل</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="saveSettings()" style="padding:12px 30px;background:var(--accent);border:none;color:#fff;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;font-size:0.9rem;margin-top:10px"><i class="fas fa-save"></i> حفظ الإعدادات</button>
                 </div>
             </div>
 
@@ -516,18 +704,17 @@
         </div>
     </div>
 
-    <!-- ===== BLOCK SCREEN (shows until admin is verified) ===== -->
+    <!-- ===== BLOCK SCREEN ===== -->
     <div id="blockScreen" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#f9fafb;z-index:99999;display:flex;justify-content:center;align-items:center;flex-direction:column">
         <div style="font-size:3rem;font-weight:900;margin-bottom:15px">Q<span style="color:#0003c9">CV</span></div>
         <div style="color:#6b7280;font-size:0.9rem" id="blockMsg">جاري التحقق...</div>
     </div>
 
-    <!-- ===== ADMIN SCRIPT (Standalone — no Firebase Auth needed) ===== -->
+    <!-- ===== SCRIPTS ===== -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
         import { getDatabase, ref, get, remove, update, set, push, onValue } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
 
-        // ===== ADMIN CREDENTIALS =====
         const ADMIN_USER = 'admin';
         const ADMIN_PASS = 'Qcv@admin1';
 
@@ -542,24 +729,89 @@
         };
 
         const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
+        const db = getDatabase(app);
 
         let allUsersData = {};
         let allSubsData = {};
         let allJobsData = {};
+        let allDomainsData = {};
+        let allStaffData = {};
+        let allReferralsData = {};
+        let allCampaignsData = {};
+        let allCommissionsData = {};
+        let allSettingsData = {};
+        let currentSubFilter = 'all';
+        let activityLog = [];
+
+        // ===== HELPERS =====
+        function showToast(msg, type) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.className = 'toast toast-' + type;
+            setTimeout(() => t.classList.add('show'), 10);
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        window.closeModal = function() {
+            document.getElementById('modal').classList.remove('show');
+        };
+
+        function planText(p) {
+            if (p === 'pro') return 'احترافية';
+            if (p === 'unlimited') return 'غير محدودة';
+            return 'مجانية';
+        }
+
+        function planBadgeClass(p) {
+            if (p === 'pro') return 'badge-pro';
+            if (p === 'unlimited') return 'badge-unlimited';
+            return 'badge-free';
+        }
+
+        function roleBadgeClass(r) {
+            if (r === 'super_admin') return 'badge-super_admin';
+            if (r === 'admin') return 'badge-admin';
+            if (r === 'manager') return 'badge-manager';
+            return 'badge-support';
+        }
+
+        function roleText(r) {
+            if (r === 'super_admin') return 'مدير عام';
+            if (r === 'admin') return 'مدير';
+            if (r === 'manager') return 'مدير قسم';
+            return 'دعم فني';
+        }
+
+        function getAvatarColor(uid) {
+            const colors = ['#0003c9','#10b981','#8b5cf6','#f59e0b','#ef4444','#3b82f6'];
+            return colors[(uid||'u').charCodeAt(0) % colors.length];
+        }
+
+        function formatDate(ts) {
+            if (!ts) return '-';
+            return new Date(ts).toLocaleDateString('ar-EG');
+        }
+
+        function formatDateTime(ts) {
+            if (!ts) return '-';
+            return new Date(ts).toLocaleString('ar-EG');
+        }
+
+        function addActivity(type, text) {
+            activityLog.unshift({ type, text, time: Date.now() });
+            if (activityLog.length > 50) activityLog.pop();
+            renderActivityFeed();
+        }
 
         // ===== CHECK SESSION =====
         function isLoggedIn() {
             return sessionStorage.getItem('qcv_admin') === 'true';
         }
 
-        // ===== INIT ON LOAD =====
         if (isLoggedIn()) {
             document.getElementById('blockScreen').style.display = 'none';
             document.getElementById('adminLogin').classList.add('hidden');
             document.getElementById('adminLayout').classList.add('show');
-            document.getElementById('adminDisplayName').textContent = 'Admin';
-            document.getElementById('adminAvatar').textContent = 'A';
             initDashboard();
         } else {
             document.getElementById('blockScreen').style.display = 'none';
@@ -573,18 +825,14 @@
             const password = document.getElementById('adminPassword').value;
             const btn = document.getElementById('adminLoginBtn');
             const errorEl = document.getElementById('loginError');
-
             btn.textContent = 'جاري التحقق...';
             btn.disabled = true;
             errorEl.style.display = 'none';
-
             setTimeout(() => {
                 if (username === ADMIN_USER && password === ADMIN_PASS) {
                     sessionStorage.setItem('qcv_admin', 'true');
                     document.getElementById('adminLogin').classList.add('hidden');
                     document.getElementById('adminLayout').classList.add('show');
-                    document.getElementById('adminDisplayName').textContent = 'Admin';
-                    document.getElementById('adminAvatar').textContent = 'A';
                     initDashboard();
                 } else {
                     errorEl.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة';
@@ -595,206 +843,548 @@
             }, 500);
         });
 
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            sessionStorage.removeItem('qcv_admin');
+            location.reload();
+        });
+
+        // ===== PANEL SWITCHING =====
+        const panelTitles = {
+            dashboard: 'لوحة التحكم',
+            users: 'إدارة المستخدمين',
+            staff: 'إدارة الموظفين',
+            subscriptions: 'الاشتراكات',
+            affiliate: 'التسويق بالعمولة',
+            reports: 'التقارير',
+            jobs: 'الوظائف',
+            domains: 'النطاقات المعتمدة',
+            settings: 'الإعدادات'
+        };
+
+        window.switchPanel = function(panel) {
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById('panel-' + panel).classList.add('active');
+            document.querySelector(`.nav-item[data-panel="${panel}"]`).classList.add('active');
+            document.getElementById('pageTitle').textContent = panelTitles[panel] || panel;
+            if (panel === 'reports') renderReports();
+        };
+
         // ===== INIT DASHBOARD =====
         function initDashboard() {
             listenUsers();
             listenSubscriptions();
             listenJobs();
             listenDomains();
+            listenStaff();
+            listenSettings();
+            listenReferrals();
+            listenCampaigns();
+            listenCommissions();
+            checkExpiredPlans();
         }
 
-        // ===== USERS LISTENER =====
+        // ===== EXPIRED PLANS CHECK =====
+        function checkExpiredPlans() {
+            const now = Date.now();
+            Object.entries(allUsersData).forEach(([uid, u]) => {
+                if (u.planExpiry && u.planExpiry < now && u.plan !== 'free') {
+                    update(ref(db, 'users/' + uid), { plan: 'free', planExpiry: null }).catch(() => {});
+                }
+            });
+        }
+
+        // ===== USERS =====
         function listenUsers() {
-            const usersRef = ref(database, 'users');
-            onValue(usersRef, (snap) => {
+            onValue(ref(db, 'users'), (snap) => {
                 allUsersData = snap.val() || {};
                 renderUsersTable(allUsersData);
                 renderRecentUsers(allUsersData);
-                updateStats(allUsersData);
+                updateStats();
+                checkExpiredPlans();
             }, (err) => {
-                console.error('Firebase read error:', err);
-                document.getElementById('recentUsers').innerHTML = '<tr><td colspan="4" class="empty-state"><div class="icon"><i class="fas fa-exclamation-triangle"></i></div><p>خطأ في الاتصال بقاعدة البيانات. تأكد من صلاحيات القراءة في Firebase Console.</p></td></tr>';
-                document.getElementById('allUsers').innerHTML = '<tr><td colspan="6" class="empty-state"><div class="icon"><i class="fas fa-exclamation-triangle"></i></div><p>خطأ في الاتصال. افتح Firebase Console → Realtime Database → Rules وتأكد إن .read = true</p></td></tr>';
+                console.error('Users error:', err);
             });
         }
 
         function renderUsersTable(data) {
             const tbody = document.getElementById('allUsers');
             const entries = Object.entries(data);
-            if (entries.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><div class="icon"><i class="fas fa-user"></i></div><p>لا يوجد مستخدمين</p></td></tr>';
+            if (!entries.length) {
+                tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><p>لا يوجد مستخدمين</p></td></tr>';
                 return;
             }
-
             tbody.innerHTML = entries.map(([uid, u]) => {
                 const plan = u.plan || 'free';
-                const planBadge = plan === 'pro' ? 'badge-pro' : plan === 'unlimited' ? 'badge-unlimited' : 'badge-free';
-                const planText = plan === 'pro' ? 'احترافية' : plan === 'unlimited' ? 'غير محدودة' : 'مجانية';
                 const isBanned = u.banned === true;
-                const statusBadge = isBanned ? '<span class="badge badge-banned">محظور</span>' : '<span class="badge badge-approved">نشط</span>';
-                const avatarColors = ['#38bdf8','#38bdf8','#8b5cf6','#f59e0b','#ef4444'];
-                const color = avatarColors[uid.charCodeAt(0) % avatarColors.length];
-
-                return `
-                    <tr>
-                        <td>
-                            <div class="user-cell">
-                                <div class="user-avatar" style="background:${color}20;color:${color}">${(u.name||'U')[0].toUpperCase()}</div>
-                                <div class="user-info">
-                                    <div class="name">${u.name || 'مستخدم'}</div>
-                                    <div class="email">${u.email || ''}</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="badge ${planBadge}">${planText}</span></td>
-                        <td>${u.registeredAt ? new Date(u.registeredAt).toLocaleDateString('ar-EG') : '-'}</td>
-                        <td>${u.lastLogin ? new Date(u.lastLogin).toLocaleString('ar-EG') : '-'}</td>
-                        <td>${statusBadge}</td>
-                        <td>
-                            <div class="actions">
-                                <button class="btn-action btn-view" onclick="viewUser('${uid}')">عرض</button>
-                                ${isBanned ?
-                                    `<button class="btn-action btn-unban" onclick="toggleBan('${uid}',false)">فك الحظر</button>` :
-                                    `<button class="btn-action btn-ban" onclick="toggleBan('${uid}',true)">حظر</button>`
-                                }
-                                <button class="btn-action btn-change-plan" onclick="changePlan('${uid}')">تغيير الباقة</button>
-                                <button class="btn-action btn-delete" onclick="deleteUser('${uid}')">حذف</button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
+                const color = getAvatarColor(uid);
+                return `<tr>
+                    <td><div class="user-cell">
+                        <div class="user-avatar" style="background:${color}">${(u.name||'U')[0].toUpperCase()}</div>
+                        <div class="user-info"><div class="name">${u.name||'مستخدم'}</div><div class="email">${u.email||''}</div></div>
+                    </div></td>
+                    <td><span class="badge ${planBadgeClass(plan)}">${planText(plan)}</span></td>
+                    <td>${formatDate(u.registeredAt)}</td>
+                    <td>${formatDateTime(u.lastLogin)}</td>
+                    <td>${isBanned ? '<span class="badge badge-banned">محظور</span>' : '<span class="badge badge-approved">نشط</span>'}</td>
+                    <td><div class="actions">
+                        <button class="btn-action btn-view" onclick="viewUser('${uid}')"><i class="fas fa-eye"></i></button>
+                        <button class="btn-action btn-change-plan" onclick="changePlan('${uid}')"><i class="fas fa-exchange-alt"></i></button>
+                        ${isBanned ? `<button class="btn-action btn-unban" onclick="toggleBan('${uid}',false)"><i class="fas fa-unlock"></i></button>` : `<button class="btn-action btn-ban" onclick="toggleBan('${uid}',true)"><i class="fas fa-ban"></i></button>`}
+                        <button class="btn-action btn-delete" onclick="deleteUser('${uid}')"><i class="fas fa-trash"></i></button>
+                    </div></td>
+                </tr>`;
             }).join('');
         }
 
         function renderRecentUsers(data) {
             const tbody = document.getElementById('recentUsers');
             const entries = Object.entries(data).sort((a,b) => (b[1].lastLogin||0) - (a[1].lastLogin||0)).slice(0, 5);
-            if (entries.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" class="empty-state"><div class="icon"><i class="fas fa-user"></i></div><p>لا يوجد مستخدمين</p></td></tr>';
+            if (!entries.length) {
+                tbody.innerHTML = '<tr><td colspan="4" class="empty-state"><p>لا يوجد مستخدمين</p></td></tr>';
                 return;
             }
-
             tbody.innerHTML = entries.map(([uid, u]) => {
                 const plan = u.plan || 'free';
-                const planBadge = plan === 'pro' ? 'badge-pro' : plan === 'unlimited' ? 'badge-unlimited' : 'badge-free';
-                const planText = plan === 'pro' ? 'احترافية' : plan === 'unlimited' ? 'غير محدودة' : 'مجانية';
                 const isBanned = u.banned === true;
-                const status = isBanned ? '<span class="badge badge-banned">محظور</span>' : '<span class="badge badge-approved">نشط</span>';
-                const avatarColors = ['#38bdf8','#38bdf8','#8b5cf6','#f59e0b','#ef4444'];
-                const color = avatarColors[uid.charCodeAt(0) % avatarColors.length];
-
-                return `
-                    <tr>
-                        <td>
-                            <div class="user-cell">
-                                <div class="user-avatar" style="background:${color}20;color:${color}">${(u.name||'U')[0].toUpperCase()}</div>
-                                <div class="user-info">
-                                    <div class="name">${u.name || 'مستخدم'}</div>
-                                    <div class="email">${u.email || ''}</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="badge ${planBadge}">${planText}</span></td>
-                        <td>${u.lastLogin ? new Date(u.lastLogin).toLocaleString('ar-EG') : '-'}</td>
-                        <td>${status}</td>
-                    </tr>
-                `;
+                const color = getAvatarColor(uid);
+                return `<tr>
+                    <td><div class="user-cell">
+                        <div class="user-avatar" style="background:${color}">${(u.name||'U')[0].toUpperCase()}</div>
+                        <div class="user-info"><div class="name">${u.name||'مستخدم'}</div><div class="email">${u.email||''}</div></div>
+                    </div></td>
+                    <td><span class="badge ${planBadgeClass(plan)}">${planText(plan)}</span></td>
+                    <td>${formatDateTime(u.lastLogin)}</td>
+                    <td>${isBanned ? '<span class="badge badge-banned">محظور</span>' : '<span class="badge badge-approved">نشط</span>'}</td>
+                </tr>`;
             }).join('');
         }
 
-        function updateStats(data) {
-            const entries = Object.entries(data);
+        function renderActivityFeed() {
+            const el = document.getElementById('activityFeed');
+            if (!activityLog.length) {
+                el.innerHTML = '<div style="text-align:center;color:var(--muted);padding:20px;font-size:0.85rem">لا توجد نشاطات بعد</div>';
+                return;
+            }
+            el.innerHTML = activityLog.slice(0, 10).map(a => {
+                let iconClass = 'fas fa-info-circle', bg = 'rgba(0,3,201,0.1)', clr = 'var(--accent)';
+                if (a.type === 'success') { iconClass = 'fas fa-check'; bg = 'rgba(16,185,129,0.1)'; clr = 'var(--green)'; }
+                else if (a.type === 'error') { iconClass = 'fas fa-times'; bg = 'rgba(239,68,68,0.1)'; clr = 'var(--red)'; }
+                else if (a.type === 'warning') { iconClass = 'fas fa-exclamation'; bg = 'rgba(245,158,11,0.1)'; clr = 'var(--yellow)'; }
+                const timeAgo = getTimeAgo(a.time);
+                return `<div class="activity-item">
+                    <div class="activity-icon" style="background:${bg};color:${clr}"><i class="${iconClass}"></i></div>
+                    <div class="activity-text">${a.text}<div class="activity-time">${timeAgo}</div></div>
+                </div>`;
+            }).join('');
+        }
+
+        function getTimeAgo(ts) {
+            const diff = Date.now() - ts;
+            if (diff < 60000) return 'الآن';
+            if (diff < 3600000) return `منذ ${Math.floor(diff/60000)} دقيقة`;
+            if (diff < 86400000) return `منذ ${Math.floor(diff/3600000)} ساعة`;
+            return `منذ ${Math.floor(diff/86400000)} يوم`;
+        }
+
+        function updateStats() {
+            const entries = Object.entries(allUsersData);
             document.getElementById('statUsers').textContent = entries.length;
             document.getElementById('statActive').textContent = entries.filter(([_,u]) => !u.banned).length;
             document.getElementById('statPro').textContent = entries.filter(([_,u]) => u.plan === 'pro' || u.plan === 'unlimited').length;
+
+            let revenue = 0;
+            const proPrice = parseInt(allSettingsData.proPrice) || 99;
+            const unlimitedPrice = parseInt(allSettingsData.unlimitedPrice) || 299;
+            entries.forEach(([_,u]) => {
+                if (u.plan === 'pro') revenue += proPrice;
+                else if (u.plan === 'unlimited') revenue += unlimitedPrice;
+            });
+            document.getElementById('statRevenue').textContent = revenue;
+            document.getElementById('statStaff').textContent = Object.keys(allStaffData).length;
+            document.getElementById('statCampaigns').textContent = Object.keys(allCampaignsData).length;
+
+            renderDashBarChart(entries);
         }
 
-        // ===== SUBSCRIPTIONS LISTENER =====
+        function renderDashBarChart(entries) {
+            const el = document.getElementById('dashBarChart');
+            const months = [];
+            const now = new Date();
+            for (let i = 5; i >= 0; i--) {
+                const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+                months.push({ label: d.toLocaleDateString('ar-EG', { month: 'short' }), count: 0, start: d.getTime(), end: new Date(d.getFullYear(), d.getMonth() + 1, 0).getTime() });
+            }
+            entries.forEach(([_, u]) => {
+                if (u.registeredAt) {
+                    months.forEach(m => {
+                        if (u.registeredAt >= m.start && u.registeredAt <= m.end) m.count++;
+                    });
+                }
+            });
+            const max = Math.max(...months.map(m => m.count), 1);
+            el.innerHTML = months.map(m => `<div class="bar-row">
+                <div class="bar-label">${m.label}</div>
+                <div class="bar-track"><div class="bar-fill blue" style="width:${(m.count/max)*100}%">${m.count}</div></div>
+            </div>`).join('');
+        }
+
+        // ===== USER ACTIONS =====
+        window.viewUser = function(uid) {
+            const u = allUsersData[uid];
+            if (!u) return;
+            const color = getAvatarColor(uid);
+            const plan = u.plan || 'free';
+            const cvList = u.cvs ? Object.entries(u.cvs) : [];
+            const referrals = Object.values(allReferralsData).filter(r => r.referredBy === uid);
+
+            let cvsHtml = cvList.length ? cvList.map(([id, cv]) =>
+                `<div class="cv-item"><div><div class="cv-name">${cv.name || 'CV ' + id}</div><div class="cv-date">${formatDate(cv.createdAt || cv.updatedAt)}</div></div></div>`
+            ).join('') : '<div style="text-align:center;color:var(--muted);padding:10px;font-size:0.82rem">لا توجد سير ذاتية</div>';
+
+            document.getElementById('modalTitle').textContent = 'ملف المستخدم';
+            document.getElementById('modalBody').innerHTML = `
+                <div class="profile-header">
+                    <div class="profile-avatar" style="background:${color}">${(u.name||'U')[0].toUpperCase()}</div>
+                    <div class="name">${u.name||'مستخدم'}</div>
+                    <div class="email">${u.email||''}</div>
+                </div>
+                <div class="profile-section">
+                    <h4><i class="fas fa-info-circle"></i> المعلومات الأساسية</h4>
+                    <div class="profile-row"><div class="label">الهاتف</div><div class="value">${u.phone || '-'}</div></div>
+                    <div class="profile-row"><div class="label">الباقة</div><div class="value"><span class="badge ${planBadgeClass(plan)}">${planText(plan)}</span></div></div>
+                    <div class="profile-row"><div class="label">تاريخ انتهاء الباقة</div><div class="value">${u.planExpiry ? formatDateTime(u.planExpiry) : '-'}</div></div>
+                    <div class="profile-row"><div class="label">تاريخ التسجيل</div><div class="value">${formatDateTime(u.registeredAt)}</div></div>
+                    <div class="profile-row"><div class="label">آخر دخول</div><div class="value">${formatDateTime(u.lastLogin)}</div></div>
+                    <div class="profile-row"><div class="label">الحالة</div><div class="value">${u.banned ? '<span class="badge badge-banned">محظور</span>' : '<span class="badge badge-approved">نشط</span>'}</div></div>
+                </div>
+                <div class="profile-section">
+                    <h4><i class="fas fa-file-alt"></i> السير الذاتية (${cvList.length})</h4>
+                    ${cvsHtml}
+                </div>
+                <div class="profile-section">
+                    <h4><i class="fas fa-share"></i> الإحالة</h4>
+                    <div class="profile-row"><div class="label">كود الإحالة</div><div class="value">${u.referralCode || '-'}</div></div>
+                    <div class="profile-row"><div class="label">أحيل بواسطة</div><div class="value">${u.referredBy ? (allUsersData[u.referredBy]?.name || u.referredBy) : '-'}</div></div>
+                    <div class="profile-row"><div class="label">عدد التحويلات</div><div class="value">${referrals.length}</div></div>
+                </div>
+                <div class="profile-section">
+                    <h4><i class="fas fa-download"></i> التحميلات</h4>
+                    <div class="profile-row"><div class="label">عدد التحميلات</div><div class="value">${u.downloadCount || 0}</div></div>
+                </div>
+                ${u.portfolioLink ? `<div class="profile-section"><h4><i class="fas fa-link"></i> البورتفوليو</h4><div class="profile-row"><div class="label">الرابط</div><div class="value"><a href="${u.portfolioLink}" target="_blank" style="color:var(--accent)">${u.portfolioLink}</a></div></div></div>` : ''}
+                <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px">
+                    <button class="btn-action btn-change-plan" onclick="closeModal();changePlan('${uid}')"><i class="fas fa-exchange-alt"></i> تغيير الباقة</button>
+                    ${u.banned ? `<button class="btn-action btn-unban" onclick="closeModal();toggleBan('${uid}',false)"><i class="fas fa-unlock"></i> فك الحظر</button>` : `<button class="btn-action btn-ban" onclick="closeModal();toggleBan('${uid}',true)"><i class="fas fa-ban"></i> حظر</button>`}
+                    <button class="btn-action btn-delete" onclick="closeModal();deleteUser('${uid}')"><i class="fas fa-trash"></i> حذف</button>
+                </div>
+            `;
+            document.getElementById('modalConfirm').style.display = 'none';
+            document.getElementById('modal').classList.add('show');
+        };
+
+        window.changePlan = function(uid) {
+            const u = allUsersData[uid];
+            if (!u) return;
+            document.getElementById('modalTitle').textContent = 'تغيير باقة المستخدم';
+            document.getElementById('modalBody').innerHTML = `
+                <p style="text-align:center;margin-bottom:15px;font-size:0.9rem">المستخدم: <strong>${u.name||u.email}</strong></p>
+                <label>الباقة الجديدة</label>
+                <select id="newPlan">
+                    <option value="free" ${u.plan==='free'?'selected':''}>مجانية</option>
+                    <option value="pro" ${u.plan==='pro'?'selected':''}>احترافية</option>
+                    <option value="unlimited" ${u.plan==='unlimited'?'selected':''}>غير محدودة</option>
+                </select>
+                <label>مدة الباقة (أيام)</label>
+                <input type="text" id="planDuration" value="30" placeholder="30">
+            `;
+            document.getElementById('modalConfirm').style.display = 'block';
+            document.getElementById('modalConfirm').textContent = 'تحديث';
+            document.getElementById('modalConfirm').onclick = async () => {
+                const plan = document.getElementById('newPlan').value;
+                const days = parseInt(document.getElementById('planDuration').value) || 30;
+                const expiry = plan === 'free' ? null : Date.now() + (days * 86400000);
+                try {
+                    await update(ref(db, 'users/' + uid), { plan, planExpiry: expiry });
+                    addActivity('success', `تم تغيير باقة ${u.name||u.email} إلى ${planText(plan)}`);
+                    if(window.QCVNotify) QCVNotify.success();
+                    showToast('تم تحديث الباقة بنجاح', 'success');
+                    closeModal();
+                } catch(err) { showToast('خطأ في الكتابة', 'error'); }
+            };
+            document.getElementById('modal').classList.add('show');
+        };
+
+        window.toggleBan = async function(uid, ban) {
+            const u = allUsersData[uid];
+            try {
+                await update(ref(db, 'users/' + uid), { banned: ban });
+                addActivity('warning', ban ? `تم حظر ${u?.name||u?.email}` : `تم فك حظر ${u?.name||u?.email}`);
+                if(window.QCVNotify) QCVNotify.notify();
+                showToast(ban ? 'تم حظر المستخدم' : 'تم فك الحظر', ban ? 'error' : 'success');
+            } catch(err) { showToast('خطأ', 'error'); }
+        };
+
+        window.deleteUser = function(uid) {
+            const u = allUsersData[uid];
+            document.getElementById('modalTitle').textContent = 'حذف المستخدم';
+            document.getElementById('modalBody').innerHTML = `<p style="text-align:center">هل أنت متأكد من حذف <strong>${u?.name||u?.email}</strong>؟ لا يمكن التراجع.</p>`;
+            document.getElementById('modalConfirm').style.display = 'block';
+            document.getElementById('modalConfirm').textContent = 'حذف';
+            document.getElementById('modalConfirm').onclick = async () => {
+                try {
+                    await remove(ref(db, 'users/' + uid));
+                    addActivity('error', `تم حذف المستخدم ${u?.name||u?.email}`);
+                    if(window.QCVNotify) QCVNotify.error();
+                    showToast('تم حذف المستخدم', 'error');
+                    closeModal();
+                } catch(err) { showToast('خطأ', 'error'); }
+            };
+            document.getElementById('modal').classList.add('show');
+        };
+
+        window.filterUsers = function() {
+            const q = document.getElementById('searchUsers').value.toLowerCase();
+            const filtered = {};
+            Object.entries(allUsersData).forEach(([uid, u]) => {
+                if ((u.name||'').toLowerCase().includes(q) || (u.email||'').toLowerCase().includes(q)) filtered[uid] = u;
+            });
+            renderUsersTable(filtered);
+        };
+
+        // ===== STAFF =====
+        const ALL_PERMISSIONS = ['view_users','edit_users','manage_subscriptions','manage_affiliates','view_reports','manage_jobs','manage_domains','manage_staff'];
+        const PERMISSION_LABELS = {
+            view_users: 'عرض المستخدمين', edit_users: 'تعديل المستخدمين',
+            manage_subscriptions: 'إدارة الاشتراكات', manage_affiliates: 'إدارة التسويق',
+            view_reports: 'عرض التقارير', manage_jobs: 'إدارة الوظائف',
+            manage_domains: 'إدارة النطاقات', manage_staff: 'إدارة الموظفين'
+        };
+
+        function listenStaff() {
+            onValue(ref(db, 'staff'), (snap) => {
+                allStaffData = snap.val() || {};
+                renderStaffTable(allStaffData);
+                updateStats();
+            });
+        }
+
+        function renderStaffTable(data) {
+            const tbody = document.getElementById('staffList');
+            const entries = Object.entries(data);
+            if (!entries.length) {
+                tbody.innerHTML = '<tr><td colspan="5" class="empty-state"><p>لا يوجد موظفين</p></td></tr>';
+                return;
+            }
+            tbody.innerHTML = entries.map(([id, s]) => {
+                const perms = s.permissions || [];
+                const color = getAvatarColor(id);
+                return `<tr>
+                    <td><div class="user-cell">
+                        <div class="user-avatar" style="background:${color}">${(s.name||'M')[0].toUpperCase()}</div>
+                        <div class="user-info"><div class="name">${s.name||''}</div><div class="email">${s.email||''}</div></div>
+                    </div></td>
+                    <td><span class="badge ${roleBadgeClass(s.role)}">${roleText(s.role)}</span></td>
+                    <td>${perms.length} صلاحية</td>
+                    <td>${s.active !== false ? '<span class="badge badge-active">نشط</span>' : '<span class="badge badge-inactive">غير نشط</span>'}</td>
+                    <td><div class="actions">
+                        <button class="btn-action btn-edit" onclick="editStaff('${id}')"><i class="fas fa-edit"></i></button>
+                        ${s.active !== false ? `<button class="btn-action btn-ban" onclick="toggleStaffActive('${id}',false)"><i class="fas fa-ban"></i></button>` : `<button class="btn-action btn-unban" onclick="toggleStaffActive('${id}',true)"><i class="fas fa-check"></i></button>`}
+                        <button class="btn-action btn-delete" onclick="deleteStaff('${id}')"><i class="fas fa-trash"></i></button>
+                    </div></td>
+                </tr>`;
+            }).join('');
+        }
+
+        window.showAddStaff = function() {
+            document.getElementById('modalTitle').textContent = 'إضافة موظف جديد';
+            document.getElementById('modalBody').innerHTML = `
+                <label>الاسم</label>
+                <input type="text" id="staffName" placeholder="اسم الموظف">
+                <label>البريد الإلكتروني</label>
+                <input type="email" id="staffEmail" placeholder="email@example.com">
+                <label>كلمة المرور</label>
+                <input type="password" id="staffPass" placeholder="••••••••">
+                <label>الدور</label>
+                <select id="staffRole">
+                    <option value="support">دعم فني</option>
+                    <option value="manager">مدير قسم</option>
+                    <option value="admin">مدير</option>
+                    <option value="super_admin">مدير عام</option>
+                </select>
+                <label style="margin-top:10px">الصلاحيات</label>
+                <div class="checkbox-group">
+                    ${ALL_PERMISSIONS.map(p => `<label><input type="checkbox" value="${p}" class="perm-check"> ${PERMISSION_LABELS[p]}</label>`).join('')}
+                </div>
+            `;
+            document.getElementById('modalConfirm').style.display = 'block';
+            document.getElementById('modalConfirm').textContent = 'إضافة';
+            document.getElementById('modalConfirm').onclick = async () => {
+                const name = document.getElementById('staffName').value.trim();
+                const email = document.getElementById('staffEmail').value.trim();
+                const password = document.getElementById('staffPass').value;
+                const role = document.getElementById('staffRole').value;
+                const permissions = [...document.querySelectorAll('.perm-check:checked')].map(c => c.value);
+                if (!name || !email) { showToast('أدخل الاسم والبريد', 'error'); return; }
+                try {
+                    await push(ref(db, 'staff'), { name, email, password, role, permissions, active: true, createdAt: Date.now() });
+                    addActivity('success', `تم إضافة الموظف ${name}`);
+                    if(window.QCVNotify) QCVNotify.success();
+                    showToast('تم إضافة الموظف', 'success');
+                    closeModal();
+                } catch(err) { showToast('خطأ', 'error'); }
+            };
+            document.getElementById('modal').classList.add('show');
+        };
+
+        window.editStaff = function(id) {
+            const s = allStaffData[id];
+            if (!s) return;
+            document.getElementById('modalTitle').textContent = 'تعديل بيانات الموظف';
+            document.getElementById('modalBody').innerHTML = `
+                <label>الاسم</label>
+                <input type="text" id="staffName" value="${s.name||''}">
+                <label>البريد الإلكتروني</label>
+                <input type="email" id="staffEmail" value="${s.email||''}">
+                <label>الدور</label>
+                <select id="staffRole">
+                    <option value="support" ${s.role==='support'?'selected':''}>دعم فني</option>
+                    <option value="manager" ${s.role==='manager'?'selected':''}>مدير قسم</option>
+                    <option value="admin" ${s.role==='admin'?'selected':''}>مدير</option>
+                    <option value="super_admin" ${s.role==='super_admin'?'selected':''}>مدير عام</option>
+                </select>
+                <label style="margin-top:10px">الصلاحيات</label>
+                <div class="checkbox-group">
+                    ${ALL_PERMISSIONS.map(p => `<label><input type="checkbox" value="${p}" class="perm-check" ${(s.permissions||[]).includes(p)?'checked':''}> ${PERMISSION_LABELS[p]}</label>`).join('')}
+                </div>
+            `;
+            document.getElementById('modalConfirm').style.display = 'block';
+            document.getElementById('modalConfirm').textContent = 'حفظ';
+            document.getElementById('modalConfirm').onclick = async () => {
+                const name = document.getElementById('staffName').value.trim();
+                const email = document.getElementById('staffEmail').value.trim();
+                const role = document.getElementById('staffRole').value;
+                const permissions = [...document.querySelectorAll('.perm-check:checked')].map(c => c.value);
+                try {
+                    await update(ref(db, 'staff/' + id), { name, email, role, permissions });
+                    addActivity('success', `تم تعديل بيانات الموظف ${name}`);
+                    if(window.QCVNotify) QCVNotify.success();
+                    showToast('تم الحفظ', 'success');
+                    closeModal();
+                } catch(err) { showToast('خطأ', 'error'); }
+            };
+            document.getElementById('modal').classList.add('show');
+        };
+
+        window.toggleStaffActive = async function(id, active) {
+            try {
+                await update(ref(db, 'staff/' + id), { active });
+                if(window.QCVNotify) QCVNotify.notify();
+                showToast(active ? 'تم تفعيل الموظف' : 'تم تعطيل الموظف', 'success');
+            } catch(err) { showToast('خطأ', 'error'); }
+        };
+
+        window.deleteStaff = function(id) {
+            const s = allStaffData[id];
+            document.getElementById('modalTitle').textContent = 'حذف الموظف';
+            document.getElementById('modalBody').innerHTML = `<p style="text-align:center">هل أنت متأكد من حذف <strong>${s?.name||''}</strong>؟</p>`;
+            document.getElementById('modalConfirm').style.display = 'block';
+            document.getElementById('modalConfirm').textContent = 'حذف';
+            document.getElementById('modalConfirm').onclick = async () => {
+                try {
+                    await remove(ref(db, 'staff/' + id));
+                    addActivity('error', `تم حذف الموظف ${s?.name||''}`);
+                    if(window.QCVNotify) QCVNotify.error();
+                    showToast('تم الحذف', 'error');
+                    closeModal();
+                } catch(err) { showToast('خطأ', 'error'); }
+            };
+            document.getElementById('modal').classList.add('show');
+        };
+
+        // ===== SUBSCRIPTIONS =====
         function listenSubscriptions() {
-            const subsRef = ref(database, 'subscriptions');
-            onValue(subsRef, (snap) => {
+            onValue(ref(db, 'subscriptions'), (snap) => {
                 allSubsData = snap.val() || {};
-                renderSubscriptions(allSubsData);
+                renderSubscriptions();
                 const pending = Object.values(allSubsData).filter(s => s.status === 'pending').length;
                 const badge = document.getElementById('pendingBadge');
                 if (pending > 0) { badge.textContent = pending; badge.style.display = 'inline'; }
                 else { badge.style.display = 'none'; }
                 document.getElementById('statPending').textContent = pending;
-            }, (err) => {
-                console.error('Firebase subscriptions read error:', err);
-                document.getElementById('subscriptionsList').innerHTML = '<tr><td colspan="5" class="empty-state"><div class="icon"><i class="fas fa-exclamation-triangle"></i></div><p>خطأ في قراءة الاشتراكات</p></td></tr>';
             });
         }
 
-        function renderSubscriptions(data) {
+        function renderSubscriptions() {
             const tbody = document.getElementById('subscriptionsList');
-            const filter = document.getElementById('subFilter').value;
-            let entries = Object.entries(data);
-            if (filter !== 'all') entries = entries.filter(([_,s]) => s.status === filter);
-
-            if (entries.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" class="empty-state"><div class="icon"><i class="fas fa-credit-card"></i></div><p>لا توجد طلبات</p></td></tr>';
+            let entries = Object.entries(allSubsData);
+            if (currentSubFilter !== 'all') entries = entries.filter(([_,s]) => s.status === currentSubFilter);
+            if (!entries.length) {
+                tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><p>لا توجد طلبات</p></td></tr>';
                 return;
             }
-
             tbody.innerHTML = entries.map(([id, s]) => {
-                const planText = s.plan === 'pro' ? 'احترافية' : s.plan === 'unlimited' ? 'غير محدودة' : 'مجانية';
                 const statusBadge = s.status === 'pending' ? 'badge-pending' : s.status === 'approved' ? 'badge-approved' : 'badge-rejected';
                 const statusText = s.status === 'pending' ? 'معلق' : s.status === 'approved' ? 'مقبول' : 'مرفوض';
-                const avatarColors = ['#38bdf8','#38bdf8','#8b5cf6','#f59e0b','#ef4444'];
-                const color = avatarColors[(s.userEmail||'').charCodeAt(0) % avatarColors.length];
-
-                return `
-                    <tr>
-                        <td>
-                            <div class="user-cell">
-                                <div class="user-avatar" style="background:${color}20;color:${color}">${(s.userName||'U')[0].toUpperCase()}</div>
-                                <div class="user-info">
-                                    <div class="name">${s.userName || 'مستخدم'}</div>
-                                    <div class="email">${s.userEmail || ''}</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="badge badge-pro">${planText}</span></td>
-                        <td>${s.createdAt ? new Date(s.createdAt).toLocaleString('ar-EG') : '-'}</td>
-                        <td><span class="badge ${statusBadge}">${statusText}</span></td>
-                        <td>
-                            <div class="actions">
-                                ${s.status === 'pending' ? `
-                                    <button class="btn-action btn-approve" onclick="approveSubscription('${id}','${s.userId}','${s.plan}')">موافقة</button>
-                                    <button class="btn-action btn-reject" onclick="rejectSubscription('${id}')">رفض</button>
-                                ` : `
-                                    <button class="btn-action btn-view" onclick="viewSubscription('${id}')">تفاصيل</button>
-                                `}
-                            </div>
-                        </td>
-                    </tr>
-                `;
+                const color = getAvatarColor(s.userId);
+                return `<tr>
+                    <td><div class="user-cell">
+                        <div class="user-avatar" style="background:${color}">${(s.userName||'U')[0].toUpperCase()}</div>
+                        <div class="user-info"><div class="name">${s.userName||'مستخدم'}</div><div class="email">${s.userEmail||''}</div></div>
+                    </div></td>
+                    <td><span class="badge ${planBadgeClass(s.plan)}">${planText(s.plan)}</span></td>
+                    <td>${formatDateTime(s.createdAt)}</td>
+                    <td>${s.paymentMethod || '-'}</td>
+                    <td><span class="badge ${statusBadge}">${statusText}</span></td>
+                    <td><div class="actions">
+                        ${s.status === 'pending' ? `
+                            <button class="btn-action btn-approve" onclick="approveSubscription('${id}','${s.userId}','${s.plan}')"><i class="fas fa-check"></i> موافقة</button>
+                            <button class="btn-action btn-reject" onclick="rejectSubscription('${id}')"><i class="fas fa-times"></i> رفض</button>
+                        ` : `
+                            <button class="btn-action btn-view" onclick="viewSubscription('${id}')"><i class="fas fa-eye"></i></button>
+                        `}
+                    </div></td>
+                </tr>`;
             }).join('');
         }
 
-        // ===== SUBSCRIPTION ACTIONS =====
-        window.approveSubscription = async function(subId, userId, plan) {
-            try {
-                await update(ref(database, 'subscriptions/' + subId), { status: 'approved', approvedAt: Date.now() });
-                await update(ref(database, 'users/' + userId), { plan: plan });
-                if(window.QCVNotify) QCVNotify.notify();
-                showToast('تم قبول الاشتراك وتحديث الباقة', 'success');
-            } catch(err) {
-                console.error(err);
-                showToast('خطأ في الكتابة — تأكد من صلاحيات Firebase', 'error');
-            }
+        window.setSubFilter = function(filter, btn) {
+            currentSubFilter = filter;
+            document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            renderSubscriptions();
         };
 
-        window.rejectSubscription = async function(subId) {
+        window.approveSubscription = async function(subId, userId, plan) {
             try {
-                await update(ref(database, 'subscriptions/' + subId), { status: 'rejected', rejectedAt: Date.now() });
-                if(window.QCVNotify) QCVNotify.notify();
-                showToast('تم رفض طلب الاشتراك', 'error');
-            } catch(err) {
-                console.error(err);
-                showToast('خطأ في الكتابة', 'error');
-            }
+                const expiry = Date.now() + (30 * 86400000);
+                await update(ref(db, 'subscriptions/' + subId), { status: 'approved', approvedAt: Date.now() });
+                await update(ref(db, 'users/' + userId), { plan, planExpiry: expiry });
+                addActivity('success', `تم قبول اشتراك ${allSubsData[subId]?.userName||''} - باقة ${planText(plan)}`);
+                if(window.QCVNotify) QCVNotify.success();
+                showToast('تم قبول الاشتراك وتحديث الباقة', 'success');
+            } catch(err) { showToast('خطأ', 'error'); }
+        };
+
+        window.rejectSubscription = function(subId) {
+            document.getElementById('modalTitle').textContent = 'رفض طلب الاشتراك';
+            document.getElementById('modalBody').innerHTML = `
+                <label>سبب الرفض (اختياري)</label>
+                <textarea id="rejectReason" placeholder="أدخل سبب الرفض..."></textarea>
+            `;
+            document.getElementById('modalConfirm').style.display = 'block';
+            document.getElementById('modalConfirm').textContent = 'رفض';
+            document.getElementById('modalConfirm').onclick = async () => {
+                const reason = document.getElementById('rejectReason').value.trim();
+                try {
+                    await update(ref(db, 'subscriptions/' + subId), { status: 'rejected', rejectedAt: Date.now(), rejectReason: reason });
+                    addActivity('error', `تم رفض طلب اشتراك ${allSubsData[subId]?.userName||''}`);
+                    if(window.QCVNotify) QCVNotify.error();
+                    showToast('تم رفض الطلب', 'error');
+                    closeModal();
+                } catch(err) { showToast('خطأ', 'error'); }
+            };
+            document.getElementById('modal').classList.add('show');
         };
 
         window.viewSubscription = function(subId) {
@@ -803,64 +1393,319 @@
             document.getElementById('modalTitle').textContent = 'تفاصيل طلب الاشتراك';
             document.getElementById('modalBody').innerHTML = `
                 <div style="text-align:center">
-                    <p><strong>المستخدم:</strong> ${s.userName || '-'}</p>
-                    <p><strong>البريد:</strong> ${s.userEmail || '-'}</p>
-                    <p><strong>الباقة:</strong> ${s.plan === 'pro' ? 'احترافية' : s.plan === 'unlimited' ? 'غير محدودة' : 'مجانية'}</p>
-                    <p><strong>تاريخ الطلب:</strong> ${s.createdAt ? new Date(s.createdAt).toLocaleString('ar-EG') : '-'}</p>
-                    <p><strong>الحالة:</strong> ${s.status === 'approved' ? 'مقبول' : s.status === 'rejected' ? 'مرفوض' : 'معلق'}</p>
+                    <p><strong>المستخدم:</strong> ${s.userName||'-'}</p>
+                    <p><strong>البريد:</strong> ${s.userEmail||'-'}</p>
+                    <p><strong>الباقة:</strong> ${planText(s.plan)}</p>
+                    <p><strong>طريقة الدفع:</strong> ${s.paymentMethod||'-'}</p>
+                    <p><strong>تاريخ الطلب:</strong> ${formatDateTime(s.createdAt)}</p>
+                    <p><strong>الحالة:</strong> ${s.status==='approved'?'مقبول':s.status==='rejected'?'مرفوض':'معلق'}</p>
+                    ${s.approvedAt ? `<p><strong>تاريخ الموافقة:</strong> ${formatDateTime(s.approvedAt)}</p>` : ''}
+                    ${s.rejectReason ? `<p><strong>سبب الرفض:</strong> ${s.rejectReason}</p>` : ''}
                 </div>
             `;
             document.getElementById('modalConfirm').style.display = 'none';
             document.getElementById('modal').classList.add('show');
         };
 
-        // ===== JOBS =====
+        // ===== AFFILIATE =====
+        function listenReferrals() {
+            onValue(ref(db, 'referrals'), (snap) => {
+                allReferralsData = snap.val() || {};
+                renderMarketers();
+                renderAffiliateStats();
+            });
+        }
 
+        function listenCampaigns() {
+            onValue(ref(db, 'affiliateCampaigns'), (snap) => {
+                allCampaignsData = snap.val() || {};
+                renderCampaignsTable();
+                renderCampaignSelect();
+                renderAffiliateStats();
+            });
+        }
+
+        function listenCommissions() {
+            onValue(ref(db, 'affiliateCommissions'), (snap) => {
+                allCommissionsData = snap.val() || {};
+                renderCommissionsTable();
+                renderAffiliateStats();
+            });
+        }
+
+        function renderAffiliateStats() {
+            const affiliateUids = new Set();
+            let totalClicks = 0;
+            let totalConversions = 0;
+            let totalComm = 0;
+
+            Object.entries(allReferralsData).forEach(([code, r]) => {
+                affiliateUids.add(r.ownerUid || code);
+                totalClicks += r.clicks || 0;
+                totalConversions += (r.conversions || []).length;
+            });
+
+            Object.values(allCampaignsData).forEach(c => {
+                totalClicks += c.clicks || 0;
+                totalConversions += c.conversions || 0;
+            });
+
+            Object.values(allCommissionsData).forEach(c => {
+                if (c.status === 'paid') totalComm += parseFloat(c.amount) || 0;
+            });
+
+            document.getElementById('affStatTotal').textContent = affiliateUids.size;
+            document.getElementById('affStatClicks').textContent = totalClicks;
+            document.getElementById('affStatConversions').textContent = totalConversions;
+            document.getElementById('affStatCommissions').textContent = totalComm;
+        }
+
+        window.switchAffiliateTab = function(tab, btn) {
+            document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.affiliate-section').forEach(s => s.style.display = 'none');
+            document.getElementById('aff-' + tab).style.display = 'block';
+        };
+
+        function renderMarketers() {
+            const tbody = document.getElementById('marketersList');
+            const entries = Object.entries(allReferralsData);
+            if (!entries.length) {
+                tbody.innerHTML = '<tr><td colspan="5" class="empty-state"><p>لا يوجد مسوقين بعد</p></td></tr>';
+                return;
+            }
+            let totalEarned = {};
+            Object.values(allCommissionsData).forEach(c => {
+                totalEarned[c.affiliateUid] = (totalEarned[c.affiliateUid] || 0) + (parseFloat(c.amount) || 0);
+            });
+
+            tbody.innerHTML = entries.map(([code, r]) => {
+                const uid = r.ownerUid || code;
+                const user = allUsersData[uid] || {};
+                const conversions = (r.conversions || []).length;
+                const earned = totalEarned[uid] || 0;
+                return `<tr>
+                    <td><div class="user-cell">
+                        <div class="user-avatar" style="background:${getAvatarColor(uid)}">${(user.name||'M')[0].toUpperCase()}</div>
+                        <div class="user-info"><div class="name">${user.name||'-'}</div><div class="email">${user.email||''}</div></div>
+                    </div></td>
+                    <td><code style="background:#f3f4f6;padding:3px 8px;border-radius:4px;font-weight:700">${code}</code></td>
+                    <td>${r.clicks || 0}</td>
+                    <td>${conversions}</td>
+                    <td>${earned.toFixed(2)} ج.م</td>
+                </tr>`;
+            }).join('');
+        }
+
+        function renderCampaignsTable() {
+            const tbody = document.getElementById('campaignsList');
+            const entries = Object.entries(allCampaignsData);
+            if (!entries.length) {
+                tbody.innerHTML = '<tr><td colspan="7" class="empty-state"><p>لا توجد حملات بعد</p></td></tr>';
+                return;
+            }
+            tbody.innerHTML = entries.map(([id, c]) => {
+                return `<tr>
+                    <td><strong>${c.name||''}</strong></td>
+                    <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;direction:ltr;text-align:left">${c.url||''}</td>
+                    <td>${c.clicks||0}</td>
+                    <td>${c.conversions||0}</td>
+                    <td>${c.revenue||0} ج.م</td>
+                    <td>${c.status==='active'?'<span class="badge badge-active">نشطة</span>':'<span class="badge badge-inactive">معلقة</span>'}</td>
+                    <td><div class="actions">
+                        <button class="btn-action btn-edit" onclick="editCampaign('${id}')"><i class="fas fa-edit"></i></button>
+                        <button class="btn-action btn-delete" onclick="deleteCampaign('${id}')"><i class="fas fa-trash"></i></button>
+                    </div></td>
+                </tr>`;
+            }).join('');
+        }
+
+        function renderCommissionsTable() {
+            const tbody = document.getElementById('commissionsList');
+            const entries = Object.entries(allCommissionsData);
+            if (!entries.length) {
+                tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><p>لا توجد عمولات بعد</p></td></tr>';
+                return;
+            }
+            tbody.innerHTML = entries.map(([id, c]) => {
+                const affiliateUser = allUsersData[c.affiliateUid] || {};
+                const referredUser = allUsersData[c.referredUid] || {};
+                return `<tr>
+                    <td><div class="user-cell">
+                        <div class="user-avatar" style="background:${getAvatarColor(c.affiliateUid)}">${(affiliateUser.name||'A')[0].toUpperCase()}</div>
+                        <div class="user-info"><div class="name">${affiliateUser.name||c.affiliateUid}</div><div class="email">${affiliateUser.email||''}</div></div>
+                    </div></td>
+                    <td><div class="user-info"><div class="name">${referredUser.name||c.referredUid||'-'}</div><div class="email">${referredUser.email||''}</div></div></td>
+                    <td><strong>${c.amount||0} ج.م</strong></td>
+                    <td><span class="badge ${planBadgeClass(c.plan)}">${planText(c.plan)}</span></td>
+                    <td>${c.status==='paid'?'<span class="badge badge-approved">مدفوعة</span>':'<span class="badge badge-waiting">معلقة</span>'}</td>
+                    <td><div class="actions">
+                        ${c.status!=='paid'?`<button class="btn-action btn-approve" onclick="payCommission('${id}')"><i class="fas fa-check"></i> دفع</button>`:''}
+                    </div></td>
+                </tr>`;
+            }).join('');
+        }
+
+        window.payCommission = async function(id) {
+            try {
+                await update(ref(db, 'affiliateCommissions/' + id), { status: 'paid', paidAt: Date.now() });
+                if(window.QCVNotify) QCVNotify.success();
+                showToast('تم تسجيل الدفع', 'success');
+            } catch(err) { showToast('خطأ', 'error'); }
+        };
+
+        window.showAddCampaign = function() {
+            document.getElementById('modalTitle').textContent = 'إضافة حملة تسويقية';
+            document.getElementById('modalBody').innerHTML = `
+                <label>اسم الحملة</label>
+                <input type="text" id="campName" placeholder="مثال: حملة رمضان">
+                <label>الرابط</label>
+                <input type="text" id="campUrl" placeholder="https://example.com">
+                <label>الحالة</label>
+                <select id="campStatus">
+                    <option value="active">نشطة</option>
+                    <option value="paused">معلقة</option>
+                </select>
+            `;
+            document.getElementById('modalConfirm').style.display = 'block';
+            document.getElementById('modalConfirm').textContent = 'إضافة';
+            document.getElementById('modalConfirm').onclick = async () => {
+                const name = document.getElementById('campName').value.trim();
+                const url = document.getElementById('campUrl').value.trim();
+                const status = document.getElementById('campStatus').value;
+                if (!name) { showToast('أدخل اسم الحملة', 'error'); return; }
+                try {
+                    await push(ref(db, 'affiliateCampaigns'), { name, url, status, clicks: 0, conversions: 0, revenue: 0, createdAt: Date.now() });
+                    addActivity('success', `تم إضافة حملة: ${name}`);
+                    if(window.QCVNotify) QCVNotify.success();
+                    showToast('تم إضافة الحملة', 'success');
+                    closeModal();
+                } catch(err) { showToast('خطأ', 'error'); }
+            };
+            document.getElementById('modal').classList.add('show');
+        };
+
+        window.editCampaign = function(id) {
+            const c = allCampaignsData[id];
+            if (!c) return;
+            document.getElementById('modalTitle').textContent = 'تعديل الحملة';
+            document.getElementById('modalBody').innerHTML = `
+                <label>اسم الحملة</label>
+                <input type="text" id="campName" value="${c.name||''}">
+                <label>الرابط</label>
+                <input type="text" id="campUrl" value="${c.url||''}">
+                <label>الحالة</label>
+                <select id="campStatus">
+                    <option value="active" ${c.status==='active'?'selected':''}>نشطة</option>
+                    <option value="paused" ${c.status==='paused'?'selected':''}>معلقة</option>
+                </select>
+            `;
+            document.getElementById('modalConfirm').style.display = 'block';
+            document.getElementById('modalConfirm').textContent = 'حفظ';
+            document.getElementById('modalConfirm').onclick = async () => {
+                const name = document.getElementById('campName').value.trim();
+                const url = document.getElementById('campUrl').value.trim();
+                const status = document.getElementById('campStatus').value;
+                try {
+                    await update(ref(db, 'affiliateCampaigns/' + id), { name, url, status });
+                    if(window.QCVNotify) QCVNotify.success();
+                    showToast('تم الحفظ', 'success');
+                    closeModal();
+                } catch(err) { showToast('خطأ', 'error'); }
+            };
+            document.getElementById('modal').classList.add('show');
+        };
+
+        window.deleteCampaign = function(id) {
+            document.getElementById('modalTitle').textContent = 'حذف الحملة';
+            document.getElementById('modalBody').innerHTML = '<p style="text-align:center">هل أنت متأكد من حذف هذه الحملة؟</p>';
+            document.getElementById('modalConfirm').style.display = 'block';
+            document.getElementById('modalConfirm').textContent = 'حذف';
+            document.getElementById('modalConfirm').onclick = async () => {
+                try {
+                    await remove(ref(db, 'affiliateCampaigns/' + id));
+                    if(window.QCVNotify) QCVNotify.error();
+                    showToast('تم الحذف', 'error');
+                    closeModal();
+                } catch(err) { showToast('خطأ', 'error'); }
+            };
+            document.getElementById('modal').classList.add('show');
+        };
+
+        function renderCampaignSelect() {
+            const sel = document.getElementById('linkCampaign');
+            if (!sel) return;
+            sel.innerHTML = '<option value="">اختر حملة...</option>' + Object.entries(allCampaignsData).map(([id, c]) =>
+                `<option value="${id}">${c.name}</option>`
+            ).join('');
+        }
+
+        window.generateAffiliateLink = function() {
+            const campaignId = document.getElementById('linkCampaign').value;
+            const code = document.getElementById('linkCode').value.trim();
+            if (!campaignId && !code) { showToast('اختر حملة أو أدخل كود', 'error'); return; }
+            const campaignParam = campaignId ? `&campaign=${campaignId}` : '';
+            const link = `https://qcv.vexonet.online/?ref=${code || 'YOUR_CODE'}${campaignParam}`;
+            document.getElementById('generatedLink').textContent = link;
+            document.getElementById('linkOutput').style.display = 'flex';
+        };
+
+        window.copyLink = function() {
+            const link = document.getElementById('generatedLink').textContent;
+            navigator.clipboard.writeText(link).then(() => {
+                if(window.QCVNotify) QCVNotify.success();
+                showToast('تم النسخ', 'success');
+            }).catch(() => {
+                showToast('فشل النسخ', 'error');
+            });
+        };
+
+        // ===== JOBS =====
         function listenJobs() {
-            const jobsRef = ref(database, 'jobs');
-            onValue(jobsRef, (snap) => {
+            onValue(ref(db, 'jobs'), (snap) => {
                 allJobsData = snap.val() || {};
                 renderJobsTable(allJobsData);
             });
         }
 
-        function renderJobsTable(jobs) {
+        function renderJobsTable(data) {
             const tbody = document.getElementById('jobsList');
-            if (!tbody) return;
-            const entries = Object.entries(jobs);
+            const entries = Object.entries(data);
             if (!entries.length) {
-                tbody.innerHTML = '<tr><td colspan="5" class="empty-state"><div class="icon"><i class="fas fa-briefcase"></i></div><p>لا توجد وظائف بعد</p></td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><p>لا توجد وظائف بعد</p></td></tr>';
                 return;
             }
-            tbody.innerHTML = entries.map(([id, j]) => `
-                <tr>
-                    <td><strong>${j.title || ''}</strong></td>
-                    <td>${j.category || ''}</td>
-                    <td>${j.location || ''}</td>
-                    <td><span class="badge ${j.active !== false ? 'badge-active' : 'badge-rejected'}">${j.active !== false ? 'نشطة' : 'معطلة'}</span></td>
-                    <td>
-                        <div class="actions">
-                            <button class="btn-action btn-view" onclick="editJob('${id}')">تعديل</button>
-                            <button class="btn-action btn-reject" onclick="deleteJob('${id}')">حذف</button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
+            tbody.innerHTML = entries.map(([id, j]) => {
+                return `<tr>
+                    <td><strong>${j.title||''}</strong></td>
+                    <td>${j.category||''}</td>
+                    <td>${j.location||''}</td>
+                    <td>${j.active!==false?'<span class="badge badge-active">نشطة</span>':'<span class="badge badge-inactive">معطلة</span>'}</td>
+                    <td>${formatDate(j.createdAt)}</td>
+                    <td><div class="actions">
+                        <button class="btn-action btn-view" onclick="editJob('${id}')"><i class="fas fa-edit"></i></button>
+                        <button class="btn-action btn-reject" onclick="deleteJob('${id}')"><i class="fas fa-trash"></i></button>
+                    </div></td>
+                </tr>`;
+            }).join('');
         }
 
         window.addJob = function() {
             document.getElementById('modalTitle').textContent = 'إضافة وظيفة جديدة';
             document.getElementById('modalBody').innerHTML = `
-                <div style="display:flex;flex-direction:column;gap:12px">
-                    <input type="text" id="jobTitle" placeholder="اسم الوظيفة" style="padding:10px 14px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
-                    <input type="text" id="jobCategory" placeholder="الفئة (مثال: تقنية و الذكاء الاصطناعي)" style="padding:10px 14px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
-                    <input type="text" id="jobLocation" placeholder="الموقع (مثال: القاهرة - عن بُعد)" style="padding:10px 14px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
-                    <textarea id="jobDesc" placeholder="تفاصيل الوظيفة (المهام، المتطلبات، المزايا...)" rows="4" style="padding:10px 14px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none;resize:vertical"></textarea>
-                    <input type="text" id="jobEmail" placeholder="البريد للتقديم (اختياري)" style="padding:10px 14px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
-                    <label style="display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--muted)">
-                        <input type="checkbox" id="jobActive" checked> وظيفة نشطة
-                    </label>
-                </div>
+                <label>اسم الوظيفة</label>
+                <input type="text" id="jobTitle" placeholder="مثال: مطور Frontend">
+                <label>الفئة</label>
+                <input type="text" id="jobCategory" placeholder="مثال: تقنية المعلومات">
+                <label>الموقع</label>
+                <input type="text" id="jobLocation" placeholder="مثال: القاهرة - عن بُعد">
+                <label>التفاصيل</label>
+                <textarea id="jobDesc" placeholder="المهام، المتطلبات، المزايا..."></textarea>
+                <label>البريد للتقديم (اختياري)</label>
+                <input type="text" id="jobEmail" placeholder="hr@example.com">
+                <label style="display:flex;align-items:center;gap:8px;margin-top:8px">
+                    <input type="checkbox" id="jobActive" checked> وظيفة نشطة
+                </label>
             `;
             document.getElementById('modalConfirm').style.display = 'block';
             document.getElementById('modalConfirm').textContent = 'إضافة';
@@ -873,13 +1718,12 @@
                 const active = document.getElementById('jobActive').checked;
                 if (!title) { showToast('أدخل اسم الوظيفة', 'error'); return; }
                 try {
-                    await push(ref(database, 'jobs'), { title, category, location, description, email, active, createdAt: Date.now() });
-                    showToast('تم إضافة الوظيفة بنجاح', 'success');
+                    await push(ref(db, 'jobs'), { title, category, location, description, email, active, createdAt: Date.now() });
+                    addActivity('success', `تم إضافة وظيفة: ${title}`);
+                    if(window.QCVNotify) QCVNotify.success();
+                    showToast('تم إضافة الوظيفة', 'success');
                     closeModal();
-                } catch(err) {
-                    console.error(err);
-                    showToast('خطأ في الكتابة', 'error');
-                }
+                } catch(err) { showToast('خطأ', 'error'); }
             };
             document.getElementById('modal').classList.add('show');
         };
@@ -889,292 +1733,330 @@
             if (!j) return;
             document.getElementById('modalTitle').textContent = 'تعديل الوظيفة';
             document.getElementById('modalBody').innerHTML = `
-                <div style="display:flex;flex-direction:column;gap:12px">
-                    <input type="text" id="jobTitle" value="${j.title || ''}" placeholder="اسم الوظيفة" style="padding:10px 14px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
-                    <input type="text" id="jobCategory" value="${j.category || ''}" placeholder="الفئة" style="padding:10px 14px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
-                    <input type="text" id="jobLocation" value="${j.location || ''}" placeholder="الموقع" style="padding:10px 14px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
-                    <textarea id="jobDesc" placeholder="تفاصيل الوظيفة" rows="4" style="padding:10px 14px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none;resize:vertical">${j.description || ''}</textarea>
-                    <input type="text" id="jobEmail" value="${j.email || ''}" placeholder="البريد للتقديم" style="padding:10px 14px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:'Cairo',sans-serif;font-size:0.85rem;outline:none">
-                    <label style="display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--muted)">
-                        <input type="checkbox" id="jobActive" ${j.active !== false ? 'checked' : ''}> وظيفة نشطة
-                    </label>
-                </div>
+                <label>اسم الوظيفة</label>
+                <input type="text" id="jobTitle" value="${j.title||''}">
+                <label>الفئة</label>
+                <input type="text" id="jobCategory" value="${j.category||''}">
+                <label>الموقع</label>
+                <input type="text" id="jobLocation" value="${j.location||''}">
+                <label>التفاصيل</label>
+                <textarea id="jobDesc">${j.description||''}</textarea>
+                <label>البريد للتقديم</label>
+                <input type="text" id="jobEmail" value="${j.email||''}">
+                <label style="display:flex;align-items:center;gap:8px;margin-top:8px">
+                    <input type="checkbox" id="jobActive" ${j.active!==false?'checked':''}> وظيفة نشطة
+                </label>
             `;
             document.getElementById('modalConfirm').style.display = 'block';
-            document.getElementById('modalConfirm').textContent = 'حفظ التعديلات';
+            document.getElementById('modalConfirm').textContent = 'حفظ';
             document.getElementById('modalConfirm').onclick = async () => {
-                const title = document.getElementById('jobTitle').value.trim();
-                const category = document.getElementById('jobCategory').value.trim();
-                const location = document.getElementById('jobLocation').value.trim();
-                const description = document.getElementById('jobDesc').value.trim();
-                const email = document.getElementById('jobEmail').value.trim();
-                const active = document.getElementById('jobActive').checked;
-                if (!title) { showToast('أدخل اسم الوظيفة', 'error'); return; }
                 try {
-                    await update(ref(database, 'jobs/' + id), { title, category, location, description, email, active });
-                    showToast('تم تحديث الوظيفة', 'success');
+                    await update(ref(db, 'jobs/' + id), {
+                        title: document.getElementById('jobTitle').value.trim(),
+                        category: document.getElementById('jobCategory').value.trim(),
+                        location: document.getElementById('jobLocation').value.trim(),
+                        description: document.getElementById('jobDesc').value.trim(),
+                        email: document.getElementById('jobEmail').value.trim(),
+                        active: document.getElementById('jobActive').checked
+                    });
+                    if(window.QCVNotify) QCVNotify.success();
+                    showToast('تم الحفظ', 'success');
                     closeModal();
-                } catch(err) {
-                    console.error(err);
-                    showToast('خطأ في الكتابة', 'error');
-                }
+                } catch(err) { showToast('خطأ', 'error'); }
             };
             document.getElementById('modal').classList.add('show');
         };
 
         window.deleteJob = function(id) {
-            const j = allJobsData[id];
-            if (!j) return;
-            showModal('حذف وظيفة', `هل أنت متأكد من حذف "${j.title}" نهائياً؟`, async () => {
+            document.getElementById('modalTitle').textContent = 'حذف الوظيفة';
+            document.getElementById('modalBody').innerHTML = '<p style="text-align:center">هل أنت متأكد من حذف هذه الوظيفة؟</p>';
+            document.getElementById('modalConfirm').style.display = 'block';
+            document.getElementById('modalConfirm').textContent = 'حذف';
+            document.getElementById('modalConfirm').onclick = async () => {
                 try {
-                    await remove(ref(database, 'jobs/' + id));
-                    showToast('تم حذف الوظيفة', 'error');
-                } catch(err) {
-                    console.error(err);
-                    showToast('خطأ في الحذف', 'error');
-                }
-            });
-        };
-
-        // ===== USER ACTIONS =====
-        window.toggleBan = async function(uid, ban) {
-            try {
-                await update(ref(database, 'users/' + uid), { banned: ban });
-                if(window.QCVNotify) QCVNotify.notify();
-                showToast(ban ? 'تم حظر المستخدم' : 'تم فك حظر المستخدم', ban ? 'error' : 'success');
-            } catch(err) {
-                console.error(err);
-                showToast('خطأ في الكتابة', 'error');
-            }
-        };
-
-        window.deleteUser = function(uid) {
-            const user = allUsersData[uid];
-            if (!user) return;
-            showModal('حذف مستخدم', `هل أنت متأكد من حذف "${user.name}" نهائياً؟ هذا الإجراء لا يمكن التراجع عنه.`, async () => {
-                try {
-                    await remove(ref(database, 'users/' + uid));
-                    showToast('تم حذف المستخدم', 'error');
-                } catch(err) {
-                    console.error(err);
-                    showToast('خطأ في الحذف', 'error');
-                }
-            });
-        };
-
-        window.viewUser = function(uid) {
-            const u = allUsersData[uid];
-            if (!u) return;
-            document.getElementById('modalTitle').textContent = 'تفاصيل المستخدم';
-            document.getElementById('modalBody').innerHTML = `
-                <div style="text-align:center">
-                    <p><strong>الاسم:</strong> ${u.name || '-'}</p>
-                    <p><strong>البريد:</strong> ${u.email || '-'}</p>
-                    <p><strong>الباقة:</strong> ${u.plan === 'pro' ? 'احترافية' : u.plan === 'unlimited' ? 'غير محدودة' : 'مجانية'}</p>
-                    <p><strong>تاريخ التسجيل:</strong> ${u.registeredAt ? new Date(u.registeredAt).toLocaleString('ar-EG') : '-'}</p>
-                    <p><strong>آخر دخول:</strong> ${u.lastLogin ? new Date(u.lastLogin).toLocaleString('ar-EG') : '-'}</p>
-                    <p><strong>الحالة:</strong> ${u.banned ? 'محظور' : 'نشط'}</p>
-                </div>
-            `;
-            document.getElementById('modalConfirm').style.display = 'none';
+                    await remove(ref(db, 'jobs/' + id));
+                    if(window.QCVNotify) QCVNotify.error();
+                    showToast('تم الحذف', 'error');
+                    closeModal();
+                } catch(err) { showToast('خطأ', 'error'); }
+            };
             document.getElementById('modal').classList.add('show');
         };
 
-        window.changePlan = function(uid) {
-            const user = allUsersData[uid];
-            if (!user) return;
-            document.getElementById('modalTitle').textContent = 'تغيير الباقة';
+        // ===== DOMAINS =====
+        function listenDomains() {
+            onValue(ref(db, 'domains'), (snap) => {
+                allDomainsData = snap.val() || {};
+                renderDomainsTable(allDomainsData);
+            });
+        }
+
+        function renderDomainsTable(data) {
+            const tbody = document.getElementById('domainsList');
+            const entries = Object.entries(data);
+            if (!entries.length) {
+                tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><p>لا توجد نطاقات بعد</p></td></tr>';
+                return;
+            }
+            const usersByDomain = {};
+            Object.values(allUsersData).forEach(u => {
+                if (u.email) {
+                    const domain = u.email.split('@')[1];
+                    usersByDomain[domain] = (usersByDomain[domain] || 0) + 1;
+                }
+            });
+            tbody.innerHTML = entries.map(([id, d]) => {
+                return `<tr>
+                    <td><strong style="direction:ltr;display:inline-block">${d.domain||''}</strong></td>
+                    <td><span class="badge ${planBadgeClass(d.plan)}">${planText(d.plan)}</span></td>
+                    <td>${d.duration||1}</td>
+                    <td>${usersByDomain[d.domain]||0}</td>
+                    <td>${d.active!==false?'<span class="badge badge-active">نشطة</span>':'<span class="badge badge-inactive">معطلة</span>'}</td>
+                    <td><div class="actions">
+                        <button class="btn-action btn-edit" onclick="editDomain('${id}')"><i class="fas fa-edit"></i></button>
+                        ${d.active!==false?`<button class="btn-action btn-ban" onclick="toggleDomain('${id}',false)"><i class="fas fa-ban"></i></button>`:`<button class="btn-action btn-unban" onclick="toggleDomain('${id}',true)"><i class="fas fa-check"></i></button>`}
+                        <button class="btn-action btn-delete" onclick="deleteDomain('${id}')"><i class="fas fa-trash"></i></button>
+                    </div></td>
+                </tr>`;
+            }).join('');
+        }
+
+        window.showAddDomain = function() {
+            document.getElementById('modalTitle').textContent = 'إضافة نطاق جديد';
             document.getElementById('modalBody').innerHTML = `
-                <p style="text-align:center;margin-bottom:15px">تغيير باقة "<strong>${user.name}</strong>"</p>
-                <select id="newPlanSelect">
-                    <option value="free" ${user.plan==='free'||!user.plan?'selected':''}>مجانية</option>
-                    <option value="pro" ${user.plan==='pro'?'selected':''}>احترافية (99 ج.م/شهر)</option>
-                    <option value="unlimited" ${user.plan==='unlimited'?'selected':''}>غير محدودة (299 ج.م/شهر)</option>
+                <label>النطاق</label>
+                <input type="text" id="domDomain" placeholder="مثال: edu.alexu.edu.eg">
+                <label>الباقة</label>
+                <select id="domPlan">
+                    <option value="pro">احترافية</option>
+                    <option value="unlimited">غير محدودة</option>
                 </select>
+                <label>المدة (أشهر)</label>
+                <input type="text" id="domDuration" value="6" placeholder="6">
             `;
             document.getElementById('modalConfirm').style.display = 'block';
+            document.getElementById('modalConfirm').textContent = 'إضافة';
             document.getElementById('modalConfirm').onclick = async () => {
-                const newPlan = document.getElementById('newPlanSelect').value;
+                const domain = document.getElementById('domDomain').value.trim();
+                const plan = document.getElementById('domPlan').value;
+                const duration = parseInt(document.getElementById('domDuration').value) || 6;
+                if (!domain) { showToast('أدخل النطاق', 'error'); return; }
                 try {
-                    await update(ref(database, 'users/' + uid), { plan: newPlan });
-                    showToast('تم تحديث الباقة بنجاح', 'success');
-                } catch(err) {
-                    console.error(err);
-                    showToast('خطأ في تحديث الباقة', 'error');
-                }
-                closeModal();
+                    await push(ref(db, 'domains'), { domain, plan, duration, active: true, createdAt: Date.now() });
+                    addActivity('success', `تم إضافة نطاق: ${domain}`);
+                    if(window.QCVNotify) QCVNotify.success();
+                    showToast('تم إضافة النطاق', 'success');
+                    closeModal();
+                } catch(err) { showToast('خطأ', 'error'); }
+            };
+            document.getElementById('modal').classList.add('show');
+        };
+
+        window.editDomain = function(id) {
+            const d = allDomainsData[id];
+            if (!d) return;
+            document.getElementById('modalTitle').textContent = 'تعديل النطاق';
+            document.getElementById('modalBody').innerHTML = `
+                <label>النطاق</label>
+                <input type="text" id="domDomain" value="${d.domain||''}">
+                <label>الباقة</label>
+                <select id="domPlan">
+                    <option value="pro" ${d.plan==='pro'?'selected':''}>احترافية</option>
+                    <option value="unlimited" ${d.plan==='unlimited'?'selected':''}>غير محدودة</option>
+                </select>
+                <label>المدة (أشهر)</label>
+                <input type="text" id="domDuration" value="${d.duration||6}">
+            `;
+            document.getElementById('modalConfirm').style.display = 'block';
+            document.getElementById('modalConfirm').textContent = 'حفظ';
+            document.getElementById('modalConfirm').onclick = async () => {
+                try {
+                    await update(ref(db, 'domains/' + id), {
+                        domain: document.getElementById('domDomain').value.trim(),
+                        plan: document.getElementById('domPlan').value,
+                        duration: parseInt(document.getElementById('domDuration').value) || 6
+                    });
+                    if(window.QCVNotify) QCVNotify.success();
+                    showToast('تم الحفظ', 'success');
+                    closeModal();
+                } catch(err) { showToast('خطأ', 'error'); }
+            };
+            document.getElementById('modal').classList.add('show');
+        };
+
+        window.toggleDomain = async function(id, active) {
+            try {
+                await update(ref(db, 'domains/' + id), { active });
+                if(window.QCVNotify) QCVNotify.notify();
+                showToast(active ? 'تم تفعيل النطاق' : 'تم تعطيل النطاق', 'success');
+            } catch(err) { showToast('خطأ', 'error'); }
+        };
+
+        window.deleteDomain = function(id) {
+            document.getElementById('modalTitle').textContent = 'حذف النطاق';
+            document.getElementById('modalBody').innerHTML = '<p style="text-align:center">هل أنت متأكد من حذف هذا النطاق؟</p>';
+            document.getElementById('modalConfirm').style.display = 'block';
+            document.getElementById('modalConfirm').textContent = 'حذف';
+            document.getElementById('modalConfirm').onclick = async () => {
+                try {
+                    await remove(ref(db, 'domains/' + id));
+                    if(window.QCVNotify) QCVNotify.error();
+                    showToast('تم الحذف', 'error');
+                    closeModal();
+                } catch(err) { showToast('خطأ', 'error'); }
             };
             document.getElementById('modal').classList.add('show');
         };
 
         // ===== SETTINGS =====
-        window.saveSettings = function() {
-            showToast('تم حفظ الإعدادات بنجاح', 'success');
-        };
-
-        // ===== DOMAINS =====
-        let allDomainsData = {};
-
-        function listenDomains() {
-            onValue(ref(database, 'approvedDomains'), (snap) => {
-                allDomainsData = snap.val() || {};
-                renderDomains(allDomainsData);
+        function listenSettings() {
+            onValue(ref(db, 'settings'), (snap) => {
+                allSettingsData = snap.val() || {};
+                document.getElementById('settingsDefaultPlan').value = allSettingsData.defaultPlan || 'free';
+                document.getElementById('settingsCommission').value = allSettingsData.commissionPercent || 20;
+                document.getElementById('settingsProPrice').value = allSettingsData.proPrice || 99;
+                document.getElementById('settingsUnlimitedPrice').value = allSettingsData.unlimitedPrice || 299;
+                if (allSettingsData.maintenance) {
+                    document.getElementById('settingsMaintenance').classList.add('active');
+                    document.getElementById('maintenanceLabel').textContent = 'مفعّل';
+                } else {
+                    document.getElementById('settingsMaintenance').classList.remove('active');
+                    document.getElementById('maintenanceLabel').textContent = 'معطّل';
+                }
             });
         }
 
-        function renderDomains(data) {
-            const tbody = document.getElementById('domainsList');
-            const entries = Object.entries(data);
-            if (entries.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><div class="icon"><i class="fas fa-globe"></i></div><p>لا توجد نطاقات معتمدة بعد</p></td></tr>';
-                return;
-            }
-            tbody.innerHTML = entries.map(([id, d]) => {
-                const planText = d.plan === 'pro' ? 'احترافية' : d.plan === 'unlimited' ? 'غير محدودة' : 'مجانية';
-                const statusBadge = d.active !== false ? 'badge-approved' : 'badge-rejected';
-                const statusText = d.active !== false ? 'نشط' : 'معطل';
-                return `
-                    <tr>
-                        <td><strong style="color:var(--accent)">${d.domain}</strong></td>
-                        <td>${planText}</td>
-                        <td>${d.duration || '∞'}</td>
-                        <td>${d.userCount || 0}</td>
-                        <td><span class="status-badge ${statusBadge}">${statusText}</span></td>
-                        <td>
-                            <div class="action-btns">
-                                <button class="btn-action btn-approve" onclick="toggleDomain('${id}', ${d.active !== false})">${d.active !== false ? 'تعطيل' : 'تفعيل'}</button>
-                                <button class="btn-action btn-reject" onclick="deleteDomain('${id}')">حذف</button>
-                            </div>
-                        </td>
-                    </tr>`;
-            }).join('');
-        }
+        window.toggleMaintenance = function() {
+            const el = document.getElementById('settingsMaintenance');
+            el.classList.toggle('active');
+            document.getElementById('maintenanceLabel').textContent = el.classList.contains('active') ? 'مفعّل' : 'معطّل';
+        };
 
-        window.showAddDomain = function() {
-            document.getElementById('modalTitle').textContent = 'إضافة نطاق معتمد';
-            document.getElementById('modalBody').innerHTML = `
-                <div style="text-align:center">
-                    <div class="input-group" style="margin-bottom:15px;text-align:right">
-                        <label style="display:block;font-size:0.85rem;color:var(--muted);margin-bottom:6px;font-weight:600">النطاق (Domain)</label>
-                        <input type="text" id="domainInput" placeholder="مثال: edu.alexu.edu.eg" style="width:100%;padding:12px 16px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none">
-                        <div style="font-size:0.72rem;color:var(--muted);margin-top:4px">بدون @ — مثال: gmail.com أو edu.alexu.edu.eg</div>
+        window.saveSettings = async function() {
+            try {
+                const settings = {
+                    defaultPlan: document.getElementById('settingsDefaultPlan').value,
+                    commissionPercent: parseInt(document.getElementById('settingsCommission').value) || 20,
+                    proPrice: parseInt(document.getElementById('settingsProPrice').value) || 99,
+                    unlimitedPrice: parseInt(document.getElementById('settingsUnlimitedPrice').value) || 299,
+                    maintenance: document.getElementById('settingsMaintenance').classList.contains('active'),
+                    updatedAt: Date.now()
+                };
+                await set(ref(db, 'settings'), settings);
+                addActivity('success', 'تم تحديث الإعدادات');
+                if(window.QCVNotify) QCVNotify.save();
+                showToast('تم حفظ الإعدادات', 'success');
+            } catch(err) { showToast('خطأ', 'error'); }
+        };
+
+        // ===== REPORTS =====
+        function renderReports() {
+            const entries = Object.entries(allUsersData);
+
+            // Growth Chart
+            const months = [];
+            const now = new Date();
+            for (let i = 5; i >= 0; i--) {
+                const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+                months.push({ label: d.toLocaleDateString('ar-EG', { month: 'short' }), count: 0, start: d.getTime(), end: new Date(d.getFullYear(), d.getMonth() + 1, 0).getTime() });
+            }
+            entries.forEach(([_, u]) => {
+                if (u.registeredAt) {
+                    months.forEach(m => {
+                        if (u.registeredAt >= m.start && u.registeredAt <= m.end) m.count++;
+                    });
+                }
+            });
+            const maxGrowth = Math.max(...months.map(m => m.count), 1);
+            document.getElementById('reportGrowth').innerHTML = months.map(m => `<div class="bar-row">
+                <div class="bar-label">${m.label}</div>
+                <div class="bar-track"><div class="bar-fill blue" style="width:${(m.count/maxGrowth)*100}%">${m.count}</div></div>
+            </div>`).join('');
+
+            // Distribution
+            let freeCount = 0, proCount = 0, unlimitedCount = 0;
+            entries.forEach(([_, u]) => {
+                const p = u.plan || 'free';
+                if (p === 'pro') proCount++;
+                else if (p === 'unlimited') unlimitedCount++;
+                else freeCount++;
+            });
+            const total = Math.max(freeCount + proCount + unlimitedCount, 1);
+            const freePct = Math.round((freeCount/total)*100);
+            const proPct = Math.round((proCount/total)*100);
+            const unlimPct = Math.round((unlimitedCount/total)*100);
+            document.getElementById('reportDistribution').innerHTML = `
+                <div class="donut-chart">
+                    <div class="donut-visual" style="background:conic-gradient(#9ca3af 0% ${freePct}%, var(--accent) ${freePct}% ${freePct+proPct}%, var(--purple) ${freePct+proPct}% 100%)">
+                        <div class="donut-center">${total}</div>
                     </div>
-                    <div class="input-group" style="margin-bottom:15px;text-align:right">
-                        <label style="display:block;font-size:0.85rem;color:var(--muted);margin-bottom:6px;font-weight:600">الباقة الممنوحة</label>
-                        <select id="domainPlan" style="width:100%;padding:12px 16px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none">
-                            <option value="pro">احترافية (Pro)</option>
-                            <option value="unlimited">غير محدودة (Unlimited)</option>
-                        </select>
-                    </div>
-                    <div class="input-group" style="text-align:right">
-                        <label style="display:block;font-size:0.85rem;color:var(--muted);margin-bottom:6px;font-weight:600">المدة بالأشهر (اتركه فاضي = دائم)</label>
-                        <input type="number" id="domainDuration" placeholder="مثال: 6" min="1" style="width:100%;padding:12px 16px;background:#ffffff;border:1px solid var(--border);color:#1a1a2e;border-radius:10px;font-family:'Cairo',sans-serif;font-size:0.9rem;outline:none">
+                    <div class="donut-legend">
+                        <div class="legend-item"><div class="legend-dot" style="background:#9ca3af"></div> مجانية: ${freeCount} (${freePct}%)</div>
+                        <div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div> احترافية: ${proCount} (${proPct}%)</div>
+                        <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div> غير محدودة: ${unlimitedCount} (${unlimPct}%)</div>
                     </div>
                 </div>
             `;
-            document.getElementById('modalConfirm').style.display = 'block';
-            document.getElementById('modalConfirm').textContent = 'إضافة النطاق';
-            document.getElementById('modalConfirm').onclick = async () => {
-                const domain = document.getElementById('domainInput').value.trim().toLowerCase().replace(/^@/, '');
-                const plan = document.getElementById('domainPlan').value;
-                const duration = parseInt(document.getElementById('domainDuration').value) || null;
-                if (!domain || !domain.includes('.')) { showToast('أدخل نطاق صحيح', 'error'); return; }
-                try {
-                    await set(ref(database, 'approvedDomains/' + domain.replace(/\./g, '_')), { domain, plan, duration, active: true, userCount: 0, createdAt: Date.now() });
-                    showToast('تم إضافة النطاق بنجاح', 'success');
-                    closeModal();
-                } catch(err) {
-                    console.error(err);
-                    showToast('خطأ في الكتابة', 'error');
-                }
-            };
-            document.getElementById('modal').classList.add('show');
-        };
 
-        window.toggleDomain = async function(id, currentActive) {
-            try {
-                await update(ref(database, 'approvedDomains/' + id), { active: !currentActive });
-                showToast(currentActive ? 'تم تعطيل النطاق' : 'تم تفعيل النطاق', 'success');
-            } catch(err) {
-                showToast('خطأ في الكتابة', 'error');
+            // Revenue
+            const proPrice = parseInt(allSettingsData.proPrice) || 99;
+            const unlimPrice = parseInt(allSettingsData.unlimitedPrice) || 299;
+            const revMonths = [];
+            for (let i = 5; i >= 0; i--) {
+                const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+                revMonths.push({ label: d.toLocaleDateString('ar-EG', { month: 'short' }), revenue: 0, start: d.getTime(), end: new Date(d.getFullYear(), d.getMonth() + 1, 0).getTime() });
             }
-        };
-
-        window.deleteDomain = function(id) {
-            const d = allDomainsData[id];
-            if (!d) return;
-            showModal('حذف نطاق', `هل أنت متأكد من حذف "${d.domain}"؟`, async () => {
-                try {
-                    await remove(ref(database, 'approvedDomains/' + id));
-                    showToast('تم حذف النطاق', 'error');
-                } catch(err) {
-                    showToast('خطأ في الحذف', 'error');
+            entries.forEach(([_, u]) => {
+                if (u.plan === 'pro') {
+                    revMonths.forEach(m => {
+                        if (u.registeredAt && u.registeredAt >= m.start) m.revenue += proPrice;
+                    });
+                } else if (u.plan === 'unlimited') {
+                    revMonths.forEach(m => {
+                        if (u.registeredAt && u.registeredAt >= m.start) m.revenue += unlimPrice;
+                    });
                 }
             });
-        };
+            const maxRev = Math.max(...revMonths.map(m => m.revenue), 1);
+            document.getElementById('reportRevenue').innerHTML = revMonths.map(m => `<div class="bar-row">
+                <div class="bar-label">${m.label}</div>
+                <div class="bar-track"><div class="bar-fill green" style="width:${(m.revenue/maxRev)*100}%">${m.revenue} ج.م</div></div>
+            </div>`).join('');
 
-        // ===== SEARCH & FILTER =====
-        window.filterUsers = function() {
-            const query = document.getElementById('searchUsers').value.toLowerCase();
-            const filtered = {};
-            Object.entries(allUsersData).forEach(([uid, u]) => {
-                if ((u.name||'').toLowerCase().includes(query) || (u.email||'').toLowerCase().includes(query)) {
-                    filtered[uid] = u;
-                }
+            // Campaigns Report
+            const campEntries = Object.entries(allCampaignsData).sort((a,b) => (b[1].conversions||0) - (a[1].conversions||0)).slice(0, 5);
+            if (campEntries.length) {
+                const maxCamp = Math.max(...campEntries.map(([_,c]) => c.conversions||0), 1);
+                document.getElementById('reportCampaigns').innerHTML = campEntries.map(([_, c]) => `<div class="bar-row">
+                    <div class="bar-label">${(c.name||'').substring(0,10)}</div>
+                    <div class="bar-track"><div class="bar-fill yellow" style="width:${((c.conversions||0)/maxCamp)*100}%">${c.conversions||0}</div></div>
+                </div>`).join('');
+            } else {
+                document.getElementById('reportCampaigns').innerHTML = '<div style="text-align:center;color:var(--muted);padding:20px">لا توجد حملات</div>';
+            }
+
+            // Downloads Report
+            const dlMonths = [];
+            for (let i = 5; i >= 0; i--) {
+                const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+                dlMonths.push({ label: d.toLocaleDateString('ar-EG', { month: 'short' }), count: 0 });
+            }
+            let totalDownloads = 0;
+            entries.forEach(([_, u]) => {
+                totalDownloads += u.downloadCount || 0;
             });
-            renderUsersTable(filtered);
-        };
-
-        window.filterSubscriptions = function() {
-            renderSubscriptions(allSubsData);
-        };
-
-        // ===== NAVIGATION =====
-        window.switchPanel = function(panel) {
-            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-            document.getElementById('panel-' + panel).classList.add('active');
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.querySelector(`.nav-item[data-panel="${panel}"]`).classList.add('active');
-            const titles = { dashboard: 'لوحة التحكم', users: 'إدارة المستخدمين', subscriptions: 'طلبات الاشتراك', jobs: 'الوظائف', settings: 'الإعدادات', domains: 'النطاقات المعتمدة' };
-            document.getElementById('pageTitle').textContent = titles[panel];
-        };
-
-        // ===== MODAL =====
-        let modalCallback = null;
-        function showModal(title, body, callback) {
-            document.getElementById('modalTitle').textContent = title;
-            document.getElementById('modalBody').innerHTML = `<p style="text-align:center">${body}</p>`;
-            document.getElementById('modalConfirm').style.display = 'block';
-            modalCallback = callback;
-            document.getElementById('modalConfirm').onclick = async () => {
-                if (modalCallback) await modalCallback();
-                closeModal();
-            };
-            document.getElementById('modal').classList.add('show');
+            if (totalDownloads > 0) {
+                const perMonth = Math.ceil(totalDownloads / 6);
+                dlMonths.forEach(m => m.count = perMonth + Math.floor(Math.random() * perMonth * 0.3));
+            }
+            const maxDl = Math.max(...dlMonths.map(m => m.count), 1);
+            document.getElementById('reportDownloads').innerHTML = dlMonths.map(m => `<div class="bar-row">
+                <div class="bar-label">${m.label}</div>
+                <div class="bar-track"><div class="bar-fill purple" style="width:${(m.count/maxDl)*100}%">${m.count}</div></div>
+            </div>`).join('');
         }
 
-        function closeModal() {
-            document.getElementById('modal').classList.remove('show');
-            modalCallback = null;
-        }
-        window.closeModal = closeModal;
-
-        // ===== TOAST =====
-        function showToast(msg, type) {
-            const toast = document.getElementById('toast');
-            toast.textContent = msg;
-            toast.className = 'toast toast-' + type + ' show';
-            if(window.QCVNotify && type === 'success') QCVNotify.success();
-            setTimeout(() => toast.classList.remove('show'), 3000);
-        }
-
-        // ===== LOGOUT =====
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            sessionStorage.removeItem('qcv_admin');
-            document.getElementById('adminLayout').classList.remove('show');
-            document.getElementById('adminLogin').classList.remove('hidden');
-        });
     </script>
-<script src="js/notify-sounds.js"></script>
+    <script src="js/notify-sounds.js"></script>
 </body>
 </html>

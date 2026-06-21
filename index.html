@@ -750,10 +750,10 @@
         <div class="footer-links">
             <h4>الشركة</h4>
             <ul>
-                <li><a href="#">من نحن</a></li>
+                <li><a href="help.html#about">من نحن</a></li>
                 <li><a href="careers.html">الوظائف</a></li>
-                <li><a href="#">سياسة الخصوصية</a></li>
-                <li><a href="#">شروط الاستخدام</a></li>
+                <li><a href="help.html#privacy">سياسة الخصوصية</a></li>
+                <li><a href="help.html#terms">شروط الاستخدام</a></li>
             </ul>
         </div>
     </div>
@@ -770,6 +770,24 @@ function toggleFaq(el){
 </script>
 
 
+<script src="js/tutorial.js"></script>
+<script src="js/site-settings.js"></script>
 <script src="js/notify-sounds.js"></script>
+<script>
+// Tutorial for index page
+document.addEventListener('DOMContentLoaded', () => {
+    if (QCVTutorial.shouldShow()) {
+        setTimeout(() => {
+            QCVTutorial.start([
+                { target: '.hero h1', title: 'Welcome to QCV!', message: 'QCV helps you build a professional, ATS-optimized CV in minutes using AI.', tip: 'Click "Get Started" to begin building your CV for free!' },
+                { target: '#features', title: 'Powerful Features', message: 'We offer AI assistant, CV scoring, ATS templates, and cloud storage — everything you need to land your dream job.', tip: 'All features work together to maximize your chances of getting hired.' },
+                { target: '#how', title: 'How It Works', message: 'Just 3 simple steps: Sign up, enter your info, and download your professional CV as PDF.', tip: 'It takes less than 5 minutes to create your first CV!' },
+                { target: '#pricing', title: 'Flexible Pricing', message: 'Start free! Upgrade to Pro (99 EGP/mo) for unlimited templates and AI features.', tip: 'Free plan includes 1 CV with 1 template.' },
+                { target: '.footer', title: 'Need Help?', message: 'Visit our Help Center or contact support anytime. We are here to help!', tip: 'You can always come back to this tour from the Help page.' }
+            ]);
+        }, 1500);
+    }
+});
+</script>
 </body>
 </html>

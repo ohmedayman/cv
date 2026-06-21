@@ -167,26 +167,39 @@
         /* AI Score Widget */
         .ai-score-widget{padding:14px;border-bottom:1px solid var(--border);display:none}
         .ai-score-widget.show{display:block}
-        .ai-score-widget.show{display:block}
-        .ai-score-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-        .ai-score-header h3{font-size:0.78rem;font-weight:700;color:var(--accent)}
+        .ai-score-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+        .ai-score-header h3{font-size:0.78rem;font-weight:700;color:var(--accent);display:flex;align-items:center;gap:6px}
         .ai-score-ring{width:80px;height:80px;margin:0 auto 10px;position:relative}
         .ai-score-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
         .ai-score-ring circle{fill:none;stroke-width:6;stroke-linecap:round}
         .ai-score-ring .ring-bg{stroke:var(--border)}
         .ai-score-ring .ring-fill{stroke:var(--accent);transition:stroke-dashoffset 0.8s ease}
         .ai-score-value{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:1.3rem;font-weight:900;color:var(--accent)}
-        .ai-score-label{text-align:center;font-size:0.7rem;color:var(--muted);font-weight:600}
-        .ai-score-details{display:flex;flex-direction:column;gap:6px;margin-top:10px}
-        .ai-detail-row{display:flex;justify-content:space-between;align-items:center;font-size:0.7rem}
-        .ai-detail-row .label{color:var(--muted)}
-        .ai-detail-row .value{font-weight:700}
-        .ai-recs{margin-top:10px;max-height:150px;overflow-y:auto}
-        .ai-rec{padding:8px;border-radius:6px;font-size:0.68rem;margin-bottom:4px;background:rgba(0,0,0,0.03);border:1px solid var(--border)}
-        .ai-rec.warning{border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.05)}
-        .ai-rec.critical{border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.05)}
-        .ai-rec.success{border-color:rgba(56,189,248,0.3);background:rgba(56,189,248,0.05)}
-        .ai-rec .rec-title{font-weight:700;margin-bottom:2px}
+        .ai-score-label{text-align:center;font-size:0.7rem;color:var(--muted);font-weight:600;margin-bottom:12px}
+        .ai-score-details{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+        .ai-detail-row{display:flex;flex-direction:column;gap:3px}
+        .ai-detail-header{display:flex;justify-content:space-between;align-items:center}
+        .ai-detail-header .label{font-size:0.68rem;color:var(--muted);font-weight:600}
+        .ai-detail-header .value{font-size:0.72rem;font-weight:800}
+        .ai-detail-bar{height:5px;background:var(--border);border-radius:3px;overflow:hidden}
+        .ai-detail-bar-fill{height:100%;border-radius:3px;transition:width 0.6s ease}
+        .ai-score-summary{background:rgba(0,3,201,0.04);border:1px solid rgba(0,3,201,0.1);border-radius:8px;padding:10px;margin-bottom:10px;font-size:0.7rem;color:var(--text)}
+        .ai-score-summary strong{color:var(--accent)}
+        .ai-recs{max-height:220px;overflow-y:auto}
+        .ai-recs::-webkit-scrollbar{width:4px}
+        .ai-recs::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+        .ai-rec{padding:8px 10px;border-radius:6px;font-size:0.68rem;margin-bottom:4px;border:1px solid var(--border);display:flex;align-items:flex-start;gap:8px;cursor:pointer;transition:all 0.15s}
+        .ai-rec:hover{transform:translateX(2px);box-shadow:0 1px 4px rgba(0,0,0,0.06)}
+        .ai-rec.warning{border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.04)}
+        .ai-rec.critical{border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.04)}
+        .ai-rec.info{border-color:rgba(14,165,233,0.3);background:rgba(14,165,233,0.04)}
+        .ai-rec .rec-icon{width:18px;height:18px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:0.6rem;flex-shrink:0;margin-top:1px}
+        .ai-rec.critical .rec-icon{background:rgba(239,68,68,0.12);color:#ef4444}
+        .ai-rec.warning .rec-icon{background:rgba(245,158,11,0.12);color:#f59e0b}
+        .ai-rec.info .rec-icon{background:rgba(14,165,233,0.12);color:#0ea5e9}
+        .ai-rec .rec-body{flex:1;min-width:0}
+        .ai-rec .rec-title{font-weight:700;font-size:0.66rem;margin-bottom:2px;line-height:1.3}
+        .ai-rec .rec-fix{font-size:0.6rem;color:var(--accent);font-weight:600;white-space:nowrap;flex-shrink:0;padding:2px 6px;background:rgba(0,3,201,0.06);border-radius:4px}
 
         /* Job Match Tab */
         .job-match-input{width:100%;min-height:100px;padding:10px;background:var(--input);border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:inherit;font-size:0.82rem;resize:vertical;outline:none}
@@ -445,6 +458,7 @@
             </div>
             <div class="ai-score-label" id="scoreLabel">Analyzing...</div>
             <div class="ai-score-details" id="scoreDetails"></div>
+            <div class="ai-score-summary" id="scoreSummary"></div>
             <div class="ai-recs" id="scoreRecs"></div>
         </div>
 
@@ -1028,17 +1042,77 @@
         document.getElementById('scoreValue').textContent = scores.overall;
         document.getElementById('scoreValue').style.color = grade.color;
         document.getElementById('scoreLabel').textContent = grade.emoji + ' ' + grade.grade;
+
+        // Score breakdown with progress bars
+        const categories = [
+            { key: 'contact', label: 'Contact', data: scores.contact },
+            { key: 'content', label: 'Content', data: scores.content },
+            { key: 'ats', label: 'ATS Score', data: scores.ats },
+            { key: 'skills', label: 'Skills', data: scores.skills },
+            { key: 'impact', label: 'Impact', data: scores.impact }
+        ];
+
         const details = document.getElementById('scoreDetails');
-        if(details) details.innerHTML = `
-            <div class="ai-detail-row"><span class="label">Content</span><span class="value" style="color:${CVAnalyzer.getGrade(scores.content).color}">${scores.content}</span></div>
-            <div class="ai-detail-row"><span class="label">ATS</span><span class="value" style="color:${CVAnalyzer.getGrade(scores.ats).color}">${scores.ats}</span></div>
-            <div class="ai-detail-row"><span class="label">Skills</span><span class="value" style="color:${CVAnalyzer.getGrade(scores.skills).color}">${scores.skills}</span></div>
-            <div class="ai-detail-row"><span class="label">Impact</span><span class="value" style="color:${CVAnalyzer.getGrade(scores.impact).color}">${scores.impact}</span></div>
-        `;
+        if(details) {
+            details.innerHTML = categories.map(cat => {
+                const g = CVAnalyzer.getGrade(cat.data.total);
+                const barColor = g.color;
+                return `<div class="ai-detail-row">
+                    <div class="ai-detail-header"><span class="label">${cat.label}</span><span class="value" style="color:${barColor}">${cat.data.total}/100</span></div>
+                    <div class="ai-detail-bar"><div class="ai-detail-bar-fill" style="width:${cat.data.total}%;background:${barColor}"></div></div>
+                </div>`;
+            }).join('');
+        }
+
+        // Summary line
+        const totalIssues = scores.recommendations.length;
+        const criticalCount = scores.recommendations.filter(r => r.type === 'critical').length;
+        const warningCount = scores.recommendations.filter(r => r.type === 'warning').length;
+        const infoCount = scores.recommendations.filter(r => r.type === 'info').length;
+
+        // Summary box
+        const summaryEl = document.getElementById('scoreSummary');
+        if(summaryEl) {
+            if(totalIssues === 0) {
+                summaryEl.innerHTML = '<strong>Score: 100/100</strong> — Perfect! Your CV is fully optimized.';
+                summaryEl.style.background = 'rgba(5,150,105,0.06)';
+                summaryEl.style.borderColor = 'rgba(5,150,105,0.15)';
+                summaryEl.style.color = '#059669';
+            } else {
+                const potential = scores.overall + scores.recommendations.reduce((sum, r) => sum + parseInt(r.fix.replace('+','')), 0);
+                summaryEl.innerHTML = `Fix <strong>${totalIssues} issue${totalIssues>1?'s':''}</strong> to reach <strong>${Math.min(100, potential)}/100</strong>`;
+                summaryEl.style.background = 'rgba(0,3,201,0.04)';
+                summaryEl.style.borderColor = 'rgba(0,3,201,0.1)';
+                summaryEl.style.color = 'var(--text)';
+            }
+        }
+
+        // Recommendations with fix buttons
         const recs = document.getElementById('scoreRecs');
-        if(recs) recs.innerHTML = (scores.recommendations || []).slice(0, 4).map(r =>
-            `<div class="ai-rec ${r.type}"><div class="rec-title">${r.icon} ${r.title}</div>${r.text}</div>`
-        ).join('');
+        if(recs) {
+            let html = '';
+            if(totalIssues === 0) {
+                html = '<div style="text-align:center;padding:12px;color:#059669;font-size:0.75rem;font-weight:700"><i class="fas fa-check-circle" style="margin-right:4px"></i> Perfect! Your CV is optimized.</div>';
+            } else {
+                html = `<div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap">`;
+                if(criticalCount) html += `<span style="font-size:0.62rem;font-weight:700;color:#ef4444;background:rgba(239,68,68,0.08);padding:2px 8px;border-radius:10px">${criticalCount} Critical</span>`;
+                if(warningCount) html += `<span style="font-size:0.62rem;font-weight:700;color:#f59e0b;background:rgba(245,158,11,0.08);padding:2px 8px;border-radius:10px">${warningCount} Warning</span>`;
+                if(infoCount) html += `<span style="font-size:0.62rem;font-weight:700;color:#0ea5e9;background:rgba(14,165,233,0.08);padding:2px 8px;border-radius:10px">${infoCount} Tips</span>`;
+                html += '</div>';
+                html += scores.recommendations.slice(0, 8).map(r => {
+                    const sectionLabels = {personal:'Personal Info',summary:'Summary',experience:'Experience',education:'Education',skills:'Skills'};
+                    return `<div class="ai-rec ${r.type}" onclick="switchTab('${r.type==='critical'?'personal':r.section}',document.querySelector('[data-section=${r.section}]'))">
+                        <div class="rec-icon"><i class="fas ${r.type==='critical'?'fa-exclamation-circle':r.type==='warning'?'fa-exclamation-triangle':'fa-info-circle'}"></i></div>
+                        <div class="rec-body"><div class="rec-title">${r.title}</div></div>
+                        <span class="rec-fix">${r.fix}</span>
+                    </div>`;
+                }).join('');
+                if(scores.recommendations.length > 8) {
+                    html += `<div style="text-align:center;font-size:0.62rem;color:var(--muted);padding:4px">+${scores.recommendations.length - 8} more issues to fix</div>`;
+                }
+            }
+            recs.innerHTML = html;
+        }
     }
 
     window.runJobMatch = function() {
@@ -1104,59 +1178,34 @@
 
         const el = document.getElementById('cvPage');
 
-        // ── FREE PLAN: clip to 1 A4 page ────────────────────────────────────
-        // A4 at 96dpi = 794px wide × 1122px tall
+        // ── 1-page PDF: use html2canvas height限制 to capture only A4 height ──
         const A4_HEIGHT_PX = 1122;
-        let clonedEl = null;
-        let wrapper = null;
-
-        if (!paid) {
-            // Show a notice before downloading
-            const notice = document.createElement('div');
-            notice.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#f59e0b;color:#000;padding:10px 22px;border-radius:10px;font-weight:700;font-size:0.85rem;z-index:99999;box-shadow:0 4px 15px rgba(0,0,0,0.3)';
-            notice.textContent = '⚠️ Free plan: exporting page 1 only. Upgrade for full CV.';
-            document.body.appendChild(notice);
-            setTimeout(() => notice.remove(), 4000);
-
-            // Clone the element and clip its height to one A4 page
-            clonedEl = el.cloneNode(true);
-            clonedEl.style.overflow = 'hidden';
-            clonedEl.style.maxHeight = A4_HEIGHT_PX + 'px';
-            clonedEl.style.height = A4_HEIGHT_PX + 'px';
-            clonedEl.style.position = 'absolute';
-            clonedEl.style.left = '-9999px';
-            clonedEl.style.top = '0';
-            clonedEl.style.width = el.offsetWidth + 'px';
-            clonedEl.style.zIndex = '-1';
-
-            wrapper = document.createElement('div');
-            wrapper.style.cssText = 'position:fixed;left:-9999px;top:0;';
-            wrapper.appendChild(clonedEl);
-            document.body.appendChild(wrapper);
-        }
-
-        const targetEl = paid ? el : clonedEl;
 
         const opt = {
             margin: 0,
             filename: finalName + '.pdf',
             image: { type: 'jpeg', quality: paid ? 0.98 : 0.75 },
-            html2canvas: { scale: paid ? 2 : 1.5, useCORS: true, letterRendering: true },
+            html2canvas: {
+                scale: paid ? 2 : 1.5,
+                useCORS: true,
+                letterRendering: true,
+                height: A4_HEIGHT_PX,
+                windowHeight: A4_HEIGHT_PX
+            },
             jsPDF: {
                 unit: 'mm',
                 format: 'a4',
-                orientation: 'portrait'
+                orientation: 'portrait',
+                hotfixes: ['px_scaling']
             },
-            pagebreak: paid ? { mode: ['avoid-all', 'css', 'legacy'] } : { mode: [] }
+            pagebreak: { mode: [] }
         };
 
         if(window.QCVNotify) QCVNotify.download();
-        html2pdf().set(opt).from(targetEl).save().then(() => {
+        html2pdf().set(opt).from(el).save().then(() => {
             b.classList.remove('loading');
-            if(wrapper) wrapper.remove();
         }).catch(() => {
             b.classList.remove('loading');
-            if(wrapper) wrapper.remove();
             window.print();
         });
     };
@@ -1611,6 +1660,24 @@
     </div>
 </div>
 
+<script src="js/tutorial.js"></script>
+<script src="js/site-settings.js"></script>
 <script src="js/notify-sounds.js"></script>
+<script>
+// Tutorial for editor page
+document.addEventListener('DOMContentLoaded', () => {
+    if (QCVTutorial.shouldShow()) {
+        setTimeout(() => {
+            QCVTutorial.start([
+                { target: '.sidebar-nav', title: 'Navigation Sidebar', message: 'Use this sidebar to switch between different sections of your CV: Personal info, Experience, Education, Skills, and more.', tip: 'Click any tab to edit that section. Your changes appear instantly in the preview!' },
+                { target: '.btn-export', title: 'Download PDF', message: 'When your CV is ready, click here to download it as a professional PDF file.', tip: 'Free plan: 1 download with basic quality. Pro plan: unlimited high-quality downloads.' },
+                { target: '.preview-zone', title: 'Live Preview', message: 'Your CV updates in real-time as you type. See exactly how it will look before downloading.', tip: 'You can zoom in/out using the controls above the preview.' },
+                { target: '.nav-tab', title: 'CV Sections', message: 'Add or remove sections like Summary, Languages, Certifications, and Custom sections.', tip: 'Use the ⋯ menu on each tab to Rename, Move, or Delete sections.' },
+                { target: '.btn-save', title: 'Save Your Work', message: 'Your CV auto-saves to the cloud. You can also click here to save manually.', tip: 'Your data is safe and synced across all your devices!' }
+            ]);
+        }, 1500);
+    }
+});
+</script>
 </body>
 </html>
