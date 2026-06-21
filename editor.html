@@ -542,7 +542,8 @@
                 <div class="pl-title">Portfolio Link</div>
                 <div class="portfolio-url">
                     <input type="text" id="portfolioUrl" readonly value="Loading...">
-                    <button onclick="copyPortfolioLink()">Copy</button>
+                    <button onclick="copyPortfolioLink()" id="copyPortBtn">Copy</button>
+                    <button onclick="openPortfolioLink()" style="background:var(--green);padding:6px 10px" title="Open"><i class="fas fa-external-link-alt"></i></button>
                 </div>
             </div>
         </div>
@@ -1414,19 +1415,33 @@
     window.copyPortfolioLink = function() {
         const raw = document.getElementById('portfolioUrl').value;
         const url = raw.startsWith('http') ? raw : 'https://' + raw;
-        navigator.clipboard.writeText(url).then(() => {
-            const btn = document.querySelector('.portfolio-url button');
-            btn.textContent = 'Copied!';
-            setTimeout(() => btn.textContent = 'Copy', 1500);
-        }).catch(() => {
-            const input = document.getElementById('portfolioUrl');
-            input.select();
-            document.execCommand('copy');
-            const btn = document.querySelector('.portfolio-url button');
-            btn.textContent = 'Copied!';
-            setTimeout(() => btn.textContent = 'Copy', 1500);
-        });
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(() => {
+                const btn = document.getElementById('copyPortBtn');
+                if(btn) btn.textContent = 'Copied!';
+                setTimeout(() => { if(btn) btn.textContent = 'Copy'; }, 1500);
+            }).catch(() => fallbackCopy(url));
+        } else {
+            fallbackCopy(url);
+        }
     };
+    window.openPortfolioLink = function() {
+        const raw = document.getElementById('portfolioUrl').value;
+        const url = raw.startsWith('http') ? raw : 'https://' + raw;
+        window.open(url, '_blank');
+    };
+    function fallbackCopy(text) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.cssText = 'position:fixed;left:-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        const btn = document.getElementById('copyPortBtn');
+        if(btn) btn.textContent = 'Copied!';
+        setTimeout(() => { if(btn) btn.textContent = 'Copy'; }, 1500);
+    }
 
     // ---- Tab Menu (3-dots) ----
     window.toggleTabMenu = function(btn) {

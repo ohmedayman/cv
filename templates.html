@@ -70,7 +70,7 @@
         .preview-modal-close{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:var(--bg2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all 0.2s}
         .preview-modal-close:hover{background:var(--red);color:#fff;border-color:var(--red)}
         .preview-modal-body{padding:24px;overflow-y:auto;max-height:70vh;display:flex;justify-content:center;background:#f0f0f0}
-        .preview-modal-body .tpl-preview-full{width:594px;min-height:840px;background:#fff;box-shadow:0 2px 20px rgba(0,0,0,0.1);border-radius:4px;overflow:hidden}
+        .preview-modal-body .tpl-preview-full{width:594px;min-height:840px;background:#fff;box-shadow:0 2px 20px rgba(0,0,0,0.1);border-radius:4px;overflow:hidden;transform-origin:top center}
         .preview-modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px}
         .preview-modal-footer .btn{padding:10px 24px;border-radius:10px;font-weight:700;font-size:0.85rem;cursor:pointer;border:none;font-family:inherit;transition:all 0.2s;display:inline-flex;align-items:center;gap:6px}
         .preview-modal-footer .btn-use{background:var(--accent);color:#fff}
@@ -292,6 +292,8 @@
             currentPreviewId = id;
             document.getElementById('previewTitle').textContent = name;
             document.getElementById('previewContent').innerHTML = QCVTemplates.render(id, sampleData);
+            document.getElementById('previewContent').style.transform = 'scale(0.8)';
+            document.getElementById('previewContent').style.transformOrigin = 'top center';
             const useBtn = document.getElementById('previewUseBtn');
             const locked = !paid && !FREE_TEMPLATES.includes(id);
             if (locked) {

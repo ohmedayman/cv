@@ -1,6 +1,6 @@
 /**
  * QCV Site Settings Loader
- * Loads settings from Firebase and applies them to the current page
+ * Loads settings from Firebase and applies them to the current page in real-time
  * Include this script in any page that should respect admin settings
  */
 (function(){
@@ -24,18 +24,36 @@
         const db = getDatabase(app);
 
         let siteData = {};
+        let retryCount = 0;
+        const MAX_RETRIES = 3;
+        const RETRY_DELAY = 3000;
 
-        // ===== LOAD ALL SETTINGS =====
-        onValue(ref(db, 'siteSettings'), (snap) => {
-            siteData = snap.val() || {};
-            applyAll();
-        });
+        // ===== LOAD ALL SETTINGS WITH RETRY =====
+        function attachListener() {
+            onValue(ref(db, 'siteSettings'), (snap) => {
+                siteData = snap.val() || {};
+                retryCount = 0;
+                applyAll();
+            }, (error) => {
+                console.error('Firebase siteSettings listener error:', error);
+                if (retryCount < MAX_RETRIES) {
+                    retryCount++;
+                    console.log('Retrying Firebase connection (' + retryCount + '/' + MAX_RETRIES + ')...');
+                    setTimeout(attachListener, RETRY_DELAY);
+                }
+            });
+        }
+
+        attachListener();
 
         function applyAll() {
             applyColors();
             applyBanner();
             applySEO();
             applyMaintenance();
+            applyHero();
+            applyFooter();
+            applyPricing();
         }
 
         // ===== COLORS =====
@@ -44,6 +62,11 @@
             const root = document.documentElement;
             if(c.primary) root.style.setProperty('--accent', c.primary);
             if(c.accent) root.style.setProperty('--sky', c.accent);
+            if(c.accent2) root.style.setProperty('--accent2', c.accent2);
+            if(c.green) root.style.setProperty('--green', c.green);
+            if(c.red) root.style.setProperty('--red', c.red);
+            if(c.purple) root.style.setProperty('--purple', c.purple);
+            if(c.yellow) root.style.setProperty('--yellow', c.yellow);
             if(c.background) root.style.setProperty('--bg', c.background);
             if(c.cardBg) root.style.setProperty('--card', c.cardBg);
             if(c.text) root.style.setProperty('--text', c.text);
@@ -93,10 +116,49 @@
             if(bypassPages.includes(page)) return;
             const ip = '';
             if(m.allowedIPs && m.allowedIPs.includes(ip)) return;
-            document.documentElement.innerHTML = '<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>صيانة - QCV</title><style>*{box-sizing:border-box;margin:0;padding:0}body{background:#f9fafb;color:#1a1a2e;font-family:Cairo,sans-serif;min-height:100vh;display:flex;justify-content:center;align-items:center;text-align:center;padding:20px}.box{max-width:500px}.icon{font-size:5rem;margin-bottom:20px;opacity:0.3}h1{font-size:2rem;font-weight:900;margin-bottom:12px}p{color:#6b7280;font-size:1.1rem;line-height:1.8}</style></head><body><div class="box"><div class="icon">🔧</div><h1>الموقع قيد الصيانة</h1><p>' + (m.message || 'سنعود قريباً. شكراً لصبركم.') + '</p></div></body>';
+            document.documentElement.innerHTML = '<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>صيانة - QCV</title><style>*{box-sizing:border-box;margin:0;padding:0}body{background:#f9fafb;color:#1a1a2e;font-family:Cairo,sans-serif;min-height:100vh;display:flex;justify-content:center;align-items:center;text-align:center;padding:20px}.box{max-width:500px}.icon{font-size:5rem;margin-bottom:20px;opacity:0.3}h1{font-size:2rem;font-weight:900;margin-bottom:12px}p{color:#6b7280;font-size:1.1rem;line-height:1.8}</style></head><body><div class="box"><div class="icon">\u{1F527}</div><h1>\u0627\u0644\u0645\u0648\u0642\u0639 \u0642\u064A\u062F \u0627\u0644\u0635\u064A\u0627\u0646\u0629</h1><p>' + (m.message || '\u0633\u0646\u0639\u0648\u062F \u0642\u0631\u064A\u0628\u0627\u064B. \u0634\u0643\u0631\u0627\u064B \u0644\u0635\u0628\u0631\u0643\u0645.') + '</p></div></body>';
         }
 
-        // ===== CONTACT =====
+        // ===== HERO =====
+        function applyHero() {
+            const h = siteData.hero || {};
+            if(!h.title && !h.subtitle && !h.ctaText) return;
+            const heroH1 = document.querySelector('.hero h1');
+            const heroP = document.querySelector('.hero p');
+            const heroBtn = document.querySelector('.hero-btn');
+            if(h.title && heroH1) heroH1.textContent = h.title;
+            if(h.subtitle && heroP) heroP.textContent = h.subtitle;
+            if(h.ctaText && heroBtn) heroBtn.textContent = h.ctaText;
+        }
+
+        // ===== FOOTER =====
+        function applyFooter() {
+            const f = siteData.footer || {};
+            if(f.copyright) {
+                const fb = document.querySelector('.footer-bottom');
+                if(fb) fb.textContent = f.copyright;
+            }
+            const socials = f.socials || {};
+            Object.keys(socials).forEach(platform => {
+                const link = document.querySelector('.footer a[href*="' + platform + '"], .footer a[href*="' + platform + '.com"]');
+                if(link && socials[platform]) link.href = socials[platform];
+            });
+        }
+
+        // ===== PRICING =====
+        function applyPricing() {
+            const p = siteData.pricing || {};
+            if(p.plans) {
+                document.querySelectorAll('.plan-card, .price-card').forEach((card, i) => {
+                    const plan = p.plans[i];
+                    if(!plan) return;
+                    if(plan.name) { const nameEl = card.querySelector('.plan-name, .p-name, h3'); if(nameEl) nameEl.textContent = plan.name; }
+                    if(plan.price) { const priceEl = card.querySelector('.plan-price, .p-price, .price'); if(priceEl) priceEl.textContent = plan.price; }
+                });
+            }
+        }
+
+        // ===== GLOBAL API =====
         window.QCVSettings = {
             get data() { return siteData; },
             get contact() { return siteData.contact || {}; },
@@ -105,7 +167,13 @@
             get pricing() { return siteData.pricing || {}; },
             get notifications() { return siteData.notifications || {}; },
             get colors() { return siteData.colors || {}; },
-            get general() { return siteData.general || {}; }
+            get general() { return siteData.general || {}; },
+            forceRefresh: function() {
+                fetch('https://qwcv-1cfad-default-rtdb.firebaseio.com/siteSettings.json')
+                    .then(r => r.json())
+                    .then(data => { siteData = data || {}; applyAll(); })
+                    .catch(() => {});
+            }
         };
     `;
     document.head.appendChild(script);

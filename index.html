@@ -269,24 +269,20 @@
         .btn-plan-unlim:hover{background:var(--accent);color:#fff}
 
         /* ===== TESTIMONIALS ===== */
-        .test-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden}
-        .test-track-wrap{overflow:hidden;padding:20px 0;margin:0 auto;max-width:1200px}
-        .test-track{display:flex;gap:24px;animation:scrollTestimonials 35s linear infinite;width:max-content}
-        .test-track:hover{animation-play-state:paused}
-        @keyframes scrollTestimonials{0%{transform:translateX(0)}100%{transform:translateX(calc(-50% - 12px))}}
-        .test-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;transition:all 0.3s;flex-shrink:0;width:340px;min-width:340px}
-        .test-card:hover{box-shadow:0 8px 25px rgba(0,0,0,0.06);border-color:rgba(0,3,201,0.15)}
-        .test-stars{color:var(--yellow);margin-bottom:12px;font-size:0.9rem;letter-spacing:2px}
-        .test-card p{color:var(--text);font-size:0.88rem;line-height:1.7;margin-bottom:18px;font-style:italic;position:relative;padding-right:20px}
-        .test-card p::before{content:'"';position:absolute;right:0;top:-4px;font-size:2rem;color:var(--accent);opacity:0.2;font-family:Georgia,serif;line-height:1}
-        .test-author{display:flex;align-items:center;gap:12px}
-        .test-avatar{width:42px;height:42px;background:linear-gradient(135deg,var(--accent),var(--sky));border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.85rem;flex-shrink:0;color:#fff}
-        .test-name{font-weight:700;font-size:0.88rem;color:var(--text)}
-        .test-role{color:var(--muted);font-size:0.75rem}
-        @media(max-width:768px){
-            .test-card{width:280px;min-width:280px;padding:20px}
-            .test-track{gap:16px}
-        }
+        .test-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+        .test-section .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1100px;margin:0 auto}
+        .test-card-new{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;transition:all 0.3s;position:relative}
+        .test-card-new:hover{transform:translateY(-4px);box-shadow:0 12px 35px rgba(0,0,0,0.06);border-color:rgba(0,3,201,0.15)}
+        .test-card-new .quote-icon{font-size:2.5rem;color:rgba(0,3,201,0.08);line-height:1;margin-bottom:8px;font-family:serif}
+        .test-card-new .test-stars-new{color:#f59e0b;font-size:0.9rem;margin-bottom:12px;letter-spacing:2px}
+        .test-card-new .test-text{font-size:0.9rem;line-height:1.8;color:var(--text);margin-bottom:20px;font-style:italic}
+        .test-card-new .test-author-new{display:flex;align-items:center;gap:12px}
+        .test-card-new .test-avatar-new{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.85rem;color:#fff;flex-shrink:0}
+        .test-card-new .test-info-new .name{font-weight:700;font-size:0.88rem;display:flex;align-items:center;gap:6px}
+        .test-card-new .test-info-new .verified{color:var(--accent);font-size:0.72rem}
+        .test-card-new .test-info-new .role{color:var(--muted);font-size:0.78rem}
+        @media(max-width:900px){.test-section .test-grid{grid-template-columns:repeat(2,1fr);gap:16px}}
+        @media(max-width:600px){.test-section .test-grid{grid-template-columns:1fr}}
 
         /* ===== FAQ ===== */
         .faq-list{max-width:750px;margin:0 auto}
@@ -345,7 +341,6 @@
             .features-grid{grid-template-columns:repeat(2,1fr);gap:20px}
             .pricing-grid{grid-template-columns:repeat(2,1fr);gap:20px}
             .steps-grid{grid-template-columns:repeat(2,1fr);gap:20px}
-            .test-track-wrap{padding:10px 0}
             .footer-content{flex-direction:column;gap:30px}
         }
         @media(max-width:768px){
@@ -373,7 +368,6 @@
             .price-card.popular:hover{transform:translateY(-5px)}
             .steps-grid{grid-template-columns:1fr}
             .step{text-align:center;padding:0 10px}
-            .test-track-wrap{padding:10px 0}
             .faq-list{padding:0}
             .cta-box{padding:40px 24px;border-radius:20px;margin:0 10px}
             .cta-box h2{font-size:1.3rem}
@@ -601,105 +595,102 @@
 <section class="section test-section">
     <div class="section-header">
         <h2>ماذا يقول عملاؤنا؟</h2>
-        <p>آلاف المستخدمين حصلوا على وظائف أحلامهم باستخدام QCV</p>
+        <p>أكثر من ١٠,٠٠٠ مستخدم يثقون بـ QCV</p>
     </div>
-    <div class="test-track-wrap">
-        <div class="test-track" id="testTrack">
-            <div class="test-card">
-                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p>QCV غيّر حياتي! حصلت على مقابلة عمل في شركة كبيرة بعد ما كنت بنبّع سيرتي الذاتية من غير رد. الذكاء الاصطناعي ساعدني أكتب ملخص احترافي.</p>
-                <div class="test-author">
-                    <div class="test-avatar">أم</div>
-                    <div><div class="test-name">أحمد مصطفى</div><div class="test-role">مطور ويب فرونت إند</div></div>
+    <div class="test-grid">
+        <div class="test-card-new">
+            <div class="test-stars-new">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <div class="quote-icon">&#10077;</div>
+            <p class="test-text">QCV غيّر طريقة بحثي عن عمل. سيرتي الذاتية أصبحت احترافية ومرتبة، وحصلت على 5 مقابلات في أسبوعين!</p>
+            <div class="test-author-new">
+                <div class="test-avatar-new" style="background:#3b82f6">أم</div>
+                <div class="test-info-new">
+                    <div class="name">أحمد محمد <span class="verified">&#10003;</span></div>
+                    <div class="role">مطور ويب في شركة تقنية مصرية</div>
                 </div>
             </div>
-            <div class="test-card">
-                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p>القوالب احترافية جداً والتحليل الـ ATS فادني أفهم ليه سيرتي الذاتية كانت بترفض. الآن صار 95% وبنصح كل حد يجربها.</p>
-                <div class="test-author">
-                    <div class="test-avatar">سن</div>
-                    <div><div class="test-name">سارة ناصر</div><div class="test-role">مهندسة برمجيات</div></div>
+        </div>
+        <div class="test-card-new">
+            <div class="test-stars-new">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <div class="quote-icon">&#10077;</div>
+            <p class="test-text">القوالب ممتازة جداً وتوافق أنظمة ATS. فهمت ليه كانت سيرتي الذاتية بترفض قبل كده.</p>
+            <div class="test-author-new">
+                <div class="test-avatar-new" style="background:#8b5cf6">سع</div>
+                <div class="test-info-new">
+                    <div class="name">سارة عبدالله <span class="verified">&#10003;</span></div>
+                    <div class="role">مهندسة برمجيات في Telecom Egypt</div>
                 </div>
             </div>
-            <div class="test-card">
-                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p>أفضل منشئ سير ذاتية جربته. سهل الاستخدام والنتائج مبهرة. حصلت على 3 مقابلات في أسبوع واحد بعد ما استخدمت QCV.</p>
-                <div class="test-author">
-                    <div class="test-avatar">مح</div>
-                    <div><div class="test-name">محمد حسين</div><div class="test-role">مدير مشاريع تقنية</div></div>
+        </div>
+        <div class="test-card-new">
+            <div class="test-stars-new">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <div class="quote-icon">&#10077;</div>
+            <p class="test-text">أفضل أداة لبناء السير الذاتية. سهل الاستخدام والنتائج احترافية. أنصح كل حد يجربها.</p>
+            <div class="test-author-new">
+                <div class="test-avatar-new" style="background:#10b981">مح</div>
+                <div class="test-info-new">
+                    <div class="name">محمد حسين <span class="verified">&#10003;</span></div>
+                    <div class="role">مدير مشاريع في Vodafone</div>
                 </div>
             </div>
-            <div class="test-card">
-                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p>كنت مش عارف أكتب إيه في الملخص الوظيفي. QCV ساعدني أكتب ملخص احترافي في ثواني. أنصح بيهم جداً!</p>
-                <div class="test-author">
-                    <div class="test-avatar">فب</div>
-                    <div><div class="test-name">فاطمة بلال</div><div class="test-role">مصممة تجربة المستخدم</div></div>
+        </div>
+        <div class="test-card-new">
+            <div class="test-stars-new">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <div class="quote-icon">&#10077;</div>
+            <p class="test-text">كنت مش عارفة أكتب إيه في الملخص. QCV ساعدني أكتب وصف احترافي في ثواني.</p>
+            <div class="test-author-new">
+                <div class="test-avatar-new" style="background:#f59e0b">فأ</div>
+                <div class="test-info-new">
+                    <div class="name">فاطمة أحمد <span class="verified">&#10003;</span></div>
+                    <div class="role">مصممة UI/UX في سودانيز</div>
                 </div>
             </div>
-            <div class="test-card">
-                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p>بعد ما استخدمت QCV، سيرتي الذاتية بقت أول حاجة الموظف بيشوفها. حصلت على عرض وظيفة في أسبوع واحد!</p>
-                <div class="test-author">
-                    <div class="test-avatar">خع</div>
-                    <div><div class="test-name">خالد ربيع</div><div class="test-role">مهندس بيانات</div></div>
+        </div>
+        <div class="test-card-new">
+            <div class="test-stars-new">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <div class="quote-icon">&#10077;</div>
+            <p class="test-text">بعد ما استخدمت QCV، بدأت أتلقى ردود من الشركات الكبرى. السيرة الذاتية بقت مميزة.</p>
+            <div class="test-author-new">
+                <div class="test-avatar-new" style="background:#06b6d4">خع</div>
+                <div class="test-info-new">
+                    <div class="name">خالد عمر <span class="verified">&#10003;</span></div>
+                    <div class="role">مهندس بيانات في Microsoft</div>
                 </div>
             </div>
-            <div class="test-card">
-                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p>القوالب الـ ATS فادتني جداً. كنت بنبّع سيرتي لـ 50 شركة ومفيش رد. بعد QCV، بدأت أتلقى ردود فورية.</p>
-                <div class="test-author">
-                    <div class="test-avatar">نع</div>
-                    <div><div class="test-name">نورا عادل</div><div class="test-role">محللة بيانات</div></div>
+        </div>
+        <div class="test-card-new">
+            <div class="test-stars-new">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <div class="quote-icon">&#10077;</div>
+            <p class="test-text">القوالب تنظيمها ممتاز والATS analysis فادني جداً. حصلت على وظيفة أحلامي!</p>
+            <div class="test-author-new">
+                <div class="test-avatar-new" style="background:#ec4899">نس</div>
+                <div class="test-info-new">
+                    <div class="name">نورا سعيد <span class="verified">&#10003;</span></div>
+                    <div class="role">محاسبة في PwC</div>
                 </div>
             </div>
-            <!-- Duplicate set for infinite scroll -->
-            <div class="test-card">
-                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p>QCV غيّر حياتي! حصلت على مقابلة عمل في شركة كبيرة بعد ما كنت بنبّع سيرتي الذاتية من غير رد. الذكاء الاصطناعي ساعدني أكتب ملخص احترافي.</p>
-                <div class="test-author">
-                    <div class="test-avatar">أم</div>
-                    <div><div class="test-name">أحمد مصطفى</div><div class="test-role">مطور ويب فرونت إند</div></div>
+        </div>
+        <div class="test-card-new">
+            <div class="test-stars-new">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <div class="quote-icon">&#10077;</div>
+            <p class="test-text">QCV وفر عليّ وقت كبير. بدل ما أقعد أساعات أعدل سيرتي، خلصت في 15 دقيقة.</p>
+            <div class="test-author-new">
+                <div class="test-avatar-new" style="background:#6366f1">يع</div>
+                <div class="test-info-new">
+                    <div class="name">ياسمين علي <span class="verified">&#10003;</span></div>
+                    <div class="role">مديرة تسويق في Americana</div>
                 </div>
             </div>
-            <div class="test-card">
-                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p>القوالب احترافية جداً والتحليل الـ ATS فادني أفهم ليه سيرتي الذاتية كانت بترفض. الآن صار 95% وبنصح كل حد يجربها.</p>
-                <div class="test-author">
-                    <div class="test-avatar">سن</div>
-                    <div><div class="test-name">سارة ناصر</div><div class="test-role">مهندسة برمجيات</div></div>
-                </div>
-            </div>
-            <div class="test-card">
-                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p>أفضل منشئ سير ذاتية جربته. سهل الاستخدام والنتائج مبهرة. حصلت على 3 مقابلات في أسبوع واحد بعد ما استخدمت QCV.</p>
-                <div class="test-author">
-                    <div class="test-avatar">مح</div>
-                    <div><div class="test-name">محمد حسين</div><div class="test-role">مدير مشاريع تقنية</div></div>
-                </div>
-            </div>
-            <div class="test-card">
-                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p>كنت مش عارف أكتب إيه في الملخص الوظيفي. QCV ساعدني أكتب ملخص احترافي في ثواني. أنصح بيهم جداً!</p>
-                <div class="test-author">
-                    <div class="test-avatar">فب</div>
-                    <div><div class="test-name">فاطمة بلال</div><div class="test-role">مصممة تجربة المستخدم</div></div>
-                </div>
-            </div>
-            <div class="test-card">
-                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p>بعد ما استخدمت QCV، سيرتي الذاتية بقت أول حاجة الموظف بيشوفها. حصلت على عرض وظيفة في أسبوع واحد!</p>
-                <div class="test-author">
-                    <div class="test-avatar">خع</div>
-                    <div><div class="test-name">خالد ربيع</div><div class="test-role">مهندس بيانات</div></div>
-                </div>
-            </div>
-            <div class="test-card">
-                <div class="test-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                <p>القوالب الـ ATS فادتني جداً. كنت بنبّع سيرتي لـ 50 شركة ومفيش رد. بعد QCV، بدأت أتلقى ردود فورية.</p>
-                <div class="test-author">
-                    <div class="test-avatar">نع</div>
-                    <div><div class="test-name">نورا عادل</div><div class="test-role">محللة بيانات</div></div>
+        </div>
+        <div class="test-card-new">
+            <div class="test-stars-new">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <div class="quote-icon">&#10077;</div>
+            <p class="test-text">القوالب Technical مع الـ Sidebar كانت مثالية لي. كل المعلومات مهمة موجودة في صفحة واحدة.</p>
+            <div class="test-author-new">
+                <div class="test-avatar-new" style="background:#14b8a6">عم</div>
+                <div class="test-info-new">
+                    <div class="name">عمر حسن <span class="verified">&#10003;</span></div>
+                    <div class="role">مطور Flutter في Swvl</div>
                 </div>
             </div>
         </div>
