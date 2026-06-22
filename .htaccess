@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteBase /
+RewriteRule ^portfolio/([a-zA-Z0-9]+)/?$ portfolio-view.html?code=$1 [L,QSA]
+RewriteRule ^p/([a-zA-Z0-9]+)/?$ portfolio-view.html?code=$1 [L,QSA]
