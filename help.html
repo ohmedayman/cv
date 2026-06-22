@@ -195,7 +195,10 @@
         @media(max-width:400px){
             .categories-grid{grid-template-columns:1fr}
         }
+
     </style>
+    <script src="js/theme.js"></script>
+    <script src="js/lang.js"></script>
 </head>
 <body>
 
@@ -203,57 +206,58 @@
 <nav class="navbar">
     <a href="index.html" class="logo" style="font-size:1.8rem;font-weight:900">Q<span style="color:var(--accent)">CV</span></a>
     <ul class="nav-links">
-        <li><a href="index.html">الرئيسية</a></li>
-        <li><a href="index.html#pricing">التسعير</a></li>
-        <li><a href="help.html" class="active">المساعدة</a></li>
-        <li><a href="login.html" class="nav-cta">ابدأ مجاناً</a></li>
+        <li><a href="index.html" data-i18n="home">الرئيسية</a></li>
+        <li><a href="index.html#pricing" data-i18n="pricing">التسعير</a></li>
+        <li><a href="help.html" class="active" data-i18n="help">المساعدة</a></li>
+        <li><a href="login.html" class="nav-cta" data-i18n="start_free">ابدأ مجاناً</a></li>
+        <li><div class="lang-switch" style="display:flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:2px 4px"><button class="lang-ar" onclick="QCVLang.set('ar')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:1">عربي</button><button class="lang-en" onclick="QCVLang.set('en')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:0.5">EN</button></div></li></div></li>
     </ul>
 </nav>
 
 <!-- ===== HERO ===== -->
 <section class="hero">
-    <h1>كيف نقدر نساعدك؟</h1>
-    <p>ابحث عن إجابة سؤالك أو تصفح الأقسام</p>
+    <h1 data-i18n="help_title">كيف نقدر نساعدك؟</h1>
+    <p data-i18n="help_sub">ابحث عن إجابة سؤالك أو تصفح الأقسام</p>
     <div class="search-box">
         <span class="search-icon"><i class="fas fa-search"></i></span>
-        <input type="text" id="searchInput" placeholder="ابحث عن سؤالك..." oninput="filterFAQ()">
+        <input type="text" id="searchInput" data-i18n-placeholder="help_search" placeholder="ابحث عن سؤالك..." oninput="filterFAQ()">
     </div>
 </section>
 
 <!-- ===== CATEGORIES ===== -->
 <section class="section">
     <div class="section-header">
-        <h2>تصفح حسب القسم</h2>
+        <h2 data-i18n="help_browse">تصفح حسب القسم</h2>
         <p>اختر القسم اللي يهمك</p>
     </div>
     <div class="categories-grid">
         <div class="cat-card active" data-filter="all" onclick="filterByCategory(this,'all')">
             <div class="cat-icon"><i class="fas fa-globe"></i></div>
-            <h3>الكل</h3>
+            <h3 data-i18n="help_all">الكل</h3>
             <p>كل الأسئلة والإجابات</p>
             <div class="cat-count">16 سؤال</div>
         </div>
         <div class="cat-card" data-filter="getting-started" onclick="filterByCategory(this,'getting-started')">
             <div class="cat-icon"><i class="fas fa-rocket"></i></div>
-            <h3>البدء</h3>
+            <h3 data-i18n="help_getting_start">البدء</h3>
             <p>كيف تبدأ وتسجل حسابك</p>
             <div class="cat-count">5 أسئلة</div>
         </div>
         <div class="cat-card" data-filter="account" onclick="filterByCategory(this,'account')">
             <div class="cat-icon"><i class="fas fa-user-circle"></i></div>
-            <h3>الحساب</h3>
+            <h3 data-i18n="help_account">الحساب</h3>
             <p>إدارة حسابك وبياناتك</p>
             <div class="cat-count">4 أسئلة</div>
         </div>
         <div class="cat-card" data-filter="billing" onclick="filterByCategory(this,'billing')">
             <div class="cat-icon"><i class="fas fa-credit-card"></i></div>
-            <h3>الفواتير والاشتراكات</h3>
+            <h3 data-i18n="help_billing">الفواتير والاشتراكات</h3>
             <p>الدفع والباقات</p>
             <div class="cat-count">4 أسئلة</div>
         </div>
         <div class="cat-card" data-filter="technical" onclick="filterByCategory(this,'technical')">
             <div class="cat-icon"><i class="fas fa-wrench"></i></div>
-            <h3>مشاكل تقنية</h3>
+            <h3 data-i18n="help_technical">مشاكل تقنية</h3>
             <p>حل المشاكل والأخطاء</p>
             <div class="cat-count">3 أسئلة</div>
         </div>
@@ -263,8 +267,8 @@
 <!-- ===== FAQ ===== -->
 <section class="section faq-section" id="faq">
     <div class="section-header">
-        <h2>الأسئلة الشائعة</h2>
-        <p>أكثر الأسئلة اللي بيسألها المستخدمين</p>
+        <h2 data-i18n="help_faq_title">الأسئلة الشائعة</h2>
+        <p data-i18n="help_faq_sub">أكثر الأسئلة اللي بيسألها المستخدمين</p>
     </div>
     <div class="faq-list" id="faqList">
 
@@ -438,39 +442,39 @@
 <!-- ===== QUICK LINKS ===== -->
 <section class="section">
     <div class="section-header">
-        <h2>روابط سريعة</h2>
-        <p>وصول سريع لأهم الصفحات</p>
+        <h2 data-i18n="help_quick_links">روابط سريعة</h2>
+        <p data-i18n="help_quick_links_sub">وصول سريع لأهم الصفحات</p>
     </div>
     <div class="quick-links">
         <a href="index.html#pricing" class="quick-link">
             <div class="ql-icon"><i class="fas fa-credit-card"></i></div>
             <div class="ql-text">
-                <h4>الباقات والتسعير</h4>
-                <p>شوف الباقات المتاحة وأسعارها</p>
+                <h4 data-i18n="help_pricing">الباقات والتسعير</h4>
+                <p data-i18n="help_pricing_desc">شوف الباقات المتاحة وأسعارها</p>
             </div>
             <span class="ql-arrow">&#8592;</span>
         </a>
         <a href="login.html" class="quick-link">
             <div class="ql-icon"><i class="fas fa-user"></i></div>
             <div class="ql-text">
-                <h4>تسجيل الدخول</h4>
-                <p>ادخل حسابك وابدأ</p>
+                <h4 data-i18n="help_login">تسجيل الدخول</h4>
+                <p data-i18n="help_login_desc">ادخل حسابك وابدأ</p>
             </div>
             <span class="ql-arrow">&#8592;</span>
         </a>
         <a href="index.html#features" class="quick-link">
             <div class="ql-icon"><i class="fas fa-lightbulb"></i></div>
             <div class="ql-text">
-                <h4>المميزات</h4>
-                <p>اكتشف كل مزايا QCV</p>
+                <h4 data-i18n="help_features">المميزات</h4>
+                <p data-i18n="help_features_desc">اكتشف كل مزايا QCV</p>
             </div>
             <span class="ql-arrow">&#8592;</span>
         </a>
         <a href="index.html#how" class="quick-link">
             <div class="ql-icon"><i class="fas fa-rocket"></i></div>
             <div class="ql-text">
-                <h4>كيف يعمل</h4>
-                <p>شرح خطوة بخطوة</p>
+                <h4 data-i18n="help_how">كيف يعمل</h4>
+                <p data-i18n="help_how_desc">شرح خطوة بخطوة</p>
             </div>
             <span class="ql-arrow">&#8592;</span>
         </a>
@@ -480,26 +484,26 @@
 <!-- ===== CONTACT ===== -->
 <section class="section" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
     <div class="section-header">
-        <h2>تواصل معنا</h2>
-        <p>لسه ملاقيتش الإجابة؟ تواصل مع فريق الدعم</p>
+        <h2 data-i18n="help_contact_title">تواصل معنا</h2>
+        <p data-i18n="help_contact_sub">لسه ملاقيتش الإجابة؟ تواصل مع فريق الدعم</p>
     </div>
     <div class="contact-grid">
         <a href="mailto:support@qcv.com" class="contact-card">
             <div class="contact-icon"><i class="fas fa-envelope"></i></div>
-            <h3>البريد الإلكتروني</h3>
-            <p>أرسل لنا إيميل وهنرد عليك خلال 24 ساعة</p>
+            <h3 data-i18n="help_email">البريد الإلكتروني</h3>
+            <p data-i18n="help_email_desc">أرسل لنا إيميل وهنرد عليك خلال 24 ساعة</p>
             <div class="contact-link">support@qcv.com</div>
         </a>
         <a href="https://wa.me/201028707543" target="_blank" class="contact-card">
             <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
-            <h3>الواتساب</h3>
-            <p>تواصل معنا مباشرة عبر الواتساب</p>
+            <h3 data-i18n="help_whatsapp">الواتساب</h3>
+            <p data-i18n="help_whatsapp_desc">تواصل معنا مباشرة عبر الواتساب</p>
             <div class="contact-link">01028707543</div>
         </a>
         <a href="https://www.facebook.com/qcv" target="_blank" class="contact-card">
             <div class="contact-icon"><i class="fab fa-facebook"></i></div>
-            <h3>فيسبوك</h3>
-            <p>تابعنا على فيسبوك للأخبار والتحديثات</p>
+            <h3 data-i18n="help_facebook">فيسبوك</h3>
+            <p data-i18n="help_facebook_desc">تابعنا على فيسبوك للأخبار والتحديثات</p>
             <div class="contact-link">@QCV</div>
         </a>
     </div>
@@ -508,9 +512,9 @@
 <!-- ===== CTA ===== -->
 <section class="cta-section">
     <div class="cta-box">
-        <h2>جاهز تبني سيرتك الذاتية؟</h2>
-        <p>ابدأ الآن مجاناً واحصل على سيرة ذاتية احترافية في دقائق</p>
-        <a href="login.html" class="btn btn-primary">ابدأ مجاناً الآن &#10132;</a>
+        <h2 data-i18n="cta_title">جاهز تبني سيرتك الذاتية؟</h2>
+        <p data-i18n="cta_sub">ابدأ الآن مجاناً واحصل على سيرة ذاتية احترافية في دقائق</p>
+        <a href="login.html" class="btn btn-primary" data-i18n="start_free">ابدأ مجاناً الآن &#10132;</a>
     </div>
 </section>
 
@@ -519,34 +523,34 @@
     <div class="footer-content">
         <div class="footer-brand">
             <div class="logo">Q<span>CV</span></div>
-            <p>منشئ سير ذاتية ذكي مدعوم بالذكاء الاصطناعي لمساعدتك في الحصول على الوظيفة الأحلام</p>
+            <p data-i18n="footer_brand">منشئ سير ذاتية ذكي مدعوم بالذكاء الاصطناعي لمساعدتك في الحصول على الوظيفة الأحلام</p>
         </div>
         <div class="footer-links">
-            <h4>المنتج</h4>
+            <h4 data-i18n="footer_product">المنتج</h4>
             <ul>
-                <li><a href="index.html#features">المميزات</a></li>
-                <li><a href="index.html#pricing">التسعير</a></li>
-                <li><a href="index.html#how">كيف يعمل</a></li>
+                <li><a href="index.html#features" data-i18n="features">المميزات</a></li>
+                <li><a href="index.html#pricing" data-i18n="pricing">التسعير</a></li>
+                <li><a href="index.html#how" data-i18n="how_works">كيف يعمل</a></li>
             </ul>
         </div>
         <div class="footer-links">
-            <h4>الشركة</h4>
+            <h4 data-i18n="footer_company">الشركة</h4>
             <ul>
-                <li><a href="#">من نحن</a></li>
-                <li><a href="careers.html">الوظائف</a></li>
-                <li><a href="#">سياسة الخصوصية</a></li>
+                <li><a href="#" data-i18n="about_us">من نحن</a></li>
+                <li><a href="careers.html" data-i18n="careers">الوظائف</a></li>
+                <li><a href="#" data-i18n="privacy">سياسة الخصوصية</a></li>
             </ul>
         </div>
         <div class="footer-links">
-            <h4>الدعم</h4>
+            <h4 data-i18n="footer_support">الدعم</h4>
             <ul>
-                <li><a href="help.html">مركز المساعدة</a></li>
-                <li><a href="mailto:support@qcv.com">تواصل معنا</a></li>
+                <li><a href="help.html" data-i18n="help_center">مركز المساعدة</a></li>
+                <li><a href="mailto:support@qcv.com" data-i18n="contact_us">تواصل معنا</a></li>
             </ul>
         </div>
     </div>
     <div class="footer-bottom">
-        &copy; 2026 QCV - جميع الحقوق محفوظة | آخر تحديث: 15 يونيو 2026
+        <span data-i18n="copyright">&copy; 2026 QCV - جميع الحقوق محفوظة | آخر تحديث: 15 يونيو 2026</span>
     </div>
 </footer>
 

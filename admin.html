@@ -8,6 +8,9 @@
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="components.css">
+    <script src="js/theme.js"></script>
+    <script src="js/lang.js"></script>
     <style>
         :root {
             --bg-main: #f9fafb;
@@ -293,6 +296,34 @@
             .search-box input{width:140px}
         }
 
+        /* ===== DARK MODE ===== */
+        body.dark-mode{--bg-main:#0f172a;--bg-sidebar:#1e293b;--bg-card:#1e293b;--bg-hover:#334155;--border:#334155;--text:#e2e8f0;--muted:#94a3b8;--light:#64748b}
+        body.dark-mode .login-box{background:var(--bg-card);border-color:var(--border)}
+        body.dark-mode .login-box input{background:#0f172a;border-color:var(--border);color:var(--text)}
+        body.dark-mode .sidebar{background:var(--bg-sidebar);border-color:var(--border)}
+        body.dark-mode .nav-item:hover,.body.dark-mode .nav-item.active{background:rgba(0,3,201,0.15)}
+        body.dark-mode .table-container{background:var(--bg-card);border-color:var(--border)}
+        body.dark-mode th{background:#334155;color:#e2e8f0}
+        body.dark-mode td{border-color:#334155}
+        body.dark-mode tr:hover td{background:rgba(0,3,201,0.08)}
+        body.dark-mode .search-box{background:#0f172a;border-color:var(--border)}
+        body.dark-mode .search-box input{color:var(--text)}
+        body.dark-mode .modal{background:var(--bg-card);border-color:var(--border)}
+        body.dark-mode .modal input,body.dark-mode .modal select,body.dark-mode .modal textarea{background:#0f172a;border-color:var(--border);color:var(--text)}
+        body.dark-mode .settings-card{background:var(--bg-card);border-color:var(--border)}
+        body.dark-mode .settings-row input,body.dark-mode .settings-row select{background:#0f172a;border-color:var(--border);color:var(--text)}
+        body.dark-mode .profile-section{background:#0f172a}
+        body.dark-mode .analytics-mini-card{background:var(--bg-card);border-color:var(--border)}
+        body.dark-mode .bar-track{background:#334155}
+        body.dark-mode .analytics-bar .track{background:#334155}
+        body.dark-mode .link-output{background:#0f172a;border-color:var(--border)}
+        body.dark-mode .chart-card{background:var(--bg-card);border-color:var(--border)}
+        body.dark-mode .donut-center{background:var(--bg-card)}
+        body.dark-mode .topbar h1{color:var(--text)}
+        body.dark-mode .admin-name{color:var(--text)}
+        body.dark-mode .toast-success{background:var(--green)}
+        body.dark-mode .toast-error{background:var(--red)}
+
         /* Scrollbar */
         ::-webkit-scrollbar{width:6px}
         ::-webkit-scrollbar-track{background:transparent}
@@ -362,6 +393,10 @@
                 </div>
                 <div class="nav-item" data-panel="settings" onclick="switchPanel('settings')">
                     <span class="icon"><i class="fas fa-cog"></i></span><span>الإعدادات</span>
+                </div>
+                <div class="nav-item" data-panel="messages" onclick="switchPanel('messages')">
+                    <span class="icon"><i class="fas fa-envelope"></i></span><span>الرسائل</span>
+                    <span class="badge" id="unreadBadge" style="display:none">0</span>
                 </div>
             </nav>
             <div class="sidebar-footer">
@@ -464,9 +499,13 @@
                 <div class="table-container">
                     <div class="table-header">
                         <h3>جميع المستخدمين</h3>
-                        <div class="search-box">
-                            <span class="icon"><i class="fas fa-search"></i></span>
-                            <input type="text" id="searchUsers" placeholder="بحث بالاسم أو الإيميل..." oninput="filterUsers()">
+                        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                            <button class="btn-action btn-approve" onclick="exportUsersCSV()"><i class="fas fa-file-csv"></i> تصدير CSV</button>
+                            <button class="btn-action btn-view" onclick="showSendMessage()"><i class="fas fa-paper-plane"></i> إرسال رسالة</button>
+                            <div class="search-box">
+                                <span class="icon"><i class="fas fa-search"></i></span>
+                                <input type="text" id="searchUsers" placeholder="بحث بالاسم أو الإيميل..." oninput="filterUsers()">
+                            </div>
                         </div>
                     </div>
                     <table>
@@ -751,6 +790,24 @@
                 </div>
             </div>
 
+            <!-- ===== MESSAGES PANEL ===== -->
+            <div class="panel" id="panel-messages">
+                <div class="table-container">
+                    <div class="table-header">
+                        <h3>الرسائل والإشعارات</h3>
+                        <button class="btn-action btn-add" onclick="showSendMessage()"><i class="fas fa-paper-plane"></i> رسالة جديدة</button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr><th>المستلم</th><th>الرسالة</th><th>التاريخ</th><th>الحالة</th></tr>
+                        </thead>
+                        <tbody id="messagesList">
+                            <tr><td colspan="4" class="empty-state"><p>لا توجد رسائل بعد</p></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </main>
     </div>
 
@@ -921,7 +978,8 @@
             analytics: 'التحليلات',
             jobs: 'الوظائف',
             domains: 'النطاقات المعتمدة',
-            settings: 'الإعدادات'
+            settings: 'الإعدادات',
+            messages: 'الرسائل'
         };
 
         window.switchPanel = function(panel) {
@@ -945,8 +1003,10 @@
             listenReferrals();
             listenCampaigns();
             listenCommissions();
+            listenMessages();
             checkExpiredPlans();
             loadAnalytics();
+            setInterval(checkLiveNotifications, 5000);
         }
 
         // ===== EXPIRED PLANS CHECK =====
@@ -2209,6 +2269,192 @@
                 `).join('');
             }).catch(()=>{});
         }
+
+        // ===== EXPORT USERS CSV =====
+        window.exportUsersCSV = function() {
+            const entries = Object.entries(allUsersData);
+            if (!entries.length) { showToast('لا يوجد مستخدمين للتصدير', 'error'); return; }
+            const headers = ['الاسم', 'البريد', 'الهاتف', 'الباقة', 'تاريخ التسجيل', 'آخر دخول', 'الحالة', 'عدد التحميلات'];
+            const rows = entries.map(([uid, u]) => [
+                u.name || '',
+                u.email || '',
+                u.phone || '',
+                planText(u.plan || 'free'),
+                u.registeredAt ? new Date(u.registeredAt).toLocaleString('ar-EG') : '',
+                u.lastLogin ? new Date(u.lastLogin).toLocaleString('ar-EG') : '',
+                u.banned ? 'محظور' : 'نشط',
+                u.downloadCount || 0
+            ]);
+            const csvContent = '\uFEFF' + [headers, ...rows].map(r => r.map(c => '"' + String(c).replace(/"/g, '""') + '"').join(',')).join('\n');
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'qcv-users-' + new Date().toISOString().slice(0,10) + '.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+            if(window.QCVNotify) QCVNotify.success();
+            showToast('تم تصدير ' + entries.length + ' مستخدم', 'success');
+        };
+
+        // ===== LIVE NOTIFICATIONS =====
+        let previousUserCount = 0;
+        let previousSubCount = 0;
+
+        function checkLiveNotifications() {
+            const userCount = Object.keys(allUsersData).length;
+            const pendingSubs = Object.values(allSubsData).filter(s => s.status === 'pending').length;
+
+            if (previousUserCount > 0 && userCount > previousUserCount) {
+                const newUser = Object.entries(allUsersData).sort((a,b) => (b[1].registeredAt||0) - (a[1].registeredAt||0))[0];
+                if (newUser) {
+                    showToast('مستخدم جديد: ' + (newUser[1].name || newUser[1].email || 'مستخدم'), 'success');
+                    addActivity('success', 'تسجيل مستخدم جديد: ' + (newUser[1].name || newUser[1].email));
+                }
+            }
+            if (previousSubCount > 0 && pendingSubs > previousSubCount) {
+                showToast('طلب اشتراك جديد!', 'success');
+                addActivity('warning', 'طلب اشتراك جديد');
+            }
+            previousUserCount = userCount;
+            previousSubCount = pendingSubs;
+        }
+
+        // ===== SEND MESSAGE =====
+        let allMessagesData = {};
+
+        window.showSendMessage = function(targetUid) {
+            const userOptions = Object.entries(allUsersData).map(([uid, u]) =>
+                `<option value="${uid}" ${uid===targetUid?'selected':''}>${u.name||u.email||uid}</option>`
+            ).join('');
+            document.getElementById('modalTitle').textContent = 'إرسال رسالة';
+            document.getElementById('modalBody').innerHTML = `
+                <label>المستلم</label>
+                <select id="msgTarget">
+                    <option value="all">جميع المستخدمين</option>
+                    ${userOptions}
+                </select>
+                <label>نوع الرسالة</label>
+                <select id="msgType">
+                    <option value="info">معلوماتية</option>
+                    <option value="warning">تحذير</option>
+                    <option value="success">تهنئة</option>
+                    <option value="promo">عرض خاص</option>
+                </select>
+                <label>الرسالة</label>
+                <textarea id="msgText" placeholder="اكتب رسالتك هنا..." style="min-height:100px"></textarea>
+            `;
+            document.getElementById('modalConfirm').style.display = 'block';
+            document.getElementById('modalConfirm').textContent = 'إرسال';
+            document.getElementById('modalConfirm').onclick = async () => {
+                const target = document.getElementById('msgTarget').value;
+                const type = document.getElementById('msgType').value;
+                const text = document.getElementById('msgText').value.trim();
+                if (!text) { showToast('اكتب الرسالة', 'error'); return; }
+                const msgData = {
+                    type, text,
+                    sentAt: Date.now(),
+                    read: false,
+                    from: 'admin'
+                };
+                try {
+                    if (target === 'all') {
+                        const updates = {};
+                        Object.keys(allUsersData).forEach(uid => {
+                            updates['users/' + uid + '/notifications/' + Date.now()] = msgData;
+                        });
+                        updates['messages/' + Date.now()] = { ...msgData, target: 'all', userCount: Object.keys(allUsersData).length };
+                        await update(ref(db), updates);
+                        showToast('تم إرسال الرسالة لـ ' + Object.keys(allUsersData).length + ' مستخدم', 'success');
+                    } else {
+                        await push(ref(db, 'users/' + target + '/notifications'), msgData);
+                        await push(ref(db, 'messages'), { ...msgData, target });
+                        showToast('تم إرسال الرسالة', 'success');
+                    }
+                    addActivity('success', 'إرسال رسالة: ' + text.substring(0, 50));
+                    if(window.QCVNotify) QCVNotify.success();
+                    closeModal();
+                } catch(err) { showToast('خطأ في الإرسال', 'error'); }
+            };
+            document.getElementById('modal').classList.add('show');
+        };
+
+        function listenMessages() {
+            onValue(ref(db, 'messages'), (snap) => {
+                allMessagesData = snap.val() || {};
+                renderMessagesTable(allMessagesData);
+            });
+        }
+
+        function renderMessagesTable(data) {
+            const tbody = document.getElementById('messagesList');
+            const entries = Object.entries(data).sort((a,b) => (b[1].sentAt||0) - (a[1].sentAt||0));
+            if (!entries.length) {
+                tbody.innerHTML = '<tr><td colspan="4" class="empty-state"><p>لا توجد رسائل بعد</p></td></tr>';
+                return;
+            }
+            tbody.innerHTML = entries.map(([id, m]) => {
+                const target = m.target === 'all' ? 'الكل (' + (m.userCount||0) + ')' : (allUsersData[m.target]?.name || m.target);
+                const typeColors = { info: 'var(--accent)', warning: 'var(--yellow)', success: 'var(--green)', promo: 'var(--purple)' };
+                const typeLabels = { info: 'معلوماتية', warning: 'تحذير', success: 'تهنئة', promo: 'عرض خاص' };
+                return `<tr>
+                    <td><strong>${target}</strong></td>
+                    <td style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${m.text||''}</td>
+                    <td>${formatDateTime(m.sentAt)}</td>
+                    <td><span class="badge" style="background:${typeColors[m.type]||'var(--accent)'}20;color:${typeColors[m.type]||'var(--accent)'}">${typeLabels[m.type]||m.type}</span></td>
+                </tr>`;
+            }).join('');
+        }
+
+        // ===== CV PREVIEW =====
+        window.previewUserCV = async function(uid) {
+            try {
+                const snap = await get(ref(db, 'users/' + uid + '/cvData'));
+                const data = snap.val();
+                if (!data) { showToast('لا توجد بيانات CV', 'error'); return; }
+                const cvData = {
+                    ...data,
+                    skills: Array.isArray(data.skills) ? data.skills : (data.skills || '').split('\n').filter(l => l.trim())
+                };
+                const html = QCVTemplates.render('classic', cvData);
+                document.getElementById('modalTitle').textContent = 'معاينة السيرة الذاتية';
+                document.getElementById('modalBody').innerHTML = `
+                    <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px;max-height:60vh;overflow-y:auto;direction:ltr;text-align:left">
+                        <div class="cv-page tpl-classic" style="font-size:10px;line-height:1.5;color:#1a1a1a">${html}</div>
+                    </div>
+                    <div style="display:flex;gap:8px;justify-content:center;margin-top:12px">
+                        <button class="btn-action btn-view" onclick="window.open('https://qcv.vexonet.online/portfolio-view.html?uid=${uid}','_blank')"><i class="fas fa-external-link-alt"></i> فتح الصفحة العامة</button>
+                    </div>
+                `;
+                document.getElementById('modalConfirm').style.display = 'none';
+                document.getElementById('modal').classList.add('show');
+            } catch(err) { showToast('خطأ في تحميل البيانات', 'error'); }
+        };
+
+        // ===== DARK MODE =====
+        function applyAdminDarkMode() {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark' || document.body.classList.contains('dark-mode');
+            document.body.classList.toggle('dark-mode', isDark);
+        }
+
+        const darkModeObs = new MutationObserver(() => applyAdminDarkMode());
+        darkModeObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+        darkModeObs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+        applyAdminDarkMode();
+
+        // Add preview button to viewUser
+        const origViewUser = window.viewUser;
+        window.viewUser = function(uid) {
+            origViewUser(uid);
+            const actionsDiv = document.querySelector('#modalBody > div:last-child');
+            if (actionsDiv) {
+                const previewBtn = document.createElement('button');
+                previewBtn.className = 'btn-action btn-view';
+                previewBtn.innerHTML = '<i class="fas fa-eye"></i> معاينة CV';
+                previewBtn.onclick = function() { closeModal(); previewUserCV(uid); };
+                actionsDiv.insertBefore(previewBtn, actionsDiv.firstChild);
+            }
+        };
 
     </script>
     <script src="js/notify-sounds.js"></script>

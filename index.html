@@ -399,6 +399,7 @@
             .section-header h2{font-size:1.35rem}
             .footer-bottom{font-size:0.72rem}
         }
+
     </style>
 </head>
 <body>
@@ -407,11 +408,11 @@
 <nav class="navbar">
     <a href="index.html" class="nav-logo">Q<span>CV</span></a>
     <ul class="nav-center">
-        <li><a href="#pricing">التسعير</a></li>
-        <li><a href="#how">كيف يعمل</a></li>
-        <li><a href="#features">المميزات</a></li>
-        <li><a href="careers.html">الوظائف</a></li>
-        <li><a href="help.html">المساعدة</a></li>
+        <li><a href="#pricing" data-i18n="pricing">التسعير</a></li>
+        <li><a href="#how" data-i18n="how_works">كيف يعمل</a></li>
+        <li><a href="#features" data-i18n="features">المميزات</a></li>
+        <li><a href="careers.html" data-i18n="careers">الوظائف</a></li>
+        <li><a href="help.html" data-i18n="help">المساعدة</a></li>
     </ul>
     <div class="nav-right">
         <button class="theme-toggle" onclick="QCVTheme.toggle()" style="background:none;border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
@@ -422,8 +423,8 @@
             <button class="lang-ar" onclick="QCVLang.set('ar')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;font-family:'Cairo',sans-serif;transition:all 0.2s">عربي</button>
             <button class="lang-en" onclick="QCVLang.set('en')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;font-family:'Cairo',sans-serif;transition:all 0.2s">EN</button>
         </div>
-        <a href="login.html" class="login">تسجيل الدخول</a>
-        <a href="login.html" class="btn-cta">ابدأ مجاناً</a>
+        <a href="login.html" class="login" data-i18n="login">تسجيل الدخول</a>
+        <a href="login.html" class="btn-cta" data-i18n="start_free">ابدأ مجاناً</a>
     </div>
     <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-center').classList.toggle('show')">&#9776;</button>
 </nav>
@@ -431,12 +432,12 @@
 <!-- ===== HERO ===== -->
 <section class="hero">
     <div class="hero-right">
-        <div class="hero-badge"><i class="fas fa-robot"></i> مدعوم بالذكاء الاصطناعي</div>
-        <h1>ابنِ سيرة ذاتية <span class="hl">ذكية ومتوافقة</span><br>مع أنظمة الـ ATS</h1>
-        <p>منشئ سير ذاتية احترافي يعتمد على الذكاء الاصطناعي لمساعدتك في بناء سيرة ذاتية تتجاوز أنظمة الفرز الآلي وتلفت انتباه الموظفين</p>
+        <div class="hero-badge"><i class="fas fa-robot"></i> <span data-i18n="hero_badge">مدعوم بالذكاء الاصطناعي</span></div>
+        <h1 data-i18n-html="hero_title">ابنِ سيرة ذاتية <span class="hl">ذكية ومتوافقة</span><br>مع أنظمة الـ ATS</h1>
+        <p data-i18n="hero_sub">منشئ سير ذاتية احترافي يعتمد على الذكاء الاصطناعي لمساعدتك في بناء سيرة ذاتية تتجاوز أنظمة الفرز الآلي وتلفت انتباه الموظفين</p>
         <div class="hero-btns">
-            <a href="login.html" class="btn btn-primary">ابدأ مجاناً الآن <i class="fas fa-arrow-left"></i></a>
-            <a href="#pricing" class="btn btn-ghost">شاهد الباقات</a>
+            <a href="login.html" class="btn btn-primary" data-i18n="start_free">ابدأ مجاناً الآن <i class="fas fa-arrow-left"></i></a>
+            <a href="#pricing" class="btn btn-ghost" data-i18n="view_plans">شاهد الباقات</a>
         </div>
     </div>
     <div class="hero-left">
@@ -469,43 +470,43 @@
         <span>&#11088;</span>
         <span>&#11088;</span>
     </div>
-    <p>&#10003; تم استخدامه من قبل +10,000 مستخدم</p>
+    <p data-i18n="trust_text">&#10003; تم استخدامه من قبل +10,000 مستخدم</p>
 </div>
 
 <!-- ===== STATS ===== -->
 <div class="stats-bar">
-    <div class="stat"><div class="stat-icon"><i class="fas fa-file-alt"></i></div><div class="stat-num" data-target="50" data-prefix="+">+50</div><div class="stat-label">قالب سيرة ذاتية</div></div>
-    <div class="stat"><div class="stat-icon"><i class="fas fa-star"></i></div><div class="stat-num" data-target="4.9">4.9</div><div class="stat-label">تقييم المستخدمين</div></div>
-    <div class="stat"><div class="stat-icon"><i class="fas fa-check-circle"></i></div><div class="stat-num" data-target="95" data-suffix="%">95%</div><div class="stat-label">نسبة النجاح في المقابلات</div></div>
-    <div class="stat"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-num" data-target="10000" data-prefix="+">+10K</div><div class="stat-label">مستخدم نشط</div></div>
+    <div class="stat"><div class="stat-icon"><i class="fas fa-file-alt"></i></div><div class="stat-num" data-target="50" data-prefix="+">+50</div><div class="stat-label" data-i18n="stat_templates">قالب سيرة ذاتية</div></div>
+    <div class="stat"><div class="stat-icon"><i class="fas fa-star"></i></div><div class="stat-num" data-target="4.9">4.9</div><div class="stat-label" data-i18n="stat_rating">تقييم المستخدمين</div></div>
+    <div class="stat"><div class="stat-icon"><i class="fas fa-check-circle"></i></div><div class="stat-num" data-target="95" data-suffix="%">95%</div><div class="stat-label" data-i18n="stat_success">نسبة النجاح في المقابلات</div></div>
+    <div class="stat"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-num" data-target="10000" data-prefix="+">+10K</div><div class="stat-label" data-i18n="stat_users">مستخدم نشط</div></div>
 </div>
 
 <!-- ===== FEATURES ===== -->
 <section class="section" id="features">
     <div class="section-header">
-        <h2>ليه تختار QCV؟</h2>
-        <p>أدوات متقدمة مدعومة بالذكاء الاصطناعي لبناء سيرة ذاتية احترافية تتجاوز أنظمة الفرز الآلي</p>
+        <h2 data-i18n="features_title">ليه تختار QCV؟</h2>
+        <p data-i18n="features_sub">أدوات متقدمة مدعومة بالذكاء الاصطناعي لبناء سيرة ذاتية احترافية تتجاوز أنظمة الفرز الآلي</p>
     </div>
     <div class="features-grid">
         <article class="feature-card">
             <div class="f-icon" aria-hidden="true"><i class="fas fa-brain"></i></div>
-            <h3>مساعد الذكاء الاصطناعي</h3>
-            <p>مساعد ذكي يساعدك في صياغة الملخص الوظيفي واختيار المهارات المطلوبة</p>
+            <h3 data-i18n="feature1_title">مساعد الذكاء الاصطناعي</h3>
+            <p data-i18n="feature1_desc">مساعد ذكي يساعدك في صياغة الملخص الوظيفي واختيار المهارات المطلوبة</p>
         </article>
         <article class="feature-card">
             <div class="f-icon" aria-hidden="true"><i class="fas fa-chart-line"></i></div>
-            <h3>تحليل قوة الـ CV</h3>
-            <p>مؤشر حي يحلل قوة سيرتك الذاتية ويعطيك تقييم فوري مع اقتراحات</p>
+            <h3 data-i18n="feature2_title">تحليل قوة الـ CV</h3>
+            <p data-i18n="feature2_desc">مؤشر حي يحلل قوة سيرتك الذاتية ويعطيك تقييم فوري مع اقتراحات</p>
         </article>
         <article class="feature-card">
             <div class="f-icon" aria-hidden="true"><i class="fas fa-palette"></i></div>
-            <h3>قوالب ATS احترافية</h3>
-            <p>مجموعة من القوالب المعتمدة لتخطي أنظمة الفرز الذكية</p>
+            <h3 data-i18n="feature3_title">قوالب ATS احترافية</h3>
+            <p data-i18n="feature3_desc">مجموعة من القوالب المعتمدة لتخطي أنظمة الفرز الذكية</p>
         </article>
         <article class="feature-card">
             <div class="f-icon" aria-hidden="true"><i class="fas fa-cloud"></i></div>
-            <h3>حفظ سحابي آمن</h3>
-            <p>بياناتك محفوظة ومؤمنة على السحابة مع إمكانية الوصول من أي جهاز</p>
+            <h3 data-i18n="feature4_title">حفظ سحابي آمن</h3>
+            <p data-i18n="feature4_desc">بياناتك محفوظة ومؤمنة على السحابة مع إمكانية الوصول من أي جهاز</p>
         </article>
     </div>
 </section>
@@ -513,24 +514,24 @@
 <!-- ===== HOW IT WORKS ===== -->
 <section class="section steps-section" id="how">
     <div class="section-header">
-        <h2>كيف يعمل QCV؟</h2>
-        <p>3 خطوات بسيطة للحصول على سيرة ذاتية احترافية متوافقة مع الـ ATS</p>
+        <h2 data-i18n="how_title">كيف يعمل QCV؟</h2>
+        <p data-i18n="how_sub">3 خطوات بسيطة للحصول على سيرة ذاتية احترافية متوافقة مع الـ ATS</p>
     </div>
     <div class="steps-grid">
         <div class="step">
             <div class="step-num"><i class="fas fa-user-plus"></i></div>
-            <h3>سجل حسابك مجاناً</h3>
-            <p>أنشئ حسابك في ثوانٍ باستخدام بريدك الإلكتروني أو حساب Google</p>
+            <h3 data-i18n="step1_title">سجل حسابك مجاناً</h3>
+            <p data-i18n="step1_desc">أنشئ حسابك في ثوانٍ باستخدام بريدك الإلكتروني أو حساب Google</p>
         </div>
         <div class="step">
             <div class="step-num"><i class="fas fa-edit"></i></div>
-            <h3>أدخل بياناتك</h3>
-            <p>اكتب معلوماتك الشخصية والمهنية وسيقوم الذكاء الاصطناعي بمساعدتك</p>
+            <h3 data-i18n="step2_title">أدخل بياناتك</h3>
+            <p data-i18n="step2_desc">اكتب معلوماتك الشخصية والمهنية وسيقوم الذكاء الاصطناعي بمساعدتك</p>
         </div>
         <div class="step">
             <div class="step-num"><i class="fas fa-download"></i></div>
-            <h3>حمّل سيرتك الذاتية</h3>
-            <p>اختر القالب المناسب وحمّل سيرتك الذاتية بصيغة PDF جاهزة للإرسال</p>
+            <h3 data-i18n="step3_title">حمّل سيرتك الذاتية</h3>
+            <p data-i18n="step3_desc">اختر القالب المناسب وحمّل سيرتك الذاتية بصيغة PDF جاهزة للإرسال</p>
         </div>
     </div>
 </section>
@@ -538,55 +539,55 @@
 <!-- ===== PRICING ===== -->
 <section class="section" id="pricing">
     <div class="section-header">
-        <h2>ابدأ مجاناً أو انتقل للباقة المميزة</h2>
-        <p>اختر الباقة المناسبة لاحتياجاتك مع إمكانية الترقية في أي وقت</p>
+        <h2 data-i18n="pricing_title">ابدأ مجاناً أو انتقل للباقة المميزة</h2>
+        <p data-i18n="pricing_sub">اختر الباقة المناسبة لاحتياجاتك مع إمكانية الترقية في أي وقت</p>
     </div>
     <div class="pricing-grid">
         <div class="price-card">
             <div class="p-icon"><i class="fas fa-gift"></i></div>
-            <div class="p-name">الباقة المجانية</div>
-            <div class="p-desc">للمبتدئين والطلاب</div>
-            <div class="p-price"><span class="free">مجاني</span></div>
+            <div class="p-name" data-i18n="plan_free_name">الباقة المجانية</div>
+            <div class="p-desc" data-i18n="plan_free_desc">للمبتدئين والطلاب</div>
+            <div class="p-price"><span class="free" data-i18n="plan_free_price">مجاني</span></div>
             <ul class="p-features">
-                <li><span class="ok">&#10003;</span> بناء سيرة ذاتية واحدة</li>
-                <li><span class="ok">&#10003;</span> قالب ATS أساسي</li>
-                <li><span class="ok">&#10003;</span> تنزيل PDF</li>
-                <li><span class="no">&#10007;</span> مساعد الذكاء الاصطناعي</li>
-                <li><span class="no">&#10007;</span> قوالب متعددة</li>
-                <li><span class="no">&#10007;</span> دعم فني مباشر</li>
+                <li><span class="ok">&#10003;</span> <span data-i18n="plan_free_f1">بناء سيرة ذاتية واحدة</span></li>
+                <li><span class="ok">&#10003;</span> <span data-i18n="plan_free_f2">قالب ATS أساسي</span></li>
+                <li><span class="ok">&#10003;</span> <span data-i18n="plan_free_f3">تنزيل PDF</span></li>
+                <li><span class="no">&#10007;</span> <span data-i18n="plan_free_f4">مساعد الذكاء الاصطناعي</span></li>
+                <li><span class="no">&#10007;</span> <span data-i18n="plan_free_f5">قوالب متعددة</span></li>
+                <li><span class="no">&#10007;</span> <span data-i18n="plan_free_f6">دعم فني مباشر</span></li>
             </ul>
-            <a href="login.html" class="btn-plan btn-plan-free">ابدأ مجاناً</a>
+            <a href="login.html" class="btn-plan btn-plan-free" data-i18n="start_free">ابدأ مجاناً</a>
         </div>
         <div class="price-card popular">
-            <div class="pop-badge">الأشهر</div>
+            <div class="pop-badge" data-i18n="plan_pro_badge">الأشهر</div>
             <div class="p-icon"><i class="fas fa-rocket"></i></div>
-            <div class="p-name">الباقة الاحترافية</div>
-            <div class="p-desc">للمحترفين والباحثين عن عمل</div>
-            <div class="p-price"><span class="curr">ج.م</span><span class="val">99</span><span class="period">/ شهرياً</span></div>
+            <div class="p-name" data-i18n="plan_pro_name">الباقة الاحترافية</div>
+            <div class="p-desc" data-i18n="plan_pro_desc">للمحترفين والباحثين عن عمل</div>
+            <div class="p-price"><span class="curr">ج.م</span><span class="val">99</span><span class="period" data-i18n="plan_pro_period">/ شهرياً</span></div>
             <ul class="p-features">
-                <li><span class="ok">&#10003;</span> سير ذاتية غير محدودة</li>
-                <li><span class="ok">&#10003;</span> جميع القوالب الاحترافية</li>
-                <li><span class="ok">&#10003;</span> تنزيل PDF عالي الجودة</li>
-                <li><span class="ok">&#10003;</span> مساعد الذكاء الاصطناعي (50 طلب/يوم)</li>
-                <li><span class="ok">&#10003;</span> تحليل قوة الـ CV</li>
-                <li><span class="no">&#10007;</span> دعم فني مباشر</li>
+                <li><span class="ok">&#10003;</span> <span data-i18n="plan_pro_f1">سير ذاتية غير محدودة</span></li>
+                <li><span class="ok">&#10003;</span> <span data-i18n="plan_pro_f2">جميع القوالب الاحترافية</span></li>
+                <li><span class="ok">&#10003;</span> <span data-i18n="plan_pro_f3">تنزيل PDF عالي الجودة</span></li>
+                <li><span class="ok">&#10003;</span> <span data-i18n="plan_pro_f4">مساعد الذكاء الاصطناعي (50 طلب/يوم)</span></li>
+                <li><span class="ok">&#10003;</span> <span data-i18n="plan_pro_f5">تحليل قوة الـ CV</span></li>
+                <li><span class="no">&#10007;</span> <span data-i18n="plan_pro_f6">دعم فني مباشر</span></li>
             </ul>
-            <a href="pay.html" class="btn-plan btn-plan-pro">اشترك الآن</a>
+            <a href="pay.html" class="btn-plan btn-plan-pro" data-i18n="subscribe_now">اشترك الآن</a>
         </div>
         <div class="price-card">
             <div class="p-icon"><i class="fas fa-crown"></i></div>
-            <div class="p-name">الباقة غير المحدودة</div>
-            <div class="p-desc">للشركات والفرق الكبيرة</div>
-            <div class="p-price"><span class="curr">ج.م</span><span class="val">299</span><span class="period">/ شهرياً</span></div>
+            <div class="p-name" data-i18n="plan_unlim_name">الباقة غير المحدودة</div>
+            <div class="p-desc" data-i18n="plan_unlim_desc">للشركات والفرق الكبيرة</div>
+            <div class="p-price"><span class="curr">ج.م</span><span class="val">299</span><span class="period" data-i18n="plan_pro_period">/ شهرياً</span></div>
             <ul class="p-features">
-                <li><span class="ok">&#10003;</span> سير ذاتية غير محدودة</li>
-                <li><span class="ok">&#10003;</span> جميع القوالب الاحترافية</li>
-                <li><span class="ok">&#10003;</span> تنزيل PDF عالي الجودة</li>
-                <li><span class="ok">&#10003;</span> مساعد الذكاء الاصطناعي (غير محدود)</li>
-                <li><span class="ok">&#10003;</span> تحليل قوة الـ CV المتقدم</li>
-                <li><span class="ok">&#10003;</span> دعم فني مباشر 24/7</li>
+                <li><span class="ok">&#10003;</span> <span data-i18n="plan_unlim_f1">سير ذاتية غير محدودة</span></li>
+                <li><span class="ok">&#10003;</span> <span data-i18n="plan_unlim_f2">جميع القوالب الاحترافية</span></li>
+                <li><span class="ok">&#10003;</span> <span data-i18n="plan_unlim_f3">تنزيل PDF عالي الجودة</span></li>
+                <li><span class="ok">&#10003;</span> <span data-i18n="plan_unlim_f4">مساعد الذكاء الاصطناعي (غير محدود)</span></li>
+                <li><span class="ok">&#10003;</span> <span data-i18n="plan_unlim_f5">تحليل قوة الـ CV المتقدم</span></li>
+                <li><span class="ok">&#10003;</span> <span data-i18n="plan_unlim_f6">دعم فني مباشر 24/7</span></li>
             </ul>
-            <a href="pay.html" class="btn-plan btn-plan-unlim">تواصل معنا</a>
+            <a href="pay.html" class="btn-plan btn-plan-unlim" data-i18n="contact_us">تواصل معنا</a>
         </div>
     </div>
 </section>
@@ -594,8 +595,8 @@
 <!-- ===== TESTIMONIALS ===== -->
 <section class="section test-section">
     <div class="section-header">
-        <h2>ماذا يقول عملاؤنا؟</h2>
-        <p>أكثر من ١٠,٠٠٠ مستخدم يثقون بـ QCV</p>
+        <h2 data-i18n="our_clients">ماذا يقول عملاؤنا؟</h2>
+        <p data-i18n="client_subtitle">أكثر من ١٠,٠٠٠ مستخدم يثقون بـ QCV</p>
     </div>
     <div class="test-grid">
         <div class="test-card-new">
@@ -700,28 +701,28 @@
 <!-- ===== FAQ ===== -->
 <section class="section">
     <div class="section-header">
-        <h2>الأسئلة الشائعة</h2>
+        <h2 data-i18n="faq_title">الأسئلة الشائعة</h2>
     </div>
     <div class="faq-list">
         <div class="faq-item">
-            <div class="faq-q" onclick="toggleFaq(this)">ما هو الـ ATS ولماذا أحتاج سيرة ذاتية متوافقة معه؟<span class="arrow">&#9660;</span></div>
-            <div class="faq-a"><p>الـ ATS (Applicant Tracking System) هو نظام آلي تستخدمه الشركات الكبيرة لفرز وتصنيف السير الذاتية. QCV يضمن أن سيرتك الذاتية متوافقة مع هذه الأنظمة لتصلك للمقابلة.</p></div>
+            <div class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq_q1">ما هو الـ ATS ولماذا أحتاج سيرة ذاتية متوافقة معه؟</span><span class="arrow">&#9660;</span></div>
+            <div class="faq-a"><p data-i18n="faq_a1">الـ ATS (Applicant Tracking System) هو نظام آلي تستخدمه الشركات الكبيرة لفرز وتصنيف السير الذاتية. QCV يضمن أن سيرتك الذاتية متوافقة مع هذه الأنظمة لتصلك للمقابلة.</p></div>
         </div>
         <div class="faq-item">
-            <div class="faq-q" onclick="toggleFaq(this)">هل الباقة المجانية تكفي لبناء سيرة ذاتية احترافية؟<span class="arrow">&#9660;</span></div>
-            <div class="faq-a"><p>نعم! الباقة المجانية توفر لك كل ما تحتاجه لبناء سيرة ذاتية احترافية واحدة مع قالب أساسي وتنزيل PDF.</p></div>
+            <div class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq_q2">هل الباقة المجانية تكفي لبناء سيرة ذاتية احترافية؟</span><span class="arrow">&#9660;</span></div>
+            <div class="faq-a"><p data-i18n="faq_a2">نعم! الباقة المجانية توفر لك كل ما تحتاجه لبناء سيرة ذاتية احترافية واحدة مع قالب أساسي وتنزيل PDF.</p></div>
         </div>
         <div class="faq-item">
-            <div class="faq-q" onclick="toggleFaq(this)">كيف يعمل مساعد الذكاء الاصطناعي في QCV؟<span class="arrow">&#9660;</span></div>
-            <div class="faq-a"><p>مساعد QCV الذكي يحلل محتوى سيرتك الذاتية ويقترح تحسينات فورية مثل صياغة أفضل للملخص الوظيفي.</p></div>
+            <div class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq_q3">كيف يعمل مساعد الذكاء الاصطناعي في QCV؟</span><span class="arrow">&#9660;</span></div>
+            <div class="faq-a"><p data-i18n="faq_a3">مساعد QCV الذكي يحلل محتوى سيرتك الذاتية ويقترح تحسينات فورية مثل صياغة أفضل للملخص الوظيفي.</p></div>
         </div>
         <div class="faq-item">
-            <div class="faq-q" onclick="toggleFaq(this)">هل يمكنني إلغاء اشتراك QCV في أي وقت؟<span class="arrow">&#9660;</span></div>
-            <div class="faq-a"><p>نعم، يمكنك إلغاء اشتراكي في أي وقت دون أي رسوم إضافية. بياناتك ستبقى محفوظة.</p></div>
+            <div class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq_q4">هل يمكنني إلغاء اشتراك QCV في أي وقت؟</span><span class="arrow">&#9660;</span></div>
+            <div class="faq-a"><p data-i18n="faq_a4">نعم، يمكنك إلغاء اشتراكي في أي وقت دون أي رسوم إضافية. بياناتك ستبقى محفوظة.</p></div>
         </div>
         <div class="faq-item">
-            <div class="faq-q" onclick="toggleFaq(this)">هل بياناتي آمنة على منصة QCV؟<span class="arrow">&#9660;</span></div>
-            <div class="faq-a"><p>نعم، جميع بياناتك محفوظة بشكل آمن على سحابة Firebase مع تشفير متقدم.</p></div>
+            <div class="faq-q" onclick="toggleFaq(this)"><span data-i18n="faq_q5">هل بياناتي آمنة على منصة QCV؟</span><span class="arrow">&#9660;</span></div>
+            <div class="faq-a"><p data-i18n="faq_a5">نعم، جميع بياناتك محفوظة بشكل آمن على سحابة Firebase مع تشفير متقدم.</p></div>
         </div>
     </div>
 </section>
@@ -729,9 +730,9 @@
 <!-- ===== CTA ===== -->
 <section class="cta-section">
     <div class="cta-box">
-        <h2>جاهز تبني سيرتك الذاتية الاحترافية؟</h2>
-        <p>ابدأ الآن مجاناً واحصل على سيرة ذاتية متوافقة مع الـ ATS في دقائق معدودة</p>
-        <a href="login.html" class="btn btn-primary">ابدأ مجاناً الآن <i class="fas fa-arrow-left"></i></a>
+        <h2 data-i18n="cta_title">جاهز تبني سيرتك الذاتية الاحترافية؟</h2>
+        <p data-i18n="cta_sub">ابدأ الآن مجاناً واحصل على سيرة ذاتية متوافقة مع الـ ATS في دقائق معدودة</p>
+        <a href="login.html" class="btn btn-primary" data-i18n="start_free">ابدأ مجاناً الآن <i class="fas fa-arrow-left"></i></a>
     </div>
 </section>
 
@@ -740,35 +741,35 @@
     <div class="footer-content">
         <div class="footer-brand">
             <div class="logo">Q<span>CV</span></div>
-            <p>منشئ سير ذاتية ذكي مدعوم بالذكاء الاصطناعي لمساعدتك في الحصول على الوظيفة الأحلام</p>
+            <p data-i18n="footer_brand">منشئ سير ذاتية ذكي مدعوم بالذكاء الاصطناعي لمساعدتك في الحصول على الوظيفة الأحلام</p>
         </div>
         <div class="footer-links">
-            <h4>المنتج</h4>
+            <h4 data-i18n="footer_product">المنتج</h4>
             <ul>
-                <li><a href="#features">المميزات</a></li>
-                <li><a href="#pricing">التسعير</a></li>
-                <li><a href="#how">كيف يعمل</a></li>
+                <li><a href="#features" data-i18n="features">المميزات</a></li>
+                <li><a href="#pricing" data-i18n="pricing">التسعير</a></li>
+                <li><a href="#how" data-i18n="how_works">كيف يعمل</a></li>
             </ul>
         </div>
         <div class="footer-links">
-            <h4>الدعم</h4>
+            <h4 data-i18n="footer_support">الدعم</h4>
             <ul>
-                <li><a href="help.html">مركز المساعدة</a></li>
-                <li><a href="mailto:support@qcv.com">تواصل معنا</a></li>
-                <li><a href="https://wa.me/201028707543" target="_blank"><i class="fab fa-whatsapp" style="color:#25D366"></i> واتساب</a></li>
+                <li><a href="help.html" data-i18n="help_center">مركز المساعدة</a></li>
+                <li><a href="mailto:support@qcv.com" data-i18n="contact_us">تواصل معنا</a></li>
+                <li><a href="https://wa.me/201028707543" target="_blank"><i class="fab fa-whatsapp" style="color:#25D366"></i> <span data-i18n="whatsapp">واتساب</span></a></li>
             </ul>
         </div>
         <div class="footer-links">
-            <h4>الشركة</h4>
+            <h4 data-i18n="footer_company">الشركة</h4>
             <ul>
-                <li><a href="help.html#about">من نحن</a></li>
-                <li><a href="careers.html">الوظائف</a></li>
-                <li><a href="help.html#privacy">سياسة الخصوصية</a></li>
-                <li><a href="help.html#terms">شروط الاستخدام</a></li>
+                <li><a href="help.html#about" data-i18n="about_us">من نحن</a></li>
+                <li><a href="careers.html" data-i18n="careers">الوظائف</a></li>
+                <li><a href="help.html#privacy" data-i18n="privacy">سياسة الخصوصية</a></li>
+                <li><a href="help.html#terms" data-i18n="terms">شروط الاستخدام</a></li>
             </ul>
         </div>
     </div>
-    <div class="footer-bottom">&copy; 2026 QCV - جميع الحقوق محفوظة | آخر تحديث: 15 يونيو 2026</div>
+    <div class="footer-bottom">&copy; 2026 QCV - <span data-i18n="copyright">جميع الحقوق محفوظة</span> | آخر تحديث: 15 يونيو 2026</div>
 </footer>
 
 <script>
@@ -865,35 +866,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<script src="js/tutorial.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    // Add guide button to hero
-    const heroBtns = document.querySelector('.hero-btns');
-    if (heroBtns) {
-        const guideBtn = document.createElement('a');
-        guideBtn.className = 'btn btn-ghost';
-        guideBtn.innerHTML = '<i class="fas fa-question-circle"></i> عرض الدليل';
-        guideBtn.href = '#';
-        guideBtn.onclick = (e) => { e.preventDefault(); startIndexTutorial(); };
-        heroBtns.appendChild(guideBtn);
-    }
-    // Auto-show on first visit
-    if (QCVTutorial.shouldShow()) {
-        setTimeout(() => startIndexTutorial(), 2000);
-    }
-});
 
-function startIndexTutorial() {
-    QCVTutorial.start([
-        { target: '.hero h1', title: '!مرحباً بك في QCV', message: 'منشئ سير ذاتية ذكي مدعوم بالذكاء الاصطناعي. هيساعدك تبني سيرة ذاتية احترافية تتجاوز أنظمة الفرز الآلي.', tip: 'ابدأ مجاناً من غير ما تحتاج بطاقة ائتمان!' },
-        { target: '#features', title: 'مميزات متقدمة', message: 'مساعد ذكاء اصطناعي لكتابة الملخص، تحليل قوة الـ CV فوراً، أكثر من 15 قالب ATS، وحفظ سحابي آمن.', tip: 'كل المميزات مصممة تساعدك تحصل على مقابلة عمل.' },
-        { target: '#how', title: '3 خطوات بسيطة', message: '1. سجل حسابك مجاناً  2. أدخل بياناتك والذكاء الاصطناعي هيساعدك  3. حمّل سيرتك الذاتية PDF جاهزة للإرسال', tip: 'خلال 5 دقائق بس هتكون عندك سيرة ذاتية احترافية!' },
-        { target: '#pricing', title: 'خطط مرنة', message: 'ابدأ مجاناً، أو ا_upgrade للباقة الاحترافية (99 ج.م/شهر) لوصول كامل لجميع القوالب والذكاء الاصطناعي.', tip: 'الباقة المجانية تشمل سيرة ذاتية واحدة وقالب واحد.' },
-        { target: '.test-section', title: 'عملاء يثقون بنا', message: 'أكثر من 10,000 مستخدم حصلوا على وظائف أحلامهم باستخدام QCV.', tip: 'انضم لآلاف المستخدمين الناجحين.' }
-    ]);
-}
-</script>
 
 </body>
 </html>

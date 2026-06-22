@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="components.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="js/theme.js"></script>
+    <script src="js/lang.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="templates/templates.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -20,7 +21,7 @@
 
         /* ===== TOP BAR ===== */
         .topbar{height:56px;background:var(--sidebar);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:12px;z-index:100;position:relative;direction:ltr}
-        .topbar-logo{font-size:1.4rem;font-weight:900;color:#1a1a2e;display:flex;align-items:center;gap:6px;flex-shrink:0}
+        .topbar-logo{font-size:1.4rem;font-weight:900;color:var(--text);display:flex;align-items:center;gap:6px;flex-shrink:0}
         .topbar-logo span{color:var(--accent)}
         .topbar-nav{display:flex;align-items:center;gap:6px;margin-left:16px}
         .topbar-nav a{color:var(--muted);text-decoration:none;font-weight:600;font-size:0.8rem;padding:6px 12px;border-radius:6px;transition:all 0.2s}
@@ -33,6 +34,31 @@
         .ctrl-group select{background:var(--card);border:1px solid var(--border);color:#1a1a2e;padding:5px 8px;border-radius:6px;font-size:0.72rem;font-family:inherit;cursor:pointer;outline:none}
         .ctrl-group select:focus{border-color:var(--accent)}
         .ctrl-group input[type="color"]{width:24px;height:24px;border:1px solid var(--border);border-radius:6px;cursor:pointer;background:none;padding:2px}
+        .notif-bell{position:relative;width:38px;height:38px;border-radius:10px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;font-size:1rem;color:var(--muted)}
+        .notif-bell:hover{border-color:var(--accent);color:var(--accent)}
+        .notif-badge{position:absolute;top:-4px;right:-4px;width:18px;height:18px;background:#ef4444;color:#fff;border-radius:50%;font-size:0.6rem;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg);animation:pulse-badge 2s infinite}
+        .notif-badge:empty,.notif-badge[data-count="0"]{display:none}
+        @keyframes pulse-badge{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+        .notif-panel{position:absolute;top:calc(100% + 8px);right:0;width:380px;max-height:450px;background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:0 15px 40px rgba(0,0,0,0.12);z-index:1000;display:none;overflow:hidden}
+        .notif-panel.show{display:block;animation:panelUp 0.2s ease}
+        @keyframes panelUp{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+        .notif-header{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+        .notif-header h4{font-size:0.9rem;font-weight:800;margin:0}
+        .notif-clear{background:none;border:none;color:var(--accent);font-size:0.78rem;font-weight:700;cursor:pointer;font-family:inherit;padding:4px 8px;border-radius:6px}
+        .notif-clear:hover{background:rgba(0,3,201,0.08)}
+        .notif-list{max-height:370px;overflow-y:auto}
+        .notif-item{padding:12px 18px;border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.15s}
+        .notif-item:hover{background:rgba(0,3,201,0.04)}
+        .notif-item.unread{background:rgba(0,3,201,0.06)}
+        .notif-item .notif-type{display:inline-block;padding:2px 8px;border-radius:10px;font-size:0.65rem;font-weight:700;margin-bottom:4px}
+        .notif-type-info{background:rgba(0,3,201,0.1);color:var(--accent)}
+        .notif-type-warning{background:rgba(245,158,11,0.15);color:#d97706}
+        .notif-type-success{background:rgba(16,185,129,0.15);color:#059669}
+        .notif-type-promo{background:rgba(139,92,246,0.15);color:#7c3aed}
+        .notif-item .notif-text{font-size:0.82rem;line-height:1.6;color:var(--text);margin-bottom:4px}
+        .notif-item .notif-time{font-size:0.7rem;color:var(--muted)}
+        .notif-empty{text-align:center;padding:40px 20px;color:var(--muted);font-size:0.85rem}
+        .notif-empty i{font-size:2rem;margin-bottom:10px;display:block;opacity:0.4}
         .topbar-left{display:flex;align-items:center;gap:10px;flex-shrink:0}
         .theme-toggle{width:36px;height:36px;border-radius:10px;background:var(--card);border:1px solid var(--border);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all 0.25s}
         .theme-toggle:hover{border-color:var(--accent);transform:scale(1.05);box-shadow:0 2px 8px rgba(0,3,201,0.15)}
@@ -87,7 +113,7 @@
         .editor-layout{display:flex;height:calc(100vh - 56px)}
 
         /* Left Sidebar */
-        .sidebar-nav{width:230px;min-width:230px;background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto}
+        .sidebar-nav{width:230px;min-width:230px;background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;order:1}
         .btn-upgrade{width:100%;padding:9px;background:transparent;border:1.5px solid var(--accent);color:var(--accent);border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px}
         .btn-upgrade:hover{background:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(0,3,201,0.2)}
 
@@ -227,9 +253,14 @@
         /* Portfolio Link */
         .portfolio-link-box{margin-top:10px;padding:10px;background:rgba(37,99,235,0.06);border:1px solid rgba(37,99,235,0.15);border-radius:8px}
         .portfolio-link-box .pl-title{font-size:0.72rem;font-weight:700;color:var(--sky);margin-bottom:6px}
-        .portfolio-url{display:flex;gap:6px}
-        .portfolio-url input{flex:1;padding:6px 8px;background:var(--input);border:1px solid var(--border);color:#1a1a2e;border-radius:5px;font-size:0.7rem;font-family:monospace}
-        .portfolio-url button{padding:6px 12px;background:var(--sky);color:#fff;border:none;border-radius:5px;font-size:0.7rem;font-weight:700;cursor:pointer;font-family:inherit}
+        .portfolio-url{display:flex;flex-direction:column;gap:6px}
+        .portfolio-url input{width:100%;padding:8px 10px;background:var(--input);border:1px solid var(--border);color:#1a1a2e;border-radius:6px;font-size:0.72rem;font-family:monospace;direction:ltr;text-align:left;box-sizing:border-box}
+        .portfolio-url-btns{display:flex;gap:6px}
+        .portfolio-url-btns button{flex:1;padding:8px 12px;border:none;border-radius:6px;font-size:0.75rem;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:5px;transition:all 0.2s}
+        .portfolio-url-btns .btn-copy{background:var(--sky);color:#fff}
+        .portfolio-url-btns .btn-copy:hover{background:#1d4ed8}
+        .portfolio-url-btns .btn-open{background:var(--green);color:#fff}
+        .portfolio-url-btns .btn-open:hover{background:#059669}
 
         /* Right - Preview */
         .preview-zone{flex:1;background:#e5e7eb;display:flex;flex-direction:column;align-items:center;overflow:hidden}
@@ -332,6 +363,7 @@
             .sidebar-nav{max-height:30vh}
             .editor-forms{max-height:35vh}
         }
+
     </style>
 </head>
 <body>
@@ -342,7 +374,7 @@
     <div class="topbar-nav">
         <a href="editor.html" class="active">Editor</a>
         <a href="templates.html">Templates</a>
-        <a href="portfolio.html" target="_blank" id="myPageLink">My Page</a>
+        <a href="portfolio-view.html" target="_blank" id="myPageLink">My Page</a>
     </div>
     <div class="topbar-center">
         <div class="ctrl-group">
@@ -396,6 +428,19 @@
         </div>
     </div>
     <div class="topbar-left">
+        <div class="notif-bell" onclick="toggleNotifPanel()" title="الإشعارات">
+            <i class="fas fa-bell"></i>
+            <span class="notif-badge" id="notifBadge" data-count="0"></span>
+            <div class="notif-panel" id="notifPanel">
+                <div class="notif-header">
+                    <h4><i class="fas fa-bell" style="margin-left:6px;color:var(--accent)"></i> الإشعارات</h4>
+                    <button class="notif-clear" onclick="event.stopPropagation();markAllRead()">مقروءة الكل</button>
+                </div>
+                <div class="notif-list" id="notifList">
+                    <div class="notif-empty"><i class="fas fa-bell-slash"></i>لا توجد إشعارات بعد</div>
+                </div>
+            </div>
+        </div>
         <button class="theme-toggle" onclick="QCVTheme.toggle()" title="Toggle theme">
             <i class="fas fa-sun icon-sun" style="color:#f59e0b"></i>
             <i class="fas fa-moon icon-moon" style="display:none;color:#8b5cf6"></i>
@@ -541,11 +586,13 @@
         <!-- Portfolio Link -->
         <div style="padding:10px;border-top:1px solid var(--border)">
             <div class="portfolio-link-box">
-                <div class="pl-title">Portfolio Link</div>
+                <div class="pl-title"><i class="fas fa-link" style="margin-left:4px"></i> رابط المحفظة</div>
                 <div class="portfolio-url">
-                    <input type="text" id="portfolioUrl" readonly value="Loading...">
-                    <button onclick="copyPortfolioLink()" id="copyPortBtn">Copy</button>
-                    <button onclick="openPortfolioLink()" style="background:var(--green);padding:6px 10px" title="Open"><i class="fas fa-external-link-alt"></i></button>
+                    <input type="text" id="portfolioUrl" readonly value="جاري التحميل...">
+                    <div class="portfolio-url-btns">
+                        <button class="btn-copy" onclick="copyPortfolioLink()" id="copyPortBtn"><i class="fas fa-copy"></i> نسخ</button>
+                        <button class="btn-open" onclick="openPortfolioLink()"><i class="fas fa-external-link-alt"></i> فتح</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -614,9 +661,6 @@
         <div class="preview-container" id="previewContainer">
             <div class="ai-cv-badge" id="aiCvBadge" style="display:none"><i class="fas fa-magic"></i> AI Enhanced</div>
             <div class="cv-page tpl-classic" id="cvPage"></div>
-            <div class="add-page-btn" onclick="addBlankPage()" title="صفحة جديدة">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            </div>
         </div>
         <div class="zoom-controls">
             <button class="zoom-btn" onclick="toggleGridView()" title="Grid View" id="gridViewBtn">
@@ -695,7 +739,7 @@
             const isFree = (userData.plan||'free') === 'free';
             subEl.style.display = 'block';
             const dlEl = document.getElementById('ddDownloads');
-            if(dlEl) dlEl.textContent = isFree ? (userData.downloads||0) + ' / 1' : (userData.downloads||0) + ' / ∞';
+            if(dlEl) dlEl.textContent = isFree ? (userData.downloads||0) + ' / 2' : (userData.downloads||0) + ' / ∞';
             const expEl = document.getElementById('ddExpiry');
             if(expEl) {
                 if(userData.planExpiry) {
@@ -712,6 +756,68 @@
             if(upgBtn) upgBtn.style.display = isFree ? '' : 'none';
         }
         window.currentUid=user.uid;
+
+        // ===== NOTIFICATIONS =====
+        let allNotifications = [];
+        onValue(ref(db, 'users/' + user.uid + '/notifications'), (snap) => {
+            const data = snap.val() || {};
+            allNotifications = Object.entries(data).map(([id, n]) => ({ id, ...n })).sort((a, b) => (b.sentAt || 0) - (a.sentAt || 0));
+            renderNotifList();
+        });
+
+        window.toggleNotifPanel = function() {
+            const panel = document.getElementById('notifPanel');
+            panel.classList.toggle('show');
+        };
+
+        document.addEventListener('click', function(e) {
+            const bell = document.querySelector('.notif-bell');
+            const panel = document.getElementById('notifPanel');
+            if (bell && !bell.contains(e.target)) panel.classList.remove('show');
+        });
+
+        function renderNotifList() {
+            const list = document.getElementById('notifList');
+            const badge = document.getElementById('notifBadge');
+            const unread = allNotifications.filter(n => !n.read);
+            badge.textContent = unread.length || '';
+            badge.setAttribute('data-count', unread.length);
+
+            if (!allNotifications.length) {
+                list.innerHTML = '<div class="notif-empty"><i class="fas fa-bell-slash"></i>لا توجد إشعارات بعد</div>';
+                return;
+            }
+            list.innerHTML = allNotifications.slice(0, 20).map(n => {
+                const typeClasses = { info: 'notif-type-info', warning: 'notif-type-warning', success: 'notif-type-success', promo: 'notif-type-promo' };
+                const typeLabels = { info: 'معلوماتية', warning: 'تحذير', success: 'تهنئة', promo: 'عرض خاص' };
+                const ago = getTimeAgo(n.sentAt);
+                return `<div class="notif-item ${n.read ? '' : 'unread'}" onclick="markRead('${n.id}')">
+                    <span class="notif-type ${typeClasses[n.type] || 'notif-type-info'}">${typeLabels[n.type] || n.type}</span>
+                    <div class="notif-text">${n.text || ''}</div>
+                    <div class="notif-time">${ago}</div>
+                </div>`;
+            }).join('');
+        }
+
+        window.markRead = async function(id) {
+            await set(ref(db, 'users/' + user.uid + '/notifications/' + id + '/read'), true);
+        };
+
+        window.markAllRead = async function() {
+            const updates = {};
+            allNotifications.forEach(n => { updates['users/' + user.uid + '/notifications/' + n.id + '/read'] = true; });
+            await update(ref(db), updates);
+            document.getElementById('notifPanel').classList.remove('show');
+        };
+
+        function getTimeAgo(ts) {
+            if (!ts) return '';
+            const diff = Date.now() - ts;
+            if (diff < 60000) return 'الآن';
+            if (diff < 3600000) return 'منذ ' + Math.floor(diff / 60000) + ' دقيقة';
+            if (diff < 86400000) return 'منذ ' + Math.floor(diff / 3600000) + ' ساعة';
+            return 'منذ ' + Math.floor(diff / 86400000) + ' يوم';
+        }
 
         // Generate portfolio code — stored directly under users/{uid}/portfolioCode
         const getOrCreatePortfolioCode = async (uid) => {
@@ -741,7 +847,7 @@
         };
 
         const shortCode = await getOrCreatePortfolioCode(user.uid);
-        const portfolioUrl = `https://qcv.vexonet.online/portfolio/${shortCode}`;
+        const portfolioUrl = `https://qcv.vexonet.online/portfolio-view.html?code=${shortCode}`;
         document.getElementById('portfolioUrl').value = portfolioUrl;
         const myPageLink = document.getElementById('myPageLink');
         if (myPageLink) myPageLink.href = portfolioUrl;
@@ -767,6 +873,17 @@
         if (jobForm) jobForm.style.display = paid ? '' : 'none';
         if (aiBadge) aiBadge.style.display = paid ? 'flex' : 'none';
         if (btnAiGen) btnAiGen.style.display = paid ? '' : 'none';
+        const sel = document.getElementById('templateSelect');
+        if (sel) {
+            Array.from(sel.options).forEach(opt => {
+                if (!FREE_TEMPLATES.includes(opt.value)) {
+                    opt.disabled = !paid;
+                    opt.text = paid ? opt.value.charAt(0).toUpperCase() + opt.value.slice(1).replace(/-/g,' ') : opt.value.charAt(0).toUpperCase() + opt.value.slice(1).replace(/-/g,' ') + ' 🔒';
+                } else {
+                    opt.text = opt.value.charAt(0).toUpperCase() + opt.value.slice(1) + ' (Free)';
+                }
+            });
+        }
     }
     window.toggleProfile=()=>document.getElementById('profileDropdown').classList.toggle('show');
     document.addEventListener('click',e=>{if(!e.target.closest('.profile-area'))document.getElementById('profileDropdown').classList.remove('show')});
@@ -966,6 +1083,13 @@
     };
 
     window.changeTemplate = function(tpl) {
+        const paid = isPaidPlan();
+        if (!paid && !FREE_TEMPLATES.includes(tpl)) {
+            if(window.QCVNotify) QCVNotify.error();
+            alert('This template is for Pro users only. Upgrade to unlock all templates.');
+            document.getElementById('templateSelect').value = currentTemplate;
+            return;
+        }
         currentTemplate = tpl;
         document.getElementById('cvPage').className = 'cv-page tpl-' + tpl;
         renderCV();
@@ -1161,66 +1285,55 @@
 
     window.exportPDF = async function() {
         const paid = isPaidPlan();
+        const b = document.getElementById('exportBtn');
 
-        // Free plan: 1 download limit check
         if(!paid && window.currentUid) {
-            const userSnap = await get(ref(db, 'users/' + window.currentUid));
-            const ud = userSnap.val() || {};
-            const downloads = ud.downloads || 0;
-            if(downloads >= 1) {
-                const msg = document.createElement('div');
-                msg.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--card);border:1px solid var(--border);border-radius:16px;padding:30px 40px;z-index:99999;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.5);max-width:380px;width:90%';
-                msg.innerHTML = '<div style="font-size:2rem;margin-bottom:12px">&#128274;</div><h3 style="margin-bottom:8px;font-size:1.1rem">Download Limit Reached</h3><p style="color:var(--muted);font-size:0.85rem;margin-bottom:20px;line-height:1.6">Free plan allows 1 PDF download. Upgrade to Pro for unlimited exports.</p><button style="margin-right:8px;padding:10px 24px;background:var(--accent);border:none;color:#000;border-radius:10px;font-weight:700;cursor:pointer;font-family:Cairo,sans-serif">Upgrade to Pro</button><button onclick="this.parentElement.remove()" style="padding:10px 24px;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:10px;cursor:pointer;font-family:Cairo,sans-serif">Cancel</button>';
-                msg.querySelector('button').onclick = () => { window.location.href = 'pay.html'; };
-                document.body.appendChild(msg);
-                return;
-            }
-            // Increment download count
-            set(ref(db, 'users/' + window.currentUid + '/downloads'), downloads + 1).catch(() => {});
+            try {
+                const userSnap = await get(ref(db, 'users/' + window.currentUid));
+                const ud = userSnap.val() || {};
+                const downloads = ud.downloads || 0;
+                if(downloads >= 2) {
+                    if(window.QCVNotify) QCVNotify.error();
+                    alert('You reached the free limit (2 downloads). Upgrade to Pro for unlimited.');
+                    window.location.href = 'pay.html';
+                    return;
+                }
+                set(ref(db, 'users/' + window.currentUid + '/downloads'), downloads + 1).catch(() => {});
+            } catch(e) { console.warn('Download check error:', e); }
         }
 
         const nameVal = document.getElementById('inputName').value.trim() || 'cv';
-        const defaultName = nameVal + '_CV';
-        const fileName = prompt('File name:', defaultName);
-        if (fileName === null) return;
-        const finalName = (fileName.trim() || defaultName).replace(/[^a-zA-Z0-9\u0600-\u06FF_-]/g, '_');
+        const finalName = (nameVal + '_CV').replace(/[^a-zA-Z0-9\u0600-\u06FF_-]/g, '_');
 
-        const b = document.getElementById('exportBtn');
         b.classList.add('loading');
-
         const el = document.getElementById('cvPage');
 
-        // Capture with html2canvas then create 1-page PDF
+        let watermark = null;
+        if (!paid) {
+            watermark = document.createElement('div');
+            watermark.style.cssText = 'position:absolute;bottom:12px;left:50%;transform:translateX(-50%);font-size:8px;color:#999;font-family:Inter,sans-serif;white-space:nowrap;z-index:10;pointer-events:none;letter-spacing:0.5px';
+            watermark.textContent = 'Powered by QCV - qcv.vexonet.online';
+            el.style.position = 'relative';
+            el.appendChild(watermark);
+        }
+
         try {
-            const canvas = await html2canvas(el, {
-                scale: paid ? 2 : 1.5,
-                useCORS: true,
-                letterRendering: true,
-                logging: false,
-                width: el.scrollWidth,
-                height: Math.min(el.scrollHeight, 1122)
-            });
-
-            const imgData = canvas.toDataURL('image/jpeg', paid ? 0.98 : 0.75);
-            const pdf = new jspdf.jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
-            const pageWidth = pdf.internal.pageSize.getWidth();
-            const pageHeight = pdf.internal.pageSize.getHeight();
-
-            // Fit image to 1 A4 page
-            const imgWidth = pageWidth;
-            const imgHeight = (canvas.height * pageWidth) / canvas.width;
-            const finalHeight = Math.min(imgHeight, pageHeight);
-
-            pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, finalHeight);
-            pdf.save(finalName + '.pdf');
-
-            b.classList.remove('loading');
+            const opt = {
+                margin: 0,
+                filename: finalName + '.pdf',
+                image: { type: 'jpeg', quality: paid ? 0.98 : 0.85 },
+                html2canvas: { scale: paid ? 2 : 1.5, useCORS: true, letterRendering: true, logging: false },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: ['avoid-all'] }
+            };
+            await html2pdf().set(opt).from(el).save();
             if(window.QCVNotify) QCVNotify.download();
         } catch(err) {
             console.error('PDF export error:', err);
+            if(window.QCVNotify) QCVNotify.error();
+        } finally {
+            if (watermark && watermark.parentNode) watermark.remove();
             b.classList.remove('loading');
-            // Fallback: print
-            window.print();
         }
     };
 
@@ -1398,43 +1511,52 @@
     }
 
     window.showTemplates = function() {
-        const grid = document.getElementById('templateGrid');
-        const templates = QCVTemplates.getAll();
-        const paid = isPaidPlan();
-        const catColors = {ats:'#38bdf8',modern:'#2563eb',creative:'#8b5cf6',classic:'#f59e0b',executive:'#1e293b'};
-        const sampleData = {name:'Ahmad Mostafa',title:'Senior UI/UX Designer',email:'ahmad@example.com',phone:'+20 123 456 789',location:'Cairo, Egypt',linkedin:'linkedin.com/in/ahmadmostafa',summary:'Product designer with 6+ years of experience specializing in resume systems and candidate experiences.',skills:['UI Design','Figma','Prototyping','User Research','CSS','Design Systems'],experience:[{role:'Senior Product Designer',company:'TechCorp Inc.',duration:'2022 - Present',description:'- Redesigned application flows, lifting completion by 28%\n- Led design system overhaul for 5 products'},{role:'UX Designer',company:'StartupX',duration:'2019 - 2022',description:'- Built recruiter dashboards and scoring tools\n- Improved onboarding conversion by 35%'}],education:[{degree:'B.Sc. Computer Science',school:'Cairo University',duration:'2015 - 2019',description:'- GPA: 3.7/4.0'}],languages:[{name:'Arabic',level:'Native'},{name:'English',level:'Fluent'}]};
-        grid.innerHTML = templates.map(t => {
-            const locked = !paid && !FREE_TEMPLATES.includes(t.id);
-            const isSelected = currentTemplate === t.id;
-            const clickAttr = locked ? `onclick="window.location.href='pay.html'"` : `onclick="selectTemplate('${t.id}')"`;
-            const preview = t.id ? QCVTemplates.render(t.id, sampleData) : '';
-            return `<div class="tpl-card${isSelected?' selected':''}${locked?' locked':''}" ${clickAttr}>
-                <div class="tpl-thumb"><div class="tpl-thumb-inner">${preview}</div></div>
-                <div class="tpl-card-name">${t.nameAr} — ${t.name}</div>
-                <div class="tpl-card-desc">${t.description}</div>
-                <div class="tpl-card-badge" style="background:${(catColors[t.category]||'#666')}18;color:${catColors[t.category]||'#888'}">${t.category.toUpperCase()}</div>
-                ${locked ? '<div class="tpl-card-lock">&#128274; Subscribe to unlock</div>' : ''}
-            </div>`;
-        }).join('');
-        document.getElementById('templatePanel').classList.add('show');
+        try {
+            const grid = document.getElementById('templateGrid');
+            if (!grid) { console.error('templateGrid not found'); return; }
+            const templates = QCVTemplates.getAll();
+            const paid = isPaidPlan();
+            const catColors = {ats:'#38bdf8',modern:'#2563eb',creative:'#8b5cf6',classic:'#f59e0b',executive:'#1e293b'};
+            const sampleData = {name:'Ahmad Mostafa',title:'Senior UI/UX Designer',email:'ahmad@example.com',phone:'+20 123 456 789',location:'Cairo, Egypt',linkedin:'linkedin.com/in/ahmadmostafa',summary:'Product designer with 6+ years of experience.',skills:['UI Design','Figma','Prototyping','User Research','CSS','Design Systems'],experience:[{role:'Senior Product Designer',company:'TechCorp Inc.',duration:'2022 - Present',description:'- Redesigned application flows'},{role:'UX Designer',company:'StartupX',duration:'2019 - 2022',description:'- Built recruiter dashboards'}],education:[{degree:'B.Sc. Computer Science',school:'Cairo University',duration:'2015 - 2019',description:'- GPA: 3.7/4.0'}],languages:[{name:'Arabic',level:'Native'},{name:'English',level:'Fluent'}]};
+            grid.innerHTML = templates.map(t => {
+                const locked = !paid && !FREE_TEMPLATES.includes(t.id);
+                const isSelected = currentTemplate === t.id;
+                const clickAttr = locked ? `onclick="window.location.href='pay.html'"` : `onclick="selectTemplate('${t.id}')"`;
+                let preview = '';
+                try { preview = t.id ? QCVTemplates.render(t.id, sampleData) : ''; } catch(e) { console.warn('Preview error for', t.id, e); }
+                return `<div class="tpl-card${isSelected?' selected':''}${locked?' locked':''}" ${clickAttr}>
+                    <div class="tpl-thumb"><div class="tpl-thumb-inner">${preview}</div></div>
+                    <div class="tpl-card-name">${t.nameAr} — ${t.name}</div>
+                    <div class="tpl-card-desc">${t.description}</div>
+                    <div class="tpl-card-badge" style="background:${(catColors[t.category]||'#666')}18;color:${catColors[t.category]||'#888'}">${t.category.toUpperCase()}</div>
+                    ${locked ? '<div class="tpl-card-lock">&#128274; Subscribe to unlock</div>' : ''}
+                </div>`;
+            }).join('');
+            document.getElementById('templatePanel').classList.add('show');
+        } catch(e) { console.error('showTemplates error:', e); }
     };
 
     window.hideTemplates = function() {
-        document.getElementById('templatePanel').classList.remove('show');
+        const panel = document.getElementById('templatePanel');
+        if (panel) panel.classList.remove('show');
     };
 
     window.selectTemplate = function(id) {
-        const paid = isPaidPlan();
-        if (!paid && !FREE_TEMPLATES.includes(id)) {
-            window.location.href = 'pay.html';
-            return;
-        }
-        if(window.QCVNotify) QCVNotify.click();
-        currentTemplate = id;
-        document.getElementById('templateSelect').value = id;
-        document.getElementById('cvPage').className = 'cv-page tpl-' + id;
-        renderCV();
-        hideTemplates();
+        try {
+            const paid = isPaidPlan();
+            if (!paid && !FREE_TEMPLATES.includes(id)) {
+                window.location.href = 'pay.html';
+                return;
+            }
+            if(window.QCVNotify) QCVNotify.click();
+            currentTemplate = id;
+            const sel = document.getElementById('templateSelect');
+            if (sel) sel.value = id;
+            const cvPage = document.getElementById('cvPage');
+            if (cvPage) cvPage.className = 'cv-page tpl-' + id;
+            renderCV();
+            hideTemplates();
+        } catch(e) { console.error('selectTemplate error:', e); }
     };
 
     window.filterTemplates = function(cat, el) {
@@ -1450,34 +1572,31 @@
 
     window.copyPortfolioLink = function() {
         const raw = document.getElementById('portfolioUrl').value;
+        if (!raw || raw === 'جاري التحميل...') return;
         const url = raw.startsWith('http') ? raw : 'https://' + raw;
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(url).then(() => {
-                const btn = document.getElementById('copyPortBtn');
-                if(btn) btn.textContent = 'Copied!';
-                setTimeout(() => { if(btn) btn.textContent = 'Copy'; }, 1500);
-            }).catch(() => fallbackCopy(url));
-        } else {
-            fallbackCopy(url);
+        const btn = document.getElementById('copyPortBtn');
+        try {
+            const ta = document.createElement('textarea');
+            ta.value = url;
+            ta.style.cssText = 'position:fixed;left:-9999px;top:-9999px';
+            document.body.appendChild(ta);
+            ta.focus();
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            if(btn) btn.innerHTML = '<i class="fas fa-check"></i> تم النسخ!';
+            setTimeout(() => { if(btn) btn.innerHTML = '<i class="fas fa-copy"></i> نسخ'; }, 1500);
+        } catch(e) {
+            if(btn) btn.innerHTML = '<i class="fas fa-times"></i> فشل';
+            setTimeout(() => { if(btn) btn.innerHTML = '<i class="fas fa-copy"></i> نسخ'; }, 1500);
         }
     };
     window.openPortfolioLink = function() {
         const raw = document.getElementById('portfolioUrl').value;
+        if (!raw || raw === 'جاري التحميل...') return;
         const url = raw.startsWith('http') ? raw : 'https://' + raw;
         window.open(url, '_blank');
     };
-    function fallbackCopy(text) {
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        ta.style.cssText = 'position:fixed;left:-9999px';
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        const btn = document.getElementById('copyPortBtn');
-        if(btn) btn.textContent = 'Copied!';
-        setTimeout(() => { if(btn) btn.textContent = 'Copy'; }, 1500);
-    }
 
     // ---- Tab Menu (3-dots) ----
     window.toggleTabMenu = function(btn) {

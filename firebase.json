@@ -13,7 +13,7 @@
       },
       {
         "source": "/p/:code",
-        "destination": "/p.html"
+        "destination": "/portfolio-view.html"
       }
     ]
   }

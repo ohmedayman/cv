@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html><head>
 <script>
-const hash = window.location.hash.replace('#','');
-if(hash) {
-    window.location.replace('https://qcv.vexonet.online/portfolio.html?uid=' + hash);
+var hash = window.location.hash.replace('#','');
+if (hash) {
+    window.location.replace('https://qcv.vexonet.online/portfolio-view.html?code=' + hash);
 } else {
     window.location.replace('https://qcv.vexonet.online/');
 }

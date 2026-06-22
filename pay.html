@@ -189,7 +189,10 @@
             .footer{padding:30px 20px 15px}
             .footer-content{flex-direction:column}
         }
+
     </style>
+    <script src="js/theme.js"></script>
+    <script src="js/lang.js"></script>
 </head>
 <body>
 
@@ -197,20 +200,20 @@
 <div class="confetti-box" id="confettiBox"></div>
 
 <div class="container">
-    <a href="editor.html" class="back-link"><i class="fas fa-arrow-right"></i> العودة للمحرر</a>
+    <a href="editor.html" class="back-link" data-i18n="go_back"><i class="fas fa-arrow-right"></i> العودة للمحرر</a>
 
     <div class="page-header">
-        <h1>اشترك في <span>QCV</span></h1>
-        <p>اختر الباقة المناسبة وابدأ في بناء سيرتك الذاتية</p>
+        <h1 data-i18n-html="pay_title">اشترك في <span>QCV</span></h1>
+        <p data-i18n="pay_subtitle">اختر الباقة المناسبة وابدأ في بناء سيرتك الذاتية</p>
     </div>
 
     <!-- Steps -->
     <div class="steps">
-        <div class="step active" id="step1Ind"><span class="step-num">1</span> اختر الباقة</div>
+        <div class="step active" id="step1Ind"><span class="step-num">1</span> <span data-i18n="pay_step1">اختر الباقة</span></div>
         <div class="step-connector" id="conn1"></div>
-        <div class="step" id="step2Ind"><span class="step-num">2</span> بيانات الدفع</div>
+        <div class="step" id="step2Ind"><span class="step-num">2</span> <span data-i18n="pay_step2">بيانات الدفع</span></div>
         <div class="step-connector" id="conn2"></div>
-        <div class="step" id="step3Ind"><span class="step-num">3</span> التاكيد</div>
+        <div class="step" id="step3Ind"><span class="step-num">3</span> <span data-i18n="pay_step3">التاكيد</span></div>
     </div>
 
     <!-- STEP 1: Plan Selection -->
@@ -218,7 +221,7 @@
         <div class="plans-grid">
             <div class="plan-card" onclick="selectPlan(this,'free')">
                 <div class="plan-icon"><i class="fas fa-gift"></i></div>
-                <div class="plan-name">Free</div>
+                <div class="plan-name" data-i18n="plan_free_name">Free</div>
                 <div class="plan-price free-p">مجاني</div>
                 <div class="plan-period">للأبد</div>
                 <ul class="plan-features">
@@ -234,7 +237,7 @@
             <div class="plan-card popular" onclick="selectPlan(this,'pro')">
                 <div class="plan-popular">الأكثر شعبية</div>
                 <div class="plan-icon"><i class="fas fa-star"></i></div>
-                <div class="plan-name">Pro</div>
+                <div class="plan-name" data-i18n="plan_pro_name">Pro</div>
                 <div class="plan-price">99 <span class="curr">ج.م</span></div>
                 <div class="plan-period">شهرياً</div>
                 <ul class="plan-features">
@@ -248,7 +251,7 @@
             </div>
             <div class="plan-card" onclick="selectPlan(this,'unlimited')">
                 <div class="plan-icon"><i class="fas fa-gem"></i></div>
-                <div class="plan-name">Unlimited</div>
+                <div class="plan-name" data-i18n="plan_unlim_name">Unlimited</div>
                 <div class="plan-price">299 <span class="curr">ج.م</span></div>
                 <div class="plan-period">شهرياً</div>
                 <ul class="plan-features">
@@ -278,8 +281,8 @@
                 <div class="method-card selected" onclick="selectMethod(this,'vodafone')">
                     <div class="method-icon vodafone"><i class="fas fa-mobile-alt"></i></div>
                     <div class="method-info">
-                        <div class="method-name">فودافون كاش</div>
-                        <div class="method-desc">تحويل فوري على المحفظة</div>
+                        <div class="method-name" data-i18n="pay_vodafone">فودافون كاش</div>
+                        <div class="method-desc" data-i18n="pay_vodafone_desc">تحويل فوري على المحفظة</div>
                     </div>
                     <div class="method-check">&#10003;</div>
                 </div>
@@ -287,8 +290,8 @@
                 <div class="method-card" onclick="selectMethod(this,'fawry')">
                     <div class="method-icon fawry"><i class="fas fa-store"></i></div>
                     <div class="method-info">
-                        <div class="method-name">pay فوري</div>
-                        <div class="method-desc">ادفع عن طريق فوري</div>
+                        <div class="method-name" data-i18n="pay_fawry">pay فوري</div>
+                        <div class="method-desc" data-i18n="pay_fawry_desc">ادفع عن طريق فوري</div>
                     </div>
                     <div class="method-check">&#10003;</div>
                 </div>
@@ -296,17 +299,17 @@
                 <div class="method-card" onclick="selectMethod(this,'instapay')">
                     <div class="method-icon instapay"><i class="fas fa-bolt"></i></div>
                     <div class="method-info">
-                        <div class="method-name">استانبي</div>
-                        <div class="method-desc">تحويل فوري من البنك</div>
+                        <div class="method-name" data-i18n="pay_instapay">استانبي</div>
+                        <div class="method-desc" data-i18n="pay_instapay_desc">تحويل فوري من البنك</div>
                     </div>
                     <div class="method-check">&#10003;</div>
                 </div>
 
                 <div class="wallet-box" id="walletBox">
-                    <div class="wb-label">قم بالتحويل على هذا الرقم</div>
+                    <div class="wb-label" data-i18n="pay_wallet_label">قم بالتحويل على هذا الرقم</div>
                     <div class="wb-number">01028707543</div>
                     <div class="wb-name">محمد ايمن</div>
-                    <button class="btn-copy" onclick="copyNumber()">&#128203; نسخ الرقم</button>
+                    <button class="btn-copy" onclick="copyNumber()" data-i18n="copy_link">&#128203; نسخ الرقم</button>
                 </div>
             </div>
 
@@ -319,28 +322,28 @@
                     <input type="text" id="planField" readonly style="opacity:0.7;cursor:default">
                 </div>
                 <div class="fg">
-                    <label>الاسم <span class="req">*</span></label>
+                    <label data-i18n="pay_name">الاسم <span class="req">*</span></label>
                     <input type="text" id="cardName" placeholder="أدخل اسمك">
                     <div class="err-msg">أدخل اسم صاحب البطاقة</div>
                 </div>
                 <div class="fg">
-                    <label>رقم الهاتف <span class="req">*</span></label>
+                    <label data-i18n="pay_phone">رقم الهاتف <span class="req">*</span></label>
                     <input type="text" id="phone" placeholder="01xxxxxxxxx" maxlength="11" oninput="formatPhone(this)">
                     <div class="err-msg">أدخل رقم الهاتف</div>
                 </div>
                 <div class="fg">
-                    <label>رقم المحفظة</label>
+                    <label data-i18n="pay_wallet">رقم المحفظة</label>
                     <input type="text" id="walletInput" placeholder="من المحفظة الشخصي">
                 </div>
                 <div class="fg">
-                    <label>ملاحظات</label>
+                    <label data-i18n="pay_notes">ملاحظات</label>
                     <textarea id="notes" placeholder="أي ملاحظات"></textarea>
                 </div>
 
                 <div class="btn-group">
                     <button class="btn btn-secondary" onclick="goToStep(1)">السابق</button>
                     <button class="btn btn-primary" id="payBtn" onclick="submitPayment()">
-                        <span class="btn-text">تأكيد الدفع &#10003;</span>
+                        <span class="btn-text" data-i18n="pay_submit">تأكيد الدفع &#10003;</span>
                         <div class="spinner"></div>
                     </button>
                 </div>
@@ -353,15 +356,15 @@
     <div class="step-content" id="step3">
         <div class="success-box">
             <div class="success-icon">&#10003;</div>
-            <h2>تم الدفع بنجاح!</h2>
-            <p>شكراً لك! تم استلام طلبك بنجاح. يمكنك تحميل الإيصال أو مشاركته على واتساب.</p>
-            <div class="waiting-badge">&#9203; بانتظار التفعيل</div>
+            <h2 data-i18n="pay_success_title">تم الدفع بنجاح!</h2>
+            <p data-i18n="pay_success_desc">شكراً لك! تم استلام طلبك بنجاح. يمكنك تحميل الإيصال أو مشاركته على واتساب.</p>
+            <div class="waiting-badge" data-i18n="pay_waiting">&#9203; بانتظار التفعيل</div>
         </div>
 
         <div class="receipt" id="paymentReceipt">
             <div class="receipt-header">
                 <div class="logo">Q<span>CV</span></div>
-                <p>إيصال الدفع</p>
+                <p data-i18n="pay_receipt_title">إيصال الدفع</p>
             </div>
             <div class="receipt-body">
                 <div class="receipt-row">
@@ -399,8 +402,8 @@
         </div>
 
         <div class="receipt-actions" style="max-width:480px;margin:0 auto">
-            <button class="btn btn-download" onclick="downloadReceipt()"><i class="fas fa-download"></i> تحميل الإيصال</button>
-            <button class="btn btn-whatsapp" onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i> مشاركة على واتساب</button>
+            <button class="btn btn-download" onclick="downloadReceipt()" data-i18n="download"><i class="fas fa-download"></i> تحميل الإيصال</button>
+            <button class="btn btn-whatsapp" onclick="shareWhatsApp()" data-i18n="whatsapp"><i class="fab fa-whatsapp"></i> مشاركة على واتساب</button>
         </div>
 
         <div class="btn-group" style="justify-content:center;margin-top:24px;max-width:320px;margin-left:auto;margin-right:auto">

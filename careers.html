@@ -139,6 +139,7 @@
             .footer{padding:30px 20px 15px}
             .footer-content{flex-direction:column}
         }
+
     </style>
     <script type="application/ld+json">
     {
@@ -168,6 +169,8 @@
         }
     }
     </script>
+    <script src="js/theme.js"></script>
+    <script src="js/lang.js"></script>
 </head>
 <body>
 
@@ -175,48 +178,49 @@
 <nav class="navbar">
     <a href="index.html" class="logo" style="font-size:1.8rem;font-weight:900">Q<span style="color:var(--accent)">CV</span></a>
     <ul class="nav-links">
-        <li><a href="index.html">الرئيسية</a></li>
-        <li><a href="index.html#pricing">التسعير</a></li>
-        <li><a href="careers.html" style="color:var(--accent)">الوظائف</a></li>
-        <li><a href="help.html">المساعدة</a></li>
-        <li><a href="login.html" class="nav-cta">ابدأ مجاناً</a></li>
+        <li><a href="index.html" data-i18n="home">الرئيسية</a></li>
+        <li><a href="index.html#pricing" data-i18n="pricing">التسعير</a></li>
+        <li><a href="careers.html" style="color:var(--accent)" data-i18n="careers">الوظائف</a></li>
+        <li><a href="help.html" data-i18n="help">المساعدة</a></li>
+        <li><a href="login.html" class="nav-cta" data-i18n="start_free">ابدأ مجاناً</a></li>
+        <li><div class="lang-switch" style="display:flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:2px 4px"><button class="lang-ar" onclick="QCVLang.set('ar')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:1">عربي</button><button class="lang-en" onclick="QCVLang.set('en')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:0.5">EN</button></div></li>
     </ul>
 </nav>
 
 <!-- ===== HERO ===== -->
 <section class="hero">
-    <div class="hero-badge"><i class="fas fa-hand-wave"></i> مرحباً بكم</div>
-    <h1>انضم الى مستقبل التوظيف<br>القائم على <span class="hl">الذكاء الاصطناعي</span></h1>
-    <p>نحن نبني الأدوات التي تغيّر طريقة توظيف الأشخاص. انضم إلينا وساهم في بناء مستقبل العمل</p>
-    <button class="hero-btn" onclick="document.getElementById('jobs').scrollIntoView({behavior:'smooth'})"><i class="fas fa-briefcase"></i> استعرض الوظائف</button>
+    <div class="hero-badge" data-i18n="careers_badge"><i class="fas fa-hand-wave"></i> مرحباً بكم</div>
+    <h1 data-i18n-html="careers_title">انضم الى مستقبل التوظيف<br>القائم على <span class="hl">الذكاء الاصطناعي</span></h1>
+    <p data-i18n="careers_desc">نحن نبني الأدوات التي تغيّر طريقة توظيف الأشخاص. انضم إلينا وساهم في بناء مستقبل العمل</p>
+    <button class="hero-btn" data-i18n="careers_browse" onclick="document.getElementById('jobs').scrollIntoView({behavior:'smooth'})"><i class="fas fa-briefcase"></i> استعرض الوظائف</button>
 </section>
 
 <!-- ===== WHAT WE OFFER ===== -->
 <section class="section">
     <div class="section-header">
-        <h2>ماذا نقدم</h2>
-        <p>فرص للنمو والتطور المهني في بيئة عمل مبتكرة</p>
+        <h2 data-i18n="careers_offer_title">ماذا نقدم</h2>
+        <p data-i18n="careers_offer_sub">فرص للنمو والتطور المهني في بيئة عمل مبتكرة</p>
     </div>
     <div class="offer-grid">
         <div class="offer-card">
             <div class="icon"><i class="fas fa-brain"></i></div>
-            <h3>التوظيف الذكي</h3>
-            <p>نستخدم أحدث تقنيات الذكاء الاصطناعي لتحسين عملية التوظيف وجعلها أكثر عدلاً وشفافية</p>
+            <h3 data-i18n="careers_smart_hiring">التوظيف الذكي</h3>
+            <p data-i18n="careers_smart_hiring_desc">نستخدم أحدث تقنيات الذكاء الاصطناعي لتحسين عملية التوظيف وجعلها أكثر عدلاً وشفافية</p>
         </div>
         <div class="offer-card">
             <div class="icon"><i class="fas fa-rocket"></i></div>
-            <h3>بيئة عمل مريحة</h3>
-            <p>نقدم بيئة عمل مرنة تدعم التوازن بين العمل والحياة الشخصية مع إمكانية العمل عن بُعد</p>
+            <h3 data-i18n="careers_comfortable_work">بيئة عمل مريحة</h3>
+            <p data-i18n="careers_comfortable_work_desc">نقدم بيئة عمل مرنة تدعم التوازن بين العمل والحياة الشخصية مع إمكانية العمل عن بُعد</p>
         </div>
         <div class="offer-card">
             <div class="icon"><i class="fas fa-lightbulb"></i></div>
-            <h3>ثقافة الابتكار</h3>
-            <p>نشجع الأفكار الجديدة ونوفر الموارد اللازمة لتحويلها إلى منتجات حقيقية تفيد المجتمع</p>
+            <h3 data-i18n="careers_innovation">ثقافة الابتكار</h3>
+            <p data-i18n="careers_innovation_desc">نشجع الأفكار الجديدة ونوفر الموارد اللازمة لتحويلها إلى منتجات حقيقية تفيد المجتمع</p>
         </div>
         <div class="offer-card">
             <div class="icon"><i class="fas fa-graduation-cap"></i></div>
-            <h3>بيئة قادرة</h3>
-            <p>نوفر برامج تدريب وتطوير مهني مستمرة لمساعدة فريقنا على النمو والتطور باستمرار</p>
+            <h3 data-i18n="careers_empowering">بيئة قادرة</h3>
+            <p data-i18n="careers_empowering_desc">نوفر برامج تدريب وتطوير مهني مستمرة لمساعدة فريقنا على النمو والتطور باستمرار</p>
         </div>
     </div>
 </section>
@@ -224,24 +228,24 @@
 <!-- ===== BENEFITS ===== -->
 <section class="section" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
     <div class="section-header">
-        <h2>المزايا والفوائد</h2>
-        <p>نقدم مجموعة شاملة من المزايا لضمان راحة وسعادة فريقنا</p>
+        <h2 data-i18n="careers_benefits_title">المزايا والفوائد</h2>
+        <p data-i18n="careers_benefits_sub">نقدم مجموعة شاملة من المزايا لضمان راحة وسعادة فريقنا</p>
     </div>
     <div class="benefits-grid">
         <div class="benefit-card">
             <div class="benefit-icon"><i class="fas fa-money-bill-wave"></i></div>
-            <h3>رواتب تنافسية</h3>
-            <p>نقدم رواتب تنافسية تتجاوز متوسط السوق مع مكافآت أداء سنوية</p>
+            <h3 data-i18n="careers_salary">رواتب تنافسية</h3>
+            <p data-i18n="careers_salary_desc">نقدم رواتب تنافسية تتجاوز متوسط السوق مع مكافآت أداء سنوية</p>
         </div>
         <div class="benefit-card">
             <div class="benefit-icon"><i class="fas fa-calendar-alt"></i></div>
-            <h3>إجازات ومرونة</h3>
-            <p>إجازات سنوية مرنة وعمل عن بُعد (Remote) مع مرونة في أوقات العمل</p>
+            <h3 data-i18n="careers_vacation">إجازات ومرونة</h3>
+            <p data-i18n="careers_vacation_desc">إجازات سنوية مرنة وعمل عن بُعد (Remote) مع مرونة في أوقات العمل</p>
         </div>
         <div class="benefit-card">
             <div class="benefit-icon"><i class="fas fa-heartbeat"></i></div>
-            <h3>تأمين صحي</h3>
-            <p>تغطية تأمينية شاملة لك ولعائلتك مع باقات صحية متكاملة</p>
+            <h3 data-i18n="careers_health">تأمين صحي</h3>
+            <p data-i18n="careers_health_desc">تغطية تأمينية شاملة لك ولعائلتك مع باقات صحية متكاملة</p>
         </div>
     </div>
 </section>
@@ -249,7 +253,7 @@
 <!-- ===== JOBS ===== -->
 <section class="section jobs-section" id="jobs">
     <div class="jobs-header">
-        <h2>الوظائف الشاغرة</h2>
+        <h2 data-i18n="careers_open_positions">الوظائف الشاغرة</h2>
         <div class="jobs-count" id="jobsCount">جاري التحميل...</div>
     </div>
     <div id="jobsContainer">
@@ -260,9 +264,9 @@
 <!-- ===== CTA ===== -->
 <section class="cta-section">
     <div class="cta-box">
-        <h2>لم تجد الوظيفة المناسبة؟</h2>
-        <p>أرسل لنا سيرتك الذاتية وسنتواصل معك في حال وجود فرصة مناسبة لمهاراتك وخبراتك</p>
-        <a href="mailto:support@qcv.com?subject=تقديم سيرة ذاتية" class="hero-btn"><i class="fas fa-envelope"></i> تواصل معنا</a>
+        <h2 data-i18n="careers_not_found_title">لم تجد الوظيفة المناسبة؟</h2>
+        <p data-i18n="careers_not_found_desc">أرسل لنا سيرتك الذاتية وسنتواصل معك في حال وجود فرصة مناسبة لمهاراتك وخبراتك</p>
+        <a href="mailto:support@qcv.com?subject=تقديم سيرة ذاتية" class="hero-btn" data-i18n="contact_us"><i class="fas fa-envelope"></i> تواصل معنا</a>
     </div>
 </section>
 
@@ -271,33 +275,33 @@
     <div class="footer-content">
         <div class="footer-brand">
             <div class="logo">Q<span>CV</span></div>
-            <p>منشئ سير ذاتية ذكي مدعوم بالذكاء الاصطناعي لمساعدتك في الحصول على الوظيفة الأحلام</p>
+            <p data-i18n="footer_brand">منشئ سير ذاتية ذكي مدعوم بالذكاء الاصطناعي لمساعدتك في الحصول على الوظيفة الأحلام</p>
         </div>
         <div class="footer-links">
-            <h4>المنتج</h4>
+            <h4 data-i18n="footer_product">المنتج</h4>
             <ul>
-                <li><a href="index.html#features">المميزات</a></li>
-                <li><a href="index.html#pricing">التسعير</a></li>
-                <li><a href="index.html#how">كيف يعمل</a></li>
+                <li><a href="index.html#features" data-i18n="features">المميزات</a></li>
+                <li><a href="index.html#pricing" data-i18n="pricing">التسعير</a></li>
+                <li><a href="index.html#how" data-i18n="how_works">كيف يعمل</a></li>
             </ul>
         </div>
         <div class="footer-links">
-            <h4>الشركة</h4>
+            <h4 data-i18n="footer_company">الشركة</h4>
             <ul>
-                <li><a href="#">من نحن</a></li>
-                <li><a href="careers.html">الوظائف</a></li>
-                <li><a href="#">سياسة الخصوصية</a></li>
+                <li><a href="#" data-i18n="about_us">من نحن</a></li>
+                <li><a href="careers.html" data-i18n="careers">الوظائف</a></li>
+                <li><a href="#" data-i18n="privacy">سياسة الخصوصية</a></li>
             </ul>
         </div>
         <div class="footer-links">
-            <h4>الدعم</h4>
+            <h4 data-i18n="footer_support">الدعم</h4>
             <ul>
-                <li><a href="help.html">مركز المساعدة</a></li>
-                <li><a href="mailto:support@qcv.com">تواصل معنا</a></li>
+                <li><a href="help.html" data-i18n="help_center">مركز المساعدة</a></li>
+                <li><a href="mailto:support@qcv.com" data-i18n="contact_us">تواصل معنا</a></li>
             </ul>
         </div>
     </div>
-    <div class="footer-bottom">&copy; 2026 QCV - جميع الحقوق محفوظة</div>
+    <div class="footer-bottom" data-i18n="copyright">&copy; 2026 QCV - جميع الحقوق محفوظة</div>
 </footer>
 
 <!-- ===== Firebase ===== -->
