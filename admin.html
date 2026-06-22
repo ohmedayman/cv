@@ -833,7 +833,6 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
         import { getDatabase, ref, get, remove, update, set, push, onValue } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
-        import { getAuth, signInAnonymously, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
         const ADMIN_USER = 'admin';
         const ADMIN_PASS = 'Qcv@admin1';
@@ -850,22 +849,8 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-        const auth = getAuth(app);
 
-        // Sign in with dedicated admin Firebase account so database writes work
-        const ADMIN_EMAIL = 'admin@qcv.vexonet.online';
-        const ADMIN_FIREBASE_PASS = 'Qcv@admin1!Secure';
-        async function ensureAdminAuth() {
-            try {
-                await signInWithEmailAndPassword(auth, ADMIN_EMAIL, ADMIN_FIREBASE_PASS);
-            } catch(e) {
-                if (e.code === 'auth/user-not-found' || e.code === 'auth/invalid-credential') {
-                    try { await createUserWithEmailAndPassword(auth, ADMIN_EMAIL, ADMIN_FIREBASE_PASS); }
-                    catch(e2) { console.error('Admin account creation failed:', e2); }
-                } else { console.error('Admin auth error:', e); }
-            }
-        }
-        ensureAdminAuth();
+        // No Firebase Auth needed - database rules allow open access
 
         let allUsersData = {};
         let allSubsData = {};

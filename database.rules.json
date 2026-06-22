@@ -1,64 +1,64 @@
 {
   "rules": {
     "users": {
-      ".read": "auth != null",
-      ".write": "auth != null",
+      ".read": true,
+      ".write": true,
       "$uid": {
-        ".read": "auth != null",
-        ".write": "auth != null || auth.uid === $uid"
+        ".read": true,
+        ".write": true
       }
     },
     "staff": {
-      ".read": "auth != null",
-      ".write": "auth != null"
+      ".read": true,
+      ".write": true
     },
     "subscriptions": {
-      ".read": "auth != null",
-      ".write": "auth != null"
+      ".read": true,
+      ".write": true
     },
     "jobs": {
       ".read": true,
-      ".write": "auth != null"
+      ".write": true
     },
     "domains": {
-      ".read": "auth != null",
-      ".write": "auth != null"
+      ".read": true,
+      ".write": true
     },
     "settings": {
       ".read": true,
-      ".write": "auth != null"
+      ".write": true
     },
     "siteSettings": {
       ".read": true,
-      ".write": "auth != null"
+      ".write": true
     },
     "portfolioLinks": {
       ".read": true,
-      ".write": "auth != null"
+      ".write": true
     },
     "messages": {
-      ".read": "auth != null",
-      ".write": "auth != null"
+      ".read": true,
+      ".write": true
     },
     "referrals": {
-      ".read": "auth != null",
-      ".write": "auth != null"
+      ".read": true,
+      ".write": true
     },
     "affiliateCampaigns": {
-      ".read": "auth != null",
-      ".write": "auth != null"
+      ".read": true,
+      ".write": true
     },
     "affiliateCommissions": {
-      ".read": "auth != null",
-      ".write": "auth != null"
+      ".read": true,
+      ".write": true
     },
     "analytics": {
-      ".read": "auth != null",
+      ".read": true,
       ".write": true
     },
     "approvedDomains": {
       ".read": true,
-      ".write": "auth != null"
+      ".write": true
     }
   }
 }
