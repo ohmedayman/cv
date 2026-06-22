@@ -16,5 +16,8 @@
         "destination": "/portfolio-view.html"
       }
     ]
+  },
+  "database": {
+    "rules": "database.rules.json"
   }
 }

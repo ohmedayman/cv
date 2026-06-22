@@ -704,7 +704,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-    import { getDatabase, ref, get, set, push, onValue, query, orderByValue, equalTo } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
+    import { getDatabase, ref, get, set, push, update, onValue, query, orderByValue, equalTo } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
 
     const firebaseConfig = {apiKey:"AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",authDomain:"qwcv-1cfad.firebaseapp.com",projectId:"qwcv-1cfad",storageBucket:"qwcv-1cfad.firebasestorage.app",messagingSenderId:"792471802122",appId:"1:792471802122:web:808e04099afc90315aaaf3",databaseURL:"https://qwcv-1cfad-default-rtdb.firebaseio.com"};
     const app = initializeApp(firebaseConfig);
@@ -793,7 +793,7 @@
                 const ago = getTimeAgo(n.sentAt);
                 return `<div class="notif-item ${n.read ? '' : 'unread'}" onclick="markRead('${n.id}')">
                     <span class="notif-type ${typeClasses[n.type] || 'notif-type-info'}">${typeLabels[n.type] || n.type}</span>
-                    <div class="notif-text">${n.text || ''}</div>
+                    <div class="notif-text">${(n.text||'').replace(/\n/g,'<br>')}${n.link ? '<br><a href="'+n.link+'" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="color:var(--accent);font-weight:700;text-decoration:underline;display:inline-flex;align-items:center;gap:4px;margin-top:4px"><i class="fas fa-external-link-alt" style="font-size:0.7em"></i>رابط</a>' : ''}</div>
                     <div class="notif-time">${ago}</div>
                 </div>`;
             }).join('');
@@ -806,8 +806,12 @@
         window.markAllRead = async function() {
             const updates = {};
             allNotifications.forEach(n => { updates['users/' + user.uid + '/notifications/' + n.id + '/read'] = true; });
-            await update(ref(db), updates);
-            document.getElementById('notifPanel').classList.remove('show');
+            try {
+                await update(ref(db), updates);
+                document.getElementById('notifPanel').classList.remove('show');
+            } catch(e) {
+                if(window.QCVNotify) QCVNotify.error();
+            }
         };
 
         function getTimeAgo(ts) {

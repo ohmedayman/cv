@@ -833,6 +833,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
         import { getDatabase, ref, get, remove, update, set, push, onValue } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
+        import { getAuth, signInAnonymously, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
         const ADMIN_USER = 'admin';
         const ADMIN_PASS = 'Qcv@admin1';
@@ -849,6 +850,22 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
+        const auth = getAuth(app);
+
+        // Sign in with dedicated admin Firebase account so database writes work
+        const ADMIN_EMAIL = 'admin@qcv.vexonet.online';
+        const ADMIN_FIREBASE_PASS = 'Qcv@admin1!Secure';
+        async function ensureAdminAuth() {
+            try {
+                await signInWithEmailAndPassword(auth, ADMIN_EMAIL, ADMIN_FIREBASE_PASS);
+            } catch(e) {
+                if (e.code === 'auth/user-not-found' || e.code === 'auth/invalid-credential') {
+                    try { await createUserWithEmailAndPassword(auth, ADMIN_EMAIL, ADMIN_FIREBASE_PASS); }
+                    catch(e2) { console.error('Admin account creation failed:', e2); }
+                } else { console.error('Admin auth error:', e); }
+            }
+        }
+        ensureAdminAuth();
 
         let allUsersData = {};
         let allSubsData = {};
@@ -1261,9 +1278,12 @@
                     await remove(ref(db, 'users/' + uid));
                     addActivity('error', `تم حذف المستخدم ${u?.name||u?.email}`);
                     if(window.QCVNotify) QCVNotify.error();
-                    showToast('تم حذف المستخدم', 'error');
+                    showToast('تم حذف المستخدم', 'success');
                     closeModal();
-                } catch(err) { showToast('خطأ', 'error'); }
+                } catch(err) {
+                    console.error('Delete error:', err);
+                    showToast('خطأ في الحذف: ' + (err.message || 'تأكد من صلاحياتك'), 'error');
+                }
             };
             document.getElementById('modal').classList.add('show');
         };
@@ -2342,7 +2362,14 @@
                     <option value="promo">عرض خاص</option>
                 </select>
                 <label>الرسالة</label>
-                <textarea id="msgText" placeholder="اكتب رسالتك هنا..." style="min-height:100px"></textarea>
+                <textarea id="msgText" placeholder="اكتب رسالتك هنا..." style="min-height:80px"></textarea>
+                <label>رابط (اختياري)</label>
+                <input type="url" id="msgLink" placeholder="https://example.com">
+                <div style="display:flex;gap:6px;margin-top:4px;flex-wrap:wrap">
+                    <button type="button" class="btn-action btn-view" onclick="fillMsgLink('portfolio')" style="font-size:0.7rem"><i class="fas fa-link"></i> بورتفوليو المستخدم</button>
+                    <button type="button" class="btn-action btn-view" onclick="fillMsgLink('site')" style="font-size:0.7rem"><i class="fas fa-globe"></i> الرئيسية</button>
+                    <button type="button" class="btn-action btn-view" onclick="fillMsgLink('pay')" style="font-size:0.7rem"><i class="fas fa-crown"></i> صفحة الترقية</button>
+                </div>
             `;
             document.getElementById('modalConfirm').style.display = 'block';
             document.getElementById('modalConfirm').textContent = 'إرسال';
@@ -2350,9 +2377,11 @@
                 const target = document.getElementById('msgTarget').value;
                 const type = document.getElementById('msgType').value;
                 const text = document.getElementById('msgText').value.trim();
+                const link = document.getElementById('msgLink').value.trim();
                 if (!text) { showToast('اكتب الرسالة', 'error'); return; }
+                const fullText = link ? text + '\n\n' + link : text;
                 const msgData = {
-                    type, text,
+                    type, text: fullText, link: link || null,
                     sentAt: Date.now(),
                     read: false,
                     from: 'admin'
@@ -2360,10 +2389,11 @@
                 try {
                     if (target === 'all') {
                         const updates = {};
+                        const ts = Date.now();
                         Object.keys(allUsersData).forEach(uid => {
-                            updates['users/' + uid + '/notifications/' + Date.now()] = msgData;
+                            updates['users/' + uid + '/notifications/' + ts] = msgData;
                         });
-                        updates['messages/' + Date.now()] = { ...msgData, target: 'all', userCount: Object.keys(allUsersData).length };
+                        updates['messages/' + ts] = { ...msgData, target: 'all', userCount: Object.keys(allUsersData).length };
                         await update(ref(db), updates);
                         showToast('تم إرسال الرسالة لـ ' + Object.keys(allUsersData).length + ' مستخدم', 'success');
                     } else {
@@ -2379,6 +2409,20 @@
             document.getElementById('modal').classList.add('show');
         };
 
+        window.fillMsgLink = function(type) {
+            const target = document.getElementById('msgTarget').value;
+            let url = '';
+            if (type === 'portfolio' && target !== 'all') {
+                const code = allUsersData[target]?.portfolioCode;
+                url = code ? 'https://qcv.vexonet.online/portfolio-view.html?code=' + code : '';
+                if (!url) { showToast('هذا المستخدم مالهو رابط بورتفوليو', 'error'); return; }
+            } else if (type === 'site') {
+                url = 'https://qcv.vexonet.online';
+            } else if (type === 'pay') {
+                url = 'https://qcv.vexonet.online/pay.html';
+            }
+            document.getElementById('msgLink').value = url;
+        };
         function listenMessages() {
             onValue(ref(db, 'messages'), (snap) => {
                 allMessagesData = snap.val() || {};
