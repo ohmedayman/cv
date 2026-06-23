@@ -283,8 +283,9 @@
         .filter-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 
         /* Responsive */
-        @media(max-width:1200px){.stats-grid{grid-template-columns:repeat(3,1fr)}.charts-grid{grid-template-columns:1fr}}
+        @media(max-width:1200px){.stats-grid{grid-template-columns:repeat(3,1fr)}.charts-grid{grid-template-columns:1fr}.analytics-grid{grid-template-columns:repeat(2,1fr)}.analytics-mini{grid-template-columns:1fr}}
         @media(max-width:1000px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+        @media(max-width:600px){.analytics-grid{grid-template-columns:1fr}}
         @media(max-width:900px){
             .sidebar{width:70px;padding:15px 8px}
             .sidebar-brand{font-size:1.2rem;margin-bottom:25px}
@@ -301,7 +302,7 @@
         body.dark-mode .login-box{background:var(--bg-card);border-color:var(--border)}
         body.dark-mode .login-box input{background:#0f1729;border-color:var(--border);color:var(--text)}
         body.dark-mode .sidebar{background:var(--bg-sidebar);border-color:var(--border)}
-        body.dark-mode .nav-item:hover,.body.dark-mode .nav-item.active{background:rgba(99,102,241,0.1)}
+        body.dark-mode .nav-item:hover,body.dark-mode .nav-item.active{background:rgba(99,102,241,0.1)}
         body.dark-mode .table-container{background:var(--bg-card);border-color:var(--border)}
         body.dark-mode th{background:#1a2540;color:#e8edf5;border-color:#1e2d4a}
         body.dark-mode td{border-color:#1e2d4a;color:#c8d0de}
@@ -323,6 +324,17 @@
         body.dark-mode .admin-name{color:var(--text)}
         body.dark-mode .toast-success{background:var(--green)}
         body.dark-mode .toast-error{background:var(--red)}
+        body.dark-mode .analytics-card{background:var(--bg-card);border-color:var(--border)}
+        body.dark-mode .analytics-mini-card{background:var(--bg-card);border-color:var(--border)}
+        body.dark-mode .filter-tab{background:var(--bg-card);color:var(--text);border-color:var(--border)}
+        body.dark-mode .filter-tab.active{background:var(--accent);color:#fff}
+        body.dark-mode .sub-tab{background:var(--bg-card);color:var(--text)}
+        body.dark-mode .sub-tab.active{background:var(--accent);color:#fff}
+        body.dark-mode .badge-pending{background:rgba(245,158,11,0.15);color:#f59e0b}
+        body.dark-mode .badge-approved{background:rgba(16,185,129,0.15);color:#10b981}
+        body.dark-mode .badge-rejected{background:rgba(239,68,68,0.15);color:#ef4444}
+        body.dark-mode .pagination button{background:var(--bg-card);color:var(--text);border-color:var(--border)}
+        body.dark-mode .pagination button.active{background:var(--accent);color:#fff}
 
         /* Scrollbar */
         ::-webkit-scrollbar{width:6px}
@@ -331,6 +343,13 @@
         ::-webkit-scrollbar-thumb:hover{background:#9ca3af}
         body.dark-mode ::-webkit-scrollbar-thumb{background:#1e2d4a}
         body.dark-mode ::-webkit-scrollbar-thumb:hover{background:#2d3f5e}
+
+        /* Pagination */
+        .pagination{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:16px;padding:12px}
+        .pagination button{padding:6px 12px;border:1px solid var(--border);background:var(--bg-card);color:var(--text);border-radius:6px;cursor:pointer;font-size:0.8rem;font-weight:600}
+        .pagination button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+        .pagination button:disabled{opacity:0.4;cursor:default}
+        .pagination .page-info{font-size:0.78rem;color:var(--muted);margin:0 8px}
     </style>
 </head>
 <body>
@@ -356,6 +375,28 @@
             </form>
             <div class="error" id="loginError"></div>
             <div class="back-link"><a href="index.html">← العودة للموقع</a></div>
+            <div class="back-link" style="margin-top:10px"><a href="#" onclick="showStaffLogin(event)">دخول الموظفين ←</a></div>
+        </div>
+    </div>
+
+    <!-- ===== STAFF LOGIN ===== -->
+    <div class="admin-login hidden" id="staffLogin">
+        <div class="login-box">
+            <div class="logo">Q<span>CV</span></div>
+            <div class="subtitle">دخول الموظفين</div>
+            <form id="staffLoginForm">
+                <div class="input-group">
+                    <label>البريد الإلكتروني</label>
+                    <input type="email" id="staffLoginEmail" placeholder="email@example.com" required>
+                </div>
+                <div class="input-group">
+                    <label>كلمة المرور</label>
+                    <input type="password" id="staffLoginPassword" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn" id="staffLoginBtn">دخول</button>
+            </form>
+            <div class="error" id="staffLoginError"></div>
+            <div class="back-link"><a href="#" onclick="showAdminLogin(event)">← العودة لدخول الإدارة</a></div>
         </div>
     </div>
 
@@ -518,6 +559,7 @@
                             <tr><td colspan="6" class="empty-state"><p>جاري تحميل المستخدمين...</p></td></tr>
                         </tbody>
                     </table>
+                    <div id="users-pagination"></div>
                 </div>
             </div>
 
@@ -536,6 +578,7 @@
                             <tr><td colspan="5" class="empty-state"><p>جاري التحميل...</p></td></tr>
                         </tbody>
                     </table>
+                    <div id="staff-pagination"></div>
                 </div>
             </div>
 
@@ -559,6 +602,7 @@
                             <tr><td colspan="6" class="empty-state"><p>لا توجد طلبات بعد</p></td></tr>
                         </tbody>
                     </table>
+                    <div id="subscriptions-pagination"></div>
                 </div>
             </div>
 
@@ -727,6 +771,7 @@
                             <tr><td colspan="6" class="empty-state"><p>لا توجد وظائف بعد</p></td></tr>
                         </tbody>
                     </table>
+                    <div id="jobs-pagination"></div>
                 </div>
             </div>
 
@@ -748,6 +793,7 @@
                             <tr><td colspan="6" class="empty-state"><p>لا توجد نطاقات معتمدة بعد</p></td></tr>
                         </tbody>
                     </table>
+                    <div id="domains-pagination"></div>
                 </div>
             </div>
 
@@ -797,29 +843,35 @@
                     </div>
                     <div class="settings-row">
                         <div class="field">
-                            <label>DeepSeek API Key (cheap - deepseek.com)</label>
-                            <input type="password" id="settingsDeepseekKey" placeholder="sk-..." style="font-family:monospace">
+                            <label>OpenAI API Key</label>
+                            <input type="password" id="settingsAiKey" placeholder="sk-..." style="font-family:monospace">
                         </div>
-                        <div class="field">
-                            <label>NaraRouter API Key (router.bynara.id)</label>
-                            <input type="password" id="settingsNaraKey" placeholder="sk-nry-..." style="font-family:monospace">
-                        </div>
-                    </div>
-                    <div class="settings-row">
                         <div class="field">
                             <label>Groq API Key (free - groq.com)</label>
                             <input type="password" id="settingsGroqKey" placeholder="gsk_..." style="font-family:monospace">
                         </div>
+                    </div>
+                    <div class="settings-row">
                         <div class="field">
                             <label>xAI/Grok API Key (free - console.x.ai)</label>
                             <input type="password" id="settingsXaiKey" placeholder="xai-..." style="font-family:monospace">
                         </div>
+                        <div class="field">
+                            <label>DeepSeek API Key (cheap - deepseek.com)</label>
+                            <input type="password" id="settingsDeepseekKey" placeholder="sk-..." style="font-family:monospace">
+                        </div>
                     </div>
                     <div class="settings-row">
+                        <div class="field">
+                            <label>NaraRouter API Key (router.bynara.id)</label>
+                            <input type="password" id="settingsNaraKey" placeholder="sk-nry-..." style="font-family:monospace">
+                        </div>
                         <div class="field">
                             <label>OpenRouter API Key (free - openrouter.ai)</label>
                             <input type="password" id="settingsOpenrouterKey" placeholder="sk-or-..." style="font-family:monospace">
                         </div>
+                    </div>
+                    <div class="settings-row">
                         <div class="field">
                             <label>Gemini API Key (fallback)</label>
                             <input type="password" id="settingsGeminiKey" placeholder="AI..." style="font-family:monospace">
@@ -844,6 +896,7 @@
                             <tr><td colspan="4" class="empty-state"><p>لا توجد رسائل بعد</p></td></tr>
                         </tbody>
                     </table>
+                    <div id="messages-pagination"></div>
                 </div>
             </div>
 
@@ -867,6 +920,9 @@
         <div style="font-size:3rem;font-weight:900;margin-bottom:15px">Q<span style="color:#0003c9">CV</span></div>
         <div style="color:#6b7280;font-size:0.9rem" id="blockMsg">جاري التحقق...</div>
     </div>
+    <script>
+    setTimeout(function(){ var bs=document.getElementById('blockScreen'); if(bs) bs.style.display='none'; }, 4000);
+    </script>
 
     <!-- ===== SCRIPTS ===== -->
     <script type="module">
@@ -903,7 +959,44 @@
         let currentSubFilter = 'all';
         let activityLog = [];
 
+        // ===== PAGINATION =====
+        var PAGE_SIZE = 15;
+        var currentPage = {};
+        var filteredUsersEntries = null;
+        function getPageData(arr, section) {
+            var page = currentPage[section] || 1;
+            var start = (page - 1) * PAGE_SIZE;
+            return { items: arr.slice(start, start + PAGE_SIZE), total: arr.length, page: page, pages: Math.ceil(arr.length / PAGE_SIZE) };
+        }
+        function renderPagination(section, totalItems) {
+            var pages = Math.ceil(totalItems / PAGE_SIZE);
+            if (pages <= 1) { var el = document.getElementById(section + '-pagination'); if(el) el.innerHTML = ''; return; }
+            var page = currentPage[section] || 1;
+            var html = '<div class="pagination" id="' + section + '-pagination">';
+            html += '<button ' + (page<=1?'disabled':'') + ' onclick="goPage(\''+section+'\',' + (page-1) + ')">السابق</button>';
+            for(var i=1; i<=pages; i++) {
+                html += '<button class="' + (i===page?'active':'') + '" onclick="goPage(\''+section+'\',' + i + ')">' + i + '</button>';
+            }
+            html += '<button ' + (page>=pages?'disabled':'') + ' onclick="goPage(\''+section+'\',' + (page+1) + ')">التالي</button>';
+            html += '<span class="page-info">صفحة ' + page + ' من ' + pages + ' (' + totalItems + ' عنصر)</span></div>';
+            return html;
+        }
+        window.goPage = function(section, page) {
+            currentPage[section] = page;
+            if(section === 'users') renderUsersTable(filteredUsersEntries || allUsersData);
+            else if(section === 'staff') renderStaffTable(allStaffData);
+            else if(section === 'subscriptions') renderSubscriptions();
+            else if(section === 'jobs') renderJobsTable(allJobsData);
+            else if(section === 'domains') renderDomainsTable(allDomainsData);
+            else if(section === 'messages') renderMessagesTable(allMessagesData);
+        };
+
         // ===== HELPERS =====
+        function escHtml(s) {
+            if (!s) return '';
+            return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+        }
+
         function showToast(msg, type) {
             const t = document.getElementById('toast');
             t.textContent = msg;
@@ -957,21 +1050,63 @@
             return new Date(ts).toLocaleString('ar-EG');
         }
 
+        function escHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
         function addActivity(type, text) {
             activityLog.unshift({ type, text, time: Date.now() });
             if (activityLog.length > 50) activityLog.pop();
             renderActivityFeed();
         }
 
-        // ===== CHECK SESSION =====
-        function isLoggedIn() {
+        // ===== SESSION =====
+        window._staffUser = null;
+        window._isAdmin = false;
+
+        function isAdminLoggedIn() {
             return sessionStorage.getItem('qcv_admin') === 'true';
         }
 
-        if (isLoggedIn()) {
+        function isStaffLoggedIn() {
+            const staffData = sessionStorage.getItem('qcv_staff');
+            if (staffData) {
+                window._staffUser = JSON.parse(staffData);
+                return true;
+            }
+            return false;
+        }
+
+        function showStaffLogin(e) {
+            if (e) e.preventDefault();
+            document.getElementById('adminLogin').classList.add('hidden');
+            document.getElementById('staffLogin').classList.remove('hidden');
+        }
+
+        function showAdminLogin(e) {
+            if (e) e.preventDefault();
+            document.getElementById('staffLogin').classList.add('hidden');
+            document.getElementById('adminLogin').classList.remove('hidden');
+        }
+        window.showStaffLogin = showStaffLogin;
+        window.showAdminLogin = showAdminLogin;
+
+        if (isAdminLoggedIn()) {
+            window._isAdmin = true;
             document.getElementById('blockScreen').style.display = 'none';
             document.getElementById('adminLogin').classList.add('hidden');
+            document.getElementById('staffLogin').classList.add('hidden');
             document.getElementById('adminLayout').classList.add('show');
+            applyAdminPanel();
+            initDashboard();
+        } else if (isStaffLoggedIn()) {
+            document.getElementById('blockScreen').style.display = 'none';
+            document.getElementById('adminLogin').classList.add('hidden');
+            document.getElementById('staffLogin').classList.add('hidden');
+            document.getElementById('adminLayout').classList.add('show');
+            applyStaffPanel();
             initDashboard();
         } else {
             document.getElementById('blockScreen').style.display = 'none';
@@ -991,8 +1126,11 @@
             setTimeout(() => {
                 if (username === ADMIN_USER && password === ADMIN_PASS) {
                     sessionStorage.setItem('qcv_admin', 'true');
+                    window._isAdmin = true;
                     document.getElementById('adminLogin').classList.add('hidden');
+                    document.getElementById('staffLogin').classList.add('hidden');
                     document.getElementById('adminLayout').classList.add('show');
+                    applyAdminPanel();
                     initDashboard();
                 } else {
                     errorEl.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة';
@@ -1003,10 +1141,141 @@
             }, 500);
         });
 
+        // ===== STAFF LOGIN =====
+        document.getElementById('staffLoginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            window.staffLogin();
+        });
+
+        window.staffLogin = async function() {
+            const email = document.getElementById('staffLoginEmail').value.trim();
+            const password = document.getElementById('staffLoginPassword').value;
+            const btn = document.getElementById('staffLoginBtn');
+            const errorEl = document.getElementById('staffLoginError');
+            btn.textContent = 'جاري التحقق...';
+            btn.disabled = true;
+            errorEl.style.display = 'none';
+
+            try {
+                const snap = await get(ref(db, 'staff'));
+                const staffData = snap.val() || {};
+                let foundStaff = null;
+                let foundId = null;
+                for (const [id, s] of Object.entries(staffData)) {
+                    if (s.email === email && s.password === password) {
+                        foundStaff = s;
+                        foundId = id;
+                        break;
+                    }
+                }
+                if (!foundStaff) {
+                    errorEl.textContent = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
+                    errorEl.style.display = 'block';
+                    btn.textContent = 'دخول';
+                    btn.disabled = false;
+                    return;
+                }
+                if (foundStaff.active === false) {
+                    errorEl.textContent = 'هذا الحساب معطّل. تواصل مع الإدارة';
+                    errorEl.style.display = 'block';
+                    btn.textContent = 'دخول';
+                    btn.disabled = false;
+                    return;
+                }
+                const staffSession = {
+                    id: foundId,
+                    name: foundStaff.name || '',
+                    email: foundStaff.email || '',
+                    role: foundStaff.role || 'support',
+                    permissions: foundStaff.permissions || []
+                };
+                sessionStorage.setItem('qcv_staff', JSON.stringify(staffSession));
+                window._staffUser = staffSession;
+                document.getElementById('staffLogin').classList.add('hidden');
+                document.getElementById('adminLayout').classList.add('show');
+                applyStaffPanel();
+                initDashboard();
+                addActivity('success', 'تسجيل دخول الموظف: ' + (staffSession.name || staffSession.email));
+            } catch (err) {
+                errorEl.textContent = 'خطأ في الاتصال بالخادم';
+                errorEl.style.display = 'block';
+                console.error('Staff login error:', err);
+            }
+            btn.textContent = 'دخول';
+            btn.disabled = false;
+        };
+
+        // ===== LOGOUT =====
         document.getElementById('logoutBtn').addEventListener('click', () => {
             sessionStorage.removeItem('qcv_admin');
+            sessionStorage.removeItem('qcv_staff');
+            window._isAdmin = false;
+            window._staffUser = null;
             location.reload();
         });
+
+        // ===== PANEL PERMISSIONS =====
+        const PANEL_PERMISSION_MAP = {
+            users: 'view_users',
+            staff: 'manage_staff',
+            subscriptions: 'manage_subscriptions',
+            affiliate: 'manage_affiliates',
+            reports: 'view_reports',
+            analytics: 'view_reports',
+            jobs: 'manage_jobs',
+            domains: 'manage_domains',
+            settings: 'manage_staff',
+            messages: 'view_users'
+        };
+
+        const ALL_NAV_PANELS = ['dashboard','users','staff','subscriptions','affiliate','reports','analytics','jobs','domains','settings','messages'];
+
+        function applyAdminPanel() {
+            document.querySelectorAll('.nav-item').forEach(n => n.style.display = '');
+            document.getElementById('adminDisplayName').textContent = 'Admin';
+            document.querySelector('.admin-role').textContent = 'مدير النظام';
+            document.getElementById('adminAvatar').textContent = 'A';
+            document.querySelector('.admin-avatar').style.background = 'linear-gradient(135deg,var(--accent),var(--purple))';
+        }
+
+        function applyStaffPanel() {
+            const staff = window._staffUser;
+            if (!staff) return;
+            const perms = staff.permissions || [];
+            ALL_NAV_PANELS.forEach(panel => {
+                const navItem = document.querySelector(`.nav-item[data-panel="${panel}"]`);
+                if (!navItem) return;
+                if (panel === 'dashboard') {
+                    navItem.style.display = '';
+                    return;
+                }
+                const requiredPerm = PANEL_PERMISSION_MAP[panel];
+                if (requiredPerm && perms.includes(requiredPerm)) {
+                    navItem.style.display = '';
+                } else if (!requiredPerm) {
+                    navItem.style.display = '';
+                } else {
+                    navItem.style.display = 'none';
+                }
+            });
+            document.getElementById('adminDisplayName').textContent = staff.name || staff.email;
+            document.querySelector('.admin-role').textContent = roleText(staff.role);
+            document.getElementById('adminAvatar').textContent = (staff.name || staff.email || 'M')[0].toUpperCase();
+            document.querySelector('.admin-avatar').style.background = getAvatarColor(staff.id);
+            // Hide the staff nav for staff users (they shouldn't manage staff unless they have permission)
+            const staffNavItem = document.querySelector('.nav-item[data-panel="staff"]');
+            if (staffNavItem && !perms.includes('manage_staff')) {
+                staffNavItem.style.display = 'none';
+            }
+        }
+
+        function hasPermission(perm) {
+            if (window._isAdmin) return true;
+            if (window._staffUser && window._staffUser.permissions) {
+                return window._staffUser.permissions.includes(perm);
+            }
+            return false;
+        }
 
         // ===== PANEL SWITCHING =====
         const panelTitles = {
@@ -1024,6 +1293,11 @@
         };
 
         window.switchPanel = function(panel) {
+            const requiredPerm = PANEL_PERMISSION_MAP[panel];
+            if (requiredPerm && !hasPermission(requiredPerm)) {
+                showToast('ليس لديك صلاحية للوصول لهذه الصفحة', 'error');
+                return;
+            }
             document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById('panel-' + panel).classList.add('active');
@@ -1076,18 +1350,21 @@
         function renderUsersTable(data) {
             const tbody = document.getElementById('allUsers');
             const entries = Object.entries(data);
+            filteredUsersEntries = entries;
             if (!entries.length) {
                 tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><p>لا يوجد مستخدمين</p></td></tr>';
+                document.getElementById('users-pagination').innerHTML = '';
                 return;
             }
-            tbody.innerHTML = entries.map(([uid, u]) => {
+            var pd = getPageData(entries, 'users');
+            tbody.innerHTML = pd.items.map(([uid, u]) => {
                 const plan = u.plan || 'free';
                 const isBanned = u.banned === true;
                 const color = getAvatarColor(uid);
                 return `<tr>
                     <td><div class="user-cell">
-                        <div class="user-avatar" style="background:${color}">${(u.name||'U')[0].toUpperCase()}</div>
-                        <div class="user-info"><div class="name">${u.name||'مستخدم'}</div><div class="email">${u.email||''}</div></div>
+                        <div class="user-avatar" style="background:${color}">${escHtml((u.name||'U')[0].toUpperCase())}</div>
+                        <div class="user-info"><div class="name">${escHtml(u.name||'مستخدم')}</div><div class="email">${escHtml(u.email)}</div></div>
                     </div></td>
                     <td><span class="badge ${planBadgeClass(plan)}">${planText(plan)}</span></td>
                     <td>${formatDate(u.registeredAt)}</td>
@@ -1101,6 +1378,7 @@
                     </div></td>
                 </tr>`;
             }).join('');
+            document.getElementById('users-pagination').innerHTML = renderPagination('users', pd.total);
         }
 
         function renderRecentUsers(data) {
@@ -1116,8 +1394,8 @@
                 const color = getAvatarColor(uid);
                 return `<tr>
                     <td><div class="user-cell">
-                        <div class="user-avatar" style="background:${color}">${(u.name||'U')[0].toUpperCase()}</div>
-                        <div class="user-info"><div class="name">${u.name||'مستخدم'}</div><div class="email">${u.email||''}</div></div>
+                        <div class="user-avatar" style="background:${color}">${escHtml((u.name||'U')[0].toUpperCase())}</div>
+                        <div class="user-info"><div class="name">${escHtml(u.name||'مستخدم')}</div><div class="email">${escHtml(u.email)}</div></div>
                     </div></td>
                     <td><span class="badge ${planBadgeClass(plan)}">${planText(plan)}</span></td>
                     <td>${formatDateTime(u.lastLogin)}</td>
@@ -1211,15 +1489,15 @@
             document.getElementById('modalTitle').textContent = 'ملف المستخدم';
             document.getElementById('modalBody').innerHTML = `
                 <div class="profile-header">
-                    <div class="profile-avatar" style="background:${color}">${(u.name||'U')[0].toUpperCase()}</div>
-                    <div class="name">${u.name||'مستخدم'}</div>
-                    <div class="email">${u.email||''}</div>
+                    <div class="profile-avatar" style="background:${color}">${escHtml((u.name||'U')[0].toUpperCase())}</div>
+                    <div class="name">${escHtml(u.name||'مستخدم')}</div>
+                    <div class="email">${escHtml(u.email)}</div>
                 </div>
                 <div class="profile-section">
                     <h4><i class="fas fa-info-circle"></i> المعلومات الأساسية</h4>
-                    <div class="profile-row"><div class="label">الهاتف</div><div class="value">${u.phone || '-'}</div></div>
+                    <div class="profile-row"><div class="label">الهاتف</div><div class="value">${escHtml(u.phone) || '-'}</div></div>
                     <div class="profile-row"><div class="label">الباقة</div><div class="value"><span class="badge ${planBadgeClass(plan)}">${planText(plan)}</span></div></div>
-                    <div class="profile-row"><div class="label">تاريخ انتهاء الباقة</div><div class="value">${u.planExpiry ? formatDateTime(u.planExpiry) : '-'}</div></div>
+                    <div class="profile-row"><div class="label">تاريخ انتهاء الباقة</div><div class="value">${u.planExpiry ? (function(){ var d=new Date(u.planExpiry); var diff=u.planExpiry-Date.now(); var days=Math.ceil(diff/86400000); var text=formatDateTime(u.planExpiry); if(diff<0) text+=' <span style="color:#ef4444">(منتهية)</span>'; else if(days<=7) text+=' <span style="color:#f59e0b">('+days+' يوم)</span>'; return text; })() : '-'}</div></div>
                     <div class="profile-row"><div class="label">تاريخ التسجيل</div><div class="value">${formatDateTime(u.registeredAt)}</div></div>
                     <div class="profile-row"><div class="label">آخر دخول</div><div class="value">${formatDateTime(u.lastLogin)}</div></div>
                     <div class="profile-row"><div class="label">الحالة</div><div class="value">${u.banned ? '<span class="badge badge-banned">محظور</span>' : '<span class="badge badge-approved">نشط</span>'}</div></div>
@@ -1236,7 +1514,7 @@
                 </div>
                 <div class="profile-section">
                     <h4><i class="fas fa-download"></i> التحميلات</h4>
-                    <div class="profile-row"><div class="label">عدد التحميلات</div><div class="value">${u.downloadCount || 0}</div></div>
+                    <div class="profile-row"><div class="label">عدد التحميلات</div><div class="value" style="font-weight:700;color:${(u.downloads||0)>=2?'#ef4444':'#10b981'}">${u.downloads || 0} ${plan==='free'?'/ 2':'/ ∞'}</div></div>
                 </div>
                 ${u.portfolioLink ? `<div class="profile-section"><h4><i class="fas fa-link"></i> البورتفوليو</h4><div class="profile-row"><div class="label">الرابط</div><div class="value"><a href="${u.portfolioLink}" target="_blank" style="color:var(--accent)">${u.portfolioLink}</a></div></div></div>` : ''}
                 <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px">
@@ -1254,7 +1532,7 @@
             if (!u) return;
             document.getElementById('modalTitle').textContent = 'تغيير باقة المستخدم';
             document.getElementById('modalBody').innerHTML = `
-                <p style="text-align:center;margin-bottom:15px;font-size:0.9rem">المستخدم: <strong>${u.name||u.email}</strong></p>
+                <p style="text-align:center;margin-bottom:15px;font-size:0.9rem">المستخدم: <strong>${escHtml(u.name||u.email)}</strong></p>
                 <label>الباقة الجديدة</label>
                 <select id="newPlan">
                     <option value="free" ${u.plan==='free'?'selected':''}>مجانية</option>
@@ -1294,7 +1572,7 @@
         window.deleteUser = function(uid) {
             const u = allUsersData[uid];
             document.getElementById('modalTitle').textContent = 'حذف المستخدم';
-            document.getElementById('modalBody').innerHTML = `<p style="text-align:center">هل أنت متأكد من حذف <strong>${u?.name||u?.email}</strong>؟ لا يمكن التراجع.</p>`;
+            document.getElementById('modalBody').innerHTML = `<p style="text-align:center">هل أنت متأكد من حذف <strong>${escHtml(u?.name||u?.email)}</strong>؟ لا يمكن التراجع.</p>`;
             document.getElementById('modalConfirm').style.display = 'block';
             document.getElementById('modalConfirm').textContent = 'حذف';
             document.getElementById('modalConfirm').onclick = async () => {
@@ -1313,12 +1591,38 @@
         };
 
         window.filterUsers = function() {
+            currentPage['users'] = 1;
             const q = document.getElementById('searchUsers').value.toLowerCase();
             const filtered = {};
             Object.entries(allUsersData).forEach(([uid, u]) => {
                 if ((u.name||'').toLowerCase().includes(q) || (u.email||'').toLowerCase().includes(q)) filtered[uid] = u;
             });
             renderUsersTable(filtered);
+        };
+
+        window.editUser = async function(uid) {
+            const u = allUsersData[uid];
+            if(!u) return;
+            document.getElementById('modalTitle').textContent = 'تعديل بيانات المستخدم';
+            document.getElementById('modalBody').innerHTML = `
+                <label>الاسم</label>
+                <input type="text" id="editUserName" value="${escHtml(u.name||'')}" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;margin-bottom:12px;font-family:inherit">
+                <label>البريد الإلكتروني</label>
+                <input type="email" id="editUserEmail" value="${escHtml(u.email||'')}" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-family:inherit">
+            `;
+            document.getElementById('modalConfirm').style.display = 'block';
+            document.getElementById('modalConfirm').textContent = 'حفظ';
+            document.getElementById('modalConfirm').onclick = async () => {
+                const name = document.getElementById('editUserName').value.trim();
+                const email = document.getElementById('editUserEmail').value.trim();
+                if(!name) { showToast('الاسم مطلوب', 'error'); return; }
+                try {
+                    await update(ref(db, 'users/' + uid), { name, email });
+                    showToast('تم تحديث البيانات', 'success');
+                    closeModal();
+                } catch(err) { showToast('خطأ', 'error'); }
+            };
+            document.getElementById('modal').classList.add('show');
         };
 
         // ===== STAFF =====
@@ -1343,15 +1647,17 @@
             const entries = Object.entries(data);
             if (!entries.length) {
                 tbody.innerHTML = '<tr><td colspan="5" class="empty-state"><p>لا يوجد موظفين</p></td></tr>';
+                document.getElementById('staff-pagination').innerHTML = '';
                 return;
             }
-            tbody.innerHTML = entries.map(([id, s]) => {
+            var pd = getPageData(entries, 'staff');
+            tbody.innerHTML = pd.items.map(([id, s]) => {
                 const perms = s.permissions || [];
                 const color = getAvatarColor(id);
                 return `<tr>
                     <td><div class="user-cell">
-                        <div class="user-avatar" style="background:${color}">${(s.name||'M')[0].toUpperCase()}</div>
-                        <div class="user-info"><div class="name">${s.name||''}</div><div class="email">${s.email||''}</div></div>
+                        <div class="user-avatar" style="background:${color}">${escHtml((s.name||'M')[0].toUpperCase())}</div>
+                        <div class="user-info"><div class="name">${escHtml(s.name)}</div><div class="email">${escHtml(s.email)}</div></div>
                     </div></td>
                     <td><span class="badge ${roleBadgeClass(s.role)}">${roleText(s.role)}</span></td>
                     <td>${perms.length} صلاحية</td>
@@ -1363,6 +1669,7 @@
                     </div></td>
                 </tr>`;
             }).join('');
+            document.getElementById('staff-pagination').innerHTML = renderPagination('staff', pd.total);
         }
 
         window.showAddStaff = function() {
@@ -1412,9 +1719,9 @@
             document.getElementById('modalTitle').textContent = 'تعديل بيانات الموظف';
             document.getElementById('modalBody').innerHTML = `
                 <label>الاسم</label>
-                <input type="text" id="staffName" value="${s.name||''}">
+                <input type="text" id="staffName" value="${escHtml(s.name)}">
                 <label>البريد الإلكتروني</label>
-                <input type="email" id="staffEmail" value="${s.email||''}">
+                <input type="email" id="staffEmail" value="${escHtml(s.email)}">
                 <label>الدور</label>
                 <select id="staffRole">
                     <option value="support" ${s.role==='support'?'selected':''}>دعم فني</option>
@@ -1456,7 +1763,7 @@
         window.deleteStaff = function(id) {
             const s = allStaffData[id];
             document.getElementById('modalTitle').textContent = 'حذف الموظف';
-            document.getElementById('modalBody').innerHTML = `<p style="text-align:center">هل أنت متأكد من حذف <strong>${s?.name||''}</strong>؟</p>`;
+            document.getElementById('modalBody').innerHTML = `<p style="text-align:center">هل أنت متأكد من حذف <strong>${escHtml(s?.name)}</strong>؟</p>`;
             document.getElementById('modalConfirm').style.display = 'block';
             document.getElementById('modalConfirm').textContent = 'حذف';
             document.getElementById('modalConfirm').onclick = async () => {
@@ -1490,16 +1797,18 @@
             if (currentSubFilter !== 'all') entries = entries.filter(([_,s]) => s.status === currentSubFilter);
             if (!entries.length) {
                 tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><p>لا توجد طلبات</p></td></tr>';
+                document.getElementById('subscriptions-pagination').innerHTML = '';
                 return;
             }
-            tbody.innerHTML = entries.map(([id, s]) => {
+            var pd = getPageData(entries, 'subscriptions');
+            tbody.innerHTML = pd.items.map(([id, s]) => {
                 const statusBadge = s.status === 'pending' ? 'badge-pending' : s.status === 'approved' ? 'badge-approved' : 'badge-rejected';
                 const statusText = s.status === 'pending' ? 'معلق' : s.status === 'approved' ? 'مقبول' : 'مرفوض';
                 const color = getAvatarColor(s.userId);
                 return `<tr>
                     <td><div class="user-cell">
-                        <div class="user-avatar" style="background:${color}">${(s.userName||'U')[0].toUpperCase()}</div>
-                        <div class="user-info"><div class="name">${s.userName||'مستخدم'}</div><div class="email">${s.userEmail||''}</div></div>
+                        <div class="user-avatar" style="background:${color}">${escHtml((s.userName||'U')[0].toUpperCase())}</div>
+                        <div class="user-info"><div class="name">${escHtml(s.userName||'مستخدم')}</div><div class="email">${escHtml(s.userEmail)}</div></div>
                     </div></td>
                     <td><span class="badge ${planBadgeClass(s.plan)}">${planText(s.plan)}</span></td>
                     <td>${formatDateTime(s.createdAt)}</td>
@@ -1512,13 +1821,16 @@
                         ` : `
                             <button class="btn-action btn-view" onclick="viewSubscription('${id}')"><i class="fas fa-eye"></i></button>
                         `}
+                        <button class="btn-action btn-reject" onclick="deleteSubscription('${id}','${s.userId}','${s.userName||''}')" title="حذف الاشتراك"><i class="fas fa-trash"></i></button>
                     </div></td>
                 </tr>`;
             }).join('');
+            document.getElementById('subscriptions-pagination').innerHTML = renderPagination('subscriptions', pd.total);
         }
 
         window.setSubFilter = function(filter, btn) {
             currentSubFilter = filter;
+            currentPage['subscriptions'] = 1;
             document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
             btn.classList.add('active');
             renderSubscriptions();
@@ -1556,16 +1868,34 @@
             document.getElementById('modal').classList.add('show');
         };
 
+        window.deleteSubscription = function(subId, userId, userName) {
+            document.getElementById('modalTitle').textContent = 'حذف الاشتراك';
+            document.getElementById('modalBody').innerHTML = '<p>هل أنت متأكد من حذف اشتراك <strong>' + escHtml(userName) + '</strong>؟</p><p style="color:#ef4444;font-size:0.85rem;margin-top:8px">سيتم إلغاء الباقة وتحويل المستخدم لباقة مجانية</p>';
+            document.getElementById('modalConfirm').style.display = 'block';
+            document.getElementById('modalConfirm').textContent = 'حذف';
+            document.getElementById('modalConfirm').onclick = async () => {
+                try {
+                    await remove(ref(db, 'subscriptions/' + subId));
+                    await update(ref(db, 'users/' + userId), { plan: 'free', planExpiry: null });
+                    addActivity('error', 'تم حذف اشتراك ' + userName);
+                    if(window.QCVNotify) QCVNotify.error();
+                    showToast('تم حذف الاشتراك وتحويل المستخدم لباقة مجانية', 'success');
+                    closeModal();
+                } catch(err) { showToast('خطأ', 'error'); }
+            };
+            document.getElementById('modal').classList.add('show');
+        };
+
         window.viewSubscription = function(subId) {
             const s = allSubsData[subId];
             if (!s) return;
             document.getElementById('modalTitle').textContent = 'تفاصيل طلب الاشتراك';
             document.getElementById('modalBody').innerHTML = `
                 <div style="text-align:center">
-                    <p><strong>المستخدم:</strong> ${s.userName||'-'}</p>
-                    <p><strong>البريد:</strong> ${s.userEmail||'-'}</p>
+                    <p><strong>المستخدم:</strong> ${escHtml(s.userName)||'-'}</p>
+                    <p><strong>البريد:</strong> ${escHtml(s.userEmail)||'-'}</p>
                     <p><strong>الباقة:</strong> ${planText(s.plan)}</p>
-                    <p><strong>طريقة الدفع:</strong> ${s.paymentMethod||'-'}</p>
+                    <p><strong>طريقة الدفع:</strong> ${escHtml(s.paymentMethod)||'-'}</p>
                     <p><strong>تاريخ الطلب:</strong> ${formatDateTime(s.createdAt)}</p>
                     <p><strong>الحالة:</strong> ${s.status==='approved'?'مقبول':s.status==='rejected'?'مرفوض':'معلق'}</p>
                     ${s.approvedAt ? `<p><strong>تاريخ الموافقة:</strong> ${formatDateTime(s.approvedAt)}</p>` : ''}
@@ -1655,8 +1985,8 @@
                 const earned = totalEarned[uid] || 0;
                 return `<tr>
                     <td><div class="user-cell">
-                        <div class="user-avatar" style="background:${getAvatarColor(uid)}">${(user.name||'M')[0].toUpperCase()}</div>
-                        <div class="user-info"><div class="name">${user.name||'-'}</div><div class="email">${user.email||''}</div></div>
+                        <div class="user-avatar" style="background:${getAvatarColor(uid)}">${escHtml((user.name||'M')[0].toUpperCase())}</div>
+                        <div class="user-info"><div class="name">${escHtml(user.name||'-')}</div><div class="email">${escHtml(user.email)}</div></div>
                     </div></td>
                     <td><code style="background:#f3f4f6;padding:3px 8px;border-radius:4px;font-weight:700">${code}</code></td>
                     <td>${r.clicks || 0}</td>
@@ -1675,8 +2005,8 @@
             }
             tbody.innerHTML = entries.map(([id, c]) => {
                 return `<tr>
-                    <td><strong>${c.name||''}</strong></td>
-                    <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;direction:ltr;text-align:left">${c.url||''}</td>
+                    <td><strong>${escHtml(c.name)}</strong></td>
+                    <td style="max-width:150px;overflow:hidden;text-overflow:ellipsis;direction:ltr;text-align:left">${escHtml(c.url)}</td>
                     <td>${c.clicks||0}</td>
                     <td>${c.conversions||0}</td>
                     <td>${c.revenue||0} ج.م</td>
@@ -1701,15 +2031,16 @@
                 const referredUser = allUsersData[c.referredUid] || {};
                 return `<tr>
                     <td><div class="user-cell">
-                        <div class="user-avatar" style="background:${getAvatarColor(c.affiliateUid)}">${(affiliateUser.name||'A')[0].toUpperCase()}</div>
-                        <div class="user-info"><div class="name">${affiliateUser.name||c.affiliateUid}</div><div class="email">${affiliateUser.email||''}</div></div>
+                        <div class="user-avatar" style="background:${getAvatarColor(c.affiliateUid)}">${escHtml((affiliateUser.name||'A')[0].toUpperCase())}</div>
+                        <div class="user-info"><div class="name">${escHtml(affiliateUser.name||c.affiliateUid)}</div><div class="email">${escHtml(affiliateUser.email)}</div></div>
                     </div></td>
-                    <td><div class="user-info"><div class="name">${referredUser.name||c.referredUid||'-'}</div><div class="email">${referredUser.email||''}</div></div></td>
+                    <td><div class="user-info"><div class="name">${escHtml(referredUser.name||c.referredUid||'-')}</div><div class="email">${escHtml(referredUser.email)}</div></div></td>
                     <td><strong>${c.amount||0} ج.م</strong></td>
                     <td><span class="badge ${planBadgeClass(c.plan)}">${planText(c.plan)}</span></td>
                     <td>${c.status==='paid'?'<span class="badge badge-approved">مدفوعة</span>':'<span class="badge badge-waiting">معلقة</span>'}</td>
                     <td><div class="actions">
                         ${c.status!=='paid'?`<button class="btn-action btn-approve" onclick="payCommission('${id}')"><i class="fas fa-check"></i> دفع</button>`:''}
+                        ${c.status!=='paid'?`<button class="btn-action btn-reject" onclick="rejectCommission('${id}')"><i class="fas fa-times"></i> رفض</button>`:''}
                     </div></td>
                 </tr>`;
             }).join('');
@@ -1721,6 +2052,21 @@
                 if(window.QCVNotify) QCVNotify.success();
                 showToast('تم تسجيل الدفع', 'success');
             } catch(err) { showToast('خطأ', 'error'); }
+        };
+
+        window.rejectCommission = function(id) {
+            document.getElementById('modalTitle').textContent = 'رفض العمولة';
+            document.getElementById('modalBody').innerHTML = '<p>هل أنت متأكد من رفض هذه العمولة؟</p>';
+            document.getElementById('modalConfirm').style.display = 'block';
+            document.getElementById('modalConfirm').textContent = 'رفض';
+            document.getElementById('modalConfirm').onclick = async () => {
+                try {
+                    await update(ref(db, 'affiliateCommissions/' + id), { status: 'rejected', rejectedAt: Date.now() });
+                    showToast('تم رفض العمولة', 'error');
+                    closeModal();
+                } catch(err) { showToast('خطأ', 'error'); }
+            };
+            document.getElementById('modal').classList.add('show');
         };
 
         window.showAddCampaign = function() {
@@ -1760,9 +2106,9 @@
             document.getElementById('modalTitle').textContent = 'تعديل الحملة';
             document.getElementById('modalBody').innerHTML = `
                 <label>اسم الحملة</label>
-                <input type="text" id="campName" value="${c.name||''}">
+                <input type="text" id="campName" value="${escHtml(c.name)}">
                 <label>الرابط</label>
-                <input type="text" id="campUrl" value="${c.url||''}">
+                <input type="text" id="campUrl" value="${escHtml(c.url)}">
                 <label>الحالة</label>
                 <select id="campStatus">
                     <option value="active" ${c.status==='active'?'selected':''}>نشطة</option>
@@ -1842,13 +2188,15 @@
             const entries = Object.entries(data);
             if (!entries.length) {
                 tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><p>لا توجد وظائف بعد</p></td></tr>';
+                document.getElementById('jobs-pagination').innerHTML = '';
                 return;
             }
-            tbody.innerHTML = entries.map(([id, j]) => {
+            var pd = getPageData(entries, 'jobs');
+            tbody.innerHTML = pd.items.map(([id, j]) => {
                 return `<tr>
-                    <td><strong>${j.title||''}</strong></td>
-                    <td>${j.category||''}</td>
-                    <td>${j.location||''}</td>
+                    <td><strong>${escHtml(j.title)}</strong></td>
+                    <td>${escHtml(j.category)}</td>
+                    <td>${escHtml(j.location)}</td>
                     <td>${j.active!==false?'<span class="badge badge-active">نشطة</span>':'<span class="badge badge-inactive">معطلة</span>'}</td>
                     <td>${formatDate(j.createdAt)}</td>
                     <td><div class="actions">
@@ -1857,6 +2205,7 @@
                     </div></td>
                 </tr>`;
             }).join('');
+            document.getElementById('jobs-pagination').innerHTML = renderPagination('jobs', pd.total);
         }
 
         window.addJob = function() {
@@ -1903,15 +2252,15 @@
             document.getElementById('modalTitle').textContent = 'تعديل الوظيفة';
             document.getElementById('modalBody').innerHTML = `
                 <label>اسم الوظيفة</label>
-                <input type="text" id="jobTitle" value="${j.title||''}">
+                <input type="text" id="jobTitle" value="${escHtml(j.title)}">
                 <label>الفئة</label>
-                <input type="text" id="jobCategory" value="${j.category||''}">
+                <input type="text" id="jobCategory" value="${escHtml(j.category)}">
                 <label>الموقع</label>
-                <input type="text" id="jobLocation" value="${j.location||''}">
+                <input type="text" id="jobLocation" value="${escHtml(j.location)}">
                 <label>التفاصيل</label>
-                <textarea id="jobDesc">${j.description||''}</textarea>
+                <textarea id="jobDesc">${escHtml(j.description)}</textarea>
                 <label>البريد للتقديم</label>
-                <input type="text" id="jobEmail" value="${j.email||''}">
+                <input type="text" id="jobEmail" value="${escHtml(j.email)}">
                 <label style="display:flex;align-items:center;gap:8px;margin-top:8px">
                     <input type="checkbox" id="jobActive" ${j.active!==false?'checked':''}> وظيفة نشطة
                 </label>
@@ -1965,6 +2314,7 @@
             const entries = Object.entries(data);
             if (!entries.length) {
                 tbody.innerHTML = '<tr><td colspan="6" class="empty-state"><p>لا توجد نطاقات بعد</p></td></tr>';
+                document.getElementById('domains-pagination').innerHTML = '';
                 return;
             }
             const usersByDomain = {};
@@ -1974,9 +2324,10 @@
                     usersByDomain[domain] = (usersByDomain[domain] || 0) + 1;
                 }
             });
-            tbody.innerHTML = entries.map(([id, d]) => {
+            var pd = getPageData(entries, 'domains');
+            tbody.innerHTML = pd.items.map(([id, d]) => {
                 return `<tr>
-                    <td><strong style="direction:ltr;display:inline-block">${d.domain||''}</strong></td>
+                    <td><strong style="direction:ltr;display:inline-block">${escHtml(d.domain)}</strong></td>
                     <td><span class="badge ${planBadgeClass(d.plan)}">${planText(d.plan)}</span></td>
                     <td>${d.duration||1}</td>
                     <td>${usersByDomain[d.domain]||0}</td>
@@ -1988,6 +2339,7 @@
                     </div></td>
                 </tr>`;
             }).join('');
+            document.getElementById('domains-pagination').innerHTML = renderPagination('domains', pd.total);
         }
 
         window.showAddDomain = function() {
@@ -2027,7 +2379,7 @@
             document.getElementById('modalTitle').textContent = 'تعديل النطاق';
             document.getElementById('modalBody').innerHTML = `
                 <label>النطاق</label>
-                <input type="text" id="domDomain" value="${d.domain||''}">
+                <input type="text" id="domDomain" value="${escHtml(d.domain)}">
                 <label>الباقة</label>
                 <select id="domPlan">
                     <option value="pro" ${d.plan==='pro'?'selected':''}>احترافية</option>
@@ -2236,7 +2588,7 @@
             if (campEntries.length) {
                 const maxCamp = Math.max(...campEntries.map(([_,c]) => c.conversions||0), 1);
                 document.getElementById('reportCampaigns').innerHTML = campEntries.map(([_, c]) => `<div class="bar-row">
-                    <div class="bar-label">${(c.name||'').substring(0,10)}</div>
+                    <div class="bar-label">${escHtml((c.name||'').substring(0,10))}</div>
                     <div class="bar-track"><div class="bar-fill yellow" style="width:${((c.conversions||0)/maxCamp)*100}%">${c.conversions||0}</div></div>
                 </div>`).join('');
             } else {
@@ -2247,16 +2599,16 @@
             const dlMonths = [];
             for (let i = 5; i >= 0; i--) {
                 const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
-                dlMonths.push({ label: d.toLocaleDateString('ar-EG', { month: 'short' }), count: 0 });
+                dlMonths.push({ label: d.toLocaleDateString('ar-EG', { month: 'short' }), count: 0, start: d.getTime(), end: new Date(d.getFullYear(), d.getMonth() + 1, 0).getTime() });
             }
-            let totalDownloads = 0;
             entries.forEach(([_, u]) => {
-                totalDownloads += u.downloadCount || 0;
+                const dl = u.downloads || 0;
+                if (dl > 0 && u.registeredAt) {
+                    dlMonths.forEach(m => {
+                        if (u.registeredAt >= m.start && u.registeredAt <= m.end) m.count += dl;
+                    });
+                }
             });
-            if (totalDownloads > 0) {
-                const perMonth = Math.ceil(totalDownloads / 6);
-                dlMonths.forEach(m => m.count = perMonth + Math.floor(Math.random() * perMonth * 0.3));
-            }
             const maxDl = Math.max(...dlMonths.map(m => m.count), 1);
             document.getElementById('reportDownloads').innerHTML = dlMonths.map(m => `<div class="bar-row">
                 <div class="bar-label">${m.label}</div>
@@ -2361,7 +2713,7 @@
                 u.registeredAt ? new Date(u.registeredAt).toLocaleString('ar-EG') : '',
                 u.lastLogin ? new Date(u.lastLogin).toLocaleString('ar-EG') : '',
                 u.banned ? 'محظور' : 'نشط',
-                u.downloadCount || 0
+                u.downloads || 0
             ]);
             const csvContent = '\uFEFF' + [headers, ...rows].map(r => r.map(c => '"' + String(c).replace(/"/g, '""') + '"').join(',')).join('\n');
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
@@ -2403,7 +2755,7 @@
 
         window.showSendMessage = function(targetUid) {
             const userOptions = Object.entries(allUsersData).map(([uid, u]) =>
-                `<option value="${uid}" ${uid===targetUid?'selected':''}>${u.name||u.email||uid}</option>`
+                `<option value="${uid}" ${uid===targetUid?'selected':''}>${escHtml(u.name||u.email||uid)}</option>`
             ).join('');
             document.getElementById('modalTitle').textContent = 'إرسال رسالة';
             document.getElementById('modalBody').innerHTML = `
@@ -2493,10 +2845,12 @@
             const entries = Object.entries(data).sort((a,b) => (b[1].sentAt||0) - (a[1].sentAt||0));
             if (!entries.length) {
                 tbody.innerHTML = '<tr><td colspan="4" class="empty-state"><p>لا توجد رسائل بعد</p></td></tr>';
+                document.getElementById('messages-pagination').innerHTML = '';
                 return;
             }
-            tbody.innerHTML = entries.map(([id, m]) => {
-                const target = m.target === 'all' ? 'الكل (' + (m.userCount||0) + ')' : (allUsersData[m.target]?.name || m.target);
+            var pd = getPageData(entries, 'messages');
+            tbody.innerHTML = pd.items.map(([id, m]) => {
+                const target = m.target === 'all' ? 'الكل (' + (m.userCount||0) + ')' : escHtml(allUsersData[m.target]?.name || m.target);
                 const typeColors = { info: 'var(--accent)', warning: 'var(--yellow)', success: 'var(--green)', promo: 'var(--purple)' };
                 const typeLabels = { info: 'معلوماتية', warning: 'تحذير', success: 'تهنئة', promo: 'عرض خاص' };
                 return `<tr>
@@ -2506,6 +2860,7 @@
                     <td><span class="badge" style="background:${typeColors[m.type]||'var(--accent)'}20;color:${typeColors[m.type]||'var(--accent)'}">${typeLabels[m.type]||m.type}</span></td>
                 </tr>`;
             }).join('');
+            document.getElementById('messages-pagination').innerHTML = renderPagination('messages', pd.total);
         }
 
         // ===== CV PREVIEW =====

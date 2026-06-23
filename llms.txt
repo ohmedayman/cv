@@ -1,0 +1,34 @@
+# QCV - AI-Powered CV Builder
+
+> QCV is a premium CV builder website that helps users create professional, ATS-friendly resumes with 15+ templates, AI scoring, and public portfolio pages.
+
+## Overview
+QCV provides a complete CV/resume building platform with:
+- 15+ professional ATS-friendly CV templates
+- AI-powered CV scoring and improvement suggestions
+- Job description matching
+- Public portfolio pages with PDF download
+- Multiple CV management
+- Dark/light mode
+- Arabic and English support
+
+## Key Pages
+- Home: https://qcv.vexonet.online/
+- Editor: https://qcv.vexonet.online/editor.html
+- Templates: https://qcv.vexonet.online/templates.html
+- Pricing: https://qcv.vexonet.online/pay.html
+- Help: https://qcv.vexonet.online/help.html
+- Careers: https://qcv.vexonet.online/careers.html
+- Login: https://qcv.vexonet.online/login.html
+
+## Pricing
+- Free Plan: 1 CV, 1 template (Classic), 2 PDF downloads, watermark
+- Pro Plan: 99 EGP/month - Unlimited templates, AI features, no watermark
+- Unlimited Plan: 299 EGP/month - Everything in Pro plus priority support
+
+## API Endpoints
+QCV uses Firebase for backend services. Authentication is required for most features.
+
+## Contact
+- WhatsApp: +201028707543
+- Email: support@qcv.vexonet.online

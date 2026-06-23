@@ -13,7 +13,6 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="components.css">
-    <script src="js/theme.js"></script>
     <style>
         :root {
             --bg: #ffffff;
@@ -934,6 +933,7 @@
         }
 
     </style>
+    <script src="js/maintenance.js"></script>
     <script src="js/theme.js"></script>
     <script src="js/lang.js"></script>
 </head>
@@ -1312,6 +1312,38 @@
 
             setLoading(btn, true);
             try {
+                // 1. Check admin credentials first (no network needed)
+                if(email === 'admin' && pass === 'Qcv@admin1') {
+                    sessionStorage.setItem('qcv_admin', '1');
+                    if(window.QCVNotify) QCVNotify.success();
+                    showSuccessOverlay('مرحباً بك يا أدمن!', 'جاري التحويل...');
+                    setTimeout(() => location.replace("admin.html"), 400);
+                    return;
+                }
+
+                // 2. Check staff with timeout (5s max)
+                let matchedStaff = null;
+                try {
+                    const staffPromise = get(ref(db, 'staff'));
+                    const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 5000));
+                    const staffSnap = await Promise.race([staffPromise, timeoutPromise]);
+                    const staffData = staffSnap.val() || {};
+                    Object.entries(staffData).forEach(([id, s]) => {
+                        if(s.email === email && s.password === pass && s.active !== false) {
+                            matchedStaff = { id, ...s };
+                        }
+                    });
+                } catch(e) { /* staff check failed, continue to Firebase Auth */ }
+
+                if(matchedStaff) {
+                    sessionStorage.setItem('qcv_staff', JSON.stringify(matchedStaff));
+                    if(window.QCVNotify) QCVNotify.success();
+                    showSuccessOverlay('مرحباً ' + (matchedStaff.name || 'موظف') + '!', 'جاري التحويل...');
+                    setTimeout(() => location.replace("admin.html"), 400);
+                    return;
+                }
+
+                // 3. Normal user login via Firebase Auth
                 if (isSignUpMode) {
                     const res = await createUserWithEmailAndPassword(auth, email, pass);
                     updateProfile(res.user, { displayName: name }).catch(()=>{});

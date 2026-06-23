@@ -118,18 +118,18 @@
         .editor-layout{display:flex;height:calc(100vh - 56px)}
 
         /* Left Sidebar */
-        .sidebar-nav{width:230px;min-width:230px;background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;order:1}
+        .sidebar-nav{width:240px;min-width:240px;background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;order:1}
         .btn-upgrade{width:100%;padding:9px;background:transparent;border:1.5px solid var(--accent);color:var(--accent);border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px}
         .btn-upgrade:hover{background:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(0,3,201,0.2)}
 
         /* Nav Tabs */
-        .nav-tabs{flex:1;padding:12px}
-        .nav-tab{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;font-weight:600;font-size:0.82rem;color:var(--muted);cursor:pointer;transition:all 0.2s;margin-bottom:2px;position:relative}
+        .nav-tabs{flex:1;padding:8px 10px}
+        .nav-tab{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;font-weight:600;font-size:0.82rem;color:var(--muted);cursor:pointer;transition:all 0.2s;margin-bottom:2px;position:relative}
         .nav-tab:hover{background:var(--bg);color:var(--text)}
         .nav-tab.active{background:rgba(0,3,201,0.08);color:var(--accent);font-weight:700}
-        .nav-tab .icon{width:30px;height:30px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;transition:all 0.2s}
+        .nav-tab .icon{width:28px;height:28px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:0.8rem;flex-shrink:0;transition:all 0.2s}
         .nav-tab.active .icon{background:rgba(0,3,201,0.12);color:var(--accent)}
-        .nav-tab .tab-label{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .nav-tab .tab-label{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:0.8rem}
         .nav-tab .tab-dots{width:22px;height:22px;border:none;background:transparent;color:var(--muted);border-radius:4px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.15s;flex-shrink:0;opacity:0}
         .nav-tab:hover .tab-dots{opacity:1}
         .nav-tab .tab-dots:hover{background:rgba(0,0,0,0.1);color:var(--text)}
@@ -179,8 +179,8 @@
         .upload-result .ur-text{font-size:0.8rem;color:var(--text);font-weight:600}
         .upload-result .ur-sub{font-size:0.7rem;color:var(--muted);margin-top:4px}
 
-        .sidebar-bottom{padding:12px;border-top:1px solid var(--border)}
-        .sidebar-feature{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:7px;font-size:0.78rem;color:var(--light);cursor:pointer;transition:all 0.2s;margin-bottom:3px}
+        .sidebar-bottom{padding:10px;border-top:1px solid var(--border)}
+        .sidebar-feature{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;font-size:0.78rem;color:var(--light);cursor:pointer;transition:all 0.2s;margin-bottom:2px}
         .sidebar-feature:hover{background:rgba(0,0,0,0.04)}
         .sidebar-feature .pro-badge{background:var(--accent);color:#000;font-size:0.55rem;padding:1px 5px;border-radius:4px;font-weight:700;margin-right:auto}
 
@@ -209,10 +209,10 @@
         .tpl-card-badge{display:inline-block;padding:3px 8px;border-radius:5px;font-size:0.6rem;font-weight:700;margin-top:6px}
 
         /* Middle - Forms */
-        .editor-forms{width:320px;min-width:320px;overflow-y:auto;padding:16px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+        .editor-forms{width:320px;min-width:320px;overflow-y:auto;padding:14px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
         .editor-forms::-webkit-scrollbar{width:4px}
         .editor-forms::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
-        .form-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:12px;display:none}
+        .form-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:10px;display:none}
         .form-card.active{display:block}
         .form-card-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
         .form-card-header .icon{width:36px;height:36px;border-radius:10px;background:rgba(0,3,201,0.08);display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--accent)}
@@ -417,6 +417,7 @@
             .btn-export,.btn-html-export{padding:6px 12px;font-size:0.72rem}
             .btn-save{padding:6px 12px;font-size:0.72rem}
             .profile-dropdown{width:260px}
+            #sidebarPlanInfo{display:none}
         }
         @media(max-width:600px){
             .sidebar-nav{max-height:35vh;overflow-y:auto}
@@ -549,9 +550,9 @@
                     <span class="pl">Current Plan</span>
                     <span class="pn" id="ddPlan">Free</span>
                 </div>
-                <div class="dd-subscription" id="ddSubscription" style="display:none">
-                    <div class="dd-sub-row"><span class="dd-sub-label">Downloads</span><span class="dd-sub-value" id="ddDownloads">0 / 1</span></div>
-                    <div class="dd-sub-row"><span class="dd-sub-label">Expires</span><span class="dd-sub-value" id="ddExpiry">-</span></div>
+                <div class="dd-subscription" id="ddSubscription">
+                    <div class="dd-sub-row"><span class="dd-sub-label">Downloads</span><span class="dd-sub-value" id="ddDownloads" style="font-weight:700">0 / 2</span></div>
+                    <div class="dd-sub-row"><span class="dd-sub-label">Expires</span><span class="dd-sub-value" id="ddExpiry" style="font-weight:700">-</span></div>
                     <button class="dd-upgrade-btn" onclick="window.location.href='pay.html'"><i class="fas fa-star"></i> Upgrade Plan</button>
                 </div>
                 <div class="dd-section">
@@ -820,19 +821,42 @@
         const subEl = document.getElementById('ddSubscription');
         if(subEl) {
             const isFree = (userData.plan||'free') === 'free';
-            subEl.style.display = 'block';
             const dlEl = document.getElementById('ddDownloads');
-            if(dlEl) dlEl.textContent = isFree ? (userData.downloads||0) + ' / 2' : (userData.downloads||0) + ' / ∞';
+            if(dlEl) {
+                const dlCount = userData.downloads || 0;
+                const dlLimit = isFree ? 2 : '∞';
+                dlEl.textContent = dlCount + ' / ' + dlLimit;
+                // Color code: red if at limit, orange if 1 away, green otherwise
+                if(isFree) {
+                    if(dlCount >= 2) dlEl.style.color = '#ef4444';
+                    else if(dlCount >= 1) dlEl.style.color = '#f59e0b';
+                    else dlEl.style.color = '#10b981';
+                } else {
+                    dlEl.style.color = '#10b981';
+                }
+            }
             const expEl = document.getElementById('ddExpiry');
             if(expEl) {
                 if(userData.planExpiry) {
                     const d = new Date(userData.planExpiry);
+                    const diff = userData.planExpiry - Date.now();
+                    const daysLeft = Math.ceil(diff / 86400000);
                     expEl.textContent = d.toLocaleDateString('en',{year:'numeric',month:'short',day:'numeric'});
-                    if(Date.now() > userData.planExpiry) expEl.textContent += ' (Expired)';
+                    if(diff < 0) {
+                        expEl.textContent += ' (Expired)';
+                        expEl.style.color = '#ef4444';
+                    } else if(daysLeft <= 7) {
+                        expEl.textContent += ' (' + daysLeft + ' days left)';
+                        expEl.style.color = '#f59e0b';
+                    } else {
+                        expEl.style.color = '#10b981';
+                    }
                 } else if(!isFree) {
                     expEl.textContent = 'Lifetime';
+                    expEl.style.color = '#10b981';
                 } else {
                     expEl.textContent = '-';
+                    expEl.style.color = '';
                 }
             }
             const upgBtn = subEl.querySelector('.dd-upgrade-btn');
@@ -859,6 +883,10 @@
             if (bell && !bell.contains(e.target)) panel.classList.remove('show');
         });
 
+        function escapeHtml(str) {
+            if(!str) return '';
+            return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+        }
         function renderNotifList() {
             const list = document.getElementById('notifList');
             const badge = document.getElementById('notifBadge');
@@ -874,9 +902,10 @@
                 const typeClasses = { info: 'notif-type-info', warning: 'notif-type-warning', success: 'notif-type-success', promo: 'notif-type-promo' };
                 const typeLabels = { info: 'معلوماتية', warning: 'تحذير', success: 'تهنئة', promo: 'عرض خاص' };
                 const ago = getTimeAgo(n.sentAt);
+                var safeLink = (n.link && (n.link.startsWith('http://') || n.link.startsWith('https://'))) ? n.link : '#';
                 return `<div class="notif-item ${n.read ? '' : 'unread'}" onclick="markRead('${n.id}')">
                     <span class="notif-type ${typeClasses[n.type] || 'notif-type-info'}">${typeLabels[n.type] || n.type}</span>
-                    <div class="notif-text">${(n.text||'').replace(/\n/g,'<br>')}${n.link ? '<br><a href="'+n.link+'" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="color:var(--accent);font-weight:700;text-decoration:underline;display:inline-flex;align-items:center;gap:4px;margin-top:4px"><i class="fas fa-external-link-alt" style="font-size:0.7em"></i>رابط</a>' : ''}</div>
+                    <div class="notif-text">${escapeHtml(n.text||'').replace(/\n/g,'<br>')}${n.link ? '<br><a href="'+safeLink+'" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="color:var(--accent);font-weight:700;text-decoration:underline;display:inline-flex;align-items:center;gap:4px;margin-top:4px"><i class="fas fa-external-link-alt" style="font-size:0.7em"></i>رابط</a>' : ''}</div>
                     <div class="notif-time">${ago}</div>
                 </div>`;
             }).join('');
@@ -884,6 +913,9 @@
 
         window.markRead = async function(id) {
             await set(ref(db, 'users/' + user.uid + '/notifications/' + id + '/read'), true);
+            var notif = allNotifications.find(n => n.id === id);
+            if (notif) notif.read = true;
+            renderNotifList();
         };
 
         window.markAllRead = async function() {
@@ -891,6 +923,8 @@
             allNotifications.forEach(n => { updates['users/' + user.uid + '/notifications/' + n.id + '/read'] = true; });
             try {
                 await update(ref(db), updates);
+                allNotifications.forEach(n => { n.read = true; });
+                renderNotifList();
                 document.getElementById('notifPanel').classList.remove('show');
             } catch(e) {
                 if(window.QCVNotify) QCVNotify.error();
@@ -961,7 +995,6 @@
     function togglePaidFeatures(plan) {
         const paid = plan === 'pro' || plan === 'unlimited';
         const aiScore = document.getElementById('aiScoreWidget');
-        const aiBtn = document.getElementById('aiAssistantBtn');
         const aiAssist = document.getElementById('aiAssistBtn');
         const aiMenu = document.getElementById('aiMenu');
         const jobTab = document.getElementById('jobmatchTab');
@@ -969,7 +1002,6 @@
         const aiBadge = document.getElementById('aiCvBadge');
         const btnAiGen = document.getElementById('btnAiGen');
         if (aiScore) aiScore.classList.toggle('show', paid);
-        if (aiBtn) aiBtn.style.display = paid ? '' : 'none';
         if (aiAssist) aiAssist.style.display = paid ? '' : 'none';
         if (aiMenu) aiMenu.style.display = paid ? '' : 'none';
         if (jobTab) jobTab.style.display = paid ? '' : 'none';
@@ -978,10 +1010,12 @@
         if (btnAiGen) btnAiGen.style.display = paid ? '' : 'none';
         const uploadBtn = document.getElementById('uploadCvBtn');
         if (uploadBtn) uploadBtn.style.display = paid ? '' : 'none';
+        const sideAiBtn = document.getElementById('aiAssistantBtn');
+        if (sideAiBtn) sideAiBtn.style.display = paid ? '' : 'none';
         const sel = document.getElementById('templateSelect');
         if (sel) {
             Array.from(sel.options).forEach(opt => {
-                if (!FREE_TEMPLATES.includes(opt.value)) {
+                if (isTemplateLocked(opt.value)) {
                     opt.disabled = !paid;
                     opt.text = paid ? opt.value.charAt(0).toUpperCase() + opt.value.slice(1).replace(/-/g,' ') : opt.value.charAt(0).toUpperCase() + opt.value.slice(1).replace(/-/g,' ') + ' 🔒';
                 } else {
@@ -1189,7 +1223,7 @@
 
     window.changeTemplate = function(tpl) {
         const paid = isPaidPlan();
-        if (!paid && !FREE_TEMPLATES.includes(tpl)) {
+        if (isTemplateLocked(tpl)) {
             if(window.QCVNotify) QCVNotify.error();
             alert('This template is for Pro users only. Upgrade to unlock all templates.');
             document.getElementById('templateSelect').value = currentTemplate;
@@ -1277,7 +1311,7 @@
         'consider expanding to 100+ chars': 'وسّع الملخص لأكثر من 100 حرف',
         'add numbers/results': 'أضف أرقاماً ونتائج قابلة للقياس',
         'Add at least 1 work experience entry': 'أضف خبرة عمل واحدة على الأقل',
-        'Add 2+ work experiences': 'أضفخبرتين أو أكثر',
+        'Add 2+ work experiences': 'أضف خبرتين أو أكثر',
         'has no description': 'بدون وصف — أضف 3-5 نقاط',
         'bullet(s)': 'نقاط — أضف المزيد',
         'Add your educational background': 'أضف خلفيتك التعليمية',
@@ -1450,20 +1484,49 @@
     window.exportPDF = async function() {
         const paid = isPaidPlan();
         const b = document.getElementById('exportBtn');
+        const _db = window._db || db;
+        const _ref = window._ref || ref;
+        const _set = window._set || set;
+        const _get = window._get || get;
 
-        if(!paid && window.currentUid) {
+        // Track download count for ALL users
+        console.log('ExportPDF: currentUid =', window.currentUid, 'paid =', paid);
+        if(window.currentUid) {
             try {
-                const userSnap = await get(ref(db, 'users/' + window.currentUid));
+                const userSnap = await _get(_ref(_db, 'users/' + window.currentUid));
                 const ud = userSnap.val() || {};
                 const downloads = ud.downloads || 0;
-                if(downloads >= 2) {
+                console.log('ExportPDF: current downloads =', downloads);
+
+                if(!paid && downloads >= 2) {
                     if(window.QCVNotify) QCVNotify.error();
                     alert('You reached the free limit (2 downloads). Upgrade to Pro for unlimited.');
                     window.location.href = 'pay.html';
                     return;
                 }
-                set(ref(db, 'users/' + window.currentUid + '/downloads'), downloads + 1).catch(() => {});
-            } catch(e) { console.warn('Download check error:', e); }
+
+                const newCount = downloads + 1;
+                console.log('ExportPDF: writing new count =', newCount);
+                await _set(_ref(_db, 'users/' + window.currentUid + '/downloads'), newCount);
+                console.log('ExportPDF: Firebase write success');
+
+                // Update display immediately
+                var dlDisplay = document.getElementById('ddDownloads');
+                if(dlDisplay) {
+                    dlDisplay.textContent = newCount + ' / ' + (paid ? '∞' : '2');
+                    if(!paid) {
+                        dlDisplay.style.color = newCount >= 2 ? '#ef4444' : newCount >= 1 ? '#f59e0b' : '#10b981';
+                    }
+                }
+
+                // Also update userData cache
+                if(userData) userData.downloads = newCount;
+                if(window._userData) window._userData.downloads = newCount;
+            } catch(e) {
+                console.error('Download tracking error:', e);
+            }
+        } else {
+            console.warn('ExportPDF: no currentUid — download not tracked');
         }
 
         const nameVal = document.getElementById('inputName').value.trim() || 'cv';
@@ -1674,6 +1737,12 @@
         return plan === 'pro' || plan === 'unlimited';
     }
 
+    function isTemplateLocked(templateId) {
+        const ud = window._userData;
+        const plan = ud ? ud.plan : 'free';
+        return plan === 'free' ? !FREE_TEMPLATES.includes(templateId) : false;
+    }
+
     window.showTemplates = function() {
         try {
             const grid = document.getElementById('templateGrid');
@@ -1683,7 +1752,7 @@
             const catColors = {ats:'#38bdf8',modern:'#2563eb',creative:'#8b5cf6',classic:'#f59e0b',executive:'#1e293b'};
             const sampleData = {name:'Ahmad Mostafa',title:'Senior UI/UX Designer',email:'ahmad@example.com',phone:'+20 123 456 789',location:'Cairo, Egypt',linkedin:'linkedin.com/in/ahmadmostafa',summary:'Product designer with 6+ years of experience.',skills:['UI Design','Figma','Prototyping','User Research','CSS','Design Systems'],experience:[{role:'Senior Product Designer',company:'TechCorp Inc.',duration:'2022 - Present',description:'- Redesigned application flows'},{role:'UX Designer',company:'StartupX',duration:'2019 - 2022',description:'- Built recruiter dashboards'}],education:[{degree:'B.Sc. Computer Science',school:'Cairo University',duration:'2015 - 2019',description:'- GPA: 3.7/4.0'}],languages:[{name:'Arabic',level:'Native'},{name:'English',level:'Fluent'}]};
             grid.innerHTML = templates.map(t => {
-                const locked = !paid && !FREE_TEMPLATES.includes(t.id);
+                const locked = isTemplateLocked(t.id);
                 const isSelected = currentTemplate === t.id;
                 const clickAttr = locked ? `onclick="window.location.href='pay.html'"` : `onclick="selectTemplate('${t.id}')"`;
                 let preview = '';
@@ -1708,7 +1777,7 @@
     window.selectTemplate = function(id) {
         try {
             const paid = isPaidPlan();
-            if (!paid && !FREE_TEMPLATES.includes(id)) {
+            if (isTemplateLocked(id)) {
                 window.location.href = 'pay.html';
                 return;
             }
@@ -1957,7 +2026,7 @@
         try {
             var data = JSON.parse(content);
             return {
-                name: data.name || data.fullName || data.firstName + ' ' + (data.lastName || '') || '',
+                name: data.name || data.fullName || ((data.firstName || '') + ' ' + (data.lastName || '')).trim() || '',
                 title: data.title || data.jobTitle || data.position || '',
                 email: data.email || '',
                 phone: data.phone || data.phoneNumber || data.mobile || '',
@@ -2173,10 +2242,10 @@
                 expContainer.innerHTML = '';
                 d.experience.forEach(function(exp) {
                     var id = 'exp_' + Date.now() + '_' + Math.random().toString(36).substr(2,4);
-                    var role = (exp.role||'').replace(/"/g,'&quot;');
-                    var company = (exp.company||'').replace(/"/g,'&quot;');
-                    var dur = (exp.duration||'').replace(/"/g,'&quot;');
-                    var desc = (exp.description||'').replace(/</g,'&lt;');
+                    var role = escapeHtml(exp.role||'');
+                    var company = escapeHtml(exp.company||'');
+                    var dur = escapeHtml(exp.duration||'');
+                    var desc = escapeHtml(exp.description||'');
                     expContainer.insertAdjacentHTML('beforeend', '<div class="repeater-block" id="'+id+'"><div class="rb-header"><span class="rb-title">Experience</span><button class="btn-rb-delete" onclick="document.getElementById(\''+id+'\').remove();renderCV()">Delete</button></div><div class="field"><label>Title</label><input type="text" value="'+role+'" oninput="renderCV()"></div><div class="field"><label>Company</label><input type="text" value="'+company+'" oninput="renderCV()"></div><div class="field"><label>Duration</label><input type="text" value="'+dur+'" oninput="renderCV()"></div><div class="field"><label>Description</label><textarea oninput="renderCV()">'+desc+'</textarea></div></div>');
                 });
             }
@@ -2200,13 +2269,9 @@
 
         // Map skills
         if(d.skills && d.skills.length) {
-            skills = d.skills;
-            var container = document.getElementById('skillsContainer');
-            if(container) {
-                container.innerHTML = '';
-                skills.forEach(function(s) {
-                    container.innerHTML += '<div class="skill-tag">' + s + ' <button onclick="this.parentElement.remove();renderCV()">×</button></div>';
-                });
+            var inputSkills = document.getElementById('inputSkills');
+            if(inputSkills) {
+                inputSkills.value = d.skills.join(', ');
             }
         }
 
@@ -2564,12 +2629,9 @@ window.applyAiResult = function() {
     } else if(action.includes('Skills') || action.includes('مهارات')) {
         const skills = aiResultText.split(',').map(s => s.trim()).filter(s => s);
         data.skills = skills;
-        const container = document.getElementById('skillsContainer');
-        if(container) {
-            container.innerHTML = '';
-            skills.forEach(s => {
-                container.innerHTML += '<div class="skill-tag">' + s + ' <button onclick="this.parentElement.remove();renderCV()">×</button></div>';
-            });
+        const inputSkills = document.getElementById('inputSkills');
+        if(inputSkills) {
+            inputSkills.value = skills.join(', ');
         }
     }
     renderCV();
@@ -2643,8 +2705,16 @@ window.aiFixIssue = function(section, issueText, issueType) {
         'Skills: ' + (data.skills || []).join(', ')
     ].filter(Boolean).join('\n\n');
 
-    const sectionData = data[section] || {};
-    const sectionText = JSON.stringify(sectionData);
+    window._aiFixContext = { section: section, issueText: issueText };
+    let sectionData;
+    if (section === 'personal') {
+        sectionData = { name: data.name, title: data.title, email: data.email, phone: data.phone, location: data.location, linkedin: data.linkedin };
+    } else if (data[section] !== undefined) {
+        sectionData = data[section];
+    } else {
+        sectionData = {};
+    }
+    const sectionText = typeof sectionData === 'string' ? sectionData : JSON.stringify(sectionData);
 
     const prompt = 'أنت مستشار سيرة ذاتية محترف. المستخدم عنده المشكلة دي في قسم "' + section + '":\n\nالمشكلة: ' + issueText + '\n\nبيانات القسم الحالي:\n' + sectionText + '\n\nالسيرة الذاتية كاملة:\n' + cvText + '\n\nقدم النص المُصحّح الذي يجب استخدامه. كن مختصراً (2-4 جمل). أرجع النص المُصحّح فقط بدون شرح.';
 
@@ -2673,19 +2743,25 @@ window.applyAiResult = function() {
             document.getElementById('inputSummary').value = aiResultText;
             data.summary = aiResultText;
         } else if(section === 'experience') {
-            // Find first experience and update description
             if(data.experience && data.experience.length > 0) {
-                data.experience[0].description = aiResultText;
+                var expIdx = 0;
+                var ctx = window._aiFixContext;
+                if(ctx && ctx.issueText) {
+                    var m = ctx.issueText.match(/#(\d+)/);
+                    if(m) expIdx = parseInt(m[1]) - 1;
+                }
+                if(expIdx >= 0 && expIdx < data.experience.length) {
+                    data.experience[expIdx].description = aiResultText;
+                } else {
+                    data.experience[0].description = aiResultText;
+                }
             }
         } else if(section === 'skills') {
             const skills = aiResultText.split(',').map(s => s.trim()).filter(s => s);
             data.skills = skills;
-            const container = document.getElementById('skillsContainer');
-            if(container) {
-                container.innerHTML = '';
-                skills.forEach(s => {
-                    container.innerHTML += '<div class="skill-tag">' + s + ' <button onclick="this.parentElement.remove();renderCV()">×</button></div>';
-                });
+            const inputSkills = document.getElementById('inputSkills');
+            if(inputSkills) {
+                inputSkills.value = skills.join(', ');
             }
         } else if(section === 'personal') {
             // Try to extract name/title from AI response
@@ -2702,7 +2778,31 @@ window.applyAiResult = function() {
             }
         } else if(section === 'education') {
             if(data.education && data.education.length > 0) {
-                data.education[0].description = aiResultText;
+                var eduIdx = 0;
+                var ctx2 = window._aiFixContext;
+                if(ctx2 && ctx2.issueText) {
+                    var m2 = ctx2.issueText.match(/#(\d+)/);
+                    if(m2) eduIdx = parseInt(m2[1]) - 1;
+                }
+                if(eduIdx >= 0 && eduIdx < data.education.length) {
+                    data.education[eduIdx].description = aiResultText;
+                } else {
+                    data.education[0].description = aiResultText;
+                }
+            }
+        } else if(section === 'languages') {
+            if(data.languages && data.languages.length > 0) {
+                var langIdx = 0;
+                var ctx3 = window._aiFixContext;
+                if(ctx3 && ctx3.issueText) {
+                    var m3 = ctx3.issueText.match(/#(\d+)/);
+                    if(m3) langIdx = parseInt(m3[1]) - 1;
+                }
+                if(langIdx >= 0 && langIdx < data.languages.length) {
+                    data.languages[langIdx].name = aiResultText;
+                } else {
+                    data.languages[0].name = aiResultText;
+                }
             }
         }
     } else if(action.includes('Summarize') || action.includes('ملخص')) {
@@ -2714,12 +2814,9 @@ window.applyAiResult = function() {
     } else if(action.includes('Skills') || action.includes('مهارات')) {
         const skills = aiResultText.split(',').map(s => s.trim()).filter(s => s);
         data.skills = skills;
-        const container = document.getElementById('skillsContainer');
-        if(container) {
-            container.innerHTML = '';
-            skills.forEach(s => {
-                container.innerHTML += '<div class="skill-tag">' + s + ' <button onclick="this.parentElement.remove();renderCV()">×</button></div>';
-            });
+        const inputSkills = document.getElementById('inputSkills');
+        if(inputSkills) {
+            inputSkills.value = skills.join(', ');
         }
     }
     renderCV();
@@ -2783,7 +2880,7 @@ window.doPuterAuth = function() {
 };
 
 function callDeepSeek(prompt, onSuccess, onError) {
-    var key = localStorage.getItem('qcv_deepseek_key') || 'sk-0c803f1b9cc54b089d09d81e6b0cb72e';
+    var key = localStorage.getItem('qcv_deepseek_key') || '';
     fetch('https://api.deepseek.com/chat/completions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key },
@@ -2805,11 +2902,11 @@ function callDeepSeek(prompt, onSuccess, onError) {
 
 function callRemainingProviders(prompt, onSuccess, onError) {
     var settings = (window.QCVSettings && window.QCVSettings.get) ? window.QCVSettings.get() : {};
-    var groqKey = settings.groqKey || localStorage.getItem('qcv_groq_key') || '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';
+    var groqKey = settings.groqKey || localStorage.getItem('qcv_groq_key') || '';
     var openrouterKey = settings.openrouterKey || localStorage.getItem('qcv_openrouter_key') || '';
     var openaiKey = settings.aiApiKey || localStorage.getItem('qcv_ai_key') || '';
 
-    var naraKey = 'sk-nry-8byFwwi7R-yyindmAMnSQoqzX4y4M2Doz5B8pq7ehrA';
+    var naraKey = settings.naraKey || localStorage.getItem('qcv_nara_key') || '';
 
     var providers = [];
     if(groqKey) providers.push({ url: 'https://api.groq.com/openai/v1/chat/completions', key: groqKey, model: 'llama-3.3-70b-versatile' });
