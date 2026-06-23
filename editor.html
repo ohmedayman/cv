@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="templates/templates.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://js.puter.com/v2/"></script>
     <style>
         :root{--bg:#f9fafb;--sidebar:#ffffff;--card:#ffffff;--border:#e5e7eb;--accent:#0003c9;--sky:#2563eb;--glow:rgba(0,3,201,0.25);--green:#0003c9;--red:#ef4444;--yellow:#f59e0b;--text:#1a1a2e;--muted:#6b7280;--light:#9ca3af;--input:#f9fafb}
         *{box-sizing:border-box;margin:0;padding:0}
@@ -62,6 +64,9 @@
         .topbar-left{display:flex;align-items:center;gap:10px;flex-shrink:0}
         .theme-toggle{width:36px;height:36px;border-radius:10px;background:var(--card);border:1px solid var(--border);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all 0.25s}
         .theme-toggle:hover{border-color:var(--accent);transform:scale(1.05);box-shadow:0 2px 8px rgba(0,3,201,0.15)}
+        .btn-upload-cv{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;padding:7px 14px;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:5px;transition:all 0.2s;box-shadow:0 2px 8px rgba(99,102,241,0.25)}
+        .btn-upload-cv:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(99,102,241,0.35);background:linear-gradient(135deg,#4f46e5,#7c3aed)}
+        .btn-upload-cv i{font-size:0.85rem}
         .btn-save{background:var(--card);color:var(--text);border:1px solid var(--border);padding:7px 16px;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:flex;align-items:center;gap:5px}
         .btn-save:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,3,201,0.04)}
         .btn-export{background:var(--accent);color:#fff;border:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,3,201,0.2)}
@@ -140,6 +145,39 @@
 
         .add-section-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 14px;margin:4px 12px 12px;border:2px dashed var(--border);border-radius:8px;font-size:0.78rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.2s;font-family:inherit;background:transparent}
         .add-section-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(56,189,248,0.05)}
+        .upload-cv-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 14px;margin:4px 12px 12px;border:2px solid #6366f1;border-radius:8px;font-size:0.78rem;font-weight:700;color:#6366f1;cursor:pointer;transition:all 0.2s;font-family:inherit;background:rgba(99,102,241,0.06)}
+        .upload-cv-btn:hover{background:#6366f1;color:#fff;border-color:#6366f1;transform:translateY(-1px);box-shadow:0 2px 8px rgba(99,102,241,0.3)}
+        .upload-modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.6);z-index:9999;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+        .upload-modal-overlay.show{display:flex}
+        .upload-modal{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:30px;max-width:480px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.3);animation:modalIn 0.2s ease}
+        @keyframes modalIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
+        .upload-modal h3{margin:0 0 8px;font-size:1.1rem;font-weight:800;color:var(--text)}
+        .upload-modal p{margin:0 0 20px;font-size:0.8rem;color:var(--muted);line-height:1.5}
+        .upload-dropzone{border:2px dashed var(--border);border-radius:12px;padding:40px 20px;text-align:center;cursor:pointer;transition:all 0.2s;margin-bottom:16px}
+        .upload-dropzone:hover,.upload-dropzone.dragover{border-color:#6366f1;background:rgba(99,102,241,0.04)}
+        .upload-dropzone i{font-size:2.5rem;color:#6366f1;margin-bottom:10px;display:block}
+        .upload-dropzone .uz-text{font-weight:700;font-size:0.85rem;color:var(--text);margin-bottom:4px}
+        .upload-dropzone .uz-sub{font-size:0.72rem;color:var(--muted)}
+        .upload-dropzone input[type="file"]{display:none}
+        .upload-formats{display:flex;gap:6px;justify-content:center;margin-bottom:16px;flex-wrap:wrap}
+        .upload-formats span{font-size:0.65rem;padding:3px 10px;border-radius:20px;background:rgba(99,102,241,0.08);color:#6366f1;font-weight:600}
+        .upload-actions{display:flex;gap:10px;justify-content:flex-end}
+        .upload-actions button{padding:8px 20px;border-radius:8px;font-weight:700;font-size:0.8rem;cursor:pointer;font-family:inherit;border:none;transition:all 0.15s}
+        .upload-actions .btn-cancel{background:var(--bg);color:var(--muted);border:1px solid var(--border)}
+        .upload-actions .btn-cancel:hover{background:var(--border)}
+        .upload-actions .btn-upload{background:#6366f1;color:#fff}
+        .upload-actions .btn-upload:hover{background:#4f46e5}
+        .upload-actions .btn-upload:disabled{opacity:0.5;cursor:not-allowed}
+        .upload-progress{display:none;text-align:center;padding:20px}
+        .upload-progress.show{display:block}
+        .upload-progress i{font-size:2rem;color:#6366f1;margin-bottom:8px;display:block;animation:spin 1s linear infinite}
+        .upload-result{display:none;text-align:center;padding:20px}
+        .upload-result.show{display:block}
+        .upload-result i{font-size:2rem;margin-bottom:8px;display:block}
+        .upload-result .ur-success{color:#10b981}
+        .upload-result .ur-error{color:#ef4444}
+        .upload-result .ur-text{font-size:0.8rem;color:var(--text);font-weight:600}
+        .upload-result .ur-sub{font-size:0.7rem;color:var(--muted);margin-top:4px}
 
         .sidebar-bottom{padding:12px;border-top:1px solid var(--border)}
         .sidebar-feature{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:7px;font-size:0.78rem;color:var(--light);cursor:pointer;transition:all 0.2s;margin-bottom:3px}
@@ -218,8 +256,49 @@
         .ai-recs{max-height:220px;overflow-y:auto}
         .ai-recs::-webkit-scrollbar{width:4px}
         .ai-recs::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
-        .ai-rec{padding:8px 10px;border-radius:6px;font-size:0.68rem;margin-bottom:4px;border:1px solid var(--border);display:flex;align-items:flex-start;gap:8px;cursor:pointer;transition:all 0.15s}
-        .ai-rec:hover{transform:translateX(2px);box-shadow:0 1px 4px rgba(0,0,0,0.06)}
+        .ai-rec{padding:8px 10px;border-radius:8px;font-size:0.68rem;margin-bottom:4px;border:1px solid var(--border);display:flex;align-items:center;gap:8px;cursor:pointer;transition:all 0.15s}
+        .ai-rec:hover{transform:translateX(2px);box-shadow:0 2px 8px rgba(0,0,0,0.06);border-color:rgba(99,102,241,0.2)}
+        .rec-fix{font-size:0.58rem;color:#fff;background:var(--accent);padding:2px 8px;border-radius:10px;white-space:nowrap;display:flex;align-items:center;gap:3px}
+        .cat-issues{display:flex;flex-direction:column;gap:3px;margin-top:6px;padding-left:4px}
+        .cat-issue{display:flex;align-items:center;gap:6px;font-size:0.65rem;color:var(--muted);padding:5px 8px;border-radius:6px;cursor:pointer;transition:all 0.15s;line-height:1.4;border:1px solid transparent}
+        .cat-issue:hover{color:var(--text);background:rgba(99,102,241,0.05);border-color:rgba(99,102,241,0.15)}
+        .cat-issue i{flex-shrink:0;font-size:0.55rem}
+        .cat-issue span:first-of-type{flex:1}
+        .issue-fix{font-weight:700;color:#fff;background:var(--accent);padding:2px 8px;border-radius:10px;font-size:0.58rem;flex-shrink:0;white-space:nowrap;display:flex;align-items:center;gap:3px}
+        .ai-fix-btn{transition:all 0.15s}
+        .cat-issue:hover .ai-fix-btn{background:#4338ca}
+
+        /* ===== AI ASSISTANT ===== */
+        .ai-assist-btn{position:fixed;bottom:90px;right:28px;z-index:9998;width:56px;height:56px;background:linear-gradient(135deg,#0003c9,#2563eb);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,3,201,0.35);cursor:pointer;border:none;transition:all 0.3s;animation:aiPulse 3s infinite}
+        .ai-assist-btn:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(0,3,201,0.45)}
+        .ai-assist-btn i{color:#fff;font-size:1.3rem}
+        @keyframes aiPulse{0%{box-shadow:0 4px 20px rgba(0,3,201,0.35)}50%{box-shadow:0 4px 20px rgba(0,3,201,0.15),0 0 0 12px rgba(0,3,201,0.06)}100%{box-shadow:0 4px 20px rgba(0,3,201,0.35)}}
+        .ai-menu{position:fixed;bottom:156px;right:28px;z-index:9999;background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,0.15);width:220px;padding:6px;display:none;overflow:hidden}
+        .ai-menu.show{display:block;animation:menuUp 0.2s ease}
+        @keyframes menuUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+        .ai-menu-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;cursor:pointer;font-size:0.8rem;font-weight:600;color:var(--text);transition:all 0.15s;border:none;background:none;width:100%;text-align:left;font-family:inherit}
+        .ai-menu-item:hover{background:rgba(0,3,201,0.06);color:var(--accent)}
+        .ai-menu-item i{width:20px;text-align:center;font-size:0.85rem;flex-shrink:0}
+        .ai-menu-item .ai-shortcut{margin-left:auto;font-size:0.6rem;color:var(--muted);font-weight:500}
+        .ai-menu-divider{height:1px;background:var(--border);margin:4px 10px}
+        .ai-menu-item.danger{color:var(--red)}
+        .ai-menu-item.danger:hover{background:rgba(239,68,68,0.06)}
+        .ai-result-panel{position:fixed;bottom:90px;right:96px;z-index:9997;background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,0.15);width:380px;max-height:500px;display:none;overflow:hidden;flex-direction:column}
+        .ai-result-panel.show{display:flex;animation:menuUp 0.2s ease}
+        .ai-result-header{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+        .ai-result-header h4{font-size:0.85rem;font-weight:800;display:flex;align-items:center;gap:6px}
+        .ai-result-header h4 i{color:var(--accent)}
+        .ai-result-close{background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--muted);padding:4px}
+        .ai-result-body{padding:14px 16px;overflow-y:auto;flex:1;font-size:0.78rem;line-height:1.7;color:var(--text)}
+        .ai-result-body::-webkit-scrollbar{width:4px}
+        .ai-result-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+        .ai-result-loading{text-align:center;padding:30px;color:var(--muted)}
+        .ai-result-loading i{font-size:1.5rem;color:var(--accent);margin-bottom:8px;display:block;animation:spin 1s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .ai-result-actions{padding:10px 16px;border-top:1px solid var(--border);display:flex;gap:8px}
+        .ai-result-actions button{flex:1;padding:8px;border-radius:8px;border:1px solid var(--border);background:var(--card);font-size:0.72rem;font-weight:700;cursor:pointer;transition:all 0.15s;font-family:inherit}
+        .ai-result-actions button:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+        .ai-result-actions button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
         .ai-rec.warning{border-color:rgba(245,158,11,0.3);background:rgba(245,158,11,0.04)}
         .ai-rec.critical{border-color:rgba(239,68,68,0.3);background:rgba(239,68,68,0.04)}
         .ai-rec.info{border-color:rgba(14,165,233,0.3);background:rgba(14,165,233,0.04)}
@@ -229,7 +308,7 @@
         .ai-rec.info .rec-icon{background:rgba(14,165,233,0.12);color:#0ea5e9}
         .ai-rec .rec-body{flex:1;min-width:0}
         .ai-rec .rec-title{font-weight:700;font-size:0.66rem;margin-bottom:2px;line-height:1.3}
-        .ai-rec .rec-fix{font-size:0.6rem;color:var(--accent);font-weight:600;white-space:nowrap;flex-shrink:0;padding:2px 6px;background:rgba(0,3,201,0.06);border-radius:4px}
+        .ai-rec .rec-fix{font-size:0.58rem;color:#fff;background:var(--accent);padding:2px 8px;border-radius:10px;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;gap:3px}
 
         /* Job Match Tab */
         .job-match-input{width:100%;min-height:100px;padding:10px;background:var(--input);border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:inherit;font-size:0.82rem;resize:vertical;outline:none}
@@ -362,6 +441,9 @@
             .topbar-center{order:3;width:100%}
             .sidebar-nav{max-height:30vh}
             .editor-forms{max-height:35vh}
+            .ai-assist-btn{width:48px;height:48px;bottom:70px;right:16px}
+            .ai-menu{right:16px;bottom:128px;width:200px}
+            .ai-result-panel{right:16px;bottom:70px;width:calc(100vw - 32px);max-width:380px}
         }
 
     </style>
@@ -445,6 +527,7 @@
             <i class="fas fa-sun icon-sun" style="color:#f59e0b"></i>
             <i class="fas fa-moon icon-moon" style="display:none;color:#8b5cf6"></i>
         </button>
+        <button class="btn-upload-cv" id="uploadCvBtn" onclick="openUploadModal()" title="رفع سيرة ذاتية"><i class="fas fa-cloud-upload-alt"></i> <span>رفع CV</span></button>
         <button class="btn-save" onclick="saveToFirebase()"><i class="fas fa-save"></i> Save</button>
         <button class="btn-ai-gen" id="btnAiGen" onclick="window.open('ai.html')" style="display:none"><i class="fas fa-robot"></i> AI Generate</button>
         <button class="btn-export" id="exportBtn" onclick="exportPDF()"><span class="exp-text"><i class="fas fa-file-pdf"></i> Export PDF</span><div class="spinner"></div></button>
@@ -823,6 +906,18 @@
             return 'منذ ' + Math.floor(diff / 86400000) + ' يوم';
         }
 
+        // Cache AI keys on load
+        fetch('https://qwcv-1cfad-default-rtdb.firebaseio.com/settings.json')
+            .then(r => r.json())
+            .then(data => {
+                if(data && data.aiApiKey) localStorage.setItem('qcv_ai_key', data.aiApiKey);
+                if(data && data.geminiKey) localStorage.setItem('qcv_gemini_key', data.geminiKey);
+                if(data && data.groqKey) localStorage.setItem('qcv_groq_key', data.groqKey);
+                if(data && data.openrouterKey) localStorage.setItem('qcv_openrouter_key', data.openrouterKey);
+                if(data && data.xaiKey) localStorage.setItem('qcv_xai_key', data.xaiKey);
+            })
+            .catch(()=>{});
+
         // Generate portfolio code — stored directly under users/{uid}/portfolioCode
         const getOrCreatePortfolioCode = async (uid) => {
             try {
@@ -867,16 +962,22 @@
         const paid = plan === 'pro' || plan === 'unlimited';
         const aiScore = document.getElementById('aiScoreWidget');
         const aiBtn = document.getElementById('aiAssistantBtn');
+        const aiAssist = document.getElementById('aiAssistBtn');
+        const aiMenu = document.getElementById('aiMenu');
         const jobTab = document.getElementById('jobmatchTab');
         const jobForm = document.getElementById('tab-jobmatch');
         const aiBadge = document.getElementById('aiCvBadge');
         const btnAiGen = document.getElementById('btnAiGen');
         if (aiScore) aiScore.classList.toggle('show', paid);
         if (aiBtn) aiBtn.style.display = paid ? '' : 'none';
+        if (aiAssist) aiAssist.style.display = paid ? '' : 'none';
+        if (aiMenu) aiMenu.style.display = paid ? '' : 'none';
         if (jobTab) jobTab.style.display = paid ? '' : 'none';
         if (jobForm) jobForm.style.display = paid ? '' : 'none';
         if (aiBadge) aiBadge.style.display = paid ? 'flex' : 'none';
         if (btnAiGen) btnAiGen.style.display = paid ? '' : 'none';
+        const uploadBtn = document.getElementById('uploadCvBtn');
+        if (uploadBtn) uploadBtn.style.display = paid ? '' : 'none';
         const sel = document.getElementById('templateSelect');
         if (sel) {
             Array.from(sel.options).forEach(opt => {
@@ -1169,6 +1270,55 @@
         }
     };
 
+    // Arabic translations for CV Score issues
+    const issueAR = {
+        'Add a professional summary (2-3 lines about your experience)': 'أضف ملخصاً مهنياً (2-3 أسطر عن خبرتك)',
+        'Summary too short': 'الملخص قصير جداً — أضف تفاصيل عن إنجازاتك',
+        'consider expanding to 100+ chars': 'وسّع الملخص لأكثر من 100 حرف',
+        'add numbers/results': 'أضف أرقاماً ونتائج قابلة للقياس',
+        'Add at least 1 work experience entry': 'أضف خبرة عمل واحدة على الأقل',
+        'Add 2+ work experiences': 'أضفخبرتين أو أكثر',
+        'has no description': 'بدون وصف — أضف 3-5 نقاط',
+        'bullet(s)': 'نقاط — أضف المزيد',
+        'Add your educational background': 'أضف خلفيتك التعليمية',
+        'Add your full name': 'أضف اسمك الكامل',
+        'Add your email address': 'أضف بريدك الإلكتروني',
+        'Add your phone number': 'أضف رقم هاتفك',
+        'Add your job title': 'أضف المسمى الوظيفي',
+        'Add a professional summary for ATS': 'أضف ملخصاً مهنياً لتحسين البحث',
+        'skill(s)': 'مهارات — ATS يحتاج 3-5 مهارات على الأقل',
+        'Add 5+ skills': 'أضف 5 مهارات أو أكثر',
+        '8+ skills recommended': '8 مهارات أو أكثر للمطابقة القصوى',
+        'missing job title': 'المسمى الوظيفي غير موجود',
+        'missing company name': 'اسم الشركة غير موجود',
+        'add work duration': 'أضف مدة العمل',
+        'description too short': 'الوصف قصير جداً',
+        'No skills listed': 'لا توجد مهارات — أهم شيء يبحث عنه ATS',
+        'aim for 8-12': 'استهدف 8-12 مهارة لأفضل نتيجة',
+        'maximize ATS matching': 'أضف مهارات إضافية لتحسين المطابقة',
+        'keep them concise': 'اجعلها مختصرة لـ ATS',
+        'No numbers/metrics': 'لا توجد أرقام — أضف نتائج قابلة للقياس',
+        'add 3+ metrics': 'أضف 3 مؤشرات أو أكثر',
+        'No action verbs': 'لا توجد أفعال تحفيزية — ابدأ بكلمات مثل "قاد"، "طور"، "حقّق"',
+        'use 3+ different power verbs': 'استخدم 3 أفعال تحفيزية مختلفة',
+        'No bullet points': 'لا توجد نقاط — استخدم أسطر منفصلة',
+        'aim for 5+': 'استهدف 5 نقاط أو أكثر',
+        'Add percentages': 'أضف نسباً مئوية أو قيم مالية',
+        'Add a number to your summary': 'أضف رقماً في ملخصك',
+        'Name is required': 'الاسم مطلوب',
+        'Email is required': 'البريد الإلكتروني مطلوب',
+        'Phone number is required': 'رقم الهاتف مطلوب',
+        'Job title helps': 'المسمى الوظيفي يساعد في العثور عليك',
+        'No experience bullets': 'أضف نقاطاً في وصف الخبرة'
+    };
+
+    function translateIssue(text) {
+        for(var key in issueAR) {
+            if(text.includes(key)) return issueAR[key];
+        }
+        return text;
+    }
+
     function updateAIScore(data) {
         if(typeof CVAnalyzer === 'undefined') return;
         const scores = CVAnalyzer.analyze(data);
@@ -1197,9 +1347,19 @@
             details.innerHTML = categories.map(cat => {
                 const g = CVAnalyzer.getGrade(cat.data.total);
                 const barColor = g.color;
+                let issuesHtml = '';
+                if(cat.data.issues && cat.data.issues.length) {
+                    issuesHtml = '<div class="cat-issues">' + cat.data.issues.map(iss => {
+                        const icon = iss.type === 'critical' ? 'fa-exclamation-circle' : iss.type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle';
+                        const clr = iss.type === 'critical' ? '#ef4444' : iss.type === 'warning' ? '#f59e0b' : '#0ea5e9';
+                        const arText = translateIssue(iss.text);
+                        return `<div class="cat-issue" onclick="aiFixIssue('${iss.section}','${arText.replace(/'/g,"\\'")}','${iss.type}')"><i class="fas ${icon}" style="color:${clr};font-size:0.6rem"></i><span>${arText}</span><span class="issue-fix ai-fix-btn"><i class="fas fa-wand-magic-sparkles"></i> إصلاح ${iss.fix}</span></div>`;
+                    }).join('') + '</div>';
+                }
                 return `<div class="ai-detail-row">
                     <div class="ai-detail-header"><span class="label">${cat.label}</span><span class="value" style="color:${barColor}">${cat.data.total}/100</span></div>
                     <div class="ai-detail-bar"><div class="ai-detail-bar-fill" style="width:${cat.data.total}%;background:${barColor}"></div></div>
+                    ${issuesHtml}
                 </div>`;
             }).join('');
         }
@@ -1214,13 +1374,13 @@
         const summaryEl = document.getElementById('scoreSummary');
         if(summaryEl) {
             if(totalIssues === 0) {
-                summaryEl.innerHTML = '<strong>Score: 100/100</strong> — Perfect! Your CV is fully optimized.';
+                summaryEl.innerHTML = '<strong>النتيجة: 100/100</strong> — ممتاز! سيرتك الذاتية محسّنة بالكامل.';
                 summaryEl.style.background = 'rgba(5,150,105,0.06)';
                 summaryEl.style.borderColor = 'rgba(5,150,105,0.15)';
                 summaryEl.style.color = '#059669';
             } else {
                 const potential = scores.overall + scores.recommendations.reduce((sum, r) => sum + parseInt(r.fix.replace('+','')), 0);
-                summaryEl.innerHTML = `Fix <strong>${totalIssues} issue${totalIssues>1?'s':''}</strong> to reach <strong>${Math.min(100, potential)}/100</strong>`;
+                summaryEl.innerHTML = `صلح <strong>${totalIssues} مشكل${totalIssues>1?'ات':''}</strong> عشان توصل <strong>${Math.min(100, potential)}/100</strong>`;
                 summaryEl.style.background = 'rgba(0,3,201,0.04)';
                 summaryEl.style.borderColor = 'rgba(0,3,201,0.1)';
                 summaryEl.style.color = 'var(--text)';
@@ -1232,23 +1392,23 @@
         if(recs) {
             let html = '';
             if(totalIssues === 0) {
-                html = '<div style="text-align:center;padding:12px;color:#059669;font-size:0.75rem;font-weight:700"><i class="fas fa-check-circle" style="margin-right:4px"></i> Perfect! Your CV is optimized.</div>';
+                html = '<div style="text-align:center;padding:12px;color:#059669;font-size:0.75rem;font-weight:700"><i class="fas fa-check-circle" style="margin-right:4px"></i> ممتاز! سيرتك الذاتية محسّنة بالكامل</div>';
             } else {
                 html = `<div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap">`;
-                if(criticalCount) html += `<span style="font-size:0.62rem;font-weight:700;color:#ef4444;background:rgba(239,68,68,0.08);padding:2px 8px;border-radius:10px">${criticalCount} Critical</span>`;
-                if(warningCount) html += `<span style="font-size:0.62rem;font-weight:700;color:#f59e0b;background:rgba(245,158,11,0.08);padding:2px 8px;border-radius:10px">${warningCount} Warning</span>`;
-                if(infoCount) html += `<span style="font-size:0.62rem;font-weight:700;color:#0ea5e9;background:rgba(14,165,233,0.08);padding:2px 8px;border-radius:10px">${infoCount} Tips</span>`;
+                if(criticalCount) html += `<span style="font-size:0.62rem;font-weight:700;color:#ef4444;background:rgba(239,68,68,0.08);padding:2px 8px;border-radius:10px">${criticalCount} خطأ</span>`;
+                if(warningCount) html += `<span style="font-size:0.62rem;font-weight:700;color:#f59e0b;background:rgba(245,158,11,0.08);padding:2px 8px;border-radius:10px">${warningCount} تحذير</span>`;
+                if(infoCount) html += `<span style="font-size:0.62rem;font-weight:700;color:#0ea5e9;background:rgba(14,165,233,0.08);padding:2px 8px;border-radius:10px">${infoCount} نصيحة</span>`;
                 html += '</div>';
                 html += scores.recommendations.slice(0, 8).map(r => {
-                    const sectionLabels = {personal:'Personal Info',summary:'Summary',experience:'Experience',education:'Education',skills:'Skills'};
-                    return `<div class="ai-rec ${r.type}" onclick="switchTab('${r.type==='critical'?'personal':r.section}',document.querySelector('[data-section=${r.section}]'))">
+                    const arTitle = translateIssue(r.title);
+                    return `<div class="ai-rec ${r.type}" onclick="aiFixIssue('${r.section}','${arTitle.replace(/'/g,"\\'")}','${r.type}')">
                         <div class="rec-icon"><i class="fas ${r.type==='critical'?'fa-exclamation-circle':r.type==='warning'?'fa-exclamation-triangle':'fa-info-circle'}"></i></div>
-                        <div class="rec-body"><div class="rec-title">${r.title}</div></div>
-                        <span class="rec-fix">${r.fix}</span>
+                        <div class="rec-body"><div class="rec-title">${arTitle}</div></div>
+                        <span class="rec-fix"><i class="fas fa-wand-magic-sparkles"></i> إصلاح ${r.fix}</span>
                     </div>`;
                 }).join('');
                 if(scores.recommendations.length > 8) {
-                    html += `<div style="text-align:center;font-size:0.62rem;color:var(--muted);padding:4px">+${scores.recommendations.length - 8} more issues to fix</div>`;
+                    html += `<div style="text-align:center;font-size:0.62rem;color:var(--muted);padding:4px">+${scores.recommendations.length - 8} مشاكل تانية</div>`;
                 }
             }
             recs.innerHTML = html;
@@ -1687,6 +1847,403 @@
         document.getElementById('sectionModal').classList.remove('show');
     };
 
+    // ===== UPLOAD CV =====
+    let uploadedData = null;
+
+    window.openUploadModal = function() {
+        var ud = window._userData || userData;
+        var plan = ud ? (ud.plan || 'free') : 'free';
+        if(plan === 'free') {
+            if(window.QCVNotify) QCVNotify.error();
+            alert('هذه ميزة مدفوعة — ا升级 للخطة Pro');
+            return;
+        }
+        uploadedData = null;
+        document.getElementById('uploadModal').classList.add('show');
+        document.getElementById('uploadProgress').classList.remove('show');
+        document.getElementById('uploadResult').classList.remove('show');
+        document.getElementById('uploadActions').style.display = '';
+        document.getElementById('uploadDropzone').style.display = '';
+        document.getElementById('uploadConfirmBtn').disabled = true;
+        document.getElementById('uploadFileInput').value = '';
+    };
+
+    window.closeUploadModal = function() {
+        document.getElementById('uploadModal').classList.remove('show');
+    };
+
+    // Drag & drop
+    var dropzone = document.getElementById('uploadDropzone');
+    if(dropzone) {
+        dropzone.addEventListener('dragover', function(e) { e.preventDefault(); dropzone.classList.add('dragover'); });
+        dropzone.addEventListener('dragleave', function() { dropzone.classList.remove('dragover'); });
+        dropzone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            dropzone.classList.remove('dragover');
+            if(e.dataTransfer.files.length) handleUploadFile({ files: e.dataTransfer.files });
+        });
+    }
+
+    window.handleUploadFile = function(input) {
+        var file = input.files ? input.files[0] : null;
+        if(!file) return;
+        if(file.size > 5 * 1024 * 1024) { alert('الملف أكبر من 5MB'); return; }
+
+        document.getElementById('uploadDropzone').style.display = 'none';
+        document.getElementById('uploadProgress').classList.add('show');
+        document.getElementById('uploadActions').style.display = 'none';
+
+        var ext = file.name.split('.').pop().toLowerCase();
+        if(ext === 'pdf') {
+            parsePDFFile(file);
+        } else {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var content = e.target.result;
+                try {
+                    uploadedData = parseUploadedCV(content, file.name);
+                    showUploadResult(true, uploadedData);
+                } catch(err) {
+                    showUploadResult(false, null, err.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+    };
+
+    function showUploadResult(success, data, errMsg) {
+        document.getElementById('uploadProgress').classList.remove('show');
+        var result = document.getElementById('uploadResult');
+        result.classList.add('show');
+        document.getElementById('uploadActions').style.display = '';
+        if(success && data) {
+            var fieldCount = Object.keys(data).filter(k => data[k] && (typeof data[k] === 'string' ? data[k].trim() : true)).length;
+            result.innerHTML = '<i class="fas fa-check-circle ur-success"></i><div class="ur-text">تم التحليل بنجاح!</div><div class="ur-sub">تم العثور على ' + fieldCount + ' حقل جاهز للاستيراد</div>';
+            document.getElementById('uploadConfirmBtn').disabled = false;
+        } else if(success && !data) {
+            result.innerHTML = '<i class="fas fa-exclamation-triangle ur-error"></i><div class="ur-text">لم يتم التعرف على البيانات</div><div class="ur-sub">جرب ملف HTML أو TXT أو JSON أو PDF</div>';
+        } else {
+            result.innerHTML = '<i class="fas fa-times-circle ur-error"></i><div class="ur-text">خطأ في قراءة الملف</div><div class="ur-sub">' + (errMsg || 'الملف غير مدعوم') + '</div>';
+        }
+    };
+
+    async function parsePDFFile(file) {
+        try {
+            var arrayBuffer = await file.arrayBuffer();
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+            var pdf = await pdfjsLib.getDocument({data: arrayBuffer}).promise;
+            var fullText = '';
+            for(var i = 1; i <= pdf.numPages; i++) {
+                var page = await pdf.getPage(i);
+                var content = await page.getTextContent();
+                var strings = content.items.map(function(item) { return item.str; });
+                fullText += strings.join(' ') + '\n';
+            }
+            uploadedData = parseTXT_CV(fullText);
+            showUploadResult(true, uploadedData);
+        } catch(err) {
+            showUploadResult(false, null, 'خطأ في قراءة ملف PDF: ' + err.message);
+        }
+    };
+
+    function parseUploadedCV(content, filename) {
+        var ext = filename.split('.').pop().toLowerCase();
+        if(ext === 'json') return parseJSON_CV(content);
+        if(ext === 'html' || ext === 'htm') return parseHTML_CV(content);
+        return parseTXT_CV(content);
+    }
+
+    function parseJSON_CV(content) {
+        try {
+            var data = JSON.parse(content);
+            return {
+                name: data.name || data.fullName || data.firstName + ' ' + (data.lastName || '') || '',
+                title: data.title || data.jobTitle || data.position || '',
+                email: data.email || '',
+                phone: data.phone || data.phoneNumber || data.mobile || '',
+                location: data.location || data.address || data.city || '',
+                linkedin: data.linkedin || data.linkedinUrl || '',
+                summary: data.summary || data.objective || data.profile || '',
+                experience: normalizeExpArray(data.experience || data.workExperience || data.jobs || []),
+                education: normalizeEduArray(data.education || data.educations || []),
+                skills: normalizeSkills(data.skills || data.skillSet || []),
+                customSections: extractCustomSections(data)
+            };
+        } catch(e) { return null; }
+    }
+
+    function parseHTML_CV(content) {
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(content, 'text/html');
+        var text = doc.body.textContent || '';
+        var data = { name:'', title:'', email:'', phone:'', location:'', linkedin:'', summary:'', experience:[], education:[], skills:[] };
+
+        // Extract email
+        var emailMatch = text.match(/[\w.-]+@[\w.-]+\.\w{2,}/);
+        if(emailMatch) data.email = emailMatch[0];
+
+        // Extract phone
+        var phoneMatch = text.match(/[\+]?[\d\s\-\(\)]{8,15}/);
+        if(phoneMatch) data.phone = phoneMatch[0].trim();
+
+        // Extract LinkedIn
+        var linkedinMatch = text.match(/linkedin\.com\/in\/[\w-]+/i);
+        if(linkedinMatch) data.linkedin = 'https://' + linkedinMatch[0];
+
+        // Try to extract structured sections from headings
+        var headings = doc.querySelectorAll('h1,h2,h3,h4,.section-title,.cv-section');
+        var sections = {};
+        headings.forEach(function(h) {
+            var title = h.textContent.trim().toLowerCase();
+            var next = h.nextElementSibling;
+            var content = '';
+            while(next && !['H1','H2','H3','H4'].includes(next.tagName)) {
+                content += next.textContent.trim() + '\n';
+                next = next.nextElementSibling;
+            }
+            sections[title] = content.trim();
+        });
+
+        // Map sections
+        for(var key in sections) {
+            var val = sections[key];
+            if(key.match(/name|اسم/i) && !data.name) data.name = val.split('\n')[0];
+            else if(key.match(/title|وظيفة|سمو/i) && !data.title) data.title = val.split('\n')[0];
+            else if(key.match(/summary|ملخص|profile|الملف/i)) data.summary = val;
+            else if(key.match(/experience|خبرة|عمل/i)) data.experience = parseExpFromText(val);
+            else if(key.match(/education|تعليم|دراسة/i)) data.education = parseEduFromText(val);
+            else if(key.match(/skill|مهارة|تقنية/i)) data.skills = val.split(/[\n,•·]/).map(function(s){return s.trim()}).filter(function(s){return s.length > 1});
+        }
+
+        // Fallback: extract all text if no structured sections found
+        if(!data.name && !data.summary) {
+            var lines = text.split('\n').map(function(l){return l.trim()}).filter(function(l){return l});
+            if(lines.length > 0) data.name = lines[0];
+            if(lines.length > 1) data.title = lines[1];
+        }
+
+        return data;
+    }
+
+    function parseTXT_CV(content) {
+        var lines = content.split('\n').map(function(l){return l.trim()}).filter(function(l){return l});
+        var data = { name:'', title:'', email:'', phone:'', location:'', linkedin:'', summary:'', experience:[], education:[], skills:[] };
+
+        // Extract email/phone from all text
+        var fullText = lines.join(' ');
+        var emailMatch = fullText.match(/[\w.-]+@[\w.-]+\.\w{2,}/);
+        if(emailMatch) data.email = emailMatch[0];
+        var phoneMatch = fullText.match(/[\+]?[\d\s\-\(\)]{8,15}/);
+        if(phoneMatch) data.phone = phoneMatch[0].trim();
+        var linkedinMatch = fullText.match(/linkedin\.com\/in\/[\w-]+/i);
+        if(linkedinMatch) data.linkedin = 'https://' + linkedinMatch[0];
+
+        // First line is usually name
+        if(lines.length > 0) data.name = lines[0];
+        // Second line might be title
+        if(lines.length > 1 && !lines[1].match(/@|phone|email/i)) data.title = lines[1];
+
+        // Look for section headers
+        var currentSection = 'header';
+        var sectionContent = [];
+        var sectionKeywords = {
+            'summary': /summary|ملخص|profile|objective|الملف/i,
+            'experience': /experience|خبرة|work|عمل|career/i,
+            'education': /education|تعليم|study|دراسة|degree/i,
+            'skills': /skills|مهارة|technical|تقنية|abilities/i
+        };
+
+        for(var i = 2; i < lines.length; i++) {
+            var line = lines[i];
+            var matched = false;
+            for(var sec in sectionKeywords) {
+                if(line.match(sectionKeywords[sec]) && line.length < 30) {
+                    if(currentSection !== 'header' && sectionContent.length) {
+                        processSection(currentSection, sectionContent.join('\n'), data);
+                    }
+                    currentSection = sec;
+                    sectionContent = [];
+                    matched = true;
+                    break;
+                }
+            }
+            if(!matched) sectionContent.push(line);
+        }
+        if(sectionContent.length) processSection(currentSection, sectionContent.join('\n'), data);
+
+        return data;
+    }
+
+    function processSection(name, content, data) {
+        if(name === 'summary') data.summary = content;
+        else if(name === 'experience') data.experience = parseExpFromText(content);
+        else if(name === 'education') data.education = parseEduFromText(content);
+        else if(name === 'skills') data.skills = content.split(/[\n,•·\-]/).map(function(s){return s.trim()}).filter(function(s){return s.length > 1 && s.length < 50});
+    }
+
+    function parseExpFromText(text) {
+        var blocks = text.split(/\n\s*\n|\n(?=\d{4}|•|-)/);
+        var exps = [];
+        blocks.forEach(function(block) {
+            var lines = block.split('\n').map(function(l){return l.trim()}).filter(function(l){return l});
+            if(lines.length === 0) return;
+            var firstLine = lines[0];
+            var parts = firstLine.split(/\s*[\-–|]\s*/);
+            exps.push({
+                role: parts[0] || '',
+                company: parts[1] || '',
+                duration: parts[2] || firstLine,
+                description: lines.slice(1).join('\n')
+            });
+        });
+        return exps;
+    }
+
+    function parseEduFromText(text) {
+        var lines = text.split('\n').map(function(l){return l.trim()}).filter(function(l){return l});
+        var edus = [];
+        lines.forEach(function(line) {
+            if(line.length > 3) {
+                var parts = line.split(/\s*[\-–|]\s*/);
+                edus.push({
+                    degree: parts[0] || line,
+                    school: parts[1] || '',
+                    date: parts[2] || ''
+                });
+            }
+        });
+        return edus;
+    }
+
+    function normalizeExpArray(arr) {
+        return arr.map(function(e) {
+            return {
+                role: e.role || e.title || e.position || '',
+                company: e.company || e.organization || e.employer || '',
+                duration: e.duration || e.period || (e.startDate || '') + ' - ' + (e.endDate || 'Present'),
+                description: e.description || e.details || e.bullets || ''
+            };
+        });
+    }
+
+    function normalizeEduArray(arr) {
+        return arr.map(function(e) {
+            return {
+                degree: e.degree || e.title || e.qualification || '',
+                school: e.school || e.university || e.institution || '',
+                date: e.date || e.year || e.duration || ''
+            };
+        });
+    }
+
+    function normalizeSkills(arr) {
+        if(Array.isArray(arr)) return arr.map(function(s){ return typeof s === 'string' ? s : s.name || s.title || '' }).filter(function(s){return s});
+        if(typeof arr === 'string') return arr.split(/[\n,•·]/).map(function(s){return s.trim()}).filter(function(s){return s});
+        return [];
+    }
+
+    function extractCustomSections(data) {
+        var known = ['name','title','email','phone','location','linkedin','summary','experience','education','skills','fullName','firstName','lastName','jobTitle','position','phoneNumber','mobile','address','city','skillSet','workExperience','jobs','educations','objective','profile'];
+        var customs = [];
+        for(var key in data) {
+            if(known.indexOf(key) === -1 && data[key] && typeof data[key] === 'string' && data[key].trim().length > 2) {
+                customs.push({ title: key.charAt(0).toUpperCase() + key.slice(1), content: data[key] });
+            }
+        }
+        return customs;
+    }
+
+    window.confirmUpload = function() {
+        if(!uploadedData) return;
+        var d = uploadedData;
+
+        // Map to editor fields
+        if(d.name) { var el = document.getElementById('inputName'); if(el) el.value = d.name; }
+        if(d.title) { var el = document.getElementById('inputTitle'); if(el) el.value = d.title; }
+        if(d.email) { var el = document.getElementById('inputEmail'); if(el) el.value = d.email; }
+        if(d.phone) { var el = document.getElementById('inputPhone'); if(el) el.value = d.phone; }
+        if(d.location) { var el = document.getElementById('inputLocation'); if(el) el.value = d.location; }
+        if(d.linkedin) { var el = document.getElementById('inputLinkedin'); if(el) el.value = d.linkedin; }
+        if(d.summary) { var el = document.getElementById('inputSummary'); if(el) el.value = d.summary; }
+
+        // Map experience
+        if(d.experience && d.experience.length) {
+            var expContainer = document.getElementById('expContainer');
+            if(expContainer) {
+                expContainer.innerHTML = '';
+                d.experience.forEach(function(exp) {
+                    var id = 'exp_' + Date.now() + '_' + Math.random().toString(36).substr(2,4);
+                    var role = (exp.role||'').replace(/"/g,'&quot;');
+                    var company = (exp.company||'').replace(/"/g,'&quot;');
+                    var dur = (exp.duration||'').replace(/"/g,'&quot;');
+                    var desc = (exp.description||'').replace(/</g,'&lt;');
+                    expContainer.insertAdjacentHTML('beforeend', '<div class="repeater-block" id="'+id+'"><div class="rb-header"><span class="rb-title">Experience</span><button class="btn-rb-delete" onclick="document.getElementById(\''+id+'\').remove();renderCV()">Delete</button></div><div class="field"><label>Title</label><input type="text" value="'+role+'" oninput="renderCV()"></div><div class="field"><label>Company</label><input type="text" value="'+company+'" oninput="renderCV()"></div><div class="field"><label>Duration</label><input type="text" value="'+dur+'" oninput="renderCV()"></div><div class="field"><label>Description</label><textarea oninput="renderCV()">'+desc+'</textarea></div></div>');
+                });
+            }
+        }
+
+        // Map education
+        if(d.education && d.education.length) {
+            var eduContainer = document.getElementById('eduContainer');
+            if(eduContainer) {
+                eduContainer.innerHTML = '';
+                d.education.forEach(function(edu) {
+                    var id = 'edu_' + Date.now() + '_' + Math.random().toString(36).substr(2,4);
+                    var deg = (edu.degree||'').replace(/"/g,'&quot;');
+                    var sch = (edu.school||'').replace(/"/g,'&quot;');
+                    var dur = (edu.date||'').replace(/"/g,'&quot;');
+                    var desc = (edu.description||edu.details||'').replace(/</g,'&lt;');
+                    eduContainer.insertAdjacentHTML('beforeend', '<div class="repeater-block" id="'+id+'"><div class="rb-header"><span class="rb-title">Education</span><button class="btn-rb-delete" onclick="document.getElementById(\''+id+'\').remove();renderCV()">Delete</button></div><div class="field"><label>Degree</label><input type="text" value="'+deg+'" oninput="renderCV()"></div><div class="field"><label>School</label><input type="text" value="'+sch+'" oninput="renderCV()"></div><div class="field"><label>Duration</label><input type="text" value="'+dur+'" oninput="renderCV()"></div><div class="field"><label>Details</label><textarea oninput="renderCV()">'+desc+'</textarea></div></div>');
+                });
+            }
+        }
+
+        // Map skills
+        if(d.skills && d.skills.length) {
+            skills = d.skills;
+            var container = document.getElementById('skillsContainer');
+            if(container) {
+                container.innerHTML = '';
+                skills.forEach(function(s) {
+                    container.innerHTML += '<div class="skill-tag">' + s + ' <button onclick="this.parentElement.remove();renderCV()">×</button></div>';
+                });
+            }
+        }
+
+        // Add custom sections
+        if(d.customSections && d.customSections.length) {
+            d.customSections.forEach(function(cs) {
+                addCustomSection('custom');
+                var lastSec = customSections[customSections.length - 1];
+                if(lastSec) {
+                    lastSec.title = cs.title;
+                    lastSec.content = cs.content;
+                    // Update the nav tab label
+                    var navTab = document.getElementById('nav-' + lastSec.id);
+                    if(navTab) {
+                        var label = navTab.querySelector('.tab-label');
+                        if(label) label.textContent = cs.title;
+                    }
+                    // Update the card header
+                    var card = document.getElementById('tab-' + lastSec.id);
+                    if(card) {
+                        var h3 = card.querySelector('.form-card-header h3');
+                        if(h3) h3.textContent = cs.title;
+                        // Add content textarea
+                        var itemsDiv = document.getElementById(lastSec.id + '-items');
+                        if(itemsDiv) {
+                            itemsDiv.innerHTML = '<div class="field"><label>المحتوى</label><textarea oninput="updateCustomItem(\'' + lastSec.id + '\',\'' + lastSec.id + '_content\',\'content\',this.value)" style="min-height:80px">' + (cs.content || '') + '</textarea></div>';
+                        }
+                    }
+                }
+            });
+        }
+
+        renderCV();
+        closeUploadModal();
+        if(window.QCVNotify) QCVNotify.save();
+    };
+
     window.addBlankPage = function() {
         const id = 'sec_' + Date.now();
         const section = { id, type: 'custom', title: 'قسم جديد', content: '' };
@@ -1874,6 +2431,61 @@
     </div>
 </div>
 
+<!-- Upload CV Modal -->
+<div class="upload-modal-overlay" id="uploadModal">
+    <div class="upload-modal">
+        <h3><i class="fas fa-cloud-upload-alt" style="color:#6366f1;margin-left:6px"></i> رفع السيرة الذاتية</h3>
+        <p>ارفع ملف السيرة الذاتيةexisting ومحرر QCV هيعمل import للمحتوى تلقائياً.</p>
+        <div class="upload-formats">
+            <span>HTML</span>
+            <span>TXT</span>
+            <span>JSON</span>
+        </div>
+        <div class="upload-dropzone" id="uploadDropzone" onclick="document.getElementById('uploadFileInput').click()">
+            <i class="fas fa-file-upload"></i>
+            <div class="uz-text">اسحب الملف هنا أو اضغط للتحديد</div>
+            <div class="uz-sub">يدعم HTML, TXT, JSON, PDF — الحد الأقصى 5MB</div>
+            <input type="file" id="uploadFileInput" accept=".html,.htm,.txt,.json,.pdf" onchange="handleUploadFile(this)">
+        </div>
+        <div class="upload-progress" id="uploadProgress">
+            <i class="fas fa-spinner"></i>
+            <div style="font-weight:600;font-size:0.85rem;color:var(--text)">جاري تحليل الملف...</div>
+        </div>
+        <div class="upload-result" id="uploadResult"></div>
+        <div class="upload-actions" id="uploadActions">
+            <button class="btn-cancel" onclick="closeUploadModal()">إلغاء</button>
+            <button class="btn-upload" id="uploadConfirmBtn" disabled onclick="confirmUpload()">استيراد البيانات</button>
+        </div>
+    </div>
+</div>
+
+<!-- AI Assistant -->
+<button class="ai-assist-btn" id="aiAssistBtn" onclick="toggleAiMenu()" title="AI Assistant">
+    <i class="fas fa-wand-magic-sparkles"></i>
+</button>
+<div class="ai-menu" id="aiMenu">
+    <button class="ai-menu-item" onclick="aiAction('summarize')"><i class="fas fa-compress-alt" style="color:#0003c9"></i>Summarize<span class="ai-shortcut">AI</span></button>
+    <button class="ai-menu-item" onclick="aiAction('proofread')"><i class="fas fa-spell-check" style="color:#10b981"></i>Proofread<span class="ai-shortcut">AI</span></button>
+    <button class="ai-menu-item" onclick="aiAction('improve')"><i class="fas fa-arrow-up-right-dots" style="color:#f59e0b"></i>Improve Content<span class="ai-shortcut">AI</span></button>
+    <button class="ai-menu-item" onclick="aiAction('skills')"><i class="fas fa-lightbulb" style="color:#8b5cf6"></i>Suggest Skills<span class="ai-shortcut">AI</span></button>
+    <button class="ai-menu-item" onclick="aiAction('ats')"><i class="fas fa-robot" style="color:#0ea5e9"></i>ATS Optimize<span class="ai-shortcut">AI</span></button>
+    <div class="ai-menu-divider"></div>
+    <button class="ai-menu-item" onclick="aiAction('custom')"><i class="fas fa-comment-dots" style="color:var(--muted)"></i>Ask AI Anything<span class="ai-shortcut">AI</span></button>
+</div>
+<div class="ai-result-panel" id="aiResultPanel">
+    <div class="ai-result-header">
+        <h4><i class="fas fa-wand-magic-sparkles"></i> <span id="aiResultTitle">AI Assistant</span></h4>
+        <button class="ai-result-close" onclick="closeAiPanel()">&times;</button>
+    </div>
+    <div class="ai-result-body" id="aiResultBody">
+        <div class="ai-result-loading"><i class="fas fa-spinner"></i>Thinking...</div>
+    </div>
+    <div class="ai-result-actions">
+        <button onclick="copyAiResult()"><i class="fas fa-copy"></i> Copy</button>
+        <button class="primary" onclick="applyAiResult()"><i class="fas fa-check"></i> Apply</button>
+    </div>
+</div>
+
 <script src="js/tutorial.js"></script>
 <script src="js/site-settings.js"></script>
 <script src="js/analytics.js"></script>
@@ -1907,6 +2519,328 @@ function startEditorTutorial() {
     ]);
     localStorage.setItem('qcv_editor_tutorial_done', '1');
 }
+
+// ===== AI ASSISTANT =====
+let aiMenuOpen = false;
+let aiResultText = '';
+
+window.toggleAiMenu = function() {
+    aiMenuOpen = !aiMenuOpen;
+    document.getElementById('aiMenu').classList.toggle('show', aiMenuOpen);
+    if(aiMenuOpen) document.getElementById('aiResultPanel').classList.remove('show');
+};
+
+document.addEventListener('click', function(e) {
+    const btn = document.getElementById('aiAssistBtn');
+    const menu = document.getElementById('aiMenu');
+    const panel = document.getElementById('aiResultPanel');
+    if(!btn.contains(e.target) && !menu.contains(e.target) && !panel.contains(e.target)) {
+        menu.classList.remove('show');
+        aiMenuOpen = false;
+    }
+});
+
+window.closeAiPanel = function() {
+    document.getElementById('aiResultPanel').classList.remove('show');
+    document.getElementById('aiMenu').classList.remove('show');
+    aiMenuOpen = false;
+};
+
+window.copyAiResult = function() {
+    navigator.clipboard.writeText(aiResultText).then(() => {
+        if(window.QCVNotify) QCVNotify.success();
+    });
+};
+
+window.applyAiResult = function() {
+    const data = collectData();
+    const action = document.getElementById('aiResultTitle').textContent;
+    if(action.includes('Summarize') || action.includes('ملخص')) {
+        document.getElementById('inputSummary').value = aiResultText;
+        data.summary = aiResultText;
+    } else if(action.includes('Proofread') || action.includes('تصحيح')) {
+        document.getElementById('inputSummary').value = aiResultText;
+        data.summary = aiResultText;
+    } else if(action.includes('Skills') || action.includes('مهارات')) {
+        const skills = aiResultText.split(',').map(s => s.trim()).filter(s => s);
+        data.skills = skills;
+        const container = document.getElementById('skillsContainer');
+        if(container) {
+            container.innerHTML = '';
+            skills.forEach(s => {
+                container.innerHTML += '<div class="skill-tag">' + s + ' <button onclick="this.parentElement.remove();renderCV()">×</button></div>';
+            });
+        }
+    }
+    renderCV();
+    closeAiPanel();
+    if(window.QCVNotify) QCVNotify.save();
+};
+
+window.aiAction = function(action) {
+    const data = collectData();
+    document.getElementById('aiMenu').classList.remove('show');
+    aiMenuOpen = false;
+    document.getElementById('aiResultPanel').classList.add('show');
+    document.getElementById('aiResultBody').innerHTML = '<div class="ai-result-loading"><i class="fas fa-spinner"></i>Analyzing your CV...</div>';
+
+    const titles = {
+        summarize: 'Summarize',
+        proofread: 'Proofread',
+        improve: 'Improve Content',
+        skills: 'Suggest Skills',
+        ats: 'ATS Optimize',
+        custom: 'Ask AI'
+    };
+    document.getElementById('aiResultTitle').textContent = titles[action] || 'AI Assistant';
+
+    const cvText = [
+        data.name ? 'Name: ' + data.name : '',
+        data.title ? 'Title: ' + data.title : '',
+        data.email ? 'Email: ' + data.email : '',
+        data.summary ? 'Summary: ' + data.summary : '',
+        (data.experience || []).map(e => 'Experience: ' + (e.role||'') + ' at ' + (e.company||'') + ' (' + (e.duration||'') + ')\n' + (e.description||'')).join('\n'),
+        (data.education || []).map(e => 'Education: ' + (e.degree||'') + ' from ' + (e.school||'')).join('\n'),
+        'Skills: ' + (data.skills || []).join(', ')
+    ].filter(Boolean).join('\n\n');
+
+    const prompts = {
+        summarize: 'Write a professional CV summary (2-3 sentences) based on this resume data. Be concise and impactful. Use action verbs and quantify achievements where possible:\n\n' + cvText,
+        proofread: 'Proofread this CV and return the corrected summary ONLY. Fix grammar, spelling, and improve clarity. Return ONLY the corrected text, nothing else:\n\nSummary: ' + (data.summary || ''),
+        improve: 'Improve this CV content. Rewrite the summary and experience descriptions to be more impactful. Use power verbs, add metrics where possible, and make it ATS-friendly:\n\n' + cvText,
+        skills: 'Suggest 8-12 relevant professional skills for this person based on their experience and job title. Return ONLY a comma-separated list of skills, nothing else:\n\nTitle: ' + (data.title || '') + '\nExperience: ' + (data.experience || []).map(e => e.role + ' ' + e.description).join(', '),
+        ats: 'Analyze this CV for ATS (Applicant Tracking System) optimization. List the top 5 improvements to make it more ATS-friendly. Be specific:\n\n' + cvText,
+        custom: 'You are a professional CV/resume advisor. Help the user with their CV. Be concise and actionable.\n\nCV Data:\n' + cvText
+    };
+
+    callAI(prompts[action] || prompts.custom, function(result) {
+        aiResultText = result;
+        const html = result.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        document.getElementById('aiResultBody').innerHTML = '<div style="white-space:pre-wrap">' + html + '</div>';
+    }, function(err) {
+        document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px;color:var(--red)"><i class="fas fa-exclamation-triangle" style="font-size:1.2rem;margin-bottom:6px;display:block"></i>AI Error<br><span style="font-size:0.7rem;color:var(--muted)">' + (typeof err === 'string' ? err : 'Check API key in Admin → Settings') + '</span></div>';
+    });
+};
+
+// AI Fix Issue — called when clicking a CV Score issue
+window.aiFixIssue = function(section, issueText, issueType) {
+    // Check if paid plan
+    var ud = window._userData || userData;
+    var plan = ud ? (ud.plan || 'free') : 'free';
+    if(plan === 'free') {
+        document.getElementById('aiResultPanel').classList.add('show');
+        document.getElementById('aiResultTitle').textContent = 'AI Fix';
+        document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px"><i class="fas fa-lock" style="font-size:1.5rem;color:#6366f1;margin-bottom:8px;display:block"></i><div style="font-weight:700;font-size:0.85rem;margin-bottom:4px;color:var(--text)">AI Fix — Pro Feature</div><div style="font-size:0.72rem;color:var(--muted);margin-bottom:12px">Upgrade to Pro to use AI-powered fixes</div><a href="pay.html" style="display:inline-block;padding:8px 20px;background:#6366f1;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:0.8rem;text-decoration:none">Upgrade to Pro</a></div>';
+        return;
+    }
+    const data = collectData();
+    const cvText = [
+        data.name ? 'Name: ' + data.name : '',
+        data.title ? 'Title: ' + data.title : '',
+        data.summary ? 'Summary: ' + data.summary : '',
+        (data.experience || []).map(e => 'Experience: ' + (e.role||'') + ' at ' + (e.company||'') + '\n' + (e.description||'')).join('\n'),
+        (data.education || []).map(e => 'Education: ' + (e.degree||'') + ' from ' + (e.school||'')).join('\n'),
+        'Skills: ' + (data.skills || []).join(', ')
+    ].filter(Boolean).join('\n\n');
+
+    const sectionData = data[section] || {};
+    const sectionText = JSON.stringify(sectionData);
+
+    const prompt = 'أنت مستشار سيرة ذاتية محترف. المستخدم عنده المشكلة دي في قسم "' + section + '":\n\nالمشكلة: ' + issueText + '\n\nبيانات القسم الحالي:\n' + sectionText + '\n\nالسيرة الذاتية كاملة:\n' + cvText + '\n\nقدم النص المُصحّح الذي يجب استخدامه. كن مختصراً (2-4 جمل). أرجع النص المُصحّح فقط بدون شرح.';
+
+    document.getElementById('aiResultPanel').classList.add('show');
+    document.getElementById('aiResultTitle').textContent = 'AI Fix: ' + section;
+    document.getElementById('aiResultBody').innerHTML = '<div class="ai-result-loading"><i class="fas fa-spinner"></i>جاري التحليل...</div>';
+
+    callAI(prompt, function(result) {
+        aiResultText = result;
+        const html = result.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        document.getElementById('aiResultBody').innerHTML = '<div style="white-space:pre-wrap">' + html + '</div>';
+    }, function(err) {
+        document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px;color:var(--red)"><i class="fas fa-exclamation-triangle" style="font-size:1.2rem;margin-bottom:6px;display:block"></i>خطأ في الذكاء الاصطناعي<br><span style="font-size:0.7rem;color:var(--muted)">' + (typeof err === 'string' ? err : 'تحقق من الاتصال') + '</span></div>';
+    });
+};
+
+// Override applyAiResult for CV Score fix context
+window.applyAiResult = function() {
+    const data = collectData();
+    const action = document.getElementById('aiResultTitle').textContent;
+
+    if(action.includes('AI Fix:')) {
+        // CV Score fix — apply to the relevant section
+        const section = action.replace('AI Fix:', '').trim();
+        if(section === 'summary') {
+            document.getElementById('inputSummary').value = aiResultText;
+            data.summary = aiResultText;
+        } else if(section === 'experience') {
+            // Find first experience and update description
+            if(data.experience && data.experience.length > 0) {
+                data.experience[0].description = aiResultText;
+            }
+        } else if(section === 'skills') {
+            const skills = aiResultText.split(',').map(s => s.trim()).filter(s => s);
+            data.skills = skills;
+            const container = document.getElementById('skillsContainer');
+            if(container) {
+                container.innerHTML = '';
+                skills.forEach(s => {
+                    container.innerHTML += '<div class="skill-tag">' + s + ' <button onclick="this.parentElement.remove();renderCV()">×</button></div>';
+                });
+            }
+        } else if(section === 'personal') {
+            // Try to extract name/title from AI response
+            const lines = aiResultText.split('\n').filter(l => l.trim());
+            if(lines.length >= 1) {
+                const nameInput = document.getElementById('inputName');
+                if(nameInput) nameInput.value = lines[0];
+                data.name = lines[0];
+            }
+            if(lines.length >= 2) {
+                const titleInput = document.getElementById('inputTitle');
+                if(titleInput) titleInput.value = lines[1];
+                data.title = lines[1];
+            }
+        } else if(section === 'education') {
+            if(data.education && data.education.length > 0) {
+                data.education[0].description = aiResultText;
+            }
+        }
+    } else if(action.includes('Summarize') || action.includes('ملخص')) {
+        document.getElementById('inputSummary').value = aiResultText;
+        data.summary = aiResultText;
+    } else if(action.includes('Proofread') || action.includes('تصحيح')) {
+        document.getElementById('inputSummary').value = aiResultText;
+        data.summary = aiResultText;
+    } else if(action.includes('Skills') || action.includes('مهارات')) {
+        const skills = aiResultText.split(',').map(s => s.trim()).filter(s => s);
+        data.skills = skills;
+        const container = document.getElementById('skillsContainer');
+        if(container) {
+            container.innerHTML = '';
+            skills.forEach(s => {
+                container.innerHTML += '<div class="skill-tag">' + s + ' <button onclick="this.parentElement.remove();renderCV()">×</button></div>';
+            });
+        }
+    }
+    renderCV();
+    closeAiPanel();
+    if(window.QCVNotify) QCVNotify.save();
+};
+
+function callAI(prompt, onSuccess, onError) {
+    // PRIMARY: Puter.js (free, user signs in once with Google/GitHub)
+    if(typeof puter !== 'undefined') {
+        puter.ai.chat(prompt, { model: 'gpt-4o-mini' })
+            .then(function(response) {
+                var text = typeof response === 'string' ? response : (response.message || response.content || JSON.stringify(response));
+                onSuccess(text.trim());
+            })
+            .catch(function(err) {
+                console.log('Puter failed:', err);
+                // If Puter auth error, try to authenticate then retry
+                if(err && (err.code === 'UNAUTHORIZED' || err.message?.includes('auth') || err.message?.includes('sign') || err.message?.includes('login'))) {
+                    showPuterAuth(onSuccess, onError, prompt);
+                    return;
+                }
+                callDeepSeek(prompt, onSuccess, onError);
+            });
+        return;
+    }
+    // Puter not loaded — try to load it, then retry
+    callDeepSeek(prompt, onSuccess, onError);
+}
+
+function showPuterAuth(onSuccess, onError, prompt) {
+    var panel = document.getElementById('aiResultPanel');
+    var body = document.getElementById('aiResultBody');
+    var title = document.getElementById('aiResultTitle');
+    panel.classList.add('show');
+    title.textContent = 'AI Setup';
+    body.innerHTML = '<div style="text-align:center;padding:20px"><i class="fas fa-user-circle" style="font-size:2.5rem;color:#6366f1;margin-bottom:12px;display:block"></i><div style="font-weight:700;font-size:0.9rem;margin-bottom:6px;color:var(--text)">Sign in to use AI (free)</div><div style="font-size:0.75rem;color:var(--muted);margin-bottom:16px">Click below to connect with Puter. One-time only, takes 10 seconds.</div><button onclick="doPuterAuth()" style="padding:10px 24px;background:#6366f1;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:inherit"><i class="fas fa-plug"></i> Connect with Puter</button><div id="puterAuthStatus" style="margin-top:10px;font-size:0.7rem;color:var(--muted)"></div></div>';
+    // Store prompt for retry after auth
+    window._pendingAIPrompt = prompt;
+    window._pendingAISuccess = onSuccess;
+    window._pendingAIError = onError;
+}
+
+window.doPuterAuth = function() {
+    var status = document.getElementById('puterAuthStatus');
+    status.textContent = 'Opening Puter sign-in...';
+    status.style.color = '#6366f1';
+    puter.ui.authenticate().then(function() {
+        status.textContent = 'Connected! Retrying AI...';
+        status.style.color = '#10b981';
+        setTimeout(function() {
+            if(window._pendingAIPrompt) {
+                callAI(window._pendingAIPrompt, window._pendingAISuccess, window._pendingAIError);
+            }
+        }, 500);
+    }).catch(function(err) {
+        status.textContent = 'Sign-in failed. Try again or use DeepSeek.';
+        status.style.color = '#ef4444';
+        console.log('Puter auth failed:', err);
+    });
+};
+
+function callDeepSeek(prompt, onSuccess, onError) {
+    var key = localStorage.getItem('qcv_deepseek_key') || 'sk-0c803f1b9cc54b089d09d81e6b0cb72e';
+    fetch('https://api.deepseek.com/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key },
+        body: JSON.stringify({ model: 'deepseek-chat', messages: [{ role: 'user', content: prompt }], max_tokens: 800, temperature: 0.7 })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+        if(data.choices && data.choices[0]) {
+            onSuccess(data.choices[0].message.content.trim());
+        } else if(data.error) {
+            // DeepSeek failed (no balance?) — try remaining API providers
+            callRemainingProviders(prompt, onSuccess, onError);
+        } else {
+            callRemainingProviders(prompt, onSuccess, onError);
+        }
+    })
+    .catch(function() { callRemainingProviders(prompt, onSuccess, onError); });
+}
+
+function callRemainingProviders(prompt, onSuccess, onError) {
+    var settings = (window.QCVSettings && window.QCVSettings.get) ? window.QCVSettings.get() : {};
+    var groqKey = settings.groqKey || localStorage.getItem('qcv_groq_key') || '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';
+    var openrouterKey = settings.openrouterKey || localStorage.getItem('qcv_openrouter_key') || '';
+    var openaiKey = settings.aiApiKey || localStorage.getItem('qcv_ai_key') || '';
+
+    var naraKey = 'sk-nry-8byFwwi7R-yyindmAMnSQoqzX4y4M2Doz5B8pq7ehrA';
+
+    var providers = [];
+    if(groqKey) providers.push({ url: 'https://api.groq.com/openai/v1/chat/completions', key: groqKey, model: 'llama-3.3-70b-versatile' });
+    if(naraKey) providers.push({ url: 'https://router.bynara.id/v1/chat/completions', key: naraKey, model: 'auto' });
+    if(openrouterKey) providers.push({ url: 'https://openrouter.ai/api/v1/chat/completions', key: openrouterKey, model: 'meta-llama/llama-3.3-70b-instruct:free' });
+    if(openaiKey) providers.push({ url: 'https://api.openai.com/v1/chat/completions', key: openaiKey, model: 'gpt-4o-mini' });
+
+    function tryNext(i) {
+        if(i >= providers.length) {
+            if(onError) onError('الذكاء الاصطناعي غير متاح — أضف مفتاح Groq المجاني من console.groq.com');
+            return;
+        }
+        var p = providers[i];
+        fetch(p.url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + p.key },
+            body: JSON.stringify({ model: p.model, messages: [{ role: 'user', content: prompt }], max_tokens: 800, temperature: 0.7 })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            if(data.choices && data.choices[0]) {
+                onSuccess(data.choices[0].message.content.trim());
+            } else {
+                tryNext(i + 1);
+            }
+        })
+        .catch(function() { tryNext(i + 1); });
+    }
+    tryNext(0);
+}
+
 </script>
 </body>
 </html>

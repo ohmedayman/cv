@@ -82,7 +82,7 @@
         body{background:var(--bg);color:var(--text);font-family:'Cairo',sans-serif;overflow-x:hidden;line-height:1.6}
 
         /* ===== NAVBAR ===== */
-        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 60px;height:70px;display:flex;justify-content:space-between;align-items:center}
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--sidebar, rgba(255,255,255,0.95));backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 60px;height:70px;display:flex;justify-content:space-between;align-items:center}
         .nav-logo{font-size:1.8rem;font-weight:900;color:var(--text);text-decoration:none}
         .nav-logo span{color:var(--accent)}
         .nav-links{display:flex;align-items:center;gap:30px;list-style:none}
@@ -590,6 +590,7 @@ function filterFAQ() {
 }
 </script>
 
+<script src="js/maintenance.js"></script>
 <script src="js/site-settings.js"></script>
 <script src="js/analytics.js"></script>
 <script src="js/notify-sounds.js"></script>

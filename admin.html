@@ -297,26 +297,26 @@
         }
 
         /* ===== DARK MODE ===== */
-        body.dark-mode{--bg-main:#0f172a;--bg-sidebar:#1e293b;--bg-card:#1e293b;--bg-hover:#334155;--border:#334155;--text:#e2e8f0;--muted:#94a3b8;--light:#64748b}
+        body.dark-mode{--bg-main:#0c1222;--bg-sidebar:#111a2e;--bg-card:#151f35;--bg-hover:#1e2d4a;--border:#1e2d4a;--text:#e8edf5;--muted:#8b97b0;--light:#5a6a85}
         body.dark-mode .login-box{background:var(--bg-card);border-color:var(--border)}
-        body.dark-mode .login-box input{background:#0f172a;border-color:var(--border);color:var(--text)}
+        body.dark-mode .login-box input{background:#0f1729;border-color:var(--border);color:var(--text)}
         body.dark-mode .sidebar{background:var(--bg-sidebar);border-color:var(--border)}
-        body.dark-mode .nav-item:hover,.body.dark-mode .nav-item.active{background:rgba(0,3,201,0.15)}
+        body.dark-mode .nav-item:hover,.body.dark-mode .nav-item.active{background:rgba(99,102,241,0.1)}
         body.dark-mode .table-container{background:var(--bg-card);border-color:var(--border)}
-        body.dark-mode th{background:#334155;color:#e2e8f0}
-        body.dark-mode td{border-color:#334155}
-        body.dark-mode tr:hover td{background:rgba(0,3,201,0.08)}
-        body.dark-mode .search-box{background:#0f172a;border-color:var(--border)}
+        body.dark-mode th{background:#1a2540;color:#e8edf5;border-color:#1e2d4a}
+        body.dark-mode td{border-color:#1e2d4a;color:#c8d0de}
+        body.dark-mode tr:hover td{background:rgba(99,102,241,0.04)}
+        body.dark-mode .search-box{background:#0f1729;border-color:var(--border)}
         body.dark-mode .search-box input{color:var(--text)}
         body.dark-mode .modal{background:var(--bg-card);border-color:var(--border)}
-        body.dark-mode .modal input,body.dark-mode .modal select,body.dark-mode .modal textarea{background:#0f172a;border-color:var(--border);color:var(--text)}
+        body.dark-mode .modal input,body.dark-mode .modal select,body.dark-mode .modal textarea{background:#0f1729;border-color:var(--border);color:var(--text)}
         body.dark-mode .settings-card{background:var(--bg-card);border-color:var(--border)}
-        body.dark-mode .settings-row input,body.dark-mode .settings-row select{background:#0f172a;border-color:var(--border);color:var(--text)}
-        body.dark-mode .profile-section{background:#0f172a}
+        body.dark-mode .settings-row input,body.dark-mode .settings-row select{background:#0f1729;border-color:var(--border);color:var(--text)}
+        body.dark-mode .profile-section{background:#0f1729}
         body.dark-mode .analytics-mini-card{background:var(--bg-card);border-color:var(--border)}
-        body.dark-mode .bar-track{background:#334155}
-        body.dark-mode .analytics-bar .track{background:#334155}
-        body.dark-mode .link-output{background:#0f172a;border-color:var(--border)}
+        body.dark-mode .bar-track{background:#1a2540}
+        body.dark-mode .analytics-bar .track{background:#1a2540}
+        body.dark-mode .link-output{background:#0f1729;border-color:var(--border)}
         body.dark-mode .chart-card{background:var(--bg-card);border-color:var(--border)}
         body.dark-mode .donut-center{background:var(--bg-card)}
         body.dark-mode .topbar h1{color:var(--text)}
@@ -329,6 +329,8 @@
         ::-webkit-scrollbar-track{background:transparent}
         ::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:3px}
         ::-webkit-scrollbar-thumb:hover{background:#9ca3af}
+        body.dark-mode ::-webkit-scrollbar-thumb{background:#1e2d4a}
+        body.dark-mode ::-webkit-scrollbar-thumb:hover{background:#2d3f5e}
     </style>
 </head>
 <body>
@@ -784,6 +786,43 @@
                                 <div class="toggle" id="settingsMaintenance" onclick="toggleMaintenance()"></div>
                                 <span id="maintenanceLabel" style="font-size:0.85rem;font-weight:700">معطل</span>
                             </div>
+                        </div>
+                        <div class="field">
+                            <label>ملتقط البيانات (Analytics Tracker)</label>
+                            <div class="toggle-switch">
+                                <div class="toggle" id="settingsAnalytics" onclick="toggleAnalytics()"></div>
+                                <span id="analyticsLabel" style="font-size:0.85rem;font-weight:700">معطل</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-row">
+                        <div class="field">
+                            <label>DeepSeek API Key (cheap - deepseek.com)</label>
+                            <input type="password" id="settingsDeepseekKey" placeholder="sk-..." style="font-family:monospace">
+                        </div>
+                        <div class="field">
+                            <label>NaraRouter API Key (router.bynara.id)</label>
+                            <input type="password" id="settingsNaraKey" placeholder="sk-nry-..." style="font-family:monospace">
+                        </div>
+                    </div>
+                    <div class="settings-row">
+                        <div class="field">
+                            <label>Groq API Key (free - groq.com)</label>
+                            <input type="password" id="settingsGroqKey" placeholder="gsk_..." style="font-family:monospace">
+                        </div>
+                        <div class="field">
+                            <label>xAI/Grok API Key (free - console.x.ai)</label>
+                            <input type="password" id="settingsXaiKey" placeholder="xai-..." style="font-family:monospace">
+                        </div>
+                    </div>
+                    <div class="settings-row">
+                        <div class="field">
+                            <label>OpenRouter API Key (free - openrouter.ai)</label>
+                            <input type="password" id="settingsOpenrouterKey" placeholder="sk-or-..." style="font-family:monospace">
+                        </div>
+                        <div class="field">
+                            <label>Gemini API Key (fallback)</label>
+                            <input type="password" id="settingsGeminiKey" placeholder="AI..." style="font-family:monospace">
                         </div>
                     </div>
                     <button onclick="saveSettings()" style="padding:12px 30px;background:var(--accent);border:none;color:#fff;border-radius:10px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;font-size:0.9rem;margin-top:10px"><i class="fas fa-save"></i> حفظ الإعدادات</button>
@@ -2046,12 +2085,26 @@
                 document.getElementById('settingsCommission').value = allSettingsData.commissionPercent || 20;
                 document.getElementById('settingsProPrice').value = allSettingsData.proPrice || 99;
                 document.getElementById('settingsUnlimitedPrice').value = allSettingsData.unlimitedPrice || 299;
+                document.getElementById('settingsAiKey').value = allSettingsData.aiApiKey || '';
+                document.getElementById('settingsGeminiKey').value = allSettingsData.geminiKey || '';
+                document.getElementById('settingsGroqKey').value = allSettingsData.groqKey || '';
+                document.getElementById('settingsOpenrouterKey').value = allSettingsData.openrouterKey || '';
+                document.getElementById('settingsXaiKey').value = allSettingsData.xaiKey || '';
+                document.getElementById('settingsDeepseekKey').value = allSettingsData.deepseekKey || '';
+                document.getElementById('settingsNaraKey').value = allSettingsData.naraKey || '';
                 if (allSettingsData.maintenance) {
                     document.getElementById('settingsMaintenance').classList.add('active');
                     document.getElementById('maintenanceLabel').textContent = 'مفعّل';
                 } else {
                     document.getElementById('settingsMaintenance').classList.remove('active');
                     document.getElementById('maintenanceLabel').textContent = 'معطّل';
+                }
+                if (allSettingsData.trackerEnabled) {
+                    document.getElementById('settingsAnalytics').classList.add('active');
+                    document.getElementById('analyticsLabel').textContent = 'مفعّل';
+                } else {
+                    document.getElementById('settingsAnalytics').classList.remove('active');
+                    document.getElementById('analyticsLabel').textContent = 'معطّل';
                 }
             });
         }
@@ -2063,7 +2116,19 @@
             document.getElementById('maintenanceLabel').textContent = isActive ? 'مفعّل' : 'معطّل';
             try {
                 await update(ref(db, 'settings'), { maintenance: isActive, updatedAt: Date.now() });
+                await update(ref(db, 'siteSettings/maintenance'), { enabled: isActive });
                 showToast(isActive ? 'تم تفعيل وضع الصيانة' : 'تم تعطيل وضع الصيانة', 'success');
+            } catch(err) { showToast('خطأ', 'error'); }
+        };
+
+        window.toggleAnalytics = async function() {
+            const el = document.getElementById('settingsAnalytics');
+            el.classList.toggle('active');
+            const isActive = el.classList.contains('active');
+            document.getElementById('analyticsLabel').textContent = isActive ? 'مفعّل' : 'معطّل';
+            try {
+                await update(ref(db, 'settings'), { trackerEnabled: isActive, updatedAt: Date.now() });
+                showToast(isActive ? 'تم تفعيل ملتقط البيانات' : 'تم تعطيل ملتقط البيانات', 'success');
             } catch(err) { showToast('خطأ', 'error'); }
         };
 
@@ -2075,6 +2140,14 @@
                     proPrice: parseInt(document.getElementById('settingsProPrice').value) || 99,
                     unlimitedPrice: parseInt(document.getElementById('settingsUnlimitedPrice').value) || 299,
                     maintenance: document.getElementById('settingsMaintenance').classList.contains('active'),
+                    trackerEnabled: document.getElementById('settingsAnalytics').classList.contains('active'),
+                    geminiKey: document.getElementById('settingsGeminiKey').value.trim(),
+                    aiApiKey: document.getElementById('settingsAiKey').value.trim(),
+                    groqKey: document.getElementById('settingsGroqKey').value.trim(),
+                    openrouterKey: document.getElementById('settingsOpenrouterKey').value.trim(),
+                    xaiKey: document.getElementById('settingsXaiKey').value.trim(),
+                    deepseekKey: document.getElementById('settingsDeepseekKey').value.trim(),
+                    naraKey: document.getElementById('settingsNaraKey').value.trim(),
                     updatedAt: Date.now()
                 };
                 await update(ref(db, 'settings'), settings);

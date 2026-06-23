@@ -166,7 +166,7 @@
         body{background:var(--bg);color:var(--text);font-family:'Cairo',sans-serif;overflow-x:hidden;line-height:1.6}
 
         /* ===== NAVBAR ===== */
-        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 50px;height:68px;display:flex;justify-content:space-between;align-items:center}
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--sidebar, rgba(255,255,255,0.95));backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 50px;height:68px;display:flex;justify-content:space-between;align-items:center}
         .nav-logo{font-size:1.7rem;font-weight:900;text-decoration:none;color:var(--text)}
         .nav-logo span{color:var(--accent)}
         .nav-center{display:flex;align-items:center;gap:28px;list-style:none}
@@ -345,7 +345,7 @@
         }
         @media(max-width:768px){
             .nav-mobile-toggle{display:flex}
-            .nav-center{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(255,255,255,0.98);backdrop-filter:blur(20px);flex-direction:column;padding:20px;gap:12px;border-bottom:1px solid var(--border);z-index:999;box-shadow:0 8px 24px rgba(0,0,0,0.06)}
+            .nav-center{display:none;position:fixed;top:68px;left:0;right:0;background:var(--sidebar, rgba(255,255,255,0.98));backdrop-filter:blur(20px);flex-direction:column;padding:20px;gap:12px;border-bottom:1px solid var(--border);z-index:999;box-shadow:0 8px 24px rgba(0,0,0,0.06)}
             .nav-center.show{display:flex}
             .nav-center li{width:100%}
             .nav-center a{display:block;padding:10px 16px;border-radius:10px;font-size:0.95rem;transition:background 0.2s}
@@ -783,7 +783,8 @@ function toggleFaq(el){
 
 
 
-<script src="js/site-settings.js"></script>
+    <script src="js/maintenance.js"></script>
+    <script src="js/site-settings.js"></script>
 <script src="js/analytics.js"></script>
 <script src="js/notify-sounds.js"></script>
 
