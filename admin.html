@@ -20,7 +20,7 @@
             --border: #e5e7eb;
             --accent: #0003c9;
             --accent-glow: rgba(0,3,201,0.15);
-            --green: #10b981;
+            --green: #059669;
             --red: #ef4444;
             --yellow: #f59e0b;
             --purple: #8b5cf6;
@@ -84,7 +84,7 @@
         .stat-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 25px rgba(0,3,201,0.1)}
         .stat-card .stat-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:15px}
         .stat-card .stat-icon.blue{background:rgba(0,3,201,0.1);color:var(--accent)}
-        .stat-card .stat-icon.green{background:rgba(16,185,129,0.1);color:var(--green)}
+        .stat-card .stat-icon.green{background:rgba(5,150,105,0.1);color:var(--green)}
         .stat-card .stat-icon.yellow{background:rgba(245,158,11,0.1);color:var(--yellow)}
         .stat-card .stat-icon.purple{background:rgba(139,92,246,0.1);color:var(--purple)}
         .stat-card .stat-value{font-size:1.8rem;font-weight:900;margin-bottom:4px}
@@ -118,22 +118,22 @@
         .badge-pro{background:rgba(0,3,201,0.1);color:var(--accent)}
         .badge-unlimited{background:rgba(139,92,246,0.15);color:var(--purple)}
         .badge-pending{background:rgba(245,158,11,0.15);color:var(--yellow)}
-        .badge-approved{background:rgba(16,185,129,0.15);color:var(--green)}
+        .badge-approved{background:rgba(5,150,105,0.15);color:var(--green)}
         .badge-rejected{background:rgba(239,68,68,0.15);color:var(--red)}
         .badge-banned{background:rgba(239,68,68,0.15);color:var(--red)}
-        .badge-active{background:rgba(16,185,129,0.15);color:var(--green)}
+        .badge-active{background:rgba(5,150,105,0.15);color:var(--green)}
         .badge-inactive{background:rgba(100,116,139,0.15);color:var(--muted)}
         .badge-super_admin{background:rgba(239,68,68,0.15);color:var(--red)}
         .badge-admin{background:rgba(0,3,201,0.1);color:var(--accent)}
         .badge-manager{background:rgba(139,92,246,0.15);color:var(--purple)}
-        .badge-support{background:rgba(16,185,129,0.15);color:var(--green)}
-        .badge-paid{background:rgba(16,185,129,0.15);color:var(--green)}
+        .badge-support{background:rgba(5,150,105,0.15);color:var(--green)}
+        .badge-paid{background:rgba(5,150,105,0.15);color:var(--green)}
         .badge-waiting{background:rgba(245,158,11,0.15);color:var(--yellow)}
 
         /* Action Buttons */
         .actions{display:flex;gap:6px;flex-wrap:wrap}
         .btn-action{padding:6px 12px;border-radius:8px;border:none;font-weight:700;font-size:0.72rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s}
-        .btn-approve{background:rgba(16,185,129,0.15);color:var(--green);border:1px solid rgba(16,185,129,0.3)}
+        .btn-approve{background:rgba(5,150,105,0.15);color:var(--green);border:1px solid rgba(5,150,105,0.3)}
         .btn-approve:hover{background:var(--green);color:#fff}
         .btn-reject{background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.3)}
         .btn-reject:hover{background:var(--red);color:#fff}
@@ -149,7 +149,7 @@
         .btn-change-plan:hover{background:var(--purple);color:#fff}
         .btn-edit{background:rgba(245,158,11,0.15);color:var(--yellow);border:1px solid rgba(245,158,11,0.3)}
         .btn-edit:hover{background:var(--yellow);color:#000}
-        .btn-add{background:rgba(16,185,129,0.15);color:var(--green);border:1px solid rgba(16,185,129,0.3)}
+        .btn-add{background:rgba(5,150,105,0.15);color:var(--green);border:1px solid rgba(5,150,105,0.3)}
         .btn-add:hover{background:var(--green);color:#fff}
 
         /* Empty State */
@@ -201,7 +201,7 @@
         /* Toast */
         .toast{position:fixed;top:25px;left:50%;transform:translateX(-50%) translateY(-100px);padding:14px 28px;border-radius:12px;font-weight:700;font-size:0.88rem;z-index:9999;transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);white-space:nowrap}
         .toast.show{transform:translateX(-50%) translateY(0)}
-        .toast-success{background:var(--green);color:#fff;box-shadow:0 8px 25px rgba(16,185,129,0.3)}
+        .toast-success{background:var(--green);color:#fff;box-shadow:0 8px 25px rgba(5,150,105,0.3)}
         .toast-error{background:var(--red);color:#fff;box-shadow:0 8px 25px rgba(239,68,68,0.3)}
 
         /* Bar Charts */
@@ -331,7 +331,7 @@
         body.dark-mode .sub-tab{background:var(--bg-card);color:var(--text)}
         body.dark-mode .sub-tab.active{background:var(--accent);color:#fff}
         body.dark-mode .badge-pending{background:rgba(245,158,11,0.15);color:#f59e0b}
-        body.dark-mode .badge-approved{background:rgba(16,185,129,0.15);color:#10b981}
+        body.dark-mode .badge-approved{background:rgba(5,150,105,0.15);color:#059669}
         body.dark-mode .badge-rejected{background:rgba(239,68,68,0.15);color:#ef4444}
         body.dark-mode .pagination button{background:var(--bg-card);color:var(--text);border-color:var(--border)}
         body.dark-mode .pagination button.active{background:var(--accent);color:#fff}
@@ -353,6 +353,110 @@
     </style>
 </head>
 <body>
+
+<script>
+// Admin login handler - runs BEFORE module script for reliability
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'Qcv@admin1';
+
+// Non-module fallback for sidebar navigation (works even if Firebase SDK fails to load)
+const _panelTitles = {
+    dashboard: 'لوحة التحكم', users: 'إدارة المستخدمين', staff: 'إدارة الموظفين',
+    subscriptions: 'الاشتراكات', affiliate: 'التسويق بالعمولة', reports: 'التقارير',
+    analytics: 'التحليلات', jobs: 'الوظائف', domains: 'النطاقات المعتمدة',
+    settings: 'الإعدادات', messages: 'الرسائل'
+};
+window.switchPanel = window.switchPanel || function(panel) {
+    document.querySelectorAll('.panel').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+    var target = document.getElementById('panel-' + panel);
+    if (target) target.classList.add('active');
+    var navItem = document.querySelector('.nav-item[data-panel="' + panel + '"]');
+    if (navItem) navItem.classList.add('active');
+    var title = document.getElementById('pageTitle');
+    if (title) title.textContent = _panelTitles[panel] || panel;
+};
+window.closeModal = window.closeModal || function() {
+    document.getElementById('modal').classList.remove('show');
+};
+
+function isAdminLoggedIn() { return sessionStorage.getItem('qcv_admin') === 'true'; }
+function isStaffLoggedIn() {
+    var d = sessionStorage.getItem('qcv_staff');
+    if (d) { window._staffUser = JSON.parse(d); return true; }
+    return false;
+}
+window.showStaffLogin = function(e) {
+    if (e) e.preventDefault();
+    document.getElementById('adminLogin').classList.add('hidden');
+    document.getElementById('staffLogin').classList.remove('hidden');
+};
+window.showAdminLogin = function(e) {
+    if (e) e.preventDefault();
+    document.getElementById('staffLogin').classList.add('hidden');
+    document.getElementById('adminLogin').classList.remove('hidden');
+};
+
+// Wait for DOM ready then check session + attach login form handler
+document.addEventListener('DOMContentLoaded', function() {
+    var bs = document.getElementById('blockScreen');
+    if (isAdminLoggedIn()) {
+        window._isAdmin = true;
+        bs.style.display = 'none';
+        document.getElementById('adminLogin').classList.add('hidden');
+        document.getElementById('staffLogin').classList.add('hidden');
+        document.getElementById('adminLayout').classList.add('show');
+        function tryInitExisting() {
+            if (typeof window._adminInit === 'function') { window._adminInit(); }
+            else { setTimeout(tryInitExisting, 300); }
+        }
+        tryInitExisting();
+    } else if (isStaffLoggedIn()) {
+        bs.style.display = 'none';
+        document.getElementById('adminLogin').classList.add('hidden');
+        document.getElementById('staffLogin').classList.add('hidden');
+        document.getElementById('adminLayout').classList.add('show');
+        function tryInitExistingStaff() {
+            if (typeof window._adminInit === 'function') { window._adminInit(); }
+            else { setTimeout(tryInitExistingStaff, 300); }
+        }
+        tryInitExistingStaff();
+    } else {
+        bs.style.display = 'none';
+        document.getElementById('adminLogin').classList.remove('hidden');
+    }
+
+    document.getElementById('adminLoginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var username = document.getElementById('adminEmail').value.trim();
+        var password = document.getElementById('adminPassword').value;
+        var btn = document.getElementById('adminLoginBtn');
+        var errorEl = document.getElementById('loginError');
+        btn.textContent = 'جاري التحقق...';
+        btn.disabled = true;
+        errorEl.style.display = 'none';
+        setTimeout(function() {
+            if (username === ADMIN_USER && password === ADMIN_PASS) {
+                sessionStorage.setItem('qcv_admin', 'true');
+                window._isAdmin = true;
+                document.getElementById('adminLogin').classList.add('hidden');
+                document.getElementById('staffLogin').classList.add('hidden');
+                document.getElementById('adminLayout').classList.add('show');
+                function tryInitDashboard() {
+                    if (typeof window._adminInit === 'function') { window._adminInit(); }
+                    else { setTimeout(tryInitDashboard, 300); }
+                }
+                tryInitDashboard();
+            } else {
+                errorEl.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة';
+                errorEl.style.display = 'block';
+            }
+            btn.textContent = 'دخول لوحة التحكم';
+            btn.disabled = false;
+        }, 500);
+    });
+});
+</script>
 
     <!-- Toast -->
     <div class="toast" id="toast"></div>
@@ -724,7 +828,7 @@
                         <div class="label">إجمالي المستخدمين</div>
                     </div>
                     <div class="analytics-card">
-                        <div class="icon" style="background:rgba(16,185,129,0.1);color:var(--green)"><i class="fas fa-eye"></i></div>
+                        <div class="icon" style="background:rgba(5,150,105,0.1);color:var(--green)"><i class="fas fa-eye"></i></div>
                         <div class="num" id="a-total-visits">0</div>
                         <div class="label">إجمالي الزيارات</div>
                     </div>
@@ -920,17 +1024,11 @@
         <div style="font-size:3rem;font-weight:900;margin-bottom:15px">Q<span style="color:#0003c9">CV</span></div>
         <div style="color:#6b7280;font-size:0.9rem" id="blockMsg">جاري التحقق...</div>
     </div>
-    <script>
-    setTimeout(function(){ var bs=document.getElementById('blockScreen'); if(bs) bs.style.display='none'; }, 4000);
-    </script>
 
     <!-- ===== SCRIPTS ===== -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
         import { getDatabase, ref, get, remove, update, set, push, onValue } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
-
-        const ADMIN_USER = 'admin';
-        const ADMIN_PASS = 'Qcv@admin1';
 
         const firebaseConfig = {
             apiKey: "AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",
@@ -1036,7 +1134,7 @@
         }
 
         function getAvatarColor(uid) {
-            const colors = ['#0003c9','#10b981','#8b5cf6','#f59e0b','#ef4444','#3b82f6'];
+            const colors = ['#0003c9','#059669','#8b5cf6','#f59e0b','#ef4444','#3b82f6'];
             return colors[(uid||'u').charCodeAt(0) % colors.length];
         }
 
@@ -1061,85 +1159,6 @@
             if (activityLog.length > 50) activityLog.pop();
             renderActivityFeed();
         }
-
-        // ===== SESSION =====
-        window._staffUser = null;
-        window._isAdmin = false;
-
-        function isAdminLoggedIn() {
-            return sessionStorage.getItem('qcv_admin') === 'true';
-        }
-
-        function isStaffLoggedIn() {
-            const staffData = sessionStorage.getItem('qcv_staff');
-            if (staffData) {
-                window._staffUser = JSON.parse(staffData);
-                return true;
-            }
-            return false;
-        }
-
-        function showStaffLogin(e) {
-            if (e) e.preventDefault();
-            document.getElementById('adminLogin').classList.add('hidden');
-            document.getElementById('staffLogin').classList.remove('hidden');
-        }
-
-        function showAdminLogin(e) {
-            if (e) e.preventDefault();
-            document.getElementById('staffLogin').classList.add('hidden');
-            document.getElementById('adminLogin').classList.remove('hidden');
-        }
-        window.showStaffLogin = showStaffLogin;
-        window.showAdminLogin = showAdminLogin;
-
-        if (isAdminLoggedIn()) {
-            window._isAdmin = true;
-            document.getElementById('blockScreen').style.display = 'none';
-            document.getElementById('adminLogin').classList.add('hidden');
-            document.getElementById('staffLogin').classList.add('hidden');
-            document.getElementById('adminLayout').classList.add('show');
-            applyAdminPanel();
-            initDashboard();
-        } else if (isStaffLoggedIn()) {
-            document.getElementById('blockScreen').style.display = 'none';
-            document.getElementById('adminLogin').classList.add('hidden');
-            document.getElementById('staffLogin').classList.add('hidden');
-            document.getElementById('adminLayout').classList.add('show');
-            applyStaffPanel();
-            initDashboard();
-        } else {
-            document.getElementById('blockScreen').style.display = 'none';
-            document.getElementById('adminLogin').classList.remove('hidden');
-        }
-
-        // ===== ADMIN LOGIN =====
-        document.getElementById('adminLoginForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const username = document.getElementById('adminEmail').value.trim();
-            const password = document.getElementById('adminPassword').value;
-            const btn = document.getElementById('adminLoginBtn');
-            const errorEl = document.getElementById('loginError');
-            btn.textContent = 'جاري التحقق...';
-            btn.disabled = true;
-            errorEl.style.display = 'none';
-            setTimeout(() => {
-                if (username === ADMIN_USER && password === ADMIN_PASS) {
-                    sessionStorage.setItem('qcv_admin', 'true');
-                    window._isAdmin = true;
-                    document.getElementById('adminLogin').classList.add('hidden');
-                    document.getElementById('staffLogin').classList.add('hidden');
-                    document.getElementById('adminLayout').classList.add('show');
-                    applyAdminPanel();
-                    initDashboard();
-                } else {
-                    errorEl.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة';
-                    errorEl.style.display = 'block';
-                }
-                btn.textContent = 'دخول لوحة التحكم';
-                btn.disabled = false;
-            }, 500);
-        });
 
         // ===== STAFF LOGIN =====
         document.getElementById('staffLoginForm').addEventListener('submit', (e) => {
@@ -1194,6 +1213,7 @@
                 document.getElementById('staffLogin').classList.add('hidden');
                 document.getElementById('adminLayout').classList.add('show');
                 applyStaffPanel();
+                _dashboardStarted = true;
                 initDashboard();
                 addActivity('success', 'تسجيل دخول الموظف: ' + (staffSession.name || staffSession.email));
             } catch (err) {
@@ -1412,7 +1432,7 @@
             }
             el.innerHTML = activityLog.slice(0, 10).map(a => {
                 let iconClass = 'fas fa-info-circle', bg = 'rgba(0,3,201,0.1)', clr = 'var(--accent)';
-                if (a.type === 'success') { iconClass = 'fas fa-check'; bg = 'rgba(16,185,129,0.1)'; clr = 'var(--green)'; }
+                if (a.type === 'success') { iconClass = 'fas fa-check'; bg = 'rgba(5,150,105,0.1)'; clr = 'var(--green)'; }
                 else if (a.type === 'error') { iconClass = 'fas fa-times'; bg = 'rgba(239,68,68,0.1)'; clr = 'var(--red)'; }
                 else if (a.type === 'warning') { iconClass = 'fas fa-exclamation'; bg = 'rgba(245,158,11,0.1)'; clr = 'var(--yellow)'; }
                 const timeAgo = getTimeAgo(a.time);
@@ -1514,7 +1534,7 @@
                 </div>
                 <div class="profile-section">
                     <h4><i class="fas fa-download"></i> التحميلات</h4>
-                    <div class="profile-row"><div class="label">عدد التحميلات</div><div class="value" style="font-weight:700;color:${(u.downloads||0)>=2?'#ef4444':'#10b981'}">${u.downloads || 0} ${plan==='free'?'/ 2':'/ ∞'}</div></div>
+                    <div class="profile-row"><div class="label">عدد التحميلات</div><div class="value" style="font-weight:700;color:${(u.downloads||0)>=2?'#ef4444':'#059669'}">${u.downloads || 0} ${plan==='free'?'/ 2':'/ ∞'}</div></div>
                 </div>
                 ${u.portfolioLink ? `<div class="profile-section"><h4><i class="fas fa-link"></i> البورتفوليو</h4><div class="profile-row"><div class="label">الرابط</div><div class="value"><a href="${u.portfolioLink}" target="_blank" style="color:var(--accent)">${u.portfolioLink}</a></div></div></div>` : ''}
                 <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px">
@@ -2912,6 +2932,26 @@
                 actionsDiv.insertBefore(previewBtn, actionsDiv.firstChild);
             }
         };
+
+        // Expose to window so non-module scripts can call them
+        let _dashboardStarted = false;
+        window._adminInit = function() {
+            if (_dashboardStarted) return;
+            if (sessionStorage.getItem('qcv_admin') === 'true') {
+                window._isAdmin = true;
+                applyAdminPanel();
+                _dashboardStarted = true;
+                initDashboard();
+            } else if (sessionStorage.getItem('qcv_staff')) {
+                window._staffUser = JSON.parse(sessionStorage.getItem('qcv_staff'));
+                applyStaffPanel();
+                _dashboardStarted = true;
+                initDashboard();
+            }
+        };
+
+        // Auto-init on module load (handles page refresh with existing session)
+        window._adminInit();
 
     </script>
     <script src="js/notify-sounds.js"></script>

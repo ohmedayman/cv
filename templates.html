@@ -3,6 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qcv.vexonet.online/templates.html">
+    <meta property="og:title" content="قوالب السير الذاتية الاحترافية - QCV">
+    <meta property="og:description" content="اختر من بين أكثر من 15 قالب سيرة ذاتية احترافي متوافق مع أنظمة ATS. جميع القوالب مجانية للمعاينة.">
+    <meta property="og:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <meta property="og:site_name" content="QCV">
+    <meta property="og:locale" content="ar_AR">
     <title>قوالب سيرة ذاتية - QCV | 15+ قالب احترافي ATS مجاني</title>
     <meta name="description" content="اختر من بين أكثر من 15 قالب سيرة ذاتية احترافي متوافق مع أنظمة ATS.">
     <meta name="robots" content="index, follow">
@@ -15,7 +22,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="templates/templates.css">
     <style>
-        :root{--bg:#ffffff;--bg2:#f9fafb;--card:#ffffff;--border:#e5e7eb;--accent:#0003c9;--text:#1a1a2e;--muted:#6b7280;--light:#9ca3af;--green:#10b981;--purple:#8b5cf6;--sky:#2563eb}
+        :root{--bg:#ffffff;--bg2:#f9fafb;--card:#ffffff;--border:#e5e7eb;--accent:#0003c9;--text:#1a1a2e;--muted:#6b7280;--light:#9ca3af;--green:#059669;--purple:#8b5cf6;--sky:#2563eb}
         *{box-sizing:border-box;margin:0;padding:0}
         body{background:var(--bg2);color:var(--text);font-family:'Inter','Cairo',sans-serif;min-height:100vh}
 
@@ -81,7 +88,7 @@
         .preview-modal-footer .btn-close:hover{background:var(--border)}
 
         .tpl-badge-locked{position:absolute;top:14px;right:14px;background:rgba(0,0,0,0.7);color:#f59e0b;padding:5px 12px;border-radius:8px;font-size:0.72rem;font-weight:700;display:flex;align-items:center;gap:5px;backdrop-filter:blur(8px)}
-        .tpl-badge-free{position:absolute;top:14px;right:14px;background:rgba(16,185,129,0.9);color:#fff;padding:5px 12px;border-radius:8px;font-size:0.72rem;font-weight:700;display:flex;align-items:center;gap:5px}
+        .tpl-badge-free{position:absolute;top:14px;right:14px;background:rgba(5,150,105,0.9);color:#fff;padding:5px 12px;border-radius:8px;font-size:0.72rem;font-weight:700;display:flex;align-items:center;gap:5px}
 
         .tpl-info{padding:18px 22px}
         .tpl-name{font-size:1.05rem;font-weight:800;margin-bottom:4px;color:var(--text)}
@@ -118,12 +125,15 @@
 </head>
 <body>
     <div class="page-header">
-        <a href="index.html" class="logo" style="text-decoration:none;color:inherit">Q<span>CV</span></a>
+        <a href="index.html" class="logo" style="text-decoration:none;color:inherit;font-size:1.8rem;font-weight:900">Q<span style="color:var(--accent)">CV</span></a>
         <div class="header-nav">
-            <a href="index.html" data-i18n="home">Home</a>
-            <a href="templates.html" class="active" data-i18n="templates">Templates</a>
-            <a href="editor.html" data-i18n="editor">Editor</a>
-            <a href="login.html" class="btn-primary" data-i18n="start_free">Get Started</a>
+            <a href="index.html" data-i18n="home">الرئيسية</a>
+            <a href="templates.html" class="active" data-i18n="templates">القوالب</a>
+            <a href="pay.html" data-i18n="pricing">التسعير</a>
+            <a href="careers.html" data-i18n="careers">الوظائف</a>
+            <a href="help.html" data-i18n="help">المساعدة</a>
+            <a href="login.html" class="btn-primary" data-i18n="start_free">ابدأ مجاناً</a>
+            <button class="theme-toggle" onclick="QCVTheme.toggle()" aria-label="تبديل الوضع الليلي" style="background:none;border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'"><span class="icon-sun">☀</span><span class="icon-moon" style="display:none">🌒</span></button>
             <div class="lang-switch" style="display:flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:2px 4px"><button class="lang-ar" onclick="QCVLang.set('ar')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:1">عربي</button><button class="lang-en" onclick="QCVLang.set('en')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:0.5">EN</button></div>
         </div>
     </div>
@@ -141,15 +151,37 @@
     <div class="filters" id="filtersBar"></div>
     <div class="templates-grid" id="tplGrid"></div>
 
-    <div class="footer">
-        <p data-i18n="copyright">&copy; 2026 QCV &mdash; All rights reserved | <a href="index.html">Back to Home</a></p>
-    </div>
+    <footer class="footer" style="border-top:1px solid var(--border);padding:30px 60px 20px;background:var(--bg)">
+        <div class="footer-content" style="display:flex;justify-content:space-between;align-items:start;max-width:1200px;margin:0 auto;flex-wrap:wrap;gap:30px">
+            <div class="footer-brand">
+                <div class="logo" style="font-size:1.5rem;font-weight:900;margin-bottom:8px;color:var(--text)">Q<span style="color:var(--accent)">CV</span></div>
+                <p style="color:var(--muted);font-size:0.82rem;max-width:280px;line-height:1.5">باني سير ذاتية احترافية بالذكاء الاصطناعي</p>
+            </div>
+            <div class="footer-links">
+                <h4 style="font-size:0.9rem;font-weight:700;margin-bottom:10px;color:var(--text)">الشركة</h4>
+                <ul style="list-style:none;padding:0">
+                    <li style="margin-bottom:6px"><a href="about.html" style="color:var(--muted);text-decoration:none;font-size:0.82rem">من نحن</a></li>
+                    <li style="margin-bottom:6px"><a href="careers.html" style="color:var(--muted);text-decoration:none;font-size:0.82rem">الوظائف</a></li>
+                    <li style="margin-bottom:6px"><a href="terms.html" style="color:var(--muted);text-decoration:none;font-size:0.82rem">شروط الاستخدام</a></li>
+                    <li style="margin-bottom:6px"><a href="privacy.html" style="color:var(--muted);text-decoration:none;font-size:0.82rem">سياسة الخصوصية</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4 style="font-size:0.9rem;font-weight:700;margin-bottom:10px;color:var(--text)">الدعم</h4>
+                <ul style="list-style:none;padding:0">
+                    <li style="margin-bottom:6px"><a href="help.html" style="color:var(--muted);text-decoration:none;font-size:0.82rem">مركز المساعدة</a></li>
+                    <li style="margin-bottom:6px"><a href="https://wa.me/201028707543" target="_blank" rel="noopener noreferrer" style="color:var(--muted);text-decoration:none;font-size:0.82rem">واتساب</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom" style="text-align:center;margin-top:20px;padding-top:14px;border-top:1px solid var(--border);color:var(--muted);font-size:0.78rem">© 2026 QCV - جميع الحقوق محفوظة</div>
+    </footer>
 
     <div class="preview-modal" id="previewModal" onclick="if(event.target===this)closePreview()">
         <div class="preview-modal-inner">
             <div class="preview-modal-header">
                 <h3 id="previewTitle">معاينة القالب</h3>
-                <button class="preview-modal-close" onclick="closePreview()">&times;</button>
+                <button class="preview-modal-close" onclick="closePreview()" aria-label="إغلاق">&times;</button>
             </div>
             <div class="preview-modal-body">
                 <div class="tpl-preview-full" id="previewContent"></div>
@@ -301,7 +333,8 @@
             document.getElementById('previewContent').style.transform = 'scale(0.8)';
             document.getElementById('previewContent').style.transformOrigin = 'top center';
             const useBtn = document.getElementById('previewUseBtn');
-            const locked = !paid && !FREE_TEMPLATES.includes(id);
+            const isPaid = userPlan === 'pro' || userPlan === 'unlimited';
+            const locked = !isPaid && !FREE_TEMPLATES.includes(id);
             if (locked) {
                 useBtn.onclick = function() { window.location.href = 'pay.html'; };
                 useBtn.innerHTML = '<i class="fas fa-lock"></i> فتح القالب';
@@ -329,5 +362,8 @@
 <script src="js/site-settings.js"></script>
 <script src="js/analytics.js"></script>
 <script src="js/notify-sounds.js"></script>
+<a href="https://wa.me/201028707543" target="_blank" rel="noopener noreferrer" class="whatsapp-btn" aria-label="واتساب" style="position:fixed;bottom:28px;left:28px;z-index:9999;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.3s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+    <i class="fab fa-whatsapp" style="color:#fff;font-size:1.8rem"></i>
+</a>
 </body>
 </html>

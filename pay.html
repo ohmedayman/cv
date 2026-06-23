@@ -3,8 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qcv.vexonet.online/pay.html">
+    <meta property="og:title" content="اشترك في QCV - السير الذاتية الاحترافية">
+    <meta property="og:description" content="اختر الباقة المناسبة: مجاناً، Pro 99 ج.م/شهر، أو غير محدود 299 ج.م/شهر. ابدأ الآن!">
+    <meta property="og:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <meta property="og:site_name" content="QCV">
+    <meta property="og:locale" content="ar_AR">
     <title>QCV - اشترك ودفع</title>
     <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="اشترك في QCV لبناء سير ذاتية احترافية. اختر بين الباقة المجانية، Pro ب 99 ج.م/شهر، أو غير محدود ب 299 ج.م/شهر.">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link rel="stylesheet" href="components.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -13,7 +21,7 @@
         :root{
             --bg:#ffffff;--bg2:#f9fafb;--card:#ffffff;--border:#e5e7eb;
             --accent:#0003c9;--accent2:#27ffed;
-            --green:#10b981;--green-bg:rgba(16,185,129,0.08);
+            --green:#059669;--green-bg:rgba(5,150,105,0.08);
             --red:#ef4444;--red-bg:rgba(239,68,68,0.06);
             --orange:#f59e0b;--purple:#8b5cf6;
             --text:#1a1a2e;--muted:#6b7280;--light:#9ca3af;
@@ -37,7 +45,7 @@
         .steps{display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:35px}
         .step{display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:30px;font-size:0.8rem;font-weight:700;color:var(--muted);background:var(--bg2);border:1px solid var(--border);transition:all 0.3s}
         .step.active{color:var(--accent);background:rgba(0,3,201,0.05);border-color:rgba(0,3,201,0.2)}
-        .step.done{color:var(--green);background:rgba(16,185,129,0.06);border-color:rgba(16,185,129,0.2)}
+        .step.done{color:var(--green);background:rgba(5,150,105,0.06);border-color:rgba(5,150,105,0.2)}
         .step-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:800;background:var(--border);flex-shrink:0}
         .step.active .step-num{background:var(--accent);color:#fff}
         .step.done .step-num{background:var(--green);color:#fff}
@@ -62,10 +70,13 @@
         .plan-price.free-p{color:var(--green)}
         .plan-period{font-size:0.7rem;color:var(--muted);margin-bottom:16px}
         .plan-features{list-style:none;margin-bottom:16px;text-align:right}
-        .plan-features li{font-size:0.78rem;color:var(--muted);padding:5px 0;display:flex;align-items:center;gap:8px}
-        .plan-features li::before{content:'✓';color:var(--green);font-weight:800}
-        .plan-features li.dis{color:var(--light);opacity:0.5}
-        .plan-features li.dis::before{content:'✕';color:var(--red)}
+        .plan-features li{font-size:0.8rem;color:var(--text);padding:6px 0;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);border-bottom-color:rgba(0,0,0,0.04)}
+        .plan-features li:last-child{border-bottom:none}
+        .plan-features li i{width:16px;font-size:0.65rem}
+        .plan-features li .fa-check{color:var(--green)}
+        .plan-features li .fa-times{color:var(--red)}
+        .plan-features li.dis{opacity:0.4}
+        .plan-features li.dis span{text-decoration:line-through}
         .plan-check{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;margin:10px auto 0;font-size:0.7rem;transition:all 0.2s}
         .plan-card.selected .plan-check{background:var(--accent);border-color:var(--accent);color:#fff}
 
@@ -104,7 +115,7 @@
         .method-card.selected .method-check{background:var(--green);border-color:var(--green);color:#fff}
 
         /* ===== WALLET BOX ===== */
-        .wallet-box{background:linear-gradient(135deg,rgba(0,3,201,0.04),rgba(16,185,129,0.04));border:1px solid var(--border);border-radius:16px;padding:24px;margin-top:16px;text-align:center}
+        .wallet-box{background:linear-gradient(135deg,rgba(0,3,201,0.04),rgba(5,150,105,0.04));border:1px solid var(--border);border-radius:16px;padding:24px;margin-top:16px;text-align:center}
         .wallet-box .wb-label{font-size:0.85rem;color:var(--muted);margin-bottom:12px}
         .wallet-box .wb-number{font-size:1.8rem;font-weight:900;color:var(--accent);font-family:'Courier New',monospace;letter-spacing:1px;margin-bottom:6px}
         .wallet-box .wb-name{font-size:0.85rem;color:var(--muted);margin-bottom:16px}
@@ -157,7 +168,7 @@
         .receipt-actions{display:flex;gap:10px;justify-content:center;max-width:480px;margin:0 auto}
         .receipt-actions .btn{flex:1;justify-content:center;padding:12px 20px;border-radius:12px;font-weight:800;font-size:0.85rem;cursor:pointer;font-family:'Cairo',sans-serif;border:none;transition:all 0.25s;display:inline-flex;align-items:center;gap:8px;text-decoration:none}
         .btn-download{background:var(--green);color:#fff}
-        .btn-download:hover{background:#059669;transform:translateY(-2px);box-shadow:0 4px 15px rgba(16,185,129,0.3)}
+        .btn-download:hover{background:#059669;transform:translateY(-2px);box-shadow:0 4px 15px rgba(5,150,105,0.3)}
         .btn-whatsapp{background:#25d366;color:#fff}
         .btn-whatsapp:hover{background:#1da851;transform:translateY(-2px);box-shadow:0 4px 15px rgba(37,211,102,0.3)}
 
@@ -165,7 +176,7 @@
         .toast{position:fixed;top:22px;left:50%;transform:translateX(-50%) translateY(-100px);padding:12px 24px;border-radius:12px;font-weight:700;font-size:0.85rem;z-index:9999;transition:transform 0.35s cubic-bezier(0.16,1,0.3,1)}
         .toast.show{transform:translateX(-50%) translateY(0)}
         .toast-err{background:var(--red);color:#fff;box-shadow:0 8px 25px rgba(239,68,68,0.2)}
-        .toast-ok{background:var(--green);color:#fff;box-shadow:0 8px 25px rgba(16,185,129,0.2)}
+        .toast-ok{background:var(--green);color:#fff;box-shadow:0 8px 25px rgba(5,150,105,0.2)}
         .toast-info{background:var(--accent);color:#fff;box-shadow:0 8px 25px rgba(0,3,201,0.2)}
 
         /* ===== CONFETTI ===== */
@@ -177,6 +188,7 @@
         @media(max-width:900px){
             .navbar{padding:0 20px}
             .nav-links{display:none}
+            .plans-grid{grid-template-columns:1fr}
             .hero h1{font-size:2rem}
             .section{padding:50px 20px}
             .pricing-grid{grid-template-columns:1fr}
@@ -185,6 +197,7 @@
         @media(max-width:600px){
             .hero{padding:120px 20px 60px}
             .hero h1{font-size:1.6rem}
+            .plans-grid{grid-template-columns:1fr}
             .section-header h2{font-size:1.4rem}
             .footer{padding:30px 20px 15px}
             .footer-content{flex-direction:column}
@@ -196,11 +209,27 @@
 </head>
 <body>
 
+<nav class="navbar" style="position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--sidebar,rgba(255,255,255,0.95));backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 60px;height:70px;display:flex;justify-content:space-between;align-items:center">
+    <a href="index.html" style="font-size:1.8rem;font-weight:900;text-decoration:none;color:var(--text)">Q<span style="color:var(--accent)">CV</span></a>
+    <ul class="nav-links" style="display:flex;align-items:center;gap:30px;list-style:none">
+        <li><a href="index.html" style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.9rem">الرئيسية</a></li>
+        <li><a href="templates.html" style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.9rem">القوالب</a></li>
+        <li><a href="pay.html" style="color:var(--accent);text-decoration:none;font-weight:600;font-size:0.9rem">التسعير</a></li>
+        <li><a href="careers.html" style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.9rem">الوظائف</a></li>
+        <li><a href="help.html" style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.9rem">المساعدة</a></li>
+        <li><a href="login.html" style="background:var(--accent);color:#fff !important;padding:10px 22px;border-radius:50px;font-weight:700 !important;text-decoration:none">ابدأ مجاناً</a></li>
+        <li><button class="theme-toggle" onclick="QCVTheme.toggle()" aria-label="تبديل الوضع الليلي" style="background:none;border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'"><span class="icon-sun">☀</span><span class="icon-moon" style="display:none">🌒</span></button></li>
+        <li><div class="lang-switch" style="display:flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:2px 4px"><button class="lang-ar" onclick="QCVLang.set('ar')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;">عربي</button><button class="lang-en" onclick="QCVLang.set('en')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:0.5">EN</button></div></li>
+    </ul>
+</nav>
+
+<div style="height:90px"></div>
+
 <div class="toast" id="toast"></div>
 <div class="confetti-box" id="confettiBox"></div>
 
 <div class="container">
-    <a href="editor.html" class="back-link" data-i18n="go_back"><i class="fas fa-arrow-right"></i> العودة للمحرر</a>
+    <a href="index.html" class="back-link" data-i18n="go_back"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a>
 
     <div class="page-header">
         <h1 data-i18n-html="pay_title">اشترك في <span>QCV</span></h1>
@@ -213,7 +242,7 @@
         <div class="step-connector" id="conn1"></div>
         <div class="step" id="step2Ind"><span class="step-num">2</span> <span data-i18n="pay_step2">بيانات الدفع</span></div>
         <div class="step-connector" id="conn2"></div>
-        <div class="step" id="step3Ind"><span class="step-num">3</span> <span data-i18n="pay_step3">التاكيد</span></div>
+        <div class="step" id="step3Ind"><span class="step-num">3</span> <span data-i18n="pay_step3">التأكيد</span></div>
     </div>
 
     <!-- STEP 1: Plan Selection -->
@@ -221,16 +250,19 @@
         <div class="plans-grid">
             <div class="plan-card" onclick="selectPlan(this,'free')">
                 <div class="plan-icon"><i class="fas fa-gift"></i></div>
-                <div class="plan-name" data-i18n="plan_free_name">Free</div>
+                <div class="plan-name" data-i18n="plan_free_name">الباقة المجانية</div>
                 <div class="plan-price free-p">مجاني</div>
                 <div class="plan-period">للأبد</div>
                 <ul class="plan-features">
-                    <li>سيرة ذاتية واحدة</li>
-                    <li>قالب واحد أساسي</li>
-                    <li>تصدير PDF</li>
-                    <li class="dis">قوالب متعددة</li>
-                    <li class="dis">قوالب متقدمة</li>
-                    <li class="dis">أولوية في الدعم</li>
+                    <li><i class="fas fa-check"></i> سيرة ذاتية واحدة</li>
+                    <li><i class="fas fa-check"></i> قالب أساسي (كلاسيك)</li>
+                    <li><i class="fas fa-check"></i> تصدير PDF</li>
+                    <li><i class="fas fa-check"></i> معاينة جميع القوالب</li>
+                    <li><i class="fas fa-check"></i> تقييم أساسي للسيرة</li>
+                    <li class="dis"><i class="fas fa-times"></i> <span>قوالب متقدمة</span></li>
+                    <li class="dis"><i class="fas fa-times"></i> <span>بورتفوليو شخصي</span></li>
+                    <li class="dis"><i class="fas fa-times"></i> <span>مساعد ذكاء اصطناعي</span></li>
+                    <li class="dis"><i class="fas fa-times"></i> <span>مطابقة الوظائف</span></li>
                 </ul>
                 <div class="plan-check">&#10003;</div>
             </div>
@@ -241,11 +273,15 @@
                 <div class="plan-price">99 <span class="curr">ج.م</span></div>
                 <div class="plan-period">شهرياً</div>
                 <ul class="plan-features">
-                    <li>5 سير ذاتية</li>
-                    <li>جميع القوالب</li>
-                    <li>تصدير PDF</li>
-                    <li>قوالب متقدمة</li>
-                    <li class="dis">أولوية في الدعم</li>
+                    <li><i class="fas fa-check"></i> 5 سير ذاتية احترافية</li>
+                    <li><i class="fas fa-check"></i> جميع القوالب (15+)</li>
+                    <li><i class="fas fa-check"></i> تصدير PDF بدون علامة مائية</li>
+                    <li><i class="fas fa-check"></i> قوالب متقدمة وحصرية</li>
+                    <li><i class="fas fa-check"></i> صفحة بورتفوليو شخصية</li>
+                    <li><i class="fas fa-check"></i> تقييم متقدم للسيرة</li>
+                    <li><i class="fas fa-check"></i> مساعد كتابة بالذكاء الاصطناعي</li>
+                    <li><i class="fas fa-check"></i> مطابقة الوظائف</li>
+                    <li class="dis"><i class="fas fa-times"></i> <span>أولوية في الدعم 24/7</span></li>
                 </ul>
                 <div class="plan-check">&#10003;</div>
             </div>
@@ -255,11 +291,16 @@
                 <div class="plan-price">299 <span class="curr">ج.م</span></div>
                 <div class="plan-period">شهرياً</div>
                 <ul class="plan-features">
-                    <li>سير ذاتية غير محدودة</li>
-                    <li>جميع القوالب</li>
-                    <li>تصدير PDF</li>
-                    <li>قوالب متقدمة</li>
-                    <li>أولوية في الدعم 24/7</li>
+                    <li><i class="fas fa-check"></i> سير ذاتية غير محدودة</li>
+                    <li><i class="fas fa-check"></i> جميع القوالب (15+)</li>
+                    <li><i class="fas fa-check"></i> تصدير PDF بدون علامة مائية</li>
+                    <li><i class="fas fa-check"></i> قوالب متقدمة وحصرية</li>
+                    <li><i class="fas fa-check"></i> صفحة بورتفوليو شخصية</li>
+                    <li><i class="fas fa-check"></i> تقييم متقدم للسيرة</li>
+                    <li><i class="fas fa-check"></i> مساعد كتابة بالذكاء الاصطناعي</li>
+                    <li><i class="fas fa-check"></i> مطابقة الوظائف</li>
+                    <li><i class="fas fa-check"></i> رفع السيرة وتحليلها</li>
+                    <li><i class="fas fa-check"></i> أولوية في الدعم 24/7</li>
                 </ul>
                 <div class="plan-check">&#10003;</div>
             </div>
@@ -290,7 +331,7 @@
                 <div class="method-card" onclick="selectMethod(this,'fawry')">
                     <div class="method-icon fawry"><i class="fas fa-store"></i></div>
                     <div class="method-info">
-                        <div class="method-name" data-i18n="pay_fawry">pay فوري</div>
+                        <div class="method-name" data-i18n="pay_fawry">فوري</div>
                         <div class="method-desc" data-i18n="pay_fawry_desc">ادفع عن طريق فوري</div>
                     </div>
                     <div class="method-check">&#10003;</div>
@@ -299,7 +340,7 @@
                 <div class="method-card" onclick="selectMethod(this,'instapay')">
                     <div class="method-icon instapay"><i class="fas fa-bolt"></i></div>
                     <div class="method-info">
-                        <div class="method-name" data-i18n="pay_instapay">استانبي</div>
+                        <div class="method-name" data-i18n="pay_instapay">إنستاباي</div>
                         <div class="method-desc" data-i18n="pay_instapay_desc">تحويل فوري من البنك</div>
                     </div>
                     <div class="method-check">&#10003;</div>
@@ -675,5 +716,8 @@
 <script src="js/site-settings.js"></script>
 <script src="js/analytics.js"></script>
 <script src="js/notify-sounds.js"></script>
+<a href="https://wa.me/201028707543" target="_blank" rel="noopener noreferrer" class="whatsapp-btn" aria-label="واتساب" style="position:fixed;bottom:28px;left:28px;z-index:9999;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.3s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+    <i class="fab fa-whatsapp" style="color:#fff;font-size:1.8rem"></i>
+</a>
 </body>
 </html>

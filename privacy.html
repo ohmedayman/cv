@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سياسة الخصوصية - QCV</title>
+    <meta name="description" content="سياسة الخصوصية لمنصة QCV - كيف نحمي بياناتك ومعلوماتك الشخصية.">
+    <meta name="keywords" content="QCV سياسة الخصوصية, خصوصية بيانات, حماية معلومات">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://qcv.vexonet.online/privacy.html">
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-friendly site description">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://qcv.vexonet.online/privacy.html">
+    <meta property="og:title" content="سياسة الخصوصية - QCV">
+    <meta property="og:description" content="سياسة الخصوصية لمنصة QCV - كيف نحمي بياناتك ومعلوماتك الشخصية.">
+    <meta property="og:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <meta property="og:site_name" content="QCV">
+    <meta property="og:locale" content="ar_AR">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="سياسة الخصوصية - QCV">
+    <meta name="twitter:description" content="سياسة الخصوصية لمنصة QCV - كيف نحمي بياناتك ومعلوماتك الشخصية.">
+    <meta name="twitter:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "سياسة الخصوصية - QCV",
+        "description": "سياسة الخصوصية لمنصة QCV - كيف نحمي بياناتك ومعلوماتك الشخصية.",
+        "publisher": {
+            "@type": "Organization",
+            "name": "QCV",
+            "logo": "https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png"
+        },
+        "dateModified": "2026-06-23"
+    }
+    </script>
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --bg:#ffffff;--bg2:#f9fafb;--card:#ffffff;--border:#e5e7eb;
+            --accent:#0003c9;--accent2:#27ffed;
+            --green:#059669;--red:#ef4444;--yellow:#f59e0b;--purple:#8b5cf6;
+            --text:#1a1a2e;--muted:#6b7280;--light:#9ca3af;
+        }
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{background:var(--bg);color:var(--text);font-family:'Cairo',sans-serif;overflow-x:hidden;line-height:1.6}
+
+        /* ===== NAVBAR ===== */
+        .navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--sidebar, rgba(255,255,255,0.95));backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 60px;height:70px;display:flex;justify-content:space-between;align-items:center}
+        .nav-logo{font-size:1.8rem;font-weight:900;color:var(--text);text-decoration:none}
+        .nav-logo span{color:var(--accent)}
+        .nav-links{display:flex;align-items:center;gap:30px;list-style:none}
+        .nav-links a{color:var(--muted);text-decoration:none;font-weight:600;font-size:0.9rem;transition:color 0.2s}
+        .nav-links a:hover{color:var(--text)}
+        .nav-links a.active{color:var(--accent)}
+        .nav-cta{background:var(--accent);color:#fff !important;padding:10px 22px;border-radius:50px;font-weight:700 !important;transition:all 0.2s !important}
+        .nav-cta:hover{background:#0005e6;transform:translateY(-2px)}
+
+        /* ===== HERO ===== */
+        .hero{padding:140px 20px 60px;text-align:center;position:relative;overflow:hidden}
+        .hero::before{content:'';position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:800px;height:800px;background:radial-gradient(circle,rgba(0,3,201,0.05),transparent 70%);border-radius:50%;pointer-events:none}
+        .hero h1{font-size:2.5rem;font-weight:900;margin-bottom:12px;position:relative}
+        .hero p{color:var(--muted);font-size:1.05rem;margin-bottom:10px;max-width:600px;margin-left:auto;margin-right:auto;position:relative}
+        .hero .date{color:var(--light);font-size:0.85rem;margin-top:10px;position:relative}
+
+        /* ===== CONTENT ===== */
+        .content-section{padding:50px 60px;max-width:900px;margin:0 auto}
+        .content-section:nth-child(even){background:var(--bg2)}
+        .content-section h2{font-size:1.6rem;font-weight:900;margin-bottom:16px;color:var(--text);display:flex;align-items:center;gap:10px}
+        .content-section h2 i{color:var(--accent);font-size:1.3rem}
+        .content-section p{color:var(--muted);font-size:0.95rem;line-height:1.9;margin-bottom:14px}
+        .content-section ul{color:var(--muted);font-size:0.95rem;line-height:2;padding-right:24px;margin-bottom:14px}
+        .content-section ul li{margin-bottom:6px}
+        .content-section strong{color:var(--text)}
+        .divider{border:none;border-top:1px solid var(--border);margin:0}
+
+        /* ===== CONTACT ===== */
+        .contact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:700px;margin:30px auto 0}
+        .contact-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;transition:all 0.3s;text-decoration:none;color:var(--text)}
+        .contact-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,0.06)}
+        .contact-icon{width:50px;height:50px;background:rgba(0,3,201,0.06);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin:0 auto 14px}
+        .contact-card h3{font-size:0.95rem;font-weight:800;margin-bottom:6px}
+        .contact-card p{color:var(--muted);font-size:0.82rem;margin-bottom:10px}
+        .contact-link{color:var(--accent);font-weight:700;font-size:0.88rem}
+
+        /* ===== CTA ===== */
+        .cta-section{text-align:center;padding:70px 20px}
+        .cta-box{max-width:650px;margin:0 auto;background:linear-gradient(135deg,rgba(0,3,201,0.04),rgba(139,92,246,0.04));border:1px solid var(--border);border-radius:24px;padding:50px 40px}
+        .cta-box h2{font-size:1.8rem;font-weight:900;margin-bottom:12px}
+        .cta-box p{color:var(--muted);margin-bottom:25px;font-size:0.95rem}
+        .btn{padding:14px 32px;border-radius:50px;font-weight:700;font-size:0.95rem;cursor:pointer;font-family:'Cairo',sans-serif;border:none;transition:all 0.25s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+        .btn-primary{background:var(--accent);color:#fff}
+        .btn-primary:hover{background:#0005e6;transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,3,201,0.2)}
+
+        /* ===== FOOTER ===== */
+        .footer{border-top:1px solid var(--border);padding:50px 60px 30px}
+        .footer-content{display:flex;justify-content:space-between;align-items:start;max-width:1200px;margin:0 auto;flex-wrap:wrap;gap:40px}
+        .footer-brand .logo{font-size:1.6rem;font-weight:900;margin-bottom:12px}
+        .footer-brand .logo span{color:var(--accent)}
+        .footer-brand p{color:var(--muted);font-size:0.85rem;max-width:280px;line-height:1.6}
+        .footer-links h4{font-size:0.95rem;font-weight:700;margin-bottom:15px;color:var(--text)}
+        .footer-links ul{list-style:none}
+        .footer-links ul li{margin-bottom:10px}
+        .footer-links ul li a{color:var(--muted);text-decoration:none;font-size:0.85rem;transition:color 0.2s}
+        .footer-links ul li a:hover{color:var(--accent)}
+        .footer-bottom{text-align:center;margin-top:40px;padding-top:20px;border-top:1px solid var(--border);color:var(--muted);font-size:0.8rem}
+
+        /* ===== RESPONSIVE ===== */
+        @media(max-width:900px){
+            .navbar{padding:0 20px}
+            .nav-links{display:none}
+            .content-section{padding:40px 24px}
+            .contact-grid{grid-template-columns:1fr}
+        }
+        @media(max-width:600px){
+            .hero h1{font-size:1.6rem}
+            .content-section h2{font-size:1.3rem}
+            .footer{padding:30px 20px 15px}
+            .footer-content{flex-direction:column}
+            .cta-box{padding:30px 20px}
+            .cta-box h2{font-size:1.3rem}
+        }
+
+    </style>
+    <script src="js/theme.js"></script>
+    <script src="js/lang.js"></script>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+    <a href="index.html" class="logo" style="font-size:1.8rem;font-weight:900">Q<span style="color:var(--accent)">CV</span></a>
+    <ul class="nav-links">
+        <li><a href="index.html" data-i18n="home">الرئيسية</a></li>
+        <li><a href="templates.html" data-i18n="templates">القوالب</a></li>
+        <li><a href="pay.html" data-i18n="pricing">التسعير</a></li>
+        <li><a href="careers.html" data-i18n="careers">الوظائف</a></li>
+        <li><a href="help.html" data-i18n="help">المساعدة</a></li>
+        <li><a href="login.html" class="nav-cta" data-i18n="start_free">ابدأ مجاناً</a></li>
+        <li><button class="theme-toggle" onclick="QCVTheme.toggle()" aria-label="تبديل الوضع الليلي" style="background:none;border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'"><span class="icon-sun">☀</span><span class="icon-moon" style="display:none">🌒</span></button></li>
+        <li><div class="lang-switch" style="display:flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:2px 4px"><button class="lang-ar" onclick="QCVLang.set('ar')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:1">عربي</button><button class="lang-en" onclick="QCVLang.set('en')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:0.5">EN</button></div></li>
+    </ul>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+    <h1>سياسة الخصوصية</h1>
+    <p>نلتزم بحماية خصوصيتك وبياناتك الشخصية. قرء هذه السياسة لتعرف كيف نجمع ونستخدم ونحمي معلوماتك.</p>
+    <div class="date">آخر تحديث: 23 يونيو 2026</div>
+</section>
+
+<hr class="divider">
+
+<!-- ===== 1. مقدمة ===== -->
+<section class="content-section">
+    <h2><i class="fas fa-shield-alt"></i> مقدمة</h2>
+    <p>مرحباً بك في سياسة الخصوصية لمنصة <strong>QCV</strong> (منشئ السير الذاتية). نحن ندرك أهمية حماية خصوصيتك وبياناتك الشخصية، ونلتزم بأعلى معايير الأمان والشفافية في تعاملنا مع معلوماتك.</p>
+    <p>توضح هذه السياسة كيفية جمعنا لبياناتك واستخدامها ومشاركتها وحمايتها عند استخدامك لمنصتنا. باستخدامك لـ QCV، أنت توافق على الممارسات الموضحة في هذه السياسة.</p>
+</section>
+
+<hr class="divider">
+
+<!-- ===== 2. المعلومات التي نجمعها ===== -->
+<section class="content-section">
+    <h2><i class="fas fa-database"></i> المعلومات التي نجمعها</h2>
+    <p>نجمع أنواعاً مختلفة من المعلومات لتقديم وتحسين خدماتنا:</p>
+    <ul>
+        <li><strong>معلومات الحساب:</strong> الاسم الكامل، عنوان البريد الإلكتروني، وكلمة المرور المشفرة (عند التسجيل).</li>
+        <li><strong>بيانات السيرة الذاتية:</strong> جميع المعلومات التي تدخلها في سيرتك الذاتية، بما في ذلك الخبرات الوظيفية، التعليم، المهارات، الملخص الوظيفي، والبيانات الشخصية الأخرى.</li>
+        <li><strong>معلومات الدفع:</strong> بيانات الفواتير والمعاملات المالية (لا نخزّن بيانات البطاقات البنكية مباشرة).</li>
+        <li><strong>بيانات الاستخدام:</strong> معلومات حول كيفية استخدامك للمنصة، مثل الصفحات التي تزورها، الميزات التي تستخدمها، وأوقات الوصول.</li>
+        <li><strong>معلومات الجهاز:</strong> نوع المتصفح، نظام التشغيل، عنوان IP، وبيانات تقنية أخرى تساعد في تحسين الأداء.</li>
+    </ul>
+</section>
+
+<hr class="divider">
+
+<!-- ===== 3. كيف نستخدم معلوماتك ===== -->
+<section class="content-section">
+    <h2><i class="fas fa-cogs"></i> كيف نستخدم معلوماتك</h2>
+    <p>نستخدم المعلومات التي نجمعها للأغراض التالية:</p>
+    <ul>
+        <li>تقديم وتشغيل منصة QCV وتمكينك من إنشاء وتنزيل سيرك الذاتية.</li>
+        <li>إدارة حسابك والتواصل معك بشأن خدماتنا وتحديثاتنا.</li>
+        <li>تحسين وتطوير منصتنا وتجربة المستخدم بناءً على تحليل بيانات الاستخدام.</li>
+        <li>تقديم الدعم الفني والرد على استفساراتك.</li>
+        <li>إرسال إشعارات مهمة تتعلق بحسابك أو خدماتنا (يمكنك إلغاء الاشتراك من الإشعارات التسويقية).</li>
+        <li>ضمان الأمان ومنع الاحتيال وحماية حقوقنا القانونية.</li>
+    </ul>
+</section>
+
+<hr class="divider">
+
+<!-- ===== 4. مشاركة المعلومات ===== -->
+<section class="content-section">
+    <h2><i class="fas fa-share-alt"></i> مشاركة المعلومات</h2>
+    <p>نحن <strong>لا نبيع بياناتك</strong> لأي طرف ثالث. لا نشارك معلوماتك الشخصية إلا في الحالات التالية:</p>
+    <ul>
+        <li><strong>بموافقتك:</strong> عندما تعطينا إذناً صريحاً لمشاركة معلوماتك.</li>
+        <li><strong>مقدمو الخدمات:</strong> قد نشارك بياناتك مع شركاء موثوقين يساعدون في تشغيل منصتنا (مثل Firebase لاستضافة البيانات)، وهم ملزمون بالحفاظ على سرية بياناتك.</li>
+        <li><strong>المتطلبات القانونية:</strong> عندما يقتضي القانون ذلك أو للرد على طلبات قانونية صحيحة من الجهات المختصة.</li>
+        <li><strong>حماية الحقوق:</strong> لحماية حقوقنا ومالكيتنا وسلامة مستخدمينا والجمهور.</li>
+    </ul>
+</section>
+
+<hr class="divider">
+
+<!-- ===== 5. التخزين والأمان ===== -->
+<section class="content-section">
+    <h2><i class="fas fa-lock"></i> التخزين والأمان</h2>
+    <p>نأخذ أمن بياناتك على محمل الجد ونستخدم إجراءات متعددة لحمايتها:</p>
+    <ul>
+        <li><strong>التشفير:</strong> جميع البيانات المشفرة أثناء النقل (TLS/SSL) وعند التخزين.</li>
+        <li><strong>Firebase:</strong> نستخدم منصة Firebase من Google لتخزين البيانات بشكل آمن على خوادم مشفرة مع حماية متقدمة.</li>
+        <li><strong>التحكم في الوصول:</strong> فقط الموظفون المصرح لهم يمكنهم الوصول إلى البيانات التشغيلية، وجميع الوصول مسجل ومراقَب.</li>
+        <li><strong>الفحوصات الأمنية:</strong> نقوم بانتظام بإجراء فحوصات أمنية وتقييمات للمخاطر لضمان سلامة منصتنا.</li>
+        <li><strong>الاحتفاظ بالبيانات:</strong> نحتفظ ببياناتك فقط للمدة اللازمة لتوفير خدماتنا أو كما يتطلب القانون. عند حذف حسابك، نحذف بياناتك بشكل دائم.</li>
+    </ul>
+</section>
+
+<hr class="divider">
+
+<!-- ===== 6. ملفات تعريف الارتباط ===== -->
+<section class="content-section">
+    <h2><i class="fas fa-cookie-bite"></i> ملفات تعريف الارتباط</h2>
+    <p>نستخدم ملفات تعريف الارتباط (Cookies) وتقنيات مماثلة لتحسين تجربتك:</p>
+    <ul>
+        <li><strong>ملفات تعريف الارتباط الضرورية:</strong> مطلوبة لتشغيل المنصة وتسجيل الدخول وحفظ تفضيلاتك.</li>
+        <li><strong>ملفات تعريف الارتباط التحليلية:</strong> تساعدنا في فهم كيفية استخدامك للمنصة وتحسين الأداء.</li>
+        <li><strong>ملفات تعريف الارتباط التسويقية:</strong> قد نستخدمها لإظهار إعلانات ذات صلة (يمكنك تعطيلها).</li>
+    </ul>
+    <p>يمكنك إدارة أو تعطيل ملفات تعريف الارتباط من إعدادات متصفحك. يرجى ملاحظة أن تعطيل بعض الملفات قد يؤثر على وظائف المنصة.</p>
+</section>
+
+<hr class="divider">
+
+<!-- ===== 7. حقوقك ===== -->
+<section class="content-section">
+    <h2><i class="fas fa-user-shield"></i> حقوقك</h2>
+    <p>لك حقوق عديدة فيما يتعلق ببياناتك الشخصية:</p>
+    <ul>
+        <li><strong>الوصول:</strong> تحقوقك في طلب نسخة من جميع البيانات الشخصية التي نحتفظ بها عنك.</li>
+        <li><strong>التصحيح:</strong> تطلب تصحيح أي بيانات غير دقيقة أو غير مكتملة.</li>
+        <li><strong>الحذف:</strong> طلب حذف حسابك وبياناتك الشخصية بشكل دائم (الحق في النسيان).</li>
+        <li><strong>التصدير:</strong> تصدير بياناتك بصيغة قابلة للقراءة (مثل JSON أو CSV) للانتقال لمنصة أخرى.</li>
+        <li><strong>التقييد:</strong> طلب تقييد معالجة بياناتك في حالات معينة.</li>
+        <li><strong>الاعتراض:</strong> الاعتراض على معالجة بياناتك لأغراض تسويقية مباشرة.</li>
+    </ul>
+    <p>لممارسة أي من هذه الحقوق، تواصل معنا عبر البريد الإلكتروني support@qcv.com وسنرد خلال 30 يوماً.</p>
+</section>
+
+<hr class="divider">
+
+<!-- ===== 8. بيانات الأطفال ===== -->
+<section class="content-section">
+    <h2><i class="fas fa-child"></i> بيانات الأطفال</h2>
+    <p>منصة QCV غير مخصصة للأطفال دون سن 16 عاماً. نحن لا نجمع عمداً معلومات شخصية من الأطفال. إذا عثرنا على أننا جمعنا بيانات من طفل دون إذن من ولي الأمر، سنحذف هذه البيانات فوراً.</p>
+    <p>إذا كنت ولي أمر وتعتقد أن طفلك قد قدم لنا معلومات شخصية، يرجى التواصل معنا فوراً.</p>
+</section>
+
+<hr class="divider">
+
+<!-- ===== 9. التغييرات على السياسة ===== -->
+<section class="content-section">
+    <h2><i class="fas fa-sync-alt"></i> التغييرات على السياسة</h2>
+    <p>قد نقوم بتحديث سياسة الخصوصية هذه من وقت لآخر لتعكس التغييرات في ممارساتنا أو لأسباب تشغيلية أو قانونية أو تنظيمية.</p>
+    <p>سنقوم بإعلامك بأي تغييرات جوهرية عن طريق نشر السياسة المحدّثة على هذه الصفحة مع تاريخ "آخر تحديث" جديد، وربما نرسل لك إشعاراً عبر البريد الإلكتروني.</p>
+    <p>ننصحك بمراجعة هذه السياسة بانتظام للبقاء على اطلاع بكيفية حمايةنا لبياناتك.</p>
+</section>
+
+<hr class="divider">
+
+<!-- ===== 10. التواصل معنا ===== -->
+<section class="content-section">
+    <h2><i class="fas fa-envelope"></i> التواصل معنا</h2>
+    <p>إذا كانت لديك أي أسئلة أو مخاوف حول سياسة الخصوصية هذه أو ممارساتنا في التعامل مع بياناتك، لا تتردد في التواصل معنا:</p>
+    <div class="contact-grid">
+        <a href="mailto:support@qcv.com" class="contact-card">
+            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+            <h3>البريد الإلكتروني</h3>
+            <p>أرسل لنا إيميل وسنرد عليك خلال 24 ساعة</p>
+            <div class="contact-link">support@qcv.com</div>
+        </a>
+        <a href="https://wa.me/201028707543" target="_blank" rel="noopener noreferrer" class="contact-card">
+            <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+            <h3>الواتساب</h3>
+            <p>تواصل معنا مباشرة عبر الواتساب</p>
+            <div class="contact-link">01028707543</div>
+        </a>
+    </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="cta-section">
+    <div class="cta-box">
+        <h2>جاهز تبني سيرتك الذاتية؟</h2>
+        <p>ابدأ الآن مجاناً واحصل على سيرة ذاتية احترافية في دقائق</p>
+        <a href="login.html" class="btn btn-primary">ابدأ مجاناً الآن &#10132;</a>
+    </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-brand">
+            <div class="logo">Q<span>CV</span></div>
+            <p data-i18n="footer_brand">منشئ سير ذاتية ذكي مدعوم بالذكاء الاصطناعي لمساعدتك في الحصول على الوظيفة الأحلام</p>
+        </div>
+        <div class="footer-links">
+            <h4 data-i18n="footer_product">المنتج</h4>
+            <ul>
+                <li><a href="index.html#features" data-i18n="features">المميزات</a></li>
+                <li><a href="index.html#pricing" data-i18n="pricing">التسعير</a></li>
+                <li><a href="index.html#how" data-i18n="how_works">كيف يعمل</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4 data-i18n="footer_company">الشركة</h4>
+            <ul>
+                <li><a href="about.html" data-i18n="about_us">من نحن</a></li>
+                <li><a href="careers.html" data-i18n="careers">الوظائف</a></li>
+                <li><a href="terms.html">شروط الاستخدام</a></li>
+                <li><a href="privacy.html" data-i18n="privacy">سياسة الخصوصية</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4 data-i18n="footer_support">الدعم</h4>
+            <ul>
+                <li><a href="help.html" data-i18n="help_center">مركز المساعدة</a></li>
+                <li><a href="mailto:support@qcv.com" data-i18n="contact_us">تواصل معنا</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span data-i18n="copyright">&copy; 2026 QCV - جميع الحقوق محفوظة | آخر تحديث: 23 يونيو 2026</span>
+    </div>
+</footer>
+
+<script src="js/maintenance.js"></script>
+<script src="js/site-settings.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/notify-sounds.js"></script>
+<a href="https://wa.me/201028707543" target="_blank" rel="noopener noreferrer" class="whatsapp-btn" aria-label="واتساب" style="position:fixed;bottom:28px;left:28px;z-index:9999;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.3s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+    <i class="fab fa-whatsapp" style="color:#fff;font-size:1.8rem"></i>
+</a>
+</body>
+</html>

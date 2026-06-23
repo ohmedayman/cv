@@ -55,7 +55,7 @@
         .notif-item .notif-type{display:inline-block;padding:2px 8px;border-radius:10px;font-size:0.65rem;font-weight:700;margin-bottom:4px}
         .notif-type-info{background:rgba(0,3,201,0.1);color:var(--accent)}
         .notif-type-warning{background:rgba(245,158,11,0.15);color:#d97706}
-        .notif-type-success{background:rgba(16,185,129,0.15);color:#059669}
+        .notif-type-success{background:rgba(5,150,105,0.15);color:#059669}
         .notif-type-promo{background:rgba(139,92,246,0.15);color:#7c3aed}
         .notif-item .notif-text{font-size:0.82rem;line-height:1.6;color:var(--text);margin-bottom:4px}
         .notif-item .notif-time{font-size:0.7rem;color:var(--muted)}
@@ -174,7 +174,7 @@
         .upload-result{display:none;text-align:center;padding:20px}
         .upload-result.show{display:block}
         .upload-result i{font-size:2rem;margin-bottom:8px;display:block}
-        .upload-result .ur-success{color:#10b981}
+        .upload-result .ur-success{color:#059669}
         .upload-result .ur-error{color:#ef4444}
         .upload-result .ur-text{font-size:0.8rem;color:var(--text);font-weight:600}
         .upload-result .ur-sub{font-size:0.7rem;color:var(--muted);margin-top:4px}
@@ -457,7 +457,7 @@
     <div class="topbar-nav">
         <a href="editor.html" class="active">Editor</a>
         <a href="templates.html">Templates</a>
-        <a href="portfolio-view.html" target="_blank" id="myPageLink">My Page</a>
+        <a href="portfolio-view.html" target="_blank" rel="noopener noreferrer" id="myPageLink">My Page</a>
     </div>
     <div class="topbar-center">
         <div class="ctrl-group">
@@ -830,9 +830,9 @@
                 if(isFree) {
                     if(dlCount >= 2) dlEl.style.color = '#ef4444';
                     else if(dlCount >= 1) dlEl.style.color = '#f59e0b';
-                    else dlEl.style.color = '#10b981';
+                    else dlEl.style.color = '#059669';
                 } else {
-                    dlEl.style.color = '#10b981';
+                    dlEl.style.color = '#059669';
                 }
             }
             const expEl = document.getElementById('ddExpiry');
@@ -849,11 +849,11 @@
                         expEl.textContent += ' (' + daysLeft + ' days left)';
                         expEl.style.color = '#f59e0b';
                     } else {
-                        expEl.style.color = '#10b981';
+                        expEl.style.color = '#059669';
                     }
                 } else if(!isFree) {
                     expEl.textContent = 'Lifetime';
-                    expEl.style.color = '#10b981';
+                    expEl.style.color = '#059669';
                 } else {
                     expEl.textContent = '-';
                     expEl.style.color = '';
@@ -1515,7 +1515,7 @@
                 if(dlDisplay) {
                     dlDisplay.textContent = newCount + ' / ' + (paid ? '∞' : '2');
                     if(!paid) {
-                        dlDisplay.style.color = newCount >= 2 ? '#ef4444' : newCount >= 1 ? '#f59e0b' : '#10b981';
+                        dlDisplay.style.color = newCount >= 2 ? '#ef4444' : newCount >= 1 ? '#f59e0b' : '#059669';
                     }
                 }
 
@@ -2530,7 +2530,7 @@
 </button>
 <div class="ai-menu" id="aiMenu">
     <button class="ai-menu-item" onclick="aiAction('summarize')"><i class="fas fa-compress-alt" style="color:#0003c9"></i>Summarize<span class="ai-shortcut">AI</span></button>
-    <button class="ai-menu-item" onclick="aiAction('proofread')"><i class="fas fa-spell-check" style="color:#10b981"></i>Proofread<span class="ai-shortcut">AI</span></button>
+    <button class="ai-menu-item" onclick="aiAction('proofread')"><i class="fas fa-spell-check" style="color:#059669"></i>Proofread<span class="ai-shortcut">AI</span></button>
     <button class="ai-menu-item" onclick="aiAction('improve')"><i class="fas fa-arrow-up-right-dots" style="color:#f59e0b"></i>Improve Content<span class="ai-shortcut">AI</span></button>
     <button class="ai-menu-item" onclick="aiAction('skills')"><i class="fas fa-lightbulb" style="color:#8b5cf6"></i>Suggest Skills<span class="ai-shortcut">AI</span></button>
     <button class="ai-menu-item" onclick="aiAction('ats')"><i class="fas fa-robot" style="color:#0ea5e9"></i>ATS Optimize<span class="ai-shortcut">AI</span></button>
@@ -2866,7 +2866,7 @@ window.doPuterAuth = function() {
     status.style.color = '#6366f1';
     puter.ui.authenticate().then(function() {
         status.textContent = 'Connected! Retrying AI...';
-        status.style.color = '#10b981';
+        status.style.color = '#059669';
         setTimeout(function() {
             if(window._pendingAIPrompt) {
                 callAI(window._pendingAIPrompt, window._pendingAISuccess, window._pendingAIError);
@@ -2939,5 +2939,8 @@ function callRemainingProviders(prompt, onSuccess, onError) {
 }
 
 </script>
+<a href="https://wa.me/201028707543" target="_blank" rel="noopener noreferrer" class="whatsapp-btn" aria-label="واتساب" style="position:fixed;bottom:28px;left:28px;z-index:9999;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.3s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+    <i class="fab fa-whatsapp" style="color:#fff;font-size:1.8rem"></i>
+</a>
 </body>
 </html>

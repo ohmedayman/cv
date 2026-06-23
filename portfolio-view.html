@@ -73,6 +73,7 @@
         <div class="logo">Q<span>CV</span></div>
         <div class="header-actions">
             <a href="index.html" class="btn-outline">الرئيسية</a>
+            <div class="lang-switch" style="display:flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:2px 4px"><button class="lang-ar" onclick="QCVLang.set('ar')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;">عربي</button><button class="lang-en" onclick="QCVLang.set('en')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:0.5">EN</button></div>
             <button class="btn-whatsapp" id="whatsappBtn" style="display:none"><i class="fab fa-whatsapp"></i> واتساب</button>
             <button class="btn-accent" id="downloadBtn" onclick="downloadPDF()"><i class="fas fa-download"></i> تحميل PDF</button>
         </div>
@@ -96,7 +97,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     <script>
     (function() {
-        var firebaseConfig = {apiKey:"AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",authDomain:"qwcv-1cfad.firebaseapp.com",databaseURL:"https://qwcv-1cfad-default-rtdb.firebaseio.com",projectId:"qwcv-1cfad",storageBucket:"qwcv-1cfad.appspot.com",messagingSenderId:"792471802122",appId:"1:792471802122:web:808e04099afc90315aaaf3"};
+        var firebaseConfig = {apiKey:"AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I",authDomain:"qwcv-1cfad.firebaseapp.com",databaseURL:"https://qwcv-1cfad-default-rtdb.firebaseio.com",projectId:"qwcv-1cfad",storageBucket:"qwcv-1cfad.firebasestorage.app",messagingSenderId:"792471802122",appId:"1:792471802122:web:808e04099afc90315aaaf3"};
         firebase.initializeApp(firebaseConfig);
         var db = firebase.database();
 
