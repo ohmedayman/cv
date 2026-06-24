@@ -1026,7 +1026,15 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
     <!-- ===== SCRIPTS ===== -->
-    <script type="module">
+    <script>
+        /* MODULE DISABLED: Firebase SDK CDN may be blocked in this region.
+           All data loading uses REST API (fetch) instead of Firebase SDK.
+           This ensures the admin panel works regardless of CDN availability.
+           The import statements below will cause a SyntaxError in non-module
+           mode, preventing this script from executing. The REST API fallback
+           script below handles all data loading and CRUD operations. */
+        var _FORCE_DISABLE_MODULE = true;
+        if (_FORCE_DISABLE_MODULE) throw 'Module disabled - using REST API fallback';
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
         import { getDatabase, ref, get, remove, update, set, push, onValue } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
 
@@ -2953,6 +2961,557 @@ document.addEventListener('DOMContentLoaded', function() {
         // Auto-init on module load (handles page refresh with existing session)
         window._adminInit();
 
+    </script>
+    <!-- REST API fallback: loads all data via Firebase REST API (no SDK dependency) -->
+    <script>
+    (function() {
+        var DB = 'https://qwcv-1cfad-default-rtdb.firebaseio.com';
+
+        // Define _adminInit so the login script's polling can find and call it
+        window._adminInit = function() {
+            if (window._adminInited) return;
+            window._adminInited = true;
+            console.log('[QCV Admin] Initializing via REST API...');
+            checkAndLoad();
+            // Auto-refresh data every 30 seconds
+            setInterval(function() { checkAndLoad(); }, 30000);
+        };
+        function restGet(path) {
+            return fetch(DB + path + '.json').then(function(r) {
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                return r.json();
+            }).catch(function(e) {
+                console.error('[QCV Admin] REST GET failed for ' + path + ':', e.message);
+                return null;
+            });
+        }
+        function escHtml(s) {
+            if (!s) return '';
+            var d = document.createElement('div');
+            d.textContent = String(s);
+            return d.innerHTML;
+        }
+        function formatDate(ts) {
+            if (!ts) return '-';
+            return new Date(ts).toLocaleDateString('ar-EG');
+        }
+        function formatDateTime(ts) {
+            if (!ts) return '-';
+            return new Date(ts).toLocaleString('ar-EG');
+        }
+        function planText(p) { return p === 'pro' ? 'احترافية' : p === 'unlimited' ? 'غير محدودة' : 'مجانية'; }
+        function planBadgeClass(p) { return p === 'pro' ? 'badge-pro' : p === 'unlimited' ? 'badge-unlimited' : 'badge-free'; }
+        function roleText(r) { return r === 'super_admin' ? 'مدير عام' : r === 'admin' ? 'مدير' : r === 'manager' ? 'مدير قسم' : 'دعم فني'; }
+        function roleBadgeClass(r) { return r === 'super_admin' ? 'badge-super_admin' : r === 'admin' ? 'badge-admin' : r === 'manager' ? 'badge-manager' : 'badge-support'; }
+        function getAvatarColor(uid) {
+            var colors = ['#0003c9','#059669','#8b5cf6','#f59e0b','#ef4444','#3b82f6'];
+            return colors[(uid||'u').charCodeAt(0) % colors.length];
+        }
+
+        // Only run if module failed to load (or was disabled)
+        function checkAndLoad() {
+            var isAdmin = sessionStorage.getItem('qcv_admin') === 'true';
+            var staffData = sessionStorage.getItem('qcv_staff');
+            if (!isAdmin && !staffData) {
+                console.log('[QCV Admin] No session found, skipping data load');
+                return;
+            }
+            console.log('[QCV Admin] Loading data via REST API...');
+
+            // Load all data via REST API
+            Promise.all([
+                restGet('/users'),
+                restGet('/subscriptions'),
+                restGet('/jobs'),
+                restGet('/domains'),
+                restGet('/staff'),
+                restGet('/referrals'),
+                restGet('/affiliateCampaigns'),
+                restGet('/affiliateCommissions'),
+                restGet('/settings'),
+                restGet('/messages')
+            ]).then(function(results) {
+                var allUsers = results[0] || {};
+                var allSubs = results[1] || {};
+                var allJobs = results[2] || {};
+                var allDomains = results[3] || {};
+                var allStaff = results[4] || {};
+                var allReferrals = results[5] || {};
+                var allCampaigns = results[6] || {};
+                var allCommissions = results[7] || {};
+                var settings = results[8] || {};
+                var messages = results[9] || {};
+
+                // Dashboard stats
+                var entries = Object.entries(allUsers);
+                document.getElementById('statUsers').textContent = entries.length;
+                document.getElementById('statActive').textContent = entries.filter(function(e) { return !e[1].banned; }).length;
+                document.getElementById('statPro').textContent = entries.filter(function(e) { return e[1].plan === 'pro' || e[1].plan === 'unlimited'; }).length;
+                document.getElementById('statStaff').textContent = Object.keys(allStaff).length;
+                document.getElementById('statCampaigns').textContent = Object.keys(allCampaigns).length;
+
+                var proPrice = parseInt(settings.proPrice) || 99;
+                var unlimPrice = parseInt(settings.unlimitedPrice) || 299;
+                var revenue = 0;
+                entries.forEach(function(e) {
+                    if (e[1].plan === 'pro') revenue += proPrice;
+                    else if (e[1].plan === 'unlimited') revenue += unlimPrice;
+                });
+                document.getElementById('statRevenue').textContent = revenue;
+
+                var pendingSubs = Object.values(allSubs).filter(function(s) { return s.status === 'pending'; }).length;
+                document.getElementById('statPending').textContent = pendingSubs;
+                var pendingBadge = document.getElementById('pendingBadge');
+                if (pendingSubs > 0) { pendingBadge.textContent = pendingSubs; pendingBadge.style.display = 'inline'; }
+
+                // Recent Users
+                var recentTbody = document.getElementById('recentUsers');
+                var recent = entries.sort(function(a,b) { return (b[1].lastLogin||0) - (a[1].lastLogin||0); }).slice(0, 5);
+                if (recent.length) {
+                    recentTbody.innerHTML = recent.map(function(e) {
+                        var uid = e[0], u = e[1];
+                        var plan = u.plan || 'free';
+                        var color = getAvatarColor(uid);
+                        return '<tr><td><div class="user-cell"><div class="user-avatar" style="background:'+color+'">'+escHtml((u.name||'U')[0].toUpperCase())+'</div><div class="user-info"><div class="name">'+escHtml(u.name||'مستخدم')+'</div><div class="email">'+escHtml(u.email)+'</div></div></div></td><td><span class="badge '+planBadgeClass(plan)+'">'+planText(plan)+'</span></td><td>'+formatDateTime(u.lastLogin)+'</td><td>'+(u.banned?'<span class="badge badge-banned">محظور</span>':'<span class="badge badge-approved">نشط</span>')+'</td></tr>';
+                    }).join('');
+                } else {
+                    recentTbody.innerHTML = '<tr><td colspan="4" class="empty-state"><p>لا يوجد مستخدمين</p></td></tr>';
+                }
+
+                // All Users
+                var usersTbody = document.getElementById('allUsers');
+                if (entries.length) {
+                    usersTbody.innerHTML = entries.map(function(e) {
+                        var uid = e[0], u = e[1];
+                        var plan = u.plan || 'free';
+                        var color = getAvatarColor(uid);
+                        return '<tr><td><div class="user-cell"><div class="user-avatar" style="background:'+color+'">'+escHtml((u.name||'U')[0].toUpperCase())+'</div><div class="user-info"><div class="name">'+escHtml(u.name||'مستخدم')+'</div><div class="email">'+escHtml(u.email)+'</div></div></div></td><td><span class="badge '+planBadgeClass(plan)+'">'+planText(plan)+'</span></td><td>'+formatDate(u.registeredAt)+'</td><td>'+formatDateTime(u.lastLogin)+'</td><td>'+(u.banned?'<span class="badge badge-banned">محظور</span>':'<span class="badge badge-approved">نشط</span>')+'</td><td><div class="actions"><button class="btn-action btn-view" onclick="alert(\'تحديث الصفحة للتفاصيل\')"><i class="fas fa-eye"></i></button></div></td></tr>';
+                    }).join('');
+                } else {
+                    usersTbody.innerHTML = '<tr><td colspan="6" class="empty-state"><p>لا يوجد مستخدمين</p></td></tr>';
+                }
+
+                // Subscriptions
+                var subsTbody = document.getElementById('subscriptionsList');
+                var subsEntries = Object.entries(allSubs).sort(function(a,b) { return (b[1].createdAt||0) - (a[1].createdAt||0); });
+                if (subsEntries.length) {
+                    subsTbody.innerHTML = subsEntries.map(function(e) {
+                        var id = e[0], s = e[1];
+                        var statusBadge = s.status === 'pending' ? 'badge-pending' : s.status === 'approved' ? 'badge-approved' : 'badge-rejected';
+                        var statusText = s.status === 'pending' ? 'معلق' : s.status === 'approved' ? 'مقبول' : 'مرفوض';
+                        var color = getAvatarColor(s.userId);
+                        return '<tr><td><div class="user-cell"><div class="user-avatar" style="background:'+color+'">'+escHtml((s.userName||'U')[0].toUpperCase())+'</div><div class="user-info"><div class="name">'+escHtml(s.userName||'مستخدم')+'</div><div class="email">'+escHtml(s.userEmail)+'</div></div></div></td><td><span class="badge '+planBadgeClass(s.plan)+'">'+planText(s.plan)+'</span></td><td>'+formatDateTime(s.createdAt)+'</td><td>'+escHtml(s.paymentMethod||'-')+'</td><td><span class="badge '+statusBadge+'">'+statusText+'</span></td><td><div class="actions">'+(s.status==='pending'?'<button class="btn-action btn-approve" onclick="alert(\'تحديث الصفحة لتفعيل الموافقة\')"><i class="fas fa-check"></i> موافقة</button><button class="btn-action btn-reject" onclick="alert(\'تحديث الصفحة لتفعيل الرفض\')"><i class="fas fa-times"></i> رفض</button>':'')+'</div></td></tr>';
+                    }).join('');
+                } else {
+                    subsTbody.innerHTML = '<tr><td colspan="6" class="empty-state"><p>لا توجد طلبات</p></td></tr>';
+                }
+
+                // Jobs
+                var jobsTbody = document.getElementById('jobsList');
+                var jobsEntries = Object.entries(allJobs);
+                if (jobsEntries.length) {
+                    jobsTbody.innerHTML = jobsEntries.map(function(e) {
+                        var j = e[1];
+                        return '<tr><td><strong>'+escHtml(j.title)+'</strong></td><td>'+escHtml(j.category||'')+'</td><td>'+escHtml(j.location||'')+'</td><td>'+(j.active!==false?'<span class="badge badge-active">نشطة</span>':'<span class="badge badge-inactive">معطلة</span>')+'</td><td>'+formatDate(j.createdAt)+'</td><td><div class="actions"><button class="btn-action btn-view"><i class="fas fa-edit"></i></button></div></td></tr>';
+                    }).join('');
+                } else {
+                    jobsTbody.innerHTML = '<tr><td colspan="6" class="empty-state"><p>لا توجد وظائف</p></td></tr>';
+                }
+
+                // Domains
+                var domTbody = document.getElementById('domainsList');
+                var domEntries = Object.entries(allDomains);
+                if (domEntries.length) {
+                    domTbody.innerHTML = domEntries.map(function(e) {
+                        var d = e[1];
+                        return '<tr><td><strong style="direction:ltr;display:inline-block">'+escHtml(d.domain)+'</strong></td><td><span class="badge '+planBadgeClass(d.plan)+'">'+planText(d.plan)+'</span></td><td>'+(d.duration||1)+'</td><td>0</td><td>'+(d.active!==false?'<span class="badge badge-active">نشطة</span>':'<span class="badge badge-inactive">معطلة</span>')+'</td><td><div class="actions"><button class="btn-action btn-edit"><i class="fas fa-edit"></i></button></div></td></tr>';
+                    }).join('');
+                } else {
+                    domTbody.innerHTML = '<tr><td colspan="6" class="empty-state"><p>لا توجد نطاقات</p></td></tr>';
+                }
+
+                // Staff
+                var staffTbody = document.getElementById('staffList');
+                var staffEntries = Object.entries(allStaff);
+                if (staffEntries.length) {
+                    staffTbody.innerHTML = staffEntries.map(function(e) {
+                        var id = e[0], s = e[1];
+                        var color = getAvatarColor(id);
+                        return '<tr><td><div class="user-cell"><div class="user-avatar" style="background:'+color+'">'+escHtml((s.name||'M')[0].toUpperCase())+'</div><div class="user-info"><div class="name">'+escHtml(s.name)+'</div><div class="email">'+escHtml(s.email)+'</div></div></div></td><td><span class="badge '+roleBadgeClass(s.role)+'">'+roleText(s.role)+'</span></td><td>'+(s.permissions||[]).length+' صلاحية</td><td>'+(s.active!==false?'<span class="badge badge-active">نشط</span>':'<span class="badge badge-inactive">غير نشط</span>')+'</td><td><div class="actions"><button class="btn-action btn-edit"><i class="fas fa-edit"></i></button></div></td></tr>';
+                    }).join('');
+                } else {
+                    staffTbody.innerHTML = '<tr><td colspan="5" class="empty-state"><p>لا يوجد موظفين</p></td></tr>';
+                }
+
+                // Messages
+                var msgTbody = document.getElementById('messagesList');
+                var msgEntries = Object.entries(messages).sort(function(a,b) { return (b[1].sentAt||0) - (a[1].sentAt||0); });
+                if (msgEntries.length) {
+                    msgTbody.innerHTML = msgEntries.map(function(e) {
+                        var m = e[1];
+                        var target = m.target === 'all' ? 'الكل' : escHtml(allUsers[m.target]?.name || m.target || '-');
+                        var typeLabels = { info: 'معلوماتية', warning: 'تحذير', success: 'تهنئة', promo: 'عرض خاص' };
+                        var typeColors = { info: 'var(--accent)', warning: 'var(--yellow)', success: 'var(--green)', promo: 'var(--purple)' };
+                        return '<tr><td><strong>'+target+'</strong></td><td style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+escHtml(m.text||'')+'</td><td>'+formatDateTime(m.sentAt)+'</td><td><span class="badge" style="background:'+(typeColors[m.type]||'var(--accent)')+'20;color:'+(typeColors[m.type]||'var(--accent)')+'">'+(typeLabels[m.type]||m.type)+'</span></td></tr>';
+                    }).join('');
+                } else {
+                    msgTbody.innerHTML = '<tr><td colspan="4" class="empty-state"><p>لا توجد رسائل</p></td></tr>';
+                }
+
+                // Settings
+                document.getElementById('settingsDefaultPlan').value = settings.defaultPlan || 'free';
+                document.getElementById('settingsCommission').value = settings.commissionPercent || 20;
+                document.getElementById('settingsProPrice').value = settings.proPrice || 99;
+                document.getElementById('settingsUnlimitedPrice').value = settings.unlimitedPrice || 299;
+
+                // Activity feed
+                var actEl = document.getElementById('activityFeed');
+                var activities = [];
+                entries.forEach(function(e) {
+                    if (e[1].lastLogin) activities.push({ type: 'success', text: 'آخر دخول: ' + (e[1].name||e[1].email), time: e[1].lastLogin });
+                });
+                subsEntries.forEach(function(e) {
+                    if (e[1].status === 'pending') activities.push({ type: 'warning', text: 'طلب اشتراك: ' + (e[1].userName||''), time: e[1].createdAt });
+                });
+                activities.sort(function(a,b) { return b.time - a.time; });
+                if (activities.length) {
+                    actEl.innerHTML = activities.slice(0, 10).map(function(a) {
+                        var iconClass = 'fas fa-info-circle', bg = 'rgba(0,3,201,0.1)', clr = 'var(--accent)';
+                        if (a.type === 'success') { iconClass = 'fas fa-check'; bg = 'rgba(5,150,105,0.1)'; clr = 'var(--green)'; }
+                        else if (a.type === 'warning') { iconClass = 'fas fa-exclamation'; bg = 'rgba(245,158,11,0.1)'; clr = 'var(--yellow)'; }
+                        var diff = Date.now() - a.time;
+                        var timeAgo = diff < 60000 ? 'الآن' : diff < 3600000 ? 'منذ '+Math.floor(diff/60000)+' دقيقة' : diff < 86400000 ? 'منذ '+Math.floor(diff/3600000)+' ساعة' : 'منذ '+Math.floor(diff/86400000)+' يوم';
+                        return '<div class="activity-item"><div class="activity-icon" style="background:'+bg+';color:'+clr+'"><i class="'+iconClass+'"></i></div><div class="activity-text">'+a.text+'<div class="activity-time">'+timeAgo+'</div></div></div>';
+                    }).join('');
+                } else {
+                    actEl.innerHTML = '<div style="text-align:center;color:var(--muted);padding:20px;font-size:0.85rem">لا توجد نشاطات</div>';
+                }
+
+                console.log('REST API fallback loaded all data');
+            }).catch(function(err) {
+                console.error('REST fallback error:', err);
+            });
+        }
+
+        // ===== ANALYTICS =====
+        function loadAnalytics() {
+            var today = new Date().toISOString().slice(0, 10);
+            var days = [];
+            for (var i = 6; i >= 0; i--) {
+                days.push(new Date(Date.now() - i * 86400000).toISOString().slice(0, 10));
+            }
+
+            // Total users
+            fetch(DB + '/users.json?shallow=true').then(function(r) { return r.json(); }).then(function(data) {
+                document.getElementById('a-total-users').textContent = data ? Object.keys(data).length : 0;
+            }).catch(function() {});
+
+            // Total visits
+            fetch(DB + '/analytics/totalVisits.json').then(function(r) { return r.json(); }).then(function(v) {
+                document.getElementById('a-total-visits').textContent = (v || 0).toLocaleString();
+            }).catch(function() {});
+
+            // Today visits
+            fetch(DB + '/analytics/visits/' + today + '.json').then(function(r) { return r.json(); }).then(function(v) {
+                document.getElementById('a-today-visits').textContent = (v || 0).toLocaleString();
+            }).catch(function() {});
+
+            // Active sessions
+            fetch(DB + '/analytics/activeSessions.json').then(function(r) { return r.json(); }).then(function(data) {
+                if (!data) { document.getElementById('a-active-now').textContent = '0'; return; }
+                var cutoff = Date.now() - 60000;
+                var active = Object.values(data).filter(function(s) { return s.lastSeen > cutoff; });
+                document.getElementById('a-active-now').textContent = active.length;
+            }).catch(function() {});
+
+            // Visits chart
+            var visitsChart = document.getElementById('a-visits-chart');
+            Promise.all(days.map(function(d) {
+                return fetch(DB + '/analytics/visits/' + d + '.json').then(function(r) { return r.json(); }).then(function(v) { return v || 0; }).catch(function() { return 0; });
+            })).then(function(values) {
+                var max = Math.max.apply(null, values.concat([1]));
+                visitsChart.innerHTML = days.map(function(d, i) {
+                    return '<div class="analytics-bar"><div class="day">' + d.slice(5) + '</div><div class="track"><div class="fill" style="width:' + ((values[i] / max) * 100) + '%">' + values[i] + '</div></div></div>';
+                }).join('');
+            }).catch(function() {});
+
+            // Pages chart
+            fetch(DB + '/analytics/pageViews.json').then(function(r) { return r.json(); }).then(function(data) {
+                if (!data) { document.getElementById('a-pages-chart').innerHTML = '<p style="color:var(--muted);font-size:0.82rem">لا توجد بيانات</p>'; return; }
+                var pages = Object.keys(data).map(function(p) {
+                    return { name: p.replace(/_/g, '.'), views: Object.values(data[p]).reduce(function(a, b) { return a + b; }, 0) };
+                }).sort(function(a, b) { return b.views - a.views; }).slice(0, 5);
+                var max = Math.max.apply(null, pages.map(function(p) { return p.views; }).concat([1]));
+                document.getElementById('a-pages-chart').innerHTML = pages.map(function(p) {
+                    return '<div class="analytics-bar"><div class="day">' + p.name + '</div><div class="track"><div class="fill" style="width:' + ((p.views / max) * 100) + '%">' + p.views + '</div></div></div>';
+                }).join('');
+            }).catch(function() {});
+
+            // Time chart
+            Promise.all(days.map(function(d) {
+                return fetch(DB + '/analytics/timeOnSite/' + d + '.json').then(function(r) { return r.json(); }).then(function(v) { return v || 0; }).catch(function() { return 0; });
+            })).then(function(values) {
+                var max = Math.max.apply(null, values.concat([1]));
+                document.getElementById('a-time-chart').innerHTML = days.map(function(d, i) {
+                    return '<div class="analytics-bar"><div class="day">' + d.slice(5) + '</div><div class="track"><div class="fill" style="width:' + ((values[i] / max) * 100) + '%">' + Math.floor(values[i] / 60) + 'm</div></div></div>';
+                }).join('');
+            }).catch(function() {});
+        }
+
+        // ===== REPORTS =====
+        function renderReports() {
+            var entries = Object.entries(allUsers);
+            var now = new Date();
+
+            // Growth Chart
+            var months = [];
+            for (var i = 5; i >= 0; i--) {
+                var d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+                months.push({ label: d.toLocaleDateString('ar-EG', { month: 'short' }), count: 0, start: d.getTime(), end: new Date(d.getFullYear(), d.getMonth() + 1, 0).getTime() });
+            }
+            entries.forEach(function(e) { if (e[1].registeredAt) months.forEach(function(m) { if (e[1].registeredAt >= m.start && e[1].registeredAt <= m.end) m.count++; }); });
+            var maxGrowth = Math.max.apply(null, months.map(function(m) { return m.count; }).concat([1]));
+            var growthEl = document.getElementById('reportGrowth');
+            if (growthEl) growthEl.innerHTML = months.map(function(m) { return '<div class="bar-row"><div class="bar-label">' + m.label + '</div><div class="bar-track"><div class="bar-fill blue" style="width:' + ((m.count / maxGrowth) * 100) + '%">' + m.count + '</div></div></div>'; }).join('');
+
+            // Distribution
+            var freeCount = 0, proCount = 0, unlimCount = 0;
+            entries.forEach(function(e) { var p = e[1].plan || 'free'; if (p === 'pro') proCount++; else if (p === 'unlimited') unlimCount++; else freeCount++; });
+            var total = Math.max(freeCount + proCount + unlimCount, 1);
+            var freePct = Math.round((freeCount / total) * 100), proPct = Math.round((proCount / total) * 100), unlimPct = 100 - freePct - proPct;
+            var distEl = document.getElementById('reportDistribution');
+            if (distEl) distEl.innerHTML = '<div class="donut-chart"><div class="donut-visual" style="background:conic-gradient(#9ca3af 0% ' + freePct + '%, var(--accent) ' + freePct + '% ' + (freePct + proPct) + '%, var(--purple) ' + (freePct + proPct) + '% 100%)"><div class="donut-center">' + total + '</div></div><div class="donut-legend"><div class="legend-item"><div class="legend-dot" style="background:#9ca3af"></div> مجانية: ' + freeCount + ' (' + freePct + '%)</div><div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div> احترافية: ' + proCount + ' (' + proPct + '%)</div><div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div> غير محدودة: ' + unlimCount + ' (' + unlimPct + '%)</div></div></div>';
+
+            // Revenue
+            var proPrice = parseInt(allSettings.proPrice) || 99;
+            var unlimPrice = parseInt(allSettings.unlimitedPrice) || 299;
+            var revMonths = [];
+            for (var j = 5; j >= 0; j--) {
+                var rd = new Date(now.getFullYear(), now.getMonth() - j, 1);
+                revMonths.push({ label: rd.toLocaleDateString('ar-EG', { month: 'short' }), revenue: 0, start: rd.getTime() });
+            }
+            entries.forEach(function(e) {
+                if (e[1].plan === 'pro') revMonths.forEach(function(m) { if (e[1].registeredAt && e[1].registeredAt >= m.start) m.revenue += proPrice; });
+                else if (e[1].plan === 'unlimited') revMonths.forEach(function(m) { if (e[1].registeredAt && e[1].registeredAt >= m.start) m.revenue += unlimPrice; });
+            });
+            var maxRev = Math.max.apply(null, revMonths.map(function(m) { return m.revenue; }).concat([1]));
+            var revEl = document.getElementById('reportRevenue');
+            if (revEl) revEl.innerHTML = revMonths.map(function(m) { return '<div class="bar-row"><div class="bar-label">' + m.label + '</div><div class="bar-track"><div class="bar-fill green" style="width:' + ((m.revenue / maxRev) * 100) + '%">' + m.revenue + ' ج.م</div></div></div>'; }).join('');
+
+            // Campaigns Report
+            var campEntries = Object.entries(allCampaigns).sort(function(a, b) { return (b[1].conversions || 0) - (a[1].conversions || 0); }).slice(0, 5);
+            var campEl = document.getElementById('reportCampaigns');
+            if (campEl) {
+                if (campEntries.length) {
+                    var maxCamp = Math.max.apply(null, campEntries.map(function(e) { return e[1].conversions || 0; }).concat([1]));
+                    campEl.innerHTML = campEntries.map(function(e) { return '<div class="bar-row"><div class="bar-label">' + escHtml((e[1].name || '').substring(0, 10)) + '</div><div class="bar-track"><div class="bar-fill yellow" style="width:' + (((e[1].conversions || 0) / maxCamp) * 100) + '%">' + (e[1].conversions || 0) + '</div></div></div>'; }).join('');
+                } else {
+                    campEl.innerHTML = '<div style="text-align:center;color:var(--muted);padding:20px">لا توجد حملات</div>';
+                }
+            }
+        }
+
+        // Override switchPanel to load reports/analytics when activated
+        var _origSwitchPanel = window.switchPanel;
+        window.switchPanel = function(panel) {
+            _origSwitchPanel(panel);
+            if (panel === 'reports') renderReports();
+            if (panel === 'analytics') loadAnalytics();
+        };
+
+        // ===== MISSING FUNCTIONS FROM MODULE (needed by HTML onclick handlers) =====
+        var _allUsersFiltered = null;
+
+        window.filterUsers = function() {
+            currentPage['users'] = 1;
+            var q = (document.getElementById('searchUsers') ? document.getElementById('searchUsers').value : '').toLowerCase();
+            _allUsersFiltered = {};
+            Object.entries(allUsers).forEach(function(e) {
+                if (!q || (e[1].name || '').toLowerCase().indexOf(q) !== -1 || (e[1].email || '').toLowerCase().indexOf(q) !== -1) {
+                    _allUsersFiltered[e[0]] = e[1];
+                }
+            });
+            renderUsersTable();
+        };
+
+        var _currentSubFilter = 'all';
+        window.setSubFilter = function(filter, btn) {
+            _currentSubFilter = filter;
+            currentPage['subscriptions'] = 1;
+            document.querySelectorAll('.filter-tab').forEach(function(t) { t.classList.remove('active'); });
+            btn.classList.add('active');
+            renderSubscriptions();
+        };
+
+        window.switchAffiliateTab = function(tab, btn) {
+            document.querySelectorAll('.sub-tab').forEach(function(t) { t.classList.remove('active'); });
+            btn.classList.add('active');
+            document.querySelectorAll('.affiliate-section').forEach(function(s) { s.style.display = 'none'; s.classList.remove('active'); });
+            var el = document.getElementById('aff-' + tab);
+            if (el) { el.style.display = 'block'; el.classList.add('active'); }
+        };
+
+        window.viewUser = function(uid) {
+            var u = allUsers[uid]; if (!u) return;
+            var color = getAvatarColor(uid), plan = u.plan || 'free';
+            document.getElementById('modalTitle').textContent = 'ملف المستخدم';
+            document.getElementById('modalBody').innerHTML = '<div class="profile-header"><div class="profile-avatar" style="background:' + color + '">' + escHtml((u.name || 'U')[0].toUpperCase()) + '</div><div class="name">' + escHtml(u.name || 'مستخدم') + '</div><div class="email">' + escHtml(u.email) + '</div></div>' +
+                '<div class="profile-section"><h4><i class="fas fa-info-circle"></i> المعلومات الأساسية</h4>' +
+                '<div class="profile-row"><div class="label">الهاتف</div><div class="value">' + escHtml(u.phone || '-') + '</div></div>' +
+                '<div class="profile-row"><div class="label">الباقة</div><div class="value"><span class="badge ' + planBadgeClass(plan) + '">' + planText(plan) + '</span></div></div>' +
+                '<div class="profile-row"><div class="label">تاريخ التسجيل</div><div class="value">' + formatDateTime(u.registeredAt) + '</div></div>' +
+                '<div class="profile-row"><div class="label">آخر دخول</div><div class="value">' + formatDateTime(u.lastLogin) + '</div></div>' +
+                '<div class="profile-row"><div class="label">الحالة</div><div class="value">' + (u.banned ? '<span class="badge badge-banned">محظور</span>' : '<span class="badge badge-approved">نشط</span>') + '</div></div>' +
+                '<div class="profile-row"><div class="label">التحميلات</div><div class="value">' + (u.downloads || 0) + (plan === 'free' ? ' / 2' : ' / ∞') + '</div></div></div>' +
+                '<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px">' +
+                '<button class="btn-action btn-change-plan" onclick="closeModal();changePlan(\'' + uid + '\')"><i class="fas fa-exchange-alt"></i> تغيير الباقة</button>' +
+                (u.banned ? '<button class="btn-action btn-unban" onclick="closeModal();toggleBan(\'' + uid + '\',false)"><i class="fas fa-unlock"></i> فك الحظر</button>' : '<button class="btn-action btn-ban" onclick="closeModal();toggleBan(\'' + uid + '\',true)"><i class="fas fa-ban"></i> حظر</button>') +
+                '<button class="btn-action btn-delete" onclick="closeModal();deleteUser(\'' + uid + '\')"><i class="fas fa-trash"></i> حذف</button></div>';
+            document.getElementById('modalConfirm').style.display = 'none';
+            document.getElementById('modal').classList.add('show');
+        };
+
+        window.changePlan = function(uid) {
+            var u = allUsers[uid]; if (!u) return;
+            document.getElementById('modalTitle').textContent = 'تغيير باقة المستخدم';
+            document.getElementById('modalBody').innerHTML = '<p style="text-align:center;margin-bottom:15px">المستخدم: <strong>' + escHtml(u.name || u.email) + '</strong></p><label>الباقة الجديدة</label><select id="newPlan"><option value="free" ' + (u.plan === 'free' ? 'selected' : '') + '>مجانية</option><option value="pro" ' + (u.plan === 'pro' ? 'selected' : '') + '>احترافية</option><option value="unlimited" ' + (u.plan === 'unlimited' ? 'selected' : '') + '>غير محدودة</option></select><label>مدة الباقة (أيام)</label><input type="text" id="planDuration" value="30">';
+            document.getElementById('modalConfirm').style.display = 'block';
+            document.getElementById('modalConfirm').textContent = 'تحديث';
+            document.getElementById('modalConfirm').onclick = async function() {
+                var plan = document.getElementById('newPlan').value;
+                var days = parseInt(document.getElementById('planDuration').value) || 30;
+                var expiry = plan === 'free' ? null : Date.now() + (days * 86400000);
+                await restPatch('/users/' + uid, { plan: plan, planExpiry: expiry });
+                showToast('تم تحديث الباقة', 'success');
+                closeModal();
+                loadAllData();
+            };
+            document.getElementById('modal').classList.add('show');
+        };
+
+        window.showSendMessage = function() {
+            var userOptions = Object.entries(allUsers).map(function(e) {
+                return '<option value="' + e[0] + '">' + escHtml(e[1].name || e[1].email || e[0]) + '</option>';
+            }).join('');
+            document.getElementById('modalTitle').textContent = 'إرسال رسالة';
+            document.getElementById('modalBody').innerHTML = '<label>المستلم</label><select id="msgTarget"><option value="all">جميع المستخدمين</option>' + userOptions + '</select><label>نوع الرسالة</label><select id="msgType"><option value="info">معلوماتية</option><option value="warning">تحذير</option><option value="success">تهنئة</option><option value="promo">عرض خاص</option></select><label>الرسالة</label><textarea id="msgText" placeholder="اكتب رسالتك هنا..." style="min-height:80px"></textarea>';
+            document.getElementById('modalConfirm').style.display = 'block';
+            document.getElementById('modalConfirm').textContent = 'إرسال';
+            document.getElementById('modalConfirm').onclick = async function() {
+                var target = document.getElementById('msgTarget').value;
+                var type = document.getElementById('msgType').value;
+                var text = document.getElementById('msgText').value.trim();
+                if (!text) { showToast('اكتب الرسالة', 'error'); return; }
+                var msgData = { type: type, text: text, sentAt: Date.now(), read: false, from: 'admin' };
+                if (target === 'all') {
+                    var updates = {};
+                    Object.keys(allUsers).forEach(function(uid) { updates['users/' + uid + '/notifications/' + Date.now()] = msgData; });
+                    updates['messages/' + Date.now()] = Object.assign({}, msgData, { target: 'all', userCount: Object.keys(allUsers).length });
+                    await fetch(DB + '.json', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(updates) });
+                    showToast('تم إرسال الرسالة لـ ' + Object.keys(allUsers).length + ' مستخدم', 'success');
+                } else {
+                    await restPost('/users/' + target + '/notifications', msgData);
+                    await restPost('/messages', Object.assign({}, msgData, { target: target }));
+                    showToast('تم إرسال الرسالة', 'success');
+                }
+                closeModal();
+                loadAllData();
+            };
+            document.getElementById('modal').classList.add('show');
+        };
+
+        window.exportUsersCSV = function() {
+            var entries = Object.entries(allUsers);
+            if (!entries.length) { showToast('لا يوجد مستخدمين للتصدير', 'error'); return; }
+            var headers = ['الاسم', 'البريد', 'الباقة', 'تاريخ التسجيل', 'آخر دخول', 'الحالة', 'التحميلات'];
+            var rows = entries.map(function(e) {
+                var u = e[1];
+                return [u.name || '', u.email || '', planText(u.plan || 'free'), u.registeredAt ? new Date(u.registeredAt).toLocaleString('ar-EG') : '', u.lastLogin ? new Date(u.lastLogin).toLocaleString('ar-EG') : '', u.banned ? 'محظور' : 'نشط', u.downloads || 0];
+            });
+            var csv = '\uFEFF' + [headers].concat(rows).map(function(r) { return r.map(function(c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+            var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a'); a.href = url; a.download = 'qcv-users-' + new Date().toISOString().slice(0, 10) + '.csv'; a.click();
+            URL.revokeObjectURL(url);
+            showToast('تم تصدير ' + entries.length + ' مستخدم', 'success');
+        };
+
+        // Also trigger load after a short delay as backup
+        setTimeout(function() {
+            if (!window._adminInited) {
+                console.log('[QCV Admin] Backup trigger: _adminInit not called yet, loading directly');
+                window._adminInited = true;
+                checkAndLoad();
+                setInterval(function() { checkAndLoad(); }, 30000);
+            }
+        }, 500);
+
+        // REST API approve/reject/delete functions
+        function restPatch(path, data) {
+            return fetch(DB + path + '.json', {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).then(function(r) { return r.json(); }).catch(function(e) { console.error('[QCV Admin] PATCH failed:', path, e.message); });
+        }
+        function restDelete(path) {
+            return fetch(DB + path + '.json', { method: 'DELETE' }).catch(function(e) { console.error('[QCV Admin] DELETE failed:', path, e.message); });
+        }
+        function restPost(path, data) {
+            return fetch(DB + path + '.json', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            }).then(function(r) { return r.json(); }).catch(function(e) { console.error('[QCV Admin] POST failed:', path, e.message); return null; });
+        }
+        window.approveSubscription = window.approveSubscription || async function(subId, userId, plan) {
+            var expiry = Date.now() + (30 * 86400000);
+            await restPatch('/subscriptions/' + subId, { status: 'approved', approvedAt: Date.now() });
+            await restPatch('/users/' + userId, { plan: plan, planExpiry: expiry });
+            if (window.QCVNotify) QCVNotify.success();
+            location.reload();
+        };
+        window.rejectSubscription = window.rejectSubscription || function(subId) {
+            if (!confirm('هل أنت متأكد من رفض هذا الطلب؟')) return;
+            restPatch('/subscriptions/' + subId, { status: 'rejected', rejectedAt: Date.now() }).then(function() { location.reload(); });
+        };
+        window.deleteSubscription = window.deleteSubscription || function(subId) {
+            if (!confirm('هل أنت متأكد من حذف هذا الاشتراك؟')) return;
+            restDelete('/subscriptions/' + subId).then(function() { location.reload(); });
+        };
+        window.toggleBan = window.toggleBan || async function(uid, ban) {
+            await restPatch('/users/' + uid, { banned: ban });
+            location.reload();
+        };
+        window.deleteUser = window.deleteUser || function(uid) {
+            if (!confirm('هل أنت متأكد من حذف هذا المستخدم؟')) return;
+            restDelete('/users/' + uid).then(function() { location.reload(); });
+        };
+        window.deleteJob = window.deleteJob || function(id) {
+            if (!confirm('هل أنت متأكد من حذف هذه الوظيفة؟')) return;
+            restDelete('/jobs/' + id).then(function() { location.reload(); });
+        };
+        window.deleteDomain = window.deleteDomain || function(id) {
+            if (!confirm('هل أنت متأكد من حذف هذا النطاق؟')) return;
+            restDelete('/domains/' + id).then(function() { location.reload(); });
+        };
+        window.deleteStaff = window.deleteStaff || function(id) {
+            if (!confirm('هل أنت متأكد من حذف هذا الموظف؟')) return;
+            restDelete('/staff/' + id).then(function() { location.reload(); });
+        };
+        window.saveSettings = window.saveSettings || async function() {
+            var settings = {
+                defaultPlan: document.getElementById('settingsDefaultPlan').value,
+                commissionPercent: parseInt(document.getElementById('settingsCommission').value) || 20,
+                proPrice: parseInt(document.getElementById('settingsProPrice').value) || 99,
+                unlimitedPrice: parseInt(document.getElementById('settingsUnlimitedPrice').value) || 299,
+                updatedAt: Date.now()
+            };
+            await restPatch('/settings', settings);
+            if (window.QCVNotify) QCVNotify.save();
+            alert('تم حفظ الإعدادات');
+        };
+    })();
     </script>
     <script src="js/notify-sounds.js"></script>
 </body>

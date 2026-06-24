@@ -1,0 +1,585 @@
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+(function() {
+    var DB = 'https://qwcv-1cfad-default-rtdb.firebaseio.com';
+
+    // ===== REST API =====
+    function rGet(p){return fetch(DB+p+'.json').then(function(r){return r.json()}).catch(function(){return null})}
+    function rPut(p,d){return fetch(DB+p+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)}).catch(function(){})}
+    function rPatch(p,d){return fetch(DB+p+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)}).catch(function(){})}
+    function rDel(p){return fetch(DB+p+'.json',{method:'DELETE'}).catch(function(){});}
+    function rPost(p,d){return fetch(DB+p+'.json',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)}).then(function(r){return r.json()}).catch(function(){return null})}
+
+    // ===== STATE =====
+    var allUsers={},allSubs={},allJobs={},allDomains={},allStaff={},allReferrals={},allCampaigns={},allCommissions={},allSettings={},allMessages={};
+    var currentSubFilter='all',activityLog=[],PAGE_SIZE=15,currentPage={};
+
+    // ===== HELPERS =====
+    function esc(s){if(!s)return'';var d=document.createElement('div');d.textContent=String(s);return d.innerHTML}
+    function fmtDate(ts){if(!ts)return'-';return new Date(ts).toLocaleDateString('ar-EG')}
+    function fmtDateTime(ts){if(!ts)return'-';return new Date(ts).toLocaleString('ar-EG')}
+    function planTxt(p){return p==='pro'?'احترافية':p==='unlimited'?'غير محدودة':'مجانية'}
+    function planBadge(p){return p==='pro'?'badge-pro':p==='unlimited'?'badge-unlimited':'badge-free'}
+    function roleTxt(r){return r==='super_admin'?'مدير عام':r==='admin'?'مدير':r==='manager'?'مدير قسم':'دعم فني'}
+    function roleBadge(r){return r==='super_admin'?'badge-super_admin':r==='admin'?'badge-admin':r==='manager'?'badge-manager':'badge-support'}
+    function avatarColor(uid){var c=['#0003c9','#059669','#8b5cf6','#f59e0b','#ef4444','#3b82f6'];return c[(uid||'u').charCodeAt(0)%c.length]}
+    function timeAgo(ts){var d=Date.now()-ts;if(d<60000)return'الآن';if(d<3600000)return'منذ '+Math.floor(d/60000)+' دقيقة';if(d<86400000)return'منذ '+Math.floor(d/3600000)+' ساعة';return'منذ '+Math.floor(d/86400000)+' يوم'}
+    function addActivity(type,text){activityLog.unshift({type:type,text:text,time:Date.now()});if(activityLog.length>50)activityLog.pop();renderActivityFeed()}
+
+    // ===== TOAST =====
+    function showToast(msg,type){var t=document.getElementById('toast');t.textContent=msg;t.className='toast toast-'+type;setTimeout(function(){t.classList.add('show')},10);setTimeout(function(){t.classList.remove('show')},3000)}
+    window.closeModal=function(){document.getElementById('modal').classList.remove('show')};
+
+    // ===== PANEL SWITCHING =====
+    var panelTitles={dashboard:'لوحة التحكم',users:'إدارة المستخدمين',staff:'إدارة الموظفين',subscriptions:'الاشتراكات',affiliate:'التسويق بالعمولة',reports:'التقارير',analytics:'التحليلات',jobs:'الوظائف',domains:'النطاقات المعتمدة',settings:'الإعدادات',messages:'الرسائل'};
+    window.switchPanel=function(panel){
+        document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active')});
+        document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active')});
+        var t=document.getElementById('panel-'+panel);if(t)t.classList.add('active');
+        var n=document.querySelector('.nav-item[data-panel="'+panel+'"]');if(n)n.classList.add('active');
+        var h=document.getElementById('pageTitle');if(h)h.textContent=panelTitles[panel]||panel;
+        if(panel==='reports')renderReports();
+        if(panel==='analytics')loadAnalytics();
+    };
+
+    // ===== PAGINATION =====
+    function getPage(arr,sec){var pg=currentPage[sec]||1;var s=(pg-1)*PAGE_SIZE;return{items:arr.slice(s,s+PAGE_SIZE),total:arr.length,page:pg,pages:Math.ceil(arr.length/PAGE_SIZE)}}
+    function renderPag(sec,total){var pages=Math.ceil(total/PAGE_SIZE);if(pages<=1){var el=document.getElementById(sec+'-pagination');if(el)el.innerHTML='';return''}var pg=currentPage[sec]||1;var h='<div class="pagination">';h+='<button '+(pg<=1?'disabled':'')+' onclick="goPage(\''+sec+'\','+(pg-1)+')">السابق</button>';for(var i=1;i<=pages;i++){h+='<button class="'+(i===pg?'active':'')+'" onclick="goPage(\''+sec+'\','+i+')">'+i+'</button>'}h+='<button '+(pg>=pages?'disabled':'')+' onclick="goPage(\''+sec+'\','+(pg+1)+')">التالي</button>';h+='<span class="page-info">صفحة '+pg+' من '+pages+' ('+total+' عنصر)</span></div>';return h}
+    window.goPage=function(sec,pg){currentPage[sec]=pg;
+        if(sec==='users')renderUsersTable(allUsers);
+        else if(sec==='subscriptions')renderSubscriptions();
+        else if(sec==='staff')renderStaffTable(allStaff);
+        else if(sec==='jobs')renderJobsTable(allJobs);
+        else if(sec==='domains')renderDomainsTable(allDomains);
+        else if(sec==='messages')renderMessagesTable(allMessages);
+    };
+
+    // ===== LOAD ALL DATA =====
+    function initDashboard(){
+        Promise.all([rGet('/users'),rGet('/subscriptions'),rGet('/jobs'),rGet('/domains'),rGet('/staff'),rGet('/referrals'),rGet('/affiliateCampaigns'),rGet('/affiliateCommissions'),rGet('/settings'),rGet('/messages')]).then(function(r){
+            allUsers=r[0]||{};allSubs=r[1]||{};allJobs=r[2]||{};allDomains=r[3]||{};allStaff=r[4]||{};
+            allReferrals=r[5]||{};allCampaigns=r[6]||{};allCommissions=r[7]||{};allSettings=r[8]||{};allMessages=r[9]||{};
+            updateStats();renderUsersTable(allUsers);renderRecentUsers(allUsers);renderSubscriptions();renderStaffTable(allStaff);
+            renderJobsTable(allJobs);renderDomainsTable(allDomains);renderMessagesTable(allMessages);renderActivityFeed();
+            renderSettings();addActivity('info','تم تحميل لوحة التحكم');
+        });
+    }
+
+    // ===== UPDATE STATS =====
+    function updateStats(){
+        var e=Object.entries(allUsers);
+        document.getElementById('statUsers').textContent=e.length;
+        document.getElementById('statActive').textContent=e.filter(function(x){return!x[1].banned}).length;
+        document.getElementById('statPro').textContent=e.filter(function(x){return x[1].plan==='pro'||x[1].plan==='unlimited'}).length;
+        document.getElementById('statStaff').textContent=Object.keys(allStaff).length;
+        document.getElementById('statCampaigns').textContent=Object.keys(allCampaigns).length;
+        var pending=Object.values(allSubs).filter(function(s){return s.status==='pending'}).length;
+        document.getElementById('statPending').textContent=pending;
+        var b=document.getElementById('pendingBadge');if(pending>0){b.textContent=pending;b.style.display='inline'}else{b.style.display='none'}
+        var rev=0,pp=parseInt(allSettings.proPrice)||99,up=parseInt(allSettings.unlimitedPrice)||299;
+        e.forEach(function(x){if(x[1].plan==='pro')rev+=pp;else if(x[1].plan==='unlimited')rev+=up});
+        document.getElementById('statRevenue').textContent=rev;
+        renderDashBarChart(e);
+    }
+
+    // ===== ACTIVITY FEED =====
+    function renderActivityFeed(){
+        var el=document.getElementById('activityFeed');
+        if(!activityLog.length){el.innerHTML='<div style="text-align:center;color:var(--muted);padding:20px;font-size:0.85rem">لا توجد نشاطات بعد</div>';return}
+        el.innerHTML=activityLog.slice(0,10).map(function(a){
+            var ic='fas fa-info-circle',bg='rgba(0,3,201,0.1)',cl='var(--accent)';
+            if(a.type==='success'){ic='fas fa-check';bg='rgba(5,150,105,0.1)';cl='var(--green)'}
+            else if(a.type==='error'){ic='fas fa-times';bg='rgba(239,68,68,0.1)';cl='var(--red)'}
+            else if(a.type==='warning'){ic='fas fa-exclamation';bg='rgba(245,158,11,0.1)';cl='var(--yellow)'}
+            return'<div class="activity-item"><div class="activity-icon" style="background:'+bg+';color:'+cl+'"><i class="'+ic+'"></i></div><div class="activity-text">'+a.text+'<div class="activity-time">'+timeAgo(a.time)+'</div></div></div>';
+        }).join('');
+    }
+
+    // ===== DASH BAR CHART =====
+    function renderDashBarChart(entries){
+        var el=document.getElementById('dashBarChart'),months=[],now=new Date();
+        for(var i=5;i>=0;i--){var d=new Date(now.getFullYear(),now.getMonth()-i,1);months.push({label:d.toLocaleDateString('ar-EG',{month:'short'}),count:0,start:d.getTime(),end:new Date(d.getFullYear(),d.getMonth()+1,0).getTime()})}
+        entries.forEach(function(e){if(e[1].registeredAt)months.forEach(function(m){if(e[1].registeredAt>=m.start&&e[1].registeredAt<=m.end)m.count++})});
+        var mx=Math.max.apply(null,months.map(function(m){return m.count}).concat([1]));
+        el.innerHTML=months.map(function(m){return'<div class="bar-row"><div class="bar-label">'+m.label+'</div><div class="bar-track"><div class="bar-fill blue" style="width:'+(m.count/mx*100)+'%">'+m.count+'</div></div></div>'}).join('');
+    }
+
+    // ===== USERS =====
+    function renderUsersTable(data){
+        var tb=document.getElementById('allUsers'),entries=Object.entries(data);
+        if(!entries.length){tb.innerHTML='<tr><td colspan="6" class="empty-state"><p>لا يوجد مستخدمين</p></td></tr>';document.getElementById('users-pagination').innerHTML='';return}
+        var pd=getPage(entries,'users');
+        tb.innerHTML=pd.items.map(function(e){var uid=e[0],u=e[1],plan=u.plan||'free',c=avatarColor(uid);
+            return'<tr><td><div class="user-cell"><div class="user-avatar" style="background:'+c+'">'+esc((u.name||'U')[0].toUpperCase())+'</div><div class="user-info"><div class="name">'+esc(u.name||'مستخدم')+'</div><div class="email">'+esc(u.email)+'</div></div></div></td><td><span class="badge '+planBadge(plan)+'">'+planTxt(plan)+'</span></td><td>'+fmtDate(u.registeredAt)+'</td><td>'+fmtDateTime(u.lastLogin)+'</td><td>'+(u.banned?'<span class="badge badge-banned">محظور</span>':'<span class="badge badge-approved">نشط</span>')+'</td><td><div class="actions"><button class="btn-action btn-view" onclick="viewUser(\''+uid+'\')"><i class="fas fa-eye"></i></button><button class="btn-action btn-change-plan" onclick="changePlan(\''+uid+'\')"><i class="fas fa-exchange-alt"></i></button>'+(u.banned?'<button class="btn-action btn-unban" onclick="toggleBan(\''+uid+'\',false)"><i class="fas fa-unlock"></i></button>':'<button class="btn-action btn-ban" onclick="toggleBan(\''+uid+'\',true)"><i class="fas fa-ban"></i></button>')+'<button class="btn-action btn-delete" onclick="deleteUser(\''+uid+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
+        }).join('');
+        document.getElementById('users-pagination').innerHTML=renderPag('users',pd.total);
+    }
+    function renderRecentUsers(data){
+        var tb=document.getElementById('recentUsers'),entries=Object.entries(data).sort(function(a,b){return(b[1].lastLogin||0)-(a[1].lastLogin||0)}).slice(0,5);
+        if(!entries.length){tb.innerHTML='<tr><td colspan="4" class="empty-state"><p>لا يوجد مستخدمين</p></td></tr>';return}
+        tb.innerHTML=entries.map(function(e){var uid=e[0],u=e[1],plan=u.plan||'free',c=avatarColor(uid);
+            return'<tr><td><div class="user-cell"><div class="user-avatar" style="background:'+c+'">'+esc((u.name||'U')[0].toUpperCase())+'</div><div class="user-info"><div class="name">'+esc(u.name||'مستخدم')+'</div><div class="email">'+esc(u.email)+'</div></div></div></td><td><span class="badge '+planBadge(plan)+'">'+planTxt(plan)+'</span></td><td>'+fmtDateTime(u.lastLogin)+'</td><td>'+(u.banned?'<span class="badge badge-banned">محظور</span>':'<span class="badge badge-approved">نشط</span>')+'</td></tr>';
+        }).join('');
+    }
+    window.viewUser=function(uid){
+        var u=allUsers[uid];if(!u)return;
+        var plan=u.plan||'free',c=avatarColor(uid);
+        document.getElementById('modalTitle').textContent='ملف المستخدم';
+        document.getElementById('modalBody').innerHTML='<div class="profile-header"><div class="profile-avatar" style="background:'+c+'">'+esc((u.name||'U')[0].toUpperCase())+'</div><div class="name">'+esc(u.name||'مستخدم')+'</div><div class="email">'+esc(u.email)+'</div></div><div class="profile-section"><h4><i class="fas fa-info-circle"></i> المعلومات الأساسية</h4><div class="profile-row"><div class="label">الهاتف</div><div class="value">'+esc(u.phone||'-')+'</div></div><div class="profile-row"><div class="label">الباقة</div><div class="value"><span class="badge '+planBadge(plan)+'">'+planTxt(plan)+'</span></div></div><div class="profile-row"><div class="label">تاريخ التسجيل</div><div class="value">'+fmtDateTime(u.registeredAt)+'</div></div><div class="profile-row"><div class="label">آخر دخول</div><div class="value">'+fmtDateTime(u.lastLogin)+'</div></div><div class="profile-row"><div class="label">الحالة</div><div class="value">'+(u.banned?'<span class="badge badge-banned">محظور</span>':'<span class="badge badge-approved">نشط</span>')+'</div></div></div><div class="profile-section"><h4><i class="fas fa-download"></i> التحميلات</h4><div class="profile-row"><div class="label">العدد</div><div class="value">'+(u.downloads||0)+'</div></div></div><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:10px"><button class="btn-action btn-change-plan" onclick="closeModal();changePlan(\''+uid+'\')"><i class="fas fa-exchange-alt"></i> تغيير الباقة</button>'+(u.banned?'<button class="btn-action btn-unban" onclick="closeModal();toggleBan(\''+uid+'\',false)"><i class="fas fa-unlock"></i> فك الحظر</button>':'<button class="btn-action btn-ban" onclick="closeModal();toggleBan(\''+uid+'\',true)"><i class="fas fa-ban"></i> حظر</button>')+'<button class="btn-action btn-delete" onclick="closeModal();deleteUser(\''+uid+'\')"><i class="fas fa-trash"></i> حذف</button></div>';
+        document.getElementById('modalConfirm').style.display='none';
+        document.getElementById('modal').classList.add('show');
+    };
+    window.changePlan=function(uid){
+        var u=allUsers[uid];if(!u)return;
+        document.getElementById('modalTitle').textContent='تغيير باقة المستخدم';
+        document.getElementById('modalBody').innerHTML='<p style="text-align:center;margin-bottom:15px">المستخدم: <strong>'+esc(u.name||u.email)+'</strong></p><label>الباقة الجديدة</label><select id="newPlan"><option value="free"'+(u.plan==='free'?' selected':'')+'>مجانية</option><option value="pro"'+(u.plan==='pro'?' selected':'')+'>احترافية</option><option value="unlimited"'+(u.plan==='unlimited'?' selected':'')+'>غير محدودة</option></select><label>المدة (أيام)</label><input type="text" id="planDuration" value="30">';
+        document.getElementById('modalConfirm').style.display='block';
+        document.getElementById('modalConfirm').textContent='تحديث';
+        document.getElementById('modalConfirm').onclick=function(){
+            var plan=document.getElementById('newPlan').value;
+            var days=parseInt(document.getElementById('planDuration').value)||30;
+            var expiry=plan==='free'?null:Date.now()+(days*86400000);
+            rPatch('/users/'+uid,{plan:plan,planExpiry:expiry}).then(function(){
+                allUsers[uid].plan=plan;allUsers[uid].planExpiry=expiry;
+                addActivity('success','تغيير باقة '+u.name+' إلى '+planTxt(plan));
+                showToast('تم تحديث الباقة','success');closeModal();renderUsersTable(allUsers);renderRecentUsers(allUsers);updateStats();
+            });
+        };
+        document.getElementById('modal').classList.add('show');
+    };
+    window.toggleBan=function(uid,ban){
+        rPatch('/users/'+uid,{banned:ban}).then(function(){
+            allUsers[uid].banned=ban;
+            addActivity('warning',(ban?'حظر':'فك حظر')+' المستخدم '+(allUsers[uid].name||allUsers[uid].email));
+            showToast(ban?'تم حظر المستخدم':'تم فك الحظر',ban?'error':'success');
+            renderUsersTable(allUsers);renderRecentUsers(allUsers);updateStats();
+        });
+    };
+    window.deleteUser=function(uid){
+        var u=allUsers[uid];
+        document.getElementById('modalTitle').textContent='حذف المستخدم';
+        document.getElementById('modalBody').innerHTML='<p style="text-align:center">هل أنت متأكد من حذف <strong>'+esc(u?.name||u?.email)+'</strong>؟ لا يمكن التراجع.</p>';
+        document.getElementById('modalConfirm').style.display='block';
+        document.getElementById('modalConfirm').textContent='حذف';
+        document.getElementById('modalConfirm').onclick=function(){
+            rDel('/users/'+uid).then(function(){
+                delete allUsers[uid];addActivity('error','حذف المستخدم '+(u?.name||u?.email));
+                showToast('تم الحذف','success');closeModal();renderUsersTable(allUsers);renderRecentUsers(allUsers);updateStats();
+            });
+        };
+        document.getElementById('modal').classList.add('show');
+    };
+    window.filterUsers=function(){
+        currentPage['users']=1;
+        var q=(document.getElementById('searchUsers').value||'').toLowerCase();
+        var f={};Object.entries(allUsers).forEach(function(e){if((e[1].name||'').toLowerCase().indexOf(q)>=0||(e[1].email||'').toLowerCase().indexOf(q)>=0)f[e[0]]=e[1]});
+        renderUsersTable(f);
+    };
+    window.exportUsersCSV=function(){
+        var entries=Object.entries(allUsers);if(!entries.length){showToast('لا يوجد مستخدمين','error');return}
+        var h=['الاسم','البريد','الباقة','تاريخ التسجيل','آخر دخول','الحالة'];
+        var rows=entries.map(function(e){var u=e[1];return[u.name||'',u.email||'',planTxt(u.plan||'free'),u.registeredAt?new Date(u.registeredAt).toLocaleString('ar-EG'):'',u.lastLogin?new Date(u.lastLogin).toLocaleString('ar-EG'):'',u.banned?'محظور':'نشط']});
+        var csv='\uFEFF'+[h].concat(rows).map(function(r){return r.map(function(c){return'"'+String(c).replace(/"/g,'""')+'"'}).join(',')}).join('\n');
+        var blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});var url=URL.createObjectURL(blob);
+        var a=document.createElement('a');a.href=url;a.download='qcv-users-'+new Date().toISOString().slice(0,10)+'.csv';a.click();URL.revokeObjectURL(url);
+        showToast('تم التصدير','success');
+    };
+
+    // ===== SUBSCRIPTIONS =====
+    function renderSubscriptions(){
+        var tb=document.getElementById('subscriptionsList');
+        var entries=Object.entries(allSubs).sort(function(a,b){return(b[1].createdAt||0)-(a[1].createdAt||0)});
+        if(currentSubFilter!=='all')entries=entries.filter(function(e){return e[1].status===currentSubFilter});
+        if(!entries.length){tb.innerHTML='<tr><td colspan="6" class="empty-state"><p>لا توجد طلبات</p></td></tr>';document.getElementById('subscriptions-pagination').innerHTML='';return}
+        var pd=getPage(entries,'subscriptions');
+        tb.innerHTML=pd.items.map(function(e){
+            var id=e[0],s=e[1];
+            var st=s.status==='pending'?'badge-pending':s.status==='approved'?'badge-approved':'badge-rejected';
+            var stTxt=s.status==='pending'?'معلق':s.status==='approved'?'مقبول':'مرفوض';
+            var c=avatarColor(s.userId);
+            return'<tr><td><div class="user-cell"><div class="user-avatar" style="background:'+c+'">'+esc((s.userName||'U')[0].toUpperCase())+'</div><div class="user-info"><div class="name">'+esc(s.userName||'مستخدم')+'</div><div class="email">'+esc(s.userEmail)+'</div></div></div></td><td><span class="badge '+planBadge(s.plan)+'">'+planTxt(s.plan)+'</span></td><td>'+fmtDateTime(s.createdAt)+'</td><td>'+esc(s.paymentMethod||'-')+'</td><td><span class="badge '+st+'">'+stTxt+'</span></td><td><div class="actions">'+(s.status==='pending'?'<button class="btn-action btn-approve" onclick="approveSub(\''+id+'\')"><i class="fas fa-check"></i> موافقة</button><button class="btn-action btn-reject" onclick="rejectSub(\''+id+'\')"><i class="fas fa-times"></i> رفض</button>':'<button class="btn-action btn-view" onclick="viewSub(\''+id+'\')"><i class="fas fa-eye"></i></button>')+'<button class="btn-action btn-delete" onclick="deleteSub(\''+id+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
+        }).join('');
+        document.getElementById('subscriptions-pagination').innerHTML=renderPag('subscriptions',pd.total);
+    }
+    window.setSubFilter=function(f,btn){
+        currentSubFilter=f;currentPage['subscriptions']=1;
+        document.querySelectorAll('.filter-tab').forEach(function(t){t.classList.remove('active')});btn.classList.add('active');
+        renderSubscriptions();
+    };
+    window.approveSub=function(id){
+        var s=allSubs[id];if(!s)return;
+        document.getElementById('modalTitle').textContent='تأكيد الموافقة';
+        document.getElementById('modalBody').innerHTML='<p style="text-align:center">الموافقة على اشتراك <strong>'+esc(s.userName)+'</strong> - باقة '+planTxt(s.plan)+'؟</p>';
+        document.getElementById('modalConfirm').style.display='block';document.getElementById('modalConfirm').textContent='موافقة';
+        document.getElementById('modalConfirm').onclick=function(){
+            var expiry=Date.now()+(30*86400000);
+            rPatch('/subscriptions/'+id,{status:'approved',approvedAt:Date.now()}).then(function(){
+                return rPatch('/users/'+s.userId,{plan:s.plan,planExpiry:expiry});
+            }).then(function(){
+                allSubs[id].status='approved';allSubs[id].approvedAt=Date.now();
+                addActivity('success','موافقة على اشتراك '+s.userName+' - باقة '+planTxt(s.plan));
+                showToast('تم قبول الاشتراك','success');closeModal();renderSubscriptions();updateStats();
+            });
+        };
+        document.getElementById('modal').classList.add('show');
+    };
+    window.rejectSub=function(id){
+        document.getElementById('modalTitle').textContent='رفض طلب الاشتراك';
+        document.getElementById('modalBody').innerHTML='<label>سبب الرفض (اختياري)</label><textarea id="rejectReason" placeholder="أدخل سبب الرفض..."></textarea>';
+        document.getElementById('modalConfirm').style.display='block';document.getElementById('modalConfirm').textContent='رفض';
+        document.getElementById('modalConfirm').onclick=function(){
+            var reason=document.getElementById('rejectReason').value.trim();
+            rPatch('/subscriptions/'+id,{status:'rejected',rejectedAt:Date.now(),rejectReason:reason}).then(function(){
+                allSubs[id].status='rejected';addActivity('error','رفض اشتراك '+(allSubs[id].userName||''));
+                showToast('تم رفض الطلب','error');closeModal();renderSubscriptions();updateStats();
+            });
+        };
+        document.getElementById('modal').classList.add('show');
+    };
+    window.deleteSub=function(id){
+        var s=allSubs[id];
+        document.getElementById('modalTitle').textContent='حذف الاشتراك';
+        document.getElementById('modalBody').innerHTML='<p style="text-align:center">هل أنت متأكد من حذف اشتراك <strong>'+esc(s?.userName)+'</strong>؟</p>';
+        document.getElementById('modalConfirm').style.display='block';document.getElementById('modalConfirm').textContent='حذف';
+        document.getElementById('modalConfirm').onclick=function(){
+            rDel('/subscriptions/'+id).then(function(){delete allSubs[id];showToast('تم الحذف','success');closeModal();renderSubscriptions();updateStats()});
+        };
+        document.getElementById('modal').classList.add('show');
+    };
+    window.viewSub=function(id){
+        var s=allSubs[id];if(!s)return;
+        document.getElementById('modalTitle').textContent='تفاصيل طلب الاشتراك';
+        document.getElementById('modalBody').innerHTML='<div style="text-align:center"><p><strong>المستخدم:</strong> '+esc(s.userName||'-')+'</p><p><strong>البريد:</strong> '+esc(s.userEmail||'-')+'</p><p><strong>الباقة:</strong> '+planTxt(s.plan)+'</p><p><strong>طريقة الدفع:</strong> '+esc(s.paymentMethod||'-')+'</p><p><strong>التاريخ:</strong> '+fmtDateTime(s.createdAt)+'</p><p><strong>الحالة:</strong> '+(s.status==='approved'?'مقبول':s.status==='rejected'?'مرفوض':'معلق')+'</p></div>';
+        document.getElementById('modalConfirm').style.display='none';document.getElementById('modal').classList.add('show');
+    };
+
+    // ===== STAFF =====
+    var ALL_PERMISSIONS=['view_users','edit_users','manage_subscriptions','manage_affiliates','view_reports','manage_jobs','manage_domains','manage_staff'];
+    var PERM_LABELS={view_users:'عرض المستخدمين',edit_users:'تعديل المستخدمين',manage_subscriptions:'إدارة الاشتراكات',manage_affiliates:'إدارة التسويق',view_reports:'عرض التقارير',manage_jobs:'إدارة الوظائف',manage_domains:'إدارة النطاقات',manage_staff:'إدارة الموظفين'};
+    function renderStaffTable(data){
+        var tb=document.getElementById('staffList'),entries=Object.entries(data);
+        if(!entries.length){tb.innerHTML='<tr><td colspan="5" class="empty-state"><p>لا يوجد موظفين</p></td></tr>';document.getElementById('staff-pagination').innerHTML='';return}
+        var pd=getPage(entries,'staff');
+        tb.innerHTML=pd.items.map(function(e){
+            var id=e[0],s=e[1],c=avatarColor(id),perms=s.permissions||[];
+            return'<tr><td><div class="user-cell"><div class="user-avatar" style="background:'+c+'">'+esc((s.name||'M')[0].toUpperCase())+'</div><div class="user-info"><div class="name">'+esc(s.name)+'</div><div class="email">'+esc(s.email)+'</div></div></div></td><td><span class="badge '+roleBadge(s.role)+'">'+roleTxt(s.role)+'</span></td><td>'+perms.length+' صلاحية</td><td>'+(s.active!==false?'<span class="badge badge-active">نشط</span>':'<span class="badge badge-inactive">غير نشط</span>')+'</td><td><div class="actions"><button class="btn-action btn-edit" onclick="editStaff(\''+id+'\')"><i class="fas fa-edit"></i></button>'+(s.active!==false?'<button class="btn-action btn-ban" onclick="toggleStaffActive(\''+id+'\',false)"><i class="fas fa-ban"></i></button>':'<button class="btn-action btn-unban" onclick="toggleStaffActive(\''+id+'\',true)"><i class="fas fa-check"></i></button>')+'<button class="btn-action btn-delete" onclick="deleteStaff(\''+id+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
+        }).join('');
+        document.getElementById('staff-pagination').innerHTML=renderPag('staff',pd.total);
+    }
+    function permChecksHTML(checked){
+        return ALL_PERMISSIONS.map(function(p){return'<label><input type="checkbox" value="'+p+'" class="perm-check"'+(checked.indexOf(p)>=0?' checked':'')+'> '+PERM_LABELS[p]+'</label>'}).join('');
+    }
+    window.showAddStaff=function(){
+        document.getElementById('modalTitle').textContent='إضافة موظف جديد';
+        document.getElementById('modalBody').innerHTML='<label>الاسم</label><input type="text" id="staffName" placeholder="اسم الموظف"><label>البريد الإلكتروني</label><input type="email" id="staffEmail" placeholder="email@example.com"><label>كلمة المرور</label><input type="password" id="staffPass" placeholder="••••••••"><label>الدور</label><select id="staffRole"><option value="support">دعم فني</option><option value="manager">مدير قسم</option><option value="admin">مدير</option><option value="super_admin">مدير عام</option></select><label style="margin-top:10px">الصلاحيات</label><div class="checkbox-group">'+permChecksHTML([])+'</div>';
+        document.getElementById('modalConfirm').style.display='block';document.getElementById('modalConfirm').textContent='إضافة';
+        document.getElementById('modalConfirm').onclick=function(){
+            var name=document.getElementById('staffName').value.trim(),email=document.getElementById('staffEmail').value.trim(),pass=document.getElementById('staffPass').value,role=document.getElementById('staffRole').value;
+            var perms=[].slice.call(document.querySelectorAll('.perm-check:checked')).map(function(c){return c.value});
+            if(!name||!email){showToast('أدخل الاسم والبريد','error');return}
+            rPost('/staff',{name:name,email:email,password:pass,role:role,permissions:perms,active:true,createdAt:Date.now()}).then(function(){
+                addActivity('success','إضافة الموظف '+name);showToast('تمت الإضافة','success');closeModal();initDashboard();
+            });
+        };
+        document.getElementById('modal').classList.add('show');
+    };
+    window.editStaff=function(id){
+        var s=allStaff[id];if(!s)return;
+        document.getElementById('modalTitle').textContent='تعديل بيانات الموظف';
+        document.getElementById('modalBody').innerHTML='<label>الاسم</label><input type="text" id="staffName" value="'+esc(s.name)+'"><label>البريد</label><input type="email" id="staffEmail" value="'+esc(s.email)+'"><label>الدور</label><select id="staffRole"><option value="support"'+(s.role==='support'?' selected':'')+'>دعم فني</option><option value="manager"'+(s.role==='manager'?' selected':'')+'>مدير قسم</option><option value="admin"'+(s.role==='admin'?' selected':'')+'>مدير</option><option value="super_admin"'+(s.role==='super_admin'?' selected':'')+'>مدير عام</option></select><label style="margin-top:10px">الصلاحيات</label><div class="checkbox-group">'+permChecksHTML(s.permissions||[])+'</div>';
+        document.getElementById('modalConfirm').style.display='block';document.getElementById('modalConfirm').textContent='حفظ';
+        document.getElementById('modalConfirm').onclick=function(){
+            var name=document.getElementById('staffName').value.trim(),email=document.getElementById('staffEmail').value.trim(),role=document.getElementById('staffRole').value;
+            var perms=[].slice.call(document.querySelectorAll('.perm-check:checked')).map(function(c){return c.value});
+            rPatch('/staff/'+id,{name:name,email:email,role:role,permissions:perms}).then(function(){
+                addActivity('success','تعديل الموظف '+name);showToast('تم الحفظ','success');closeModal();initDashboard();
+            });
+        };
+        document.getElementById('modal').classList.add('show');
+    };
+    window.toggleStaffActive=function(id,active){
+        rPatch('/staff/'+id,{active:active}).then(function(){showToast(active?'تم التفعيل':'تم التعطيل','success');initDashboard()});
+    };
+    window.deleteStaff=function(id){
+        var s=allStaff[id];
+        document.getElementById('modalTitle').textContent='حذف الموظف';
+        document.getElementById('modalBody').innerHTML='<p style="text-align:center">هل أنت متأكد من حذف <strong>'+esc(s?.name)+'</strong>؟</p>';
+        document.getElementById('modalConfirm').style.display='block';document.getElementById('modalConfirm').textContent='حذف';
+        document.getElementById('modalConfirm').onclick=function(){rDel('/staff/'+id).then(function(){showToast('تم الحذف','success');closeModal();initDashboard()})};
+        document.getElementById('modal').classList.add('show');
+    };
+
+    // ===== JOBS =====
+    function renderJobsTable(data){
+        var tb=document.getElementById('jobsList'),entries=Object.entries(data);
+        if(!entries.length){tb.innerHTML='<tr><td colspan="6" class="empty-state"><p>لا توجد وظائف</p></td></tr>';document.getElementById('jobs-pagination').innerHTML='';return}
+        var pd=getPage(entries,'jobs');
+        tb.innerHTML=pd.items.map(function(e){
+            var id=e[0],j=e[1];
+            return'<tr><td><strong>'+esc(j.title)+'</strong></td><td>'+esc(j.category||'')+'</td><td>'+esc(j.location||'')+'</td><td>'+(j.active!==false?'<span class="badge badge-active">نشطة</span>':'<span class="badge badge-inactive">معطلة</span>')+'</td><td>'+fmtDate(j.createdAt)+'</td><td><div class="actions"><button class="btn-action btn-view" onclick="editJob(\''+id+'\')"><i class="fas fa-edit"></i></button><button class="btn-action btn-delete" onclick="deleteJob(\''+id+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
+        }).join('');
+        document.getElementById('jobs-pagination').innerHTML=renderPag('jobs',pd.total);
+    }
+    window.addJob=function(){
+        document.getElementById('modalTitle').textContent='إضافة وظيفة جديدة';
+        document.getElementById('modalBody').innerHTML='<label>اسم الوظيفة</label><input type="text" id="jobTitle" placeholder="مثال: مطور Frontend"><label>الفئة</label><input type="text" id="jobCategory" placeholder="مثال: تقنية المعلومات"><label>الموقع</label><input type="text" id="jobLocation" placeholder="مثال: القاهرة"><label>التفاصيل</label><textarea id="jobDesc" placeholder="المهام والمتطلبات"></textarea><label>البريد للتقديم</label><input type="text" id="jobEmail" placeholder="hr@example.com"><label style="display:flex;align-items:center;gap:8px;margin-top:8px"><input type="checkbox" id="jobActive" checked> وظيفة نشطة</label>';
+        document.getElementById('modalConfirm').style.display='block';document.getElementById('modalConfirm').textContent='إضافة';
+        document.getElementById('modalConfirm').onclick=function(){
+            var t=document.getElementById('jobTitle').value.trim();if(!t){showToast('أدخل اسم الوظيفة','error');return}
+            rPost('/jobs',{title:t,category:document.getElementById('jobCategory').value.trim(),location:document.getElementById('jobLocation').value.trim(),description:document.getElementById('jobDesc').value.trim(),email:document.getElementById('jobEmail').value.trim(),active:document.getElementById('jobActive').checked,createdAt:Date.now()}).then(function(){
+                addActivity('success','إضافة وظيفة: '+t);showToast('تمت الإضافة','success');closeModal();initDashboard();
+            });
+        };
+        document.getElementById('modal').classList.add('show');
+    };
+    window.editJob=function(id){
+        var j=allJobs[id];if(!j)return;
+        document.getElementById('modalTitle').textContent='تعديل الوظيفة';
+        document.getElementById('modalBody').innerHTML='<label>اسم الوظيفة</label><input type="text" id="jobTitle" value="'+esc(j.title)+'"><label>الفئة</label><input type="text" id="jobCategory" value="'+esc(j.category||'')+'"><label>الموقع</label><input type="text" id="jobLocation" value="'+esc(j.location||'')+'"><label>التفاصيل</label><textarea id="jobDesc">'+esc(j.description||'')+'</textarea><label>البريد</label><input type="text" id="jobEmail" value="'+esc(j.email||'')+'"><label style="display:flex;align-items:center;gap:8px;margin-top:8px"><input type="checkbox" id="jobActive"'+(j.active!==false?' checked':'')+'> نشطة</label>';
+        document.getElementById('modalConfirm').style.display='block';document.getElementById('modalConfirm').textContent='حفظ';
+        document.getElementById('modalConfirm').onclick=function(){
+            rPatch('/jobs/'+id,{title:document.getElementById('jobTitle').value.trim(),category:document.getElementById('jobCategory').value.trim(),location:document.getElementById('jobLocation').value.trim(),description:document.getElementById('jobDesc').value.trim(),email:document.getElementById('jobEmail').value.trim(),active:document.getElementById('jobActive').checked}).then(function(){
+                showToast('تم الحفظ','success');closeModal();initDashboard();
+            });
+        };
+        document.getElementById('modal').classList.add('show');
+    };
+    window.deleteJob=function(id){
+        document.getElementById('modalTitle').textContent='حذف الوظيفة';
+        document.getElementById('modalBody').innerHTML='<p style="text-align:center">هل أنت متأكد؟</p>';
+        document.getElementById('modalConfirm').style.display='block';document.getElementById('modalConfirm').textContent='حذف';
+        document.getElementById('modalConfirm').onclick=function(){rDel('/jobs/'+id).then(function(){showToast('تم الحذف','success');closeModal();initDashboard()})};
+        document.getElementById('modal').classList.add('show');
+    };
+
+    // ===== DOMAINS =====
+    function renderDomainsTable(data){
+        var tb=document.getElementById('domainsList'),entries=Object.entries(data);
+        if(!entries.length){tb.innerHTML='<tr><td colspan="6" class="empty-state"><p>لا توجد نطاقات</p></td></tr>';document.getElementById('domains-pagination').innerHTML='';return}
+        var pd=getPage(entries,'domains');
+        tb.innerHTML=pd.items.map(function(e){
+            var id=e[0],d=e[1];
+            return'<tr><td><strong style="direction:ltr;display:inline-block">'+esc(d.domain)+'</strong></td><td><span class="badge '+planBadge(d.plan)+'">'+planTxt(d.plan)+'</span></td><td>'+(d.duration||1)+'</td><td>0</td><td>'+(d.active!==false?'<span class="badge badge-active">نشطة</span>':'<span class="badge badge-inactive">معطلة</span>')+'</td><td><div class="actions"><button class="btn-action btn-edit" onclick="editDomain(\''+id+'\')"><i class="fas fa-edit"></i></button><button class="btn-action btn-delete" onclick="deleteDomain(\''+id+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
+        }).join('');
+        document.getElementById('domains-pagination').innerHTML=renderPag('domains',pd.total);
+    }
+    window.showAddDomain=function(){
+        document.getElementById('modalTitle').textContent='إضافة نطاق';
+        document.getElementById('modalBody').innerHTML='<label>النطاق</label><input type="text" id="domDomain" placeholder="مثال: edu.alexu.edu.eg"><label>الباقة</label><select id="domPlan"><option value="pro">احترافية</option><option value="unlimited">غير محدودة</option></select><label>المدة (أشهر)</label><input type="text" id="domDuration" value="6">';
+        document.getElementById('modalConfirm').style.display='block';document.getElementById('modalConfirm').textContent='إضافة';
+        document.getElementById('modalConfirm').onclick=function(){
+            var domain=document.getElementById('domDomain').value.trim();if(!domain){showToast('أدخل النطاق','error');return}
+            rPost('/domains',{domain:domain,plan:document.getElementById('domPlan').value,duration:parseInt(document.getElementById('domDuration').value)||6,active:true,createdAt:Date.now()}).then(function(){
+                addActivity('success','إضافة نطاق: '+domain);showToast('تمت الإضافة','success');closeModal();initDashboard();
+            });
+        };
+        document.getElementById('modal').classList.add('show');
+    };
+    window.editDomain=function(id){
+        var d=allDomains[id];if(!d)return;
+        document.getElementById('modalTitle').textContent='تعديل النطاق';
+        document.getElementById('modalBody').innerHTML='<label>النطاق</label><input type="text" id="domDomain" value="'+esc(d.domain)+'"><label>الباقة</label><select id="domPlan"><option value="pro"'+(d.plan==='pro'?' selected':'')+'>احترافية</option><option value="unlimited"'+(d.plan==='unlimited'?' selected':'')+'>غير محدودة</option></select><label>المدة</label><input type="text" id="domDuration" value="'+(d.duration||6)+'">';
+        document.getElementById('modalConfirm').style.display='block';document.getElementById('modalConfirm').textContent='حفظ';
+        document.getElementById('modalConfirm').onclick=function(){
+            rPatch('/domains/'+id,{domain:document.getElementById('domDomain').value.trim(),plan:document.getElementById('domPlan').value,duration:parseInt(document.getElementById('domDuration').value)||6}).then(function(){showToast('تم الحفظ','success');closeModal();initDashboard()});
+        };
+        document.getElementById('modal').classList.add('show');
+    };
+    window.deleteDomain=function(id){
+        document.getElementById('modalTitle').textContent='حذف النطاق';
+        document.getElementById('modalBody').innerHTML='<p style="text-align:center">هل أنت متأكد؟</p>';
+        document.getElementById('modalConfirm').style.display='block';document.getElementById('modalConfirm').textContent='حذف';
+        document.getElementById('modalConfirm').onclick=function(){rDel('/domains/'+id).then(function(){showToast('تم الحذف','success');closeModal();initDashboard()})};
+        document.getElementById('modal').classList.add('show');
+    };
+
+    // ===== SETTINGS =====
+    function renderSettings(){
+        document.getElementById('settingsDefaultPlan').value=allSettings.defaultPlan||'free';
+        document.getElementById('settingsCommission').value=allSettings.commissionPercent||20;
+        document.getElementById('settingsProPrice').value=allSettings.proPrice||99;
+        document.getElementById('settingsUnlimitedPrice').value=allSettings.unlimitedPrice||299;
+        document.getElementById('settingsAiKey').value=allSettings.aiApiKey||'';
+        document.getElementById('settingsGroqKey').value=allSettings.groqKey||'';
+        document.getElementById('settingsXaiKey').value=allSettings.xaiKey||'';
+        document.getElementById('settingsDeepseekKey').value=allSettings.deepseekKey||'';
+        document.getElementById('settingsNaraKey').value=allSettings.naraKey||'';
+        document.getElementById('settingsOpenrouterKey').value=allSettings.openrouterKey||'';
+        document.getElementById('settingsGeminiKey').value=allSettings.geminiKey||'';
+        if(allSettings.maintenance){document.getElementById('settingsMaintenance').classList.add('active');document.getElementById('maintenanceLabel').textContent='مفعّل'}
+        else{document.getElementById('settingsMaintenance').classList.remove('active');document.getElementById('maintenanceLabel').textContent='معطّل'}
+        if(allSettings.trackerEnabled){document.getElementById('settingsAnalytics').classList.add('active');document.getElementById('analyticsLabel').textContent='مفعّل'}
+        else{document.getElementById('settingsAnalytics').classList.remove('active');document.getElementById('analyticsLabel').textContent='معطّل'}
+    }
+    window.toggleMaintenance=function(){
+        var el=document.getElementById('settingsMaintenance');el.classList.toggle('active');
+        var active=el.classList.contains('active');
+        document.getElementById('maintenanceLabel').textContent=active?'مفعّل':'معطّل';
+        rPatch('/settings',{maintenance:active,updatedAt:Date.now()}).then(function(){return rPatch('/siteSettings/maintenance',{enabled:active})}).then(function(){
+            showToast(active?'تم تفعيل الصيانة':'تم تعطيل الصيانة','success');
+        });
+    };
+    window.toggleAnalytics=function(){
+        var el=document.getElementById('settingsAnalytics');el.classList.toggle('active');
+        var active=el.classList.contains('active');
+        document.getElementById('analyticsLabel').textContent=active?'مفعّل':'معطّل';
+        rPatch('/settings',{trackerEnabled:active,updatedAt:Date.now()}).then(function(){showToast(active?'تم تفعيل التحليلات':'تم تعطيل التحليلات','success')});
+    };
+    window.saveSettings=function(){
+        var s={defaultPlan:document.getElementById('settingsDefaultPlan').value,commissionPercent:parseInt(document.getElementById('settingsCommission').value)||20,proPrice:parseInt(document.getElementById('settingsProPrice').value)||99,unlimitedPrice:parseInt(document.getElementById('settingsUnlimitedPrice').value)||299,maintenance:document.getElementById('settingsMaintenance').classList.contains('active'),trackerEnabled:document.getElementById('settingsAnalytics').classList.contains('active'),aiApiKey:document.getElementById('settingsAiKey').value.trim(),groqKey:document.getElementById('settingsGroqKey').value.trim(),xaiKey:document.getElementById('settingsXaiKey').value.trim(),deepseekKey:document.getElementById('settingsDeepseekKey').value.trim(),naraKey:document.getElementById('settingsNaraKey').value.trim(),openrouterKey:document.getElementById('settingsOpenrouterKey').value.trim(),geminiKey:document.getElementById('settingsGeminiKey').value.trim(),updatedAt:Date.now()};
+        rPatch('/settings',s).then(function(){addActivity('success','تحديث الإعدادات');showToast('تم الحفظ','success');allSettings=s});
+    };
+
+    // ===== MESSAGES =====
+    function renderMessagesTable(data){
+        var tb=document.getElementById('messagesList'),entries=Object.entries(data).sort(function(a,b){return(b[1].sentAt||0)-(a[1].sentAt||0)});
+        if(!entries.length){tb.innerHTML='<tr><td colspan="4" class="empty-state"><p>لا توجد رسائل</p></td></tr>';document.getElementById('messages-pagination').innerHTML='';return}
+        var pd=getPage(entries,'messages');
+        tb.innerHTML=pd.items.map(function(e){
+            var m=e[1],target=m.target==='all'?'الكل':esc(allUsers[m.target]?.name||m.target||'-');
+            var tl={info:'معلوماتية',warning:'تحذير',success:'تهنئة',promo:'عرض خاص'},tc={info:'var(--accent)',warning:'var(--yellow)',success:'var(--green)',promo:'var(--purple)'};
+            return'<tr><td><strong>'+target+'</strong></td><td style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(m.text||'')+'</td><td>'+fmtDateTime(m.sentAt)+'</td><td><span class="badge" style="background:'+(tc[m.type]||'var(--accent)')+'20;color:'+(tc[m.type]||'var(--accent)')+'">'+(tl[m.type]||m.type)+'</span></td></tr>';
+        }).join('');
+        document.getElementById('messages-pagination').innerHTML=renderPag('messages',pd.total);
+    }
+    window.showSendMessage=function(targetUid){
+        var opts=Object.entries(allUsers).map(function(e){return'<option value="'+e[0]+'"'+(e[0]===targetUid?' selected':'')+'>'+esc(e[1].name||e[1].email||e[0])+'</option>'}).join('');
+        document.getElementById('modalTitle').textContent='إرسال رسالة';
+        document.getElementById('modalBody').innerHTML='<label>المستلم</label><select id="msgTarget"><option value="all">جميع المستخدمين</option>'+opts+'</select><label>نوع الرسالة</label><select id="msgType"><option value="info">معلوماتية</option><option value="warning">تحذير</option><option value="success">تهنئة</option><option value="promo">عرض خاص</option></select><label>الرسالة</label><textarea id="msgText" placeholder="اكتب رسالتك هنا..." style="min-height:80px"></textarea>';
+        document.getElementById('modalConfirm').style.display='block';document.getElementById('modalConfirm').textContent='إرسال';
+        document.getElementById('modalConfirm').onclick=function(){
+            var target=document.getElementById('msgTarget').value,text=document.getElementById('msgText').value.trim();
+            if(!text){showToast('اكتب الرسالة','error');return}
+            var msgData={type:document.getElementById('msgType').value,text:text,sentAt:Date.now(),read:false,from:'admin'};
+            if(target==='all'){
+                var updates={};var ts=Date.now();
+                Object.keys(allUsers).forEach(function(uid){updates['/users/'+uid+'/notifications/'+ts]=msgData});
+                updates['/messages/'+ts]=Object.assign({},msgData,{target:'all',userCount:Object.keys(allUsers).length});
+                rPatch('',updates).then(function(){showToast('تم الإرسال لـ '+Object.keys(allUsers).length+' مستخدم','success');closeModal()});
+            }else{
+                rPost('/users/'+target+'/notifications',msgData).then(function(){return rPost('/messages',Object.assign({},msgData,{target:target}))}).then(function(){showToast('تم الإرسال','success');closeModal()});
+            }
+        };
+        document.getElementById('modal').classList.add('show');
+    };
+
+    // ===== AFFILIATE =====
+    window.switchAffiliateTab=function(tab,btn){
+        document.querySelectorAll('.sub-tab').forEach(function(t){t.classList.remove('active')});btn.classList.add('active');
+        document.querySelectorAll('.affiliate-section').forEach(function(s){s.style.display='none'});
+        document.getElementById('aff-'+tab).style.display='block';
+    };
+    window.generateAffiliateLink=function(){
+        var code=document.getElementById('linkCode').value.trim();
+        var campaign=document.getElementById('linkCampaign').value;
+        if(!code){showToast('أدخل كود المسوق','error');return}
+        var link='https://qcv.vexonet.online/?ref='+code+(campaign?'&campaign='+campaign:'');
+        document.getElementById('generatedLink').textContent=link;
+        document.getElementById('linkOutput').style.display='flex';
+    };
+    window.copyLink=function(){
+        var link=document.getElementById('generatedLink').textContent;
+        navigator.clipboard.writeText(link).then(function(){showToast('تم النسخ','success')}).catch(function(){showToast('فشل النسخ','error')});
+    };
+    window.payCommission=function(id){
+        rPatch('/affiliateCommissions/'+id,{status:'paid',paidAt:Date.now()}).then(function(){showToast('تم الدفع','success');initDashboard()});
+    };
+    window.rejectCommission=function(id){
+        if(!confirm('هل أنت متأكد من رفض هذه العمولة؟'))return;
+        rPatch('/affiliateCommissions/'+id,{status:'rejected',rejectedAt:Date.now()}).then(function(){showToast('تم الرفض','error');initDashboard()});
+    };
+    window.showAddCampaign=function(){
+        document.getElementById('modalTitle').textContent='إضافة حملة';
+        document.getElementById('modalBody').innerHTML='<label>اسم الحملة</label><input type="text" id="campName" placeholder="مثال: حملة رمضان"><label>الرابط</label><input type="text" id="campUrl" placeholder="https://example.com"><label>الحالة</label><select id="campStatus"><option value="active">نشطة</option><option value="paused">معلقة</option></select>';
+        document.getElementById('modalConfirm').style.display='block';document.getElementById('modalConfirm').textContent='إضافة';
+        document.getElementById('modalConfirm').onclick=function(){
+            var name=document.getElementById('campName').value.trim();if(!name){showToast('أدخل الاسم','error');return}
+            rPost('/affiliateCampaigns',{name:name,url:document.getElementById('campUrl').value.trim(),status:document.getElementById('campStatus').value,clicks:0,conversions:0,revenue:0,createdAt:Date.now()}).then(function(){showToast('تمت الإضافة','success');closeModal();initDashboard()});
+        };
+        document.getElementById('modal').classList.add('show');
+    };
+    window.editCampaign=function(id){
+        var c=allCampaigns[id];if(!c)return;
+        document.getElementById('modalTitle').textContent='تعديل الحملة';
+        document.getElementById('modalBody').innerHTML='<label>الاسم</label><input type="text" id="campName" value="'+esc(c.name)+'"><label>الرابط</label><input type="text" id="campUrl" value="'+esc(c.url||'')+'"><label>الحالة</label><select id="campStatus"><option value="active"'+(c.status==='active'?' selected':'')+'>نشطة</option><option value="paused"'+(c.status==='paused'?' selected':'')+'>معلقة</option></select>';
+        document.getElementById('modalConfirm').style.display='block';document.getElementById('modalConfirm').textContent='حفظ';
+        document.getElementById('modalConfirm').onclick=function(){
+            rPatch('/affiliateCampaigns/'+id,{name:document.getElementById('campName').value.trim(),url:document.getElementById('campUrl').value.trim(),status:document.getElementById('campStatus').value}).then(function(){showToast('تم الحفظ','success');closeModal();initDashboard()});
+        };
+        document.getElementById('modal').classList.add('show');
+    };
+    window.deleteCampaign=function(id){
+        if(!confirm('هل أنت متأكد من حذف الحملة؟'))return;
+        rDel('/affiliateCampaigns/'+id).then(function(){showToast('تم الحذف','success');initDashboard()});
+    };
+
+    // ===== REPORTS =====
+    function renderReports(){
+        var entries=Object.entries(allUsers);
+        var now=new Date(),months=[];
+        for(var i=5;i>=0;i--){var d=new Date(now.getFullYear(),now.getMonth()-i,1);months.push({label:d.toLocaleDateString('ar-EG',{month:'short'}),count:0,start:d.getTime(),end:new Date(d.getFullYear(),d.getMonth()+1,0).getTime()})}
+        entries.forEach(function(e){if(e[1].registeredAt)months.forEach(function(m){if(e[1].registeredAt>=m.start&&e[1].registeredAt<=m.end)m.count++})});
+        var mx=Math.max.apply(null,months.map(function(m){return m.count}).concat([1]));
+        document.getElementById('reportGrowth').innerHTML=months.map(function(m){return'<div class="bar-row"><div class="bar-label">'+m.label+'</div><div class="bar-track"><div class="bar-fill blue" style="width:'+(m.count/mx*100)+'%">'+m.count+'</div></div></div>'}).join('');
+        var free=0,pro=0,unlim=0;entries.forEach(function(e){var p=e[1].plan||'free';if(p==='pro')pro++;else if(p==='unlimited')unlim++;else free++});
+        var total=Math.max(free+pro+unlim,1);
+        document.getElementById('reportDistribution').innerHTML='<div class="donut-chart"><div class="donut-visual" style="background:conic-gradient(#9ca3af 0% '+Math.round(free/total*100)+'%, var(--accent) '+Math.round(free/total*100)+'% '+Math.round((free+pro)/total*100)+'%, var(--purple) '+Math.round((free+pro)/total*100)+'% 100%)"><div class="donut-center">'+total+'</div></div><div class="donut-legend"><div class="legend-item"><div class="legend-dot" style="background:#9ca3af"></div> مجانية: '+free+'</div><div class="legend-item"><div class="legend-dot" style="background:var(--accent)"></div> احترافية: '+pro+'</div><div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div> غير محدودة: '+unlim+'</div></div></div>';
+    }
+
+    // ===== ANALYTICS =====
+    function loadAnalytics(){
+        Promise.all([rGet('/analytics/totalVisits'),rGet('/analytics/pageViews')]).then(function(r){
+            document.getElementById('a-total-users').textContent=Object.keys(allUsers).length;
+            document.getElementById('a-total-visits').textContent=(r[0]||0).toLocaleString();
+            document.getElementById('a-today-visits').textContent='0';
+            document.getElementById('a-active-now').textContent='0';
+        });
+    }
+
+    // ===== STAFF LOGIN =====
+    document.getElementById('staffLoginForm').addEventListener('submit',function(e){
+        e.preventDefault();
+        var email=document.getElementById('staffLoginEmail').value.trim(),pass=document.getElementById('staffLoginPassword').value;
+        var btn=document.getElementById('staffLoginBtn'),err=document.getElementById('staffLoginError');
+        btn.textContent='جاري التحقق...';btn.disabled=true;err.style.display='none';
+        rGet('/staff').then(function(staffData){
+            staffData=staffData||{};var found=null,foundId=null;
+            Object.entries(staffData).forEach(function(e){if(e[1].email===email&&e[1].password===pass){found=e[1];foundId=e[0]}});
+            if(!found){err.textContent='بيانات الدخول غير صحيحة';err.style.display='block';btn.textContent='دخول';btn.disabled=false;return}
+            if(found.active===false){err.textContent='هذا الحساب معطّل';err.style.display='block';btn.textContent='دخول';btn.disabled=false;return}
+            var session={id:foundId,name:found.name,email:found.email,role:found.role,permissions:found.permissions||[]};
+            sessionStorage.setItem('qcv_staff',JSON.stringify(session));
+            document.getElementById('staffLogin').classList.add('hidden');
+            document.getElementById('adminLayout').classList.add('show');
+            initDashboard();
+        }).catch(function(){err.textContent='خطأ في الاتصال';err.style.display='block';btn.textContent='دخول';btn.disabled=false});
+    });
+
+    // ===== LOGOUT =====
+    document.getElementById('logoutBtn').addEventListener('click',function(){
+        sessionStorage.removeItem('qcv_admin');sessionStorage.removeItem('qcv_staff');location.reload();
+    });
+
+    // ===== DARK MODE =====
+    function applyDarkMode(){
+        document.body.classList.toggle('dark-mode',document.documentElement.getAttribute('data-theme')==='dark');
+    }
+    new MutationObserver(applyDarkMode).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+    applyDarkMode();
+
+    // ===== EXPOSE FOR NON-MODULE =====
+    window._adminInit=function(){initDashboard()};
+
+    // ===== AUTO INIT =====
+    if(sessionStorage.getItem('qcv_admin')==='true'||sessionStorage.getItem('qcv_staff')){
+        document.getElementById('blockScreen').style.display='none';
+        document.getElementById('adminLogin').classList.add('hidden');
+        document.getElementById('staffLogin').classList.add('hidden');
+        document.getElementById('adminLayout').classList.add('show');
+        initDashboard();
+    }
+})();
+    </script>
+    <script src="js/notify-sounds.js"></script>
+</body>
+</html>
