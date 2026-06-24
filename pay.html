@@ -64,6 +64,7 @@
         .plan-card.popular{border-color:var(--accent);background:rgba(0,3,201,0.03)}
         .plan-popular{position:absolute;top:10px;left:10px;background:var(--accent);color:#fff;font-size:0.58rem;padding:3px 10px;border-radius:20px;font-weight:800}
         .plan-icon{font-size:2rem;margin-bottom:12px}
+        .plan-subtitle{font-size:0.72rem;color:var(--muted);margin-bottom:4px;font-weight:500}
         .plan-name{font-size:1.1rem;font-weight:800;margin-bottom:4px}
         .plan-price{font-size:1.8rem;font-weight:900;color:var(--accent);margin-bottom:3px}
         .plan-price .curr{font-size:0.8rem;font-weight:600}
@@ -250,57 +251,60 @@
         <div class="plans-grid">
             <div class="plan-card" onclick="selectPlan(this,'free')">
                 <div class="plan-icon"><i class="fas fa-gift"></i></div>
+                <div class="plan-subtitle">للمبتدئين والطالبين</div>
                 <div class="plan-name" data-i18n="plan_free_name">الباقة المجانية</div>
                 <div class="plan-price free-p">مجاني</div>
                 <div class="plan-period">للأبد</div>
                 <ul class="plan-features">
                     <li><i class="fas fa-check"></i> سيرة ذاتية واحدة</li>
-                    <li><i class="fas fa-check"></i> قالب أساسي (كلاسيك)</li>
+                    <li><i class="fas fa-check"></i> قالب كلاسيك احترافي</li>
                     <li><i class="fas fa-check"></i> تصدير PDF</li>
                     <li><i class="fas fa-check"></i> معاينة جميع القوالب</li>
                     <li><i class="fas fa-check"></i> تقييم أساسي للسيرة</li>
-                    <li class="dis"><i class="fas fa-times"></i> <span>قوالب متقدمة</span></li>
+                    <li class="dis"><i class="fas fa-times"></i> <span>تحميلات غير محدودة</span></li>
                     <li class="dis"><i class="fas fa-times"></i> <span>بورتفوليو شخصي</span></li>
-                    <li class="dis"><i class="fas fa-times"></i> <span>مساعد ذكاء اصطناعي</span></li>
-                    <li class="dis"><i class="fas fa-times"></i> <span>مطابقة الوظائف</span></li>
+                    <li class="dis"><i class="fas fa-times"></i> <span>مساعد الكتابة بالذكاء الاصطناعي</span></li>
+                    <li class="dis"><i class="fas fa-times"></i> <span>تحليل السيرة بالذكاء الاصطناعي</span></li>
                 </ul>
                 <div class="plan-check">&#10003;</div>
             </div>
             <div class="plan-card popular" onclick="selectPlan(this,'pro')">
                 <div class="plan-popular">الأكثر شعبية</div>
-                <div class="plan-icon"><i class="fas fa-star"></i></div>
-                <div class="plan-name" data-i18n="plan_pro_name">Pro</div>
+                <div class="plan-icon"><i class="fas fa-rocket"></i></div>
+                <div class="plan-subtitle">للمحترفين والباحثين عن عمل</div>
+                <div class="plan-name" data-i18n="plan_pro_name">الباقة الاحترافية</div>
                 <div class="plan-price">99 <span class="curr">ج.م</span></div>
                 <div class="plan-period">شهرياً</div>
                 <ul class="plan-features">
                     <li><i class="fas fa-check"></i> 5 سير ذاتية احترافية</li>
-                    <li><i class="fas fa-check"></i> جميع القوالب (15+)</li>
+                    <li><i class="fas fa-check"></i> جميع القوالب (+15)</li>
                     <li><i class="fas fa-check"></i> تصدير PDF بدون علامة مائية</li>
-                    <li><i class="fas fa-check"></i> قوالب متقدمة وحصرية</li>
+                    <li><i class="fas fa-check"></i> ملفات شخصية وبصرية</li>
                     <li><i class="fas fa-check"></i> صفحة بورتفوليو شخصية</li>
-                    <li><i class="fas fa-check"></i> تقييم متقدم للسيرة</li>
+                    <li><i class="fas fa-check"></i> تقييم متقدم للسيرة بالذكاء الاصطناعي</li>
                     <li><i class="fas fa-check"></i> مساعد كتابة بالذكاء الاصطناعي</li>
-                    <li><i class="fas fa-check"></i> مطابقة الوظائف</li>
-                    <li class="dis"><i class="fas fa-times"></i> <span>أولوية في الدعم 24/7</span></li>
+                    <li><i class="fas fa-check"></i> مطابقة الوظائف بالذكاء الاصطناعي</li>
+                    <li class="dis"><i class="fas fa-times"></i> <span>تحليل السيرة ورفعها</span></li>
                 </ul>
                 <div class="plan-check">&#10003;</div>
             </div>
             <div class="plan-card" onclick="selectPlan(this,'unlimited')">
-                <div class="plan-icon"><i class="fas fa-gem"></i></div>
-                <div class="plan-name" data-i18n="plan_unlim_name">Unlimited</div>
+                <div class="plan-icon"><i class="fas fa-crown"></i></div>
+                <div class="plan-subtitle">للشركات والفرق الكبيرة</div>
+                <div class="plan-name" data-i18n="plan_unlim_name">الباقة غير المحدودة</div>
                 <div class="plan-price">299 <span class="curr">ج.م</span></div>
                 <div class="plan-period">شهرياً</div>
                 <ul class="plan-features">
                     <li><i class="fas fa-check"></i> سير ذاتية غير محدودة</li>
-                    <li><i class="fas fa-check"></i> جميع القوالب (15+)</li>
+                    <li><i class="fas fa-check"></i> جميع القوالب (+15)</li>
                     <li><i class="fas fa-check"></i> تصدير PDF بدون علامة مائية</li>
-                    <li><i class="fas fa-check"></i> قوالب متقدمة وحصرية</li>
+                    <li><i class="fas fa-check"></i> ملفات شخصية وبصرية</li>
                     <li><i class="fas fa-check"></i> صفحة بورتفوليو شخصية</li>
-                    <li><i class="fas fa-check"></i> تقييم متقدم للسيرة</li>
+                    <li><i class="fas fa-check"></i> تقييم متقدم للسيرة بالذكاء الاصطناعي</li>
                     <li><i class="fas fa-check"></i> مساعد كتابة بالذكاء الاصطناعي</li>
-                    <li><i class="fas fa-check"></i> مطابقة الوظائف</li>
-                    <li><i class="fas fa-check"></i> رفع السيرة وتحليلها</li>
-                    <li><i class="fas fa-check"></i> أولوية في الدعم 24/7</li>
+                    <li><i class="fas fa-check"></i> مطابقة الوظائف بالذكاء الاصطناعي</li>
+                    <li><i class="fas fa-check"></i> رفع السيرة وتحليلها بالذكاء الاصطناعي</li>
+                    <li><i class="fas fa-check"></i> أولوية في الدعم الفني 24/7</li>
                 </ul>
                 <div class="plan-check">&#10003;</div>
             </div>

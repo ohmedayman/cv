@@ -1382,6 +1382,15 @@
                     const res = await createUserWithEmailAndPassword(auth, email, pass);
                     updateProfile(res.user, { displayName: name }).catch(()=>{});
                     saveUserData(res.user, { name });
+                    // Track referral
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const referrerUid = urlParams.get('ref');
+                    if (referrerUid && referrerUid !== res.user.uid) {
+                        set(ref(db, 'users/' + res.user.uid + '/referredBy'), referrerUid).catch(()=>{});
+                        const ptsRef = ref(db, 'users/' + referrerUid + '/affiliatePoints');
+                        get(ptsRef).then(snap => { set(ptsRef, (snap.val() || 0) + 5); }).catch(()=>{});
+                        push(ref(db, 'users/' + referrerUid + '/affiliateReferrals'), { referred: res.user.uid, name: name, timestamp: Date.now() }).catch(()=>{});
+                    }
                     if (window.QCVNotify) QCVNotify.success();
                     location.replace("editor.html");
                 } else {

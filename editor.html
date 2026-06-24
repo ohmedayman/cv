@@ -22,14 +22,14 @@
         body{background:var(--bg);color:var(--text);font-family:'Inter','Cairo',sans-serif;height:100vh;overflow:hidden}
 
         /* ===== TOP BAR ===== */
-        .topbar{height:56px;background:var(--sidebar);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:12px;z-index:100;position:relative;direction:ltr}
+        .topbar{height:56px;background:var(--sidebar);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:10px;z-index:100;position:relative;direction:ltr;overflow:visible}
         .topbar-logo{font-size:1.4rem;font-weight:900;color:var(--text);display:flex;align-items:center;gap:6px;flex-shrink:0}
         .topbar-logo span{color:var(--accent)}
         .topbar-nav{display:flex;align-items:center;gap:6px;margin-left:16px}
         .topbar-nav a{color:var(--muted);text-decoration:none;font-weight:600;font-size:0.8rem;padding:6px 12px;border-radius:6px;transition:all 0.2s}
         .topbar-nav a:hover,.topbar-nav a.active{color:var(--text);background:rgba(0,0,0,0.05)}
         .topbar-nav a.active{color:var(--accent)}
-        .topbar-center{display:flex;align-items:center;gap:10px;flex:1;justify-content:center}
+        .topbar-center{display:flex;align-items:center;gap:10px;flex:1;justify-content:center;min-width:0;overflow:hidden}
         .ctrl-group{display:flex;align-items:center;gap:5px}
         .ctrl-group label{font-size:0.68rem;color:var(--muted);font-weight:600;white-space:nowrap}
         .ctrl-group input[type="range"]{width:60px;accent-color:var(--accent);cursor:pointer}
@@ -61,7 +61,10 @@
         .notif-item .notif-time{font-size:0.7rem;color:var(--muted)}
         .notif-empty{text-align:center;padding:40px 20px;color:var(--muted);font-size:0.85rem}
         .notif-empty i{font-size:2rem;margin-bottom:10px;display:block;opacity:0.4}
-        .topbar-left{display:flex;align-items:center;gap:10px;flex-shrink:0}
+        .notif-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;padding-top:6px;border-top:1px solid var(--border)}
+        .notif-meta span{font-size:0.7rem;color:var(--muted);display:flex;align-items:center;gap:3px;background:var(--bg);padding:2px 8px;border-radius:6px;font-weight:600}
+        .notif-meta i{font-size:0.6rem;color:var(--accent)}
+        .topbar-left{display:flex;align-items:center;gap:8px;flex-shrink:0;overflow:visible}
         .theme-toggle{width:36px;height:36px;border-radius:10px;background:var(--card);border:1px solid var(--border);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all 0.25s}
         .theme-toggle:hover{border-color:var(--accent);transform:scale(1.05);box-shadow:0 2px 8px rgba(0,3,201,0.15)}
         .btn-upload-cv{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;padding:7px 14px;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:5px;transition:all 0.2s;box-shadow:0 2px 8px rgba(99,102,241,0.25)}
@@ -78,7 +81,7 @@
         .btn-ai-gen{background:linear-gradient(135deg,rgba(139,92,246,0.15),rgba(37,99,235,0.15));color:#7c3aed;border:1px solid rgba(139,92,246,0.3);padding:8px 16px;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:none;align-items:center;gap:6px}
         .btn-ai-gen:hover{background:linear-gradient(135deg,rgba(139,92,246,0.25),rgba(37,99,235,0.25));border-color:rgba(139,92,246,0.5);transform:translateY(-1px)}
         @keyframes spin{to{transform:rotate(360deg)}}
-        .profile-area{position:relative}
+        .profile-area{position:relative;flex-shrink:0}
         .profile-trigger{display:flex;align-items:center;gap:8px;cursor:pointer;padding:4px 8px;border-radius:8px;transition:background 0.2s}
         .profile-trigger:hover{background:rgba(0,0,0,0.05)}
         .profile-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--sky));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8rem;color:#fff;flex-shrink:0}
@@ -106,6 +109,25 @@
         .dd-item.danger:hover{background:rgba(239,68,68,0.1)}
         .dd-item.danger .dd-icon{background:rgba(239,68,68,0.1)}
         .dd-divider{height:1px;background:var(--border);margin:2px 14px}
+
+        /* Affiliate Section */
+        .dd-affiliate{padding:12px 14px;margin:0 6px}
+        .dd-aff-header{display:flex;align-items:center;gap:6px;margin-bottom:6px;font-size:0.82rem;font-weight:700;color:var(--text)}
+        .dd-aff-points{margin-right:auto;background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;font-size:0.65rem;font-weight:800;padding:2px 8px;border-radius:10px;min-width:24px;text-align:center}
+        .dd-aff-desc{font-size:0.68rem;color:var(--muted);margin-bottom:10px;line-height:1.5}
+        .dd-aff-desc strong{color:#f59e0b}
+        .dd-aff-link-box{display:flex;gap:4px;margin-bottom:10px}
+        .dd-aff-link-box input{flex:1;padding:8px 10px;background:var(--input);border:1px solid var(--border);border-radius:8px;font-size:0.68rem;color:var(--text);outline:none;min-width:0}
+        .dd-aff-copy{padding:8px 12px;background:var(--accent);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:0.75rem;transition:all 0.2s;flex-shrink:0}
+        .dd-aff-copy:hover{background:#0002a3}
+        .dd-aff-copy.copied{background:#059669}
+        .dd-aff-share{display:flex;gap:8px;justify-content:center}
+        .dd-aff-share-btn{width:36px;height:36px;border-radius:50%;border:none;color:#fff;font-size:0.9rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center}
+        .dd-aff-share-btn:hover{transform:scale(1.1)}
+        .dd-aff-share-btn.whatsapp{background:#25d366}
+        .dd-aff-share-btn.facebook{background:#1877f2}
+        .dd-aff-share-btn.twitter{background:#1da1f2}
+        .dd-aff-share-btn.telegram{background:#0088cc}
         .dd-subscription{margin:0 14px 10px;padding:12px 14px;background:rgba(37,99,235,0.06);border:1px solid rgba(37,99,235,0.15);border-radius:10px}
         .dd-sub-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
         .dd-sub-row:last-of-type{margin-bottom:0}
@@ -118,16 +140,16 @@
         .editor-layout{display:flex;height:calc(100vh - 56px)}
 
         /* Left Sidebar */
-        .sidebar-nav{width:240px;min-width:240px;background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;order:1}
+        .sidebar-nav{width:250px;min-width:250px;background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;order:1;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
         .btn-upgrade{width:100%;padding:9px;background:transparent;border:1.5px solid var(--accent);color:var(--accent);border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px}
         .btn-upgrade:hover{background:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(0,3,201,0.2)}
 
         /* Nav Tabs */
-        .nav-tabs{flex:1;padding:8px 10px}
-        .nav-tab{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;font-weight:600;font-size:0.82rem;color:var(--muted);cursor:pointer;transition:all 0.2s;margin-bottom:2px;position:relative}
+        .nav-tabs{flex:1;padding:6px 10px}
+        .nav-tab{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;font-weight:600;font-size:0.82rem;color:var(--muted);cursor:pointer;transition:all 0.2s;margin-bottom:4px;position:relative}
         .nav-tab:hover{background:var(--bg);color:var(--text)}
         .nav-tab.active{background:rgba(0,3,201,0.08);color:var(--accent);font-weight:700}
-        .nav-tab .icon{width:28px;height:28px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:0.8rem;flex-shrink:0;transition:all 0.2s}
+        .nav-tab .icon{width:30px;height:30px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:0.82rem;flex-shrink:0;transition:all 0.2s}
         .nav-tab.active .icon{background:rgba(0,3,201,0.12);color:var(--accent)}
         .nav-tab .tab-label{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:0.8rem}
         .nav-tab .tab-dots{width:22px;height:22px;border:none;background:transparent;color:var(--muted);border-radius:4px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.15s;flex-shrink:0;opacity:0}
@@ -143,7 +165,7 @@
         .nav-tab-custom .icon{background:rgba(139,92,246,0.15) !important;color:#a78bfa !important}
         .nav-tab-custom.active .icon{background:rgba(139,92,246,0.3) !important}
 
-        .add-section-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 14px;margin:4px 12px 12px;border:2px dashed var(--border);border-radius:8px;font-size:0.78rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.2s;font-family:inherit;background:transparent}
+        .add-section-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 14px;margin:6px 10px 10px;border:2px dashed var(--border);border-radius:8px;font-size:0.78rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.2s;font-family:inherit;background:transparent}
         .add-section-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(56,189,248,0.05)}
         .upload-cv-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 14px;margin:4px 12px 12px;border:2px solid #6366f1;border-radius:8px;font-size:0.78rem;font-weight:700;color:#6366f1;cursor:pointer;transition:all 0.2s;font-family:inherit;background:rgba(99,102,241,0.06)}
         .upload-cv-btn:hover{background:#6366f1;color:#fff;border-color:#6366f1;transform:translateY(-1px);box-shadow:0 2px 8px rgba(99,102,241,0.3)}
@@ -179,8 +201,16 @@
         .upload-result .ur-text{font-size:0.8rem;color:var(--text);font-weight:600}
         .upload-result .ur-sub{font-size:0.7rem;color:var(--muted);margin-top:4px}
 
-        .sidebar-bottom{padding:10px;border-top:1px solid var(--border)}
-        .sidebar-feature{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;font-size:0.78rem;color:var(--light);cursor:pointer;transition:all 0.2s;margin-bottom:2px}
+        .sidebar-bottom{padding:10px;border-top:1px solid var(--border);flex-shrink:0}
+        .sidebar-feature{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;font-size:0.8rem;color:var(--light);cursor:pointer;transition:all 0.2s;margin-bottom:2px}
+
+        /* Pro Upsell Card */
+        .pro-upsell{padding:14px;margin:0 0 8px;background:linear-gradient(135deg,rgba(0,3,201,0.04),rgba(139,92,246,0.04));border:1px solid rgba(0,3,201,0.12);border-radius:12px}
+        .pro-upsell-header{font-size:0.85rem;font-weight:800;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+        .pro-upsell-feat{font-size:0.75rem;color:var(--text);padding:5px 0;display:flex;align-items:center;gap:8px;font-weight:600}
+        .pro-upsell-feat i{font-size:0.6rem;flex-shrink:0}
+        .pro-upsell-btn{width:100%;margin-top:12px;padding:10px;background:linear-gradient(135deg,#0003c9,#1e40af);color:#fff;border:none;border-radius:8px;font-weight:800;font-size:0.78rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px}
+        .pro-upsell-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,3,201,0.3)}
         .sidebar-feature:hover{background:rgba(0,0,0,0.04)}
         .sidebar-feature .pro-badge{background:var(--accent);color:#000;font-size:0.55rem;padding:1px 5px;border-radius:4px;font-weight:700;margin-right:auto}
 
@@ -209,27 +239,27 @@
         .tpl-card-badge{display:inline-block;padding:3px 8px;border-radius:5px;font-size:0.6rem;font-weight:700;margin-top:6px}
 
         /* Middle - Forms */
-        .editor-forms{width:320px;min-width:320px;overflow-y:auto;padding:14px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+        .editor-forms{width:340px;min-width:340px;overflow-y:auto;padding:16px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
         .editor-forms::-webkit-scrollbar{width:4px}
         .editor-forms::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
-        .form-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:10px;display:none}
+        .form-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:12px;display:none}
         .form-card.active{display:block}
-        .form-card-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+        .form-card-header{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border)}
         .form-card-header .icon{width:36px;height:36px;border-radius:10px;background:rgba(0,3,201,0.08);display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--accent)}
         .form-card-header h3{font-size:0.95rem;font-weight:800}
-        .field{margin-bottom:14px}
-        .field label{display:flex;align-items:center;justify-content:space-between;font-size:0.72rem;color:var(--muted);margin-bottom:6px;font-weight:600}
+        .field{margin-bottom:16px}
+        .field label{display:flex;align-items:center;justify-content:space-between;font-size:0.74rem;color:var(--muted);margin-bottom:7px;font-weight:600}
         .field label .char-count{font-size:0.62rem;color:var(--muted);font-weight:400}
-        .field input,.field textarea,.field select{width:100%;padding:10px 12px;background:var(--input);border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:inherit;font-size:0.85rem;outline:none;transition:border-color 0.2s}
+        .field input,.field textarea,.field select{width:100%;padding:11px 13px;background:var(--input);border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:inherit;font-size:0.85rem;outline:none;transition:border-color 0.2s}
         .field input:focus,.field textarea:focus{border-color:var(--accent)}
-        .field textarea{resize:vertical;min-height:80px;line-height:1.6}
+        .field textarea{resize:vertical;min-height:90px;line-height:1.6}
         .field-hint{font-size:0.65rem;color:var(--muted);margin-top:4px;font-style:italic}
         .repeater-block{background:rgba(0,0,0,0.04);border:1px dashed var(--border);border-radius:7px;padding:10px;margin-bottom:8px}
         .rb-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
         .rb-title{font-size:0.72rem;font-weight:700;color:var(--light)}
         .btn-rb-delete{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);color:var(--red);border-radius:5px;padding:3px 8px;font-size:0.65rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.15s}
         .btn-rb-delete:hover{background:var(--red);color:#fff}
-        .btn-add{width:100%;padding:10px;background:transparent;border:1px dashed var(--accent);color:var(--accent);border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px}
+        .btn-add{width:100%;padding:11px;background:transparent;border:1px dashed var(--accent);color:var(--accent);border-radius:8px;font-weight:700;font-size:0.8rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px}
         .btn-add:hover{background:rgba(0,3,201,0.06);border-style:solid}
 
         /* AI Score Widget */
@@ -267,6 +297,33 @@
         .issue-fix{font-weight:700;color:#fff;background:var(--accent);padding:2px 8px;border-radius:10px;font-size:0.58rem;flex-shrink:0;white-space:nowrap;display:flex;align-items:center;gap:3px}
         .ai-fix-btn{transition:all 0.15s}
         .cat-issue:hover .ai-fix-btn{background:#4338ca}
+
+        /* ===== UPGRADE MODAL ===== */
+        .upgrade-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:9999;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+        .upgrade-overlay.show{display:flex;animation:fadeIn 0.2s ease}
+        .upgrade-card{background:var(--card);border:1px solid var(--border);border-radius:20px;max-width:420px;width:92%;overflow:hidden;box-shadow:0 25px 60px rgba(0,0,0,0.2);animation:panelUp 0.3s cubic-bezier(0.16,1,0.3,1);position:relative}
+        .upgrade-card-top{background:linear-gradient(135deg,#0003c9,#1e40af);padding:24px 28px 20px;text-align:center;color:#fff;position:relative}
+        .upgrade-card-top .rocket{font-size:2.4rem;margin-bottom:10px;display:block}
+        .upgrade-card-top .plan-label{font-size:1rem;font-weight:800;margin-bottom:2px;font-family:'Cairo',sans-serif}
+        .upgrade-card-top .plan-sub{font-size:0.78rem;opacity:0.85;font-weight:500}
+        .upgrade-price{text-align:center;padding:18px 28px 6px}
+        .upgrade-price .price-num{font-size:2.8rem;font-weight:900;color:var(--text);line-height:1}
+        .upgrade-price .price-currency{font-size:0.9rem;font-weight:700;color:var(--muted)}
+        .upgrade-price .price-period{font-size:0.82rem;color:var(--muted);font-weight:500}
+        .upgrade-features{padding:10px 28px 20px}
+        .upgrade-feat{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.05)}
+        .upgrade-feat:last-child{border-bottom:none}
+        .upgrade-feat .feat-check{width:24px;height:24px;border-radius:50%;background:rgba(0,3,201,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .upgrade-feat .feat-check i{font-size:0.7rem;color:var(--accent)}
+        .upgrade-feat .feat-text{font-size:0.85rem;font-weight:600;color:var(--text);flex:1}
+        .upgrade-actions{padding:0 28px 24px;display:flex;flex-direction:column;gap:10px}
+        .upgrade-btn-primary{width:100%;padding:14px;background:linear-gradient(135deg,#0003c9,#1e40af);color:#fff;border:none;border-radius:12px;font-weight:800;font-size:0.95rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:8px}
+        .upgrade-btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,3,201,0.3)}
+        .upgrade-btn-secondary{width:100%;padding:11px;background:transparent;color:var(--muted);border:1px solid var(--border);border-radius:10px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;transition:all 0.2s}
+        .upgrade-btn-secondary:hover{background:var(--bg);color:var(--text)}
+        .upgrade-close{position:absolute;top:12px;left:12px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.15);border:none;color:#fff;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;z-index:2}
+        .upgrade-close:hover{background:rgba(255,255,255,0.3);transform:scale(1.1)}
+        .upgrade-badge{position:absolute;top:0;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;font-size:0.7rem;font-weight:800;padding:4px 16px;border-radius:0 0 10px 10px;font-family:'Cairo',sans-serif;box-shadow:0 2px 8px rgba(245,158,11,0.3)}
 
         /* ===== AI ASSISTANT ===== */
         .ai-assist-btn{position:fixed;bottom:90px;right:28px;z-index:9998;width:56px;height:56px;background:linear-gradient(135deg,#0003c9,#2563eb);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,3,201,0.35);cursor:pointer;border:none;transition:all 0.3s;animation:aiPulse 3s infinite}
@@ -342,11 +399,11 @@
         .portfolio-url-btns .btn-open:hover{background:#059669}
 
         /* Right - Preview */
-        .preview-zone{flex:1;background:#e5e7eb;display:flex;flex-direction:column;align-items:center;overflow:hidden}
-        .preview-container{flex:1;display:flex;justify-content:center;align-items:flex-start;padding:24px;overflow-y:auto;width:100%;position:relative}
+        .preview-zone{flex:1;background:#e5e7eb;display:flex;flex-direction:column;align-items:center;overflow:hidden;min-width:0}
+        .preview-container{flex:1;display:flex;justify-content:center;align-items:flex-start;padding:28px;overflow-y:auto;width:100%;position:relative}
         .ai-cv-badge{position:absolute;top:10px;right:10px;background:linear-gradient(135deg,rgba(139,92,246,0.2),rgba(37,99,235,0.2));border:1px solid rgba(139,92,246,0.3);color:#a78bfa;font-size:0.7rem;font-weight:700;padding:5px 12px;border-radius:20px;z-index:5;display:flex;align-items:center;gap:4px;backdrop-filter:blur(8px)}
-        .zoom-controls{display:flex;align-items:center;gap:8px;padding:10px 20px;background:var(--sidebar);border-top:1px solid var(--border);width:100%;justify-content:center;position:sticky;bottom:0;z-index:10}
-        .zoom-btn{width:36px;height:36px;border-radius:8px;background:var(--card);border:1px solid var(--border);color:var(--light);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;font-size:1rem}
+        .zoom-controls{display:flex;align-items:center;gap:8px;padding:12px 20px;background:var(--sidebar);border-top:1px solid var(--border);width:100%;justify-content:center;position:sticky;bottom:0;z-index:10}
+        .zoom-btn{width:38px;height:38px;border-radius:8px;background:var(--card);border:1px solid var(--border);color:var(--light);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;font-size:1rem}
         .zoom-btn:hover{border-color:var(--accent);color:var(--accent)}
         .zoom-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
         .zoom-pct{font-size:0.78rem;font-weight:700;color:var(--text);min-width:45px;text-align:center}
@@ -402,8 +459,11 @@
         @media print{body,.topbar,.sidebar-nav,.editor-forms,.mobile-overlay,.template-panel,.zoom-controls{display:none!important}.preview-zone{padding:0;background:#fff}.preview-container{padding:0}.cv-page{box-shadow:none!important;margin:0!important}}
         /* ===== RESPONSIVE ===== */
         @media(max-width:1200px){
-            .sidebar-nav{width:220px;min-width:220px}
+            .sidebar-nav{width:230px;min-width:230px}
+            .editor-forms{width:320px;min-width:320px}
             .preview-zone{flex:1}
+            .ctrl-group label{display:none}
+            .profile-name{display:none}
         }
         @media(max-width:900px){
             .editor-layout{flex-direction:column}
@@ -418,23 +478,27 @@
             .btn-save{padding:6px 12px;font-size:0.72rem}
             .profile-dropdown{width:260px}
             #sidebarPlanInfo{display:none}
+            .notif-panel{width:calc(100vw - 24px);right:-60px}
         }
         @media(max-width:600px){
             .sidebar-nav{max-height:35vh;overflow-y:auto}
-            .nav-tabs{padding:8px}
+            .nav-tabs{padding:6px 8px}
             .nav-tab{font-size:0.75rem;padding:8px 10px}
             .nav-tab .icon{width:26px;height:26px;font-size:0.78rem}
-            .editor-forms{max-height:40vh;padding:10px}
-            .field input,.field textarea,.field select{font-size:0.82rem;padding:8px 10px}
-            .form-card{padding:14px}
+            .editor-forms{max-height:40vh;padding:12px}
+            .field input,.field textarea,.field select{font-size:0.82rem;padding:9px 11px}
+            .form-card{padding:16px}
             .preview-zone{padding:8px}
             .cv-page{transform:scale(0.5);transform-origin:top center}
             .topbar-logo{font-size:1.1rem}
             .topbar-center select{font-size:0.72rem;max-width:100px}
-            .add-section-btn{font-size:0.7rem;padding:5px 8px}
+            .add-section-btn{font-size:0.7rem;padding:8px 10px}
             .profile-dropdown{width:260px;right:-10px}
             .btn-export span:not(.spinner){display:none}
             .btn-html-export span{display:none}
+            .btn-save span{display:none}
+            .profile-name{display:none}
+            .ctrl-group label{display:none}
         }
         @media(max-width:400px){
             .cv-page{transform:scale(0.38)}
@@ -553,12 +617,32 @@
                 <div class="dd-subscription" id="ddSubscription">
                     <div class="dd-sub-row"><span class="dd-sub-label">Downloads</span><span class="dd-sub-value" id="ddDownloads" style="font-weight:700">0 / 2</span></div>
                     <div class="dd-sub-row"><span class="dd-sub-label">Expires</span><span class="dd-sub-value" id="ddExpiry" style="font-weight:700">-</span></div>
-                    <button class="dd-upgrade-btn" onclick="window.location.href='pay.html'"><i class="fas fa-star"></i> Upgrade Plan</button>
+                    <button class="dd-upgrade-btn" onclick="openUpgradeModal()"><i class="fas fa-star"></i> Upgrade Plan</button>
                 </div>
                 <div class="dd-section">
                     <div class="dd-item" onclick="openPanel('profile')"><span class="dd-icon"><i class="fas fa-user"></i></span> Profile</div>
                     <div class="dd-item" onclick="openPanel('cvs')"><span class="dd-icon"><i class="fas fa-file-alt"></i></span> My CVs</div>
                     <div class="dd-item" onclick="openPanel('settings')"><span class="dd-icon"><i class="fas fa-cog"></i></span> Settings</div>
+                </div>
+                <div class="dd-divider"></div>
+                <!-- Affiliate Section -->
+                <div class="dd-affiliate">
+                    <div class="dd-aff-header">
+                        <i class="fas fa-coins" style="color:#f59e0b"></i>
+                        <span>شارك واربح</span>
+                        <span class="dd-aff-points" id="ddAffPoints">0</span>
+                    </div>
+                    <div class="dd-aff-desc">شارك رابطك مع أصدقائك واكسب <strong>5 نقاط</strong> لكل مشاركة</div>
+                    <div class="dd-aff-link-box">
+                        <input type="text" id="ddAffLink" readonly value="جاري التحميل...">
+                        <button class="dd-aff-copy" onclick="copyAffLink()"><i class="fas fa-copy"></i></button>
+                    </div>
+                    <div class="dd-aff-share">
+                        <button class="dd-aff-share-btn whatsapp" onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i></button>
+                        <button class="dd-aff-share-btn facebook" onclick="shareFacebook()"><i class="fab fa-facebook-f"></i></button>
+                        <button class="dd-aff-share-btn twitter" onclick="shareTwitter()"><i class="fab fa-twitter"></i></button>
+                        <button class="dd-aff-share-btn telegram" onclick="shareTelegram()"><i class="fab fa-telegram-plane"></i></button>
+                    </div>
                 </div>
                 <div class="dd-divider"></div>
                 <div class="dd-section">
@@ -668,20 +752,32 @@
         <button class="add-section-btn" onclick="openSectionModal()">+ Add Section</button>
 
         <!-- Portfolio Link -->
-        <div style="padding:10px;border-top:1px solid var(--border)">
+        <div id="portfolioLinkWrap" style="padding:10px;border-top:1px solid var(--border);flex-shrink:0">
             <div class="portfolio-link-box">
-                <div class="pl-title"><i class="fas fa-link" style="margin-left:4px"></i> رابط المحفظة</div>
+                <div class="pl-title"><i class="fas fa-link" style="margin-left:4px"></i> Portfolio Link</div>
                 <div class="portfolio-url">
-                    <input type="text" id="portfolioUrl" readonly value="جاري التحميل...">
+                    <input type="text" id="portfolioUrl" readonly value="Loading...">
                     <div class="portfolio-url-btns">
-                        <button class="btn-copy" onclick="copyPortfolioLink()" id="copyPortBtn"><i class="fas fa-copy"></i> نسخ</button>
-                        <button class="btn-open" onclick="openPortfolioLink()"><i class="fas fa-external-link-alt"></i> فتح</button>
+                        <button class="btn-copy" onclick="copyPortfolioLink()" id="copyPortBtn"><i class="fas fa-copy"></i> Copy</button>
+                        <button class="btn-open" onclick="openPortfolioLink()"><i class="fas fa-external-link-alt"></i> Open</button>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="sidebar-bottom">
+            <!-- Pro Plan Upsell (free users only) -->
+            <div class="pro-upsell" id="proUpsell">
+                <div class="pro-upsell-header"><i class="fas fa-crown" style="color:#f59e0b"></i> الباقة الاحترافية</div>
+                <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> جميع القوالب (+15)</div>
+                <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> تصدير PDF بدون علامة مائية</div>
+                <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> ملفات شخصية وبصرية</div>
+                <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> صفحة بورتفوليو شخصية</div>
+                <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> تقييم السيرة بالذكاء الاصطناعي</div>
+                <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> مساعد كتابة بالذكاء الاصطناعي</div>
+                <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> مطابقة الوظائف بالذكاء الاصطناعي</div>
+                <button class="pro-upsell-btn" onclick="openUpgradeModal()"><i class="fas fa-star"></i> اشترك الان - 99 ج.م/شهر</button>
+            </div>
             <div class="sidebar-feature" onclick="showTemplates()"><span class="icon"><i class="fas fa-file-alt"></i></span> Change Template</div>
             <div class="sidebar-feature paid-only" id="aiAssistantBtn" onclick="window.open('ai.html')" style="display:none"><span class="icon"><i class="fas fa-brain"></i></span> AI Assistant</div>
             <div class="sidebar-feature" onclick="window.open('help.html')"><span class="icon"><i class="fas fa-question-circle"></i></span> Help</div>
@@ -699,7 +795,7 @@
             <div class="field"><label>Phone</label><input type="text" id="inputPhone" oninput="renderCV()" placeholder="+1 234 567 890"></div>
             <div class="field"><label>Location</label><input type="text" id="inputLocation" oninput="renderCV()" placeholder="New York, NY"></div>
             <div class="field"><label>LinkedIn</label><input type="text" id="inputLinkedin" oninput="renderCV()" placeholder="linkedin.com/in/johndoe"></div>
-            <div class="field"><label>Professional Summary <span class="char-count" id="summaryCount">0 / 100</span></label><textarea id="inputSummary" oninput="updateCharCount('summary');renderCV()" placeholder="A passionate designer creating exceptional digital experiences..." style="min-height:100px"></textarea><div class="field-hint">Recommended 50-100 words</div></div>
+            <div class="field"><label>Professional Summary <span class="char-count" id="summaryCount">0 / 100</span></label><textarea id="inputSummary" oninput="updateCharCount('summary');renderCV()" placeholder="A passionate designer creating exceptional digital experiences..." style="min-height:110px"></textarea><div class="field-hint">Recommended 50-100 words</div></div>
         </div>
 
         <!-- Experience -->
@@ -779,6 +875,38 @@
     <div class="panel" id="panelContent" onclick="event.stopPropagation()"></div>
 </div>
 
+<!-- Upgrade Modal -->
+<div class="upgrade-overlay" id="upgradeOverlay" onclick="closeUpgradeModal(event)">
+    <div class="upgrade-card" onclick="event.stopPropagation()">
+        <div class="upgrade-badge">الاشهر</div>
+        <button class="upgrade-close" onclick="closeUpgradeModal()">&times;</button>
+        <div class="upgrade-card-top">
+            <span class="rocket"><i class="fas fa-rocket"></i></span>
+            <div class="plan-label">الباقة الاحترافية</div>
+            <div class="plan-sub">للمحترفين والباحثين عن عمل</div>
+        </div>
+        <div class="upgrade-price">
+            <span class="price-num">99</span>
+            <span class="price-currency"> ج.م / </span>
+            <span class="price-period">شهرياً</span>
+        </div>
+        <div class="upgrade-features">
+            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">5 سير ذاتية احترافية</span></div>
+            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">جميع القوالب (+15)</span></div>
+            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">تصدير PDF بدون علامة مائية</span></div>
+            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">ملفات شخصية وبصرية</span></div>
+            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">صفحة بورتفوليو شخصية</span></div>
+            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">تقييم متقدم للسيرة بالذكاء الاصطناعي</span></div>
+            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">مساعد كتابة بالذكاء الاصطناعي</span></div>
+            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">مطابقة الوظائف بالذكاء الاصطناعي</span></div>
+        </div>
+        <div class="upgrade-actions">
+            <button class="upgrade-btn-primary" onclick="window.location.href='pay.html'"><i class="fas fa-star"></i> اشترك الان</button>
+            <button class="upgrade-btn-secondary" onclick="closeUpgradeModal()">لاحقاً</button>
+        </div>
+    </div>
+</div>
+
 <!-- ===== SCRIPTS ===== -->
 <script src="js/template-engine.js"></script>
 <script src="js/cv-analyzer.js"></script>
@@ -805,6 +933,39 @@
         userData=snap.val()||{};
         window._userData=userData;
         if(userData.banned){await signOut(auth);location.replace('index.html');return}
+        // Track login with IP + device + browser
+        (async function(){
+            try {
+                var ipRes = await fetch('https://api.ipify.org?format=json');
+                var ipData = await ipRes.json();
+                var ip = ipData.ip || 'unknown';
+                var ua = navigator.userAgent;
+                var device = 'جهاز غير معروف';
+                if(ua.indexOf('iPhone')>-1) device = 'iPhone';
+                else if(ua.indexOf('iPad')>-1) device = 'iPad';
+                else if(ua.indexOf('Samsung')>-1) device = 'Samsung ' + (ua.match(/SM-\w+/)||[''])[0];
+                else if(ua.indexOf('Xiaomi')>-1) device = 'Xiaomi';
+                else if(ua.indexOf('OPPO')>-1) device = 'OPPO';
+                else if(ua.indexOf('Vivo')>-1) device = 'Vivo';
+                else if(ua.indexOf('Huawei')>-1) device = 'Huawei';
+                else if(ua.indexOf('Realme')>-1) device = 'Realme';
+                else if(ua.indexOf('Mac')>-1) device = 'Apple Mac';
+                else if(ua.indexOf('Windows')>-1) device = 'Windows PC';
+                else if(ua.indexOf('Linux')>-1) device = 'Linux PC';
+                var browser = 'متصفح غير معروف';
+                if(ua.indexOf('Edg/')>-1) browser = 'Edge ' + ua.split('Edg/')[1]?.split(' ')[0];
+                else if(ua.indexOf('Chrome/')>-1 && ua.indexOf('OPR/')===-1) browser = 'Chrome ' + ua.split('Chrome/')[1]?.split(' ')[0];
+                else if(ua.indexOf('Firefox/')>-1) browser = 'Firefox ' + ua.split('Firefox/')[1]?.split(' ')[0];
+                else if(ua.indexOf('Safari/')>-1 && ua.indexOf('Chrome/')===-1) browser = 'Safari ' + ua.split('Version/')[1]?.split(' ')[0];
+                var city = 'القاهرة';
+                try { var geo = await fetch('https://ipapi.co/' + ip + '/json/'); var gd = await geo.json(); if(gd.city) city = gd.city; } catch(e){}
+                var notifId = 'n_' + Date.now();
+                await set(ref(db, 'users/' + user.uid + '/notifications/' + notifId), {
+                    type: 'login', text: 'ادخول من ' + device, ip: ip, device: device, browser: browser, city: city, timestamp: Date.now(), read: false
+                });
+                await set(ref(db, 'users/' + user.uid + '/lastLogin'), Date.now());
+            } catch(e) { console.log('Login tracking skipped:', e); }
+        })();
         const initial=(userData.name||user.displayName||'U')[0].toUpperCase();
         ['userAvatar','ddAvatar'].forEach(id=>{if(document.getElementById(id))document.getElementById(id).textContent=initial});
         ['userName','ddName'].forEach(id=>{if(document.getElementById(id))document.getElementById(id).textContent=userData.name||user.displayName||'User'});
@@ -824,12 +985,13 @@
             const dlEl = document.getElementById('ddDownloads');
             if(dlEl) {
                 const dlCount = userData.downloads || 0;
-                const dlLimit = isFree ? 2 : '∞';
+                const plan = userData.plan || 'free';
+                const dlLimit = plan === 'unlimited' ? '∞' : plan === 'pro' ? 5 : 1;
                 dlEl.textContent = dlCount + ' / ' + dlLimit;
                 // Color code: red if at limit, orange if 1 away, green otherwise
-                if(isFree) {
-                    if(dlCount >= 2) dlEl.style.color = '#ef4444';
-                    else if(dlCount >= 1) dlEl.style.color = '#f59e0b';
+                if(plan !== 'unlimited') {
+                    if(dlCount >= dlLimit) dlEl.style.color = '#ef4444';
+                    else if(dlCount >= dlLimit - 1) dlEl.style.color = '#f59e0b';
                     else dlEl.style.color = '#059669';
                 } else {
                     dlEl.style.color = '#059669';
@@ -868,7 +1030,7 @@
         let allNotifications = [];
         onValue(ref(db, 'users/' + user.uid + '/notifications'), (snap) => {
             const data = snap.val() || {};
-            allNotifications = Object.entries(data).map(([id, n]) => ({ id, ...n })).sort((a, b) => (b.sentAt || 0) - (a.sentAt || 0));
+            allNotifications = Object.entries(data).map(([id, n]) => ({ id, ...n })).sort((a, b) => (b.timestamp || b.sentAt || 0) - (a.timestamp || a.sentAt || 0));
             renderNotifList();
         });
 
@@ -890,22 +1052,27 @@
         function renderNotifList() {
             const list = document.getElementById('notifList');
             const badge = document.getElementById('notifBadge');
-            const unread = allNotifications.filter(n => !n.read);
+            const visibleNotifs = allNotifications.filter(n => n.type !== 'login');
+            const unread = visibleNotifs.filter(n => !n.read);
             badge.textContent = unread.length || '';
             badge.setAttribute('data-count', unread.length);
 
-            if (!allNotifications.length) {
+            if (!visibleNotifs.length) {
                 list.innerHTML = '<div class="notif-empty"><i class="fas fa-bell-slash"></i>لا توجد إشعارات بعد</div>';
                 return;
             }
-            list.innerHTML = allNotifications.slice(0, 20).map(n => {
-                const typeClasses = { info: 'notif-type-info', warning: 'notif-type-warning', success: 'notif-type-success', promo: 'notif-type-promo' };
-                const typeLabels = { info: 'معلوماتية', warning: 'تحذير', success: 'تهنئة', promo: 'عرض خاص' };
-                const ago = getTimeAgo(n.sentAt);
+            list.innerHTML = visibleNotifs.slice(0, 20).map(n => {
+                const typeClasses = { info: 'notif-type-info', warning: 'notif-type-warning', success: 'notif-type-success', promo: 'notif-type-promo', login: 'notif-type-success', plan: 'notif-type-info', download: 'notif-type-info' };
+                const typeLabels = { info: 'معلوماتية', warning: 'تحذير', success: 'تهنئة', promo: 'عرض خاص', login: 'ادخول', plan: 'باقة', download: 'تحميل' };
+                const ago = getTimeAgo(n.timestamp || n.sentAt);
                 var safeLink = (n.link && (n.link.startsWith('http://') || n.link.startsWith('https://'))) ? n.link : '#';
+                var metaHtml = '';
+                if (n.type === 'login' && n.ip) {
+                    metaHtml = '<div class="notif-meta"><span><i class="fas fa-wifi"></i> ' + escapeHtml(n.ip) + '</span><span><i class="fas fa-map-marker-alt"></i> ' + escapeHtml(n.city || 'غير معروف') + '</span><span><i class="fas fa-mobile-alt"></i> ' + escapeHtml(n.device || '') + '</span><span><i class="fas fa-globe"></i> ' + escapeHtml(n.browser || '') + '</span></div>';
+                }
                 return `<div class="notif-item ${n.read ? '' : 'unread'}" onclick="markRead('${n.id}')">
                     <span class="notif-type ${typeClasses[n.type] || 'notif-type-info'}">${typeLabels[n.type] || n.type}</span>
-                    <div class="notif-text">${escapeHtml(n.text||'').replace(/\n/g,'<br>')}${n.link ? '<br><a href="'+safeLink+'" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="color:var(--accent);font-weight:700;text-decoration:underline;display:inline-flex;align-items:center;gap:4px;margin-top:4px"><i class="fas fa-external-link-alt" style="font-size:0.7em"></i>رابط</a>' : ''}</div>
+                    <div class="notif-text">${escapeHtml(n.text||'').replace(/\n/g,'<br>')}${metaHtml}${n.link ? '<br><a href="'+safeLink+'" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="color:var(--accent);font-weight:700;text-decoration:underline;display:inline-flex;align-items:center;gap:4px;margin-top:4px"><i class="fas fa-external-link-alt" style="font-size:0.7em"></i>رابط</a>' : ''}</div>
                     <div class="notif-time">${ago}</div>
                 </div>`;
             }).join('');
@@ -987,13 +1154,70 @@
 
         await loadSavedData();
         togglePaidFeatures(userData.plan||'free');
+        loadAffiliatePoints();
         onValue(ref(db,'users/'+user.uid+'/plan'),s=>{const p=s.val()||'free';const l=p==='pro'?'Pro':p==='unlimited'?'Unlimited':'Free';if(document.getElementById('ddPlan'))document.getElementById('ddPlan').textContent=l;userData.plan=p;if(window._userData)window._userData.plan=p;togglePaidFeatures(p)});
     });
 
     window.logout=async()=>{await signOut(auth);location.replace("login.html")};
 
+    window.openUpgradeModal=()=>document.getElementById('upgradeOverlay').classList.add('show');
+    window.closeUpgradeModal=(e)=>{if(e&&e.target!==e.currentTarget)return;document.getElementById('upgradeOverlay').classList.remove('show')};
+
+    // ===== AFFILIATE / SHARE & EARN =====
+    function getAffiliateLink() {
+        if(!window.currentUid) return '';
+        return 'https://qcv.vexonet.online/login.html?ref=' + window.currentUid;
+    }
+    function loadAffiliatePoints() {
+        if(!window.currentUid) return;
+        onValue(ref(db,'users/'+window.currentUid+'/affiliatePoints'),function(snap){
+            var pts = snap.val() || 0;
+            var el = document.getElementById('ddAffPoints');
+            if(el) el.textContent = pts;
+        });
+        var linkEl = document.getElementById('ddAffLink');
+        if(linkEl) linkEl.value = getAffiliateLink();
+    }
+    window.copyAffLink=function(){
+        var link = getAffiliateLink();
+        if(!link) return;
+        navigator.clipboard.writeText(link).then(function(){
+            var btn = document.querySelector('.dd-aff-copy');
+            if(btn){btn.innerHTML='<i class="fas fa-check"></i>';btn.classList.add('copied');setTimeout(function(){btn.innerHTML='<i class="fas fa-copy"></i>';btn.classList.remove('copied')},2000)}
+            trackShare('copy');
+        });
+    };
+    window.shareWhatsApp=function(){
+        var link = getAffiliateLink();
+        window.open('https://wa.me/?text=' + encodeURIComponent('اكتب سيرتك الذاتية الاحترافية مع QCV - جرب مجاناً: ' + link));
+        trackShare('whatsapp');
+    };
+    window.shareFacebook=function(){
+        var link = getAffiliateLink();
+        window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(link));
+        trackShare('facebook');
+    };
+    window.shareTwitter=function(){
+        var link = getAffiliateLink();
+        window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent('اكتب سيرتك الذاتية الاحترافية مع QCV - جرب مجاناً') + '&url=' + encodeURIComponent(link));
+        trackShare('twitter');
+    };
+    window.shareTelegram=function(){
+        var link = getAffiliateLink();
+        window.open('https://t.me/share/url?url=' + encodeURIComponent(link) + '&text=' + encodeURIComponent('اكتب سيرتك الذاتية الاحترافية مع QCV - جرب مجاناً'));
+        trackShare('telegram');
+    };
+    function trackShare(platform) {
+        if(!window.currentUid) return;
+        var sharesRef = ref(db,'users/'+window.currentUid+'/affiliateShares');
+        push(sharesRef,{platform:platform,timestamp:Date.now()});
+        var ptsRef = ref(db,'users/'+window.currentUid+'/affiliatePoints');
+        get(ptsRef).then(function(snap){var cur=snap.val()||0;set(ptsRef,cur+5)});
+    }
+
     function togglePaidFeatures(plan) {
         const paid = plan === 'pro' || plan === 'unlimited';
+        const proUpsell = document.getElementById('proUpsell');
         const aiScore = document.getElementById('aiScoreWidget');
         const aiAssist = document.getElementById('aiAssistBtn');
         const aiMenu = document.getElementById('aiMenu');
@@ -1001,6 +1225,11 @@
         const jobForm = document.getElementById('tab-jobmatch');
         const aiBadge = document.getElementById('aiCvBadge');
         const btnAiGen = document.getElementById('btnAiGen');
+        const myPageLink = document.getElementById('myPageLink');
+        const portfolioWrap = document.getElementById('portfolioLinkWrap');
+        if (proUpsell) proUpsell.style.display = paid ? 'none' : 'block';
+        if (myPageLink) myPageLink.style.display = paid ? '' : 'none';
+        if (portfolioWrap) portfolioWrap.style.display = paid ? '' : 'none';
         if (aiScore) aiScore.classList.toggle('show', paid);
         if (aiAssist) aiAssist.style.display = paid ? '' : 'none';
         if (aiMenu) aiMenu.style.display = paid ? '' : 'none';
@@ -1009,7 +1238,7 @@
         if (aiBadge) aiBadge.style.display = paid ? 'flex' : 'none';
         if (btnAiGen) btnAiGen.style.display = paid ? '' : 'none';
         const uploadBtn = document.getElementById('uploadCvBtn');
-        if (uploadBtn) uploadBtn.style.display = paid ? '' : 'none';
+        if (uploadBtn) uploadBtn.style.display = plan === 'unlimited' ? '' : 'none';
         const sideAiBtn = document.getElementById('aiAssistantBtn');
         if (sideAiBtn) sideAiBtn.style.display = paid ? '' : 'none';
         const sel = document.getElementById('templateSelect');
@@ -1035,7 +1264,7 @@
             const paid = isPaidPlan();
             const addBtn = paid
                 ? `<button class="btn-add" style="margin-top:12px" onclick="createNewCV()">+ Create New CV</button>`
-                : `<button class="btn-add" style="margin-top:12px;background:var(--sky);color:#fff;border-color:var(--sky)" onclick="window.location.href='pay.html'">Subscribe to create more CVs</button>`;
+                : `<button class="btn-add" style="margin-top:12px;background:var(--sky);color:#fff;border-color:var(--sky)" onclick="closePanel();openUpgradeModal()">Subscribe to create more CVs</button>`;
             h=`<div class="panel-header"><h2>My CVs</h2><button class="panel-close" onclick="closePanel()">&times;</button></div><div class="panel-body"><div class="cvs-list" id="cvsListPanel"></div>${addBtn}</div>`
         }
         else if(type==='settings'){h=`<div class="panel-header"><h2>Settings</h2><button class="panel-close" onclick="closePanel()">&times;</button></div><div class="panel-body"><div class="panel-row"><div class="panel-row-info"><div class="pr-title">Notifications</div><div class="pr-desc">Receive updates</div></div><button class="panel-toggle on" onclick="this.classList.toggle('on')"></button></div><div class="panel-row"><div class="panel-row-info"><div class="pr-title">Auto Save</div><div class="pr-desc">Save automatically</div></div><button class="panel-toggle on" onclick="this.classList.toggle('on')"></button></div></div>`}
@@ -1496,11 +1725,13 @@
                 const userSnap = await _get(_ref(_db, 'users/' + window.currentUid));
                 const ud = userSnap.val() || {};
                 const downloads = ud.downloads || 0;
-                console.log('ExportPDF: current downloads =', downloads);
+                const plan = ud.plan || 'free';
+                console.log('ExportPDF: current downloads =', downloads, 'plan =', plan);
 
-                if(!paid && downloads >= 2) {
+                const dlLimit = plan === 'unlimited' ? Infinity : plan === 'pro' ? 5 : 1;
+                if(downloads >= dlLimit) {
                     if(window.QCVNotify) QCVNotify.error();
-                    alert('You reached the free limit (2 downloads). Upgrade to Pro for unlimited.');
+                    alert('You reached the ' + (plan === 'pro' ? 'Pro' : 'free') + ' limit (' + dlLimit + ' downloads). ' + (plan === 'pro' ? 'Upgrade to Unlimited for unlimited downloads.' : 'Upgrade to Pro for more.'));
                     window.location.href = 'pay.html';
                     return;
                 }
@@ -1513,9 +1744,11 @@
                 // Update display immediately
                 var dlDisplay = document.getElementById('ddDownloads');
                 if(dlDisplay) {
-                    dlDisplay.textContent = newCount + ' / ' + (paid ? '∞' : '2');
-                    if(!paid) {
-                        dlDisplay.style.color = newCount >= 2 ? '#ef4444' : newCount >= 1 ? '#f59e0b' : '#059669';
+                    const ulPlan = ud.plan || 'free';
+                    const ulLimit = ulPlan === 'unlimited' ? '∞' : ulPlan === 'pro' ? 5 : 1;
+                    dlDisplay.textContent = newCount + ' / ' + ulLimit;
+                    if(ulPlan !== 'unlimited') {
+                        dlDisplay.style.color = newCount >= ulLimit ? '#ef4444' : newCount >= ulLimit - 1 ? '#f59e0b' : '#059669';
                     }
                 }
 
