@@ -128,6 +128,16 @@
         .dd-aff-share-btn.facebook{background:#1877f2}
         .dd-aff-share-btn.twitter{background:#1da1f2}
         .dd-aff-share-btn.telegram{background:#0088cc}
+
+        /* Affiliate Apply / Pending */
+        .dd-aff-apply-header{font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+        .dd-aff-apply-desc{font-size:0.68rem;color:var(--muted);margin-bottom:10px;line-height:1.5}
+        .dd-aff-apply-desc strong{color:#f59e0b}
+        .dd-aff-apply-btn{width:100%;padding:10px;background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;border:none;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px}
+        .dd-aff-apply-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(245,158,11,0.3)}
+        .dd-aff-apply-btn:disabled{opacity:0.5;cursor:not-allowed}
+        .dd-aff-pending{font-size:0.82rem;font-weight:700;color:#f59e0b;display:flex;align-items:center;gap:6px;margin-bottom:6px}
+        .dd-aff-pending-desc{font-size:0.68rem;color:var(--muted);line-height:1.5}
         .dd-subscription{margin:0 14px 10px;padding:12px 14px;background:rgba(37,99,235,0.06);border:1px solid rgba(37,99,235,0.15);border-radius:10px}
         .dd-sub-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
         .dd-sub-row:last-of-type{margin-bottom:0}
@@ -626,22 +636,33 @@
                 </div>
                 <div class="dd-divider"></div>
                 <!-- Affiliate Section -->
-                <div class="dd-affiliate">
-                    <div class="dd-aff-header">
-                        <i class="fas fa-coins" style="color:#f59e0b"></i>
-                        <span>شارك واربح</span>
-                        <span class="dd-aff-points" id="ddAffPoints">0</span>
+                <div class="dd-affiliate" id="ddAffiliateSection">
+                    <div id="affApplyView">
+                        <div class="dd-aff-apply-header"><i class="fas fa-bullhorn" style="color:#f59e0b"></i> <span>حساب مسوق</span></div>
+                        <div class="dd-aff-apply-desc">اقبل طلبك واحصل على رابط م专属ك واربح <strong>5 نقاط</strong> لكل عضو جديد تسجل من خلالك</div>
+                        <button class="dd-aff-apply-btn" onclick="applyAffiliate()"><i class="fas fa-paper-plane"></i> تقديم طلب</button>
                     </div>
-                    <div class="dd-aff-desc">شارك رابطك مع أصدقائك واكسب <strong>5 نقاط</strong> لكل مشاركة</div>
-                    <div class="dd-aff-link-box">
-                        <input type="text" id="ddAffLink" readonly value="جاري التحميل...">
-                        <button class="dd-aff-copy" onclick="copyAffLink()"><i class="fas fa-copy"></i></button>
+                    <div id="affPendingView" style="display:none">
+                        <div class="dd-aff-pending"><i class="fas fa-clock" style="color:#f59e0b"></i> طلبك قيد المراجعة</div>
+                        <div class="dd-aff-pending-desc">سيتم مراجعة طلبك من الإدارة وستتلقى إشعاراً عند الموافقة</div>
                     </div>
-                    <div class="dd-aff-share">
-                        <button class="dd-aff-share-btn whatsapp" onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i></button>
-                        <button class="dd-aff-share-btn facebook" onclick="shareFacebook()"><i class="fab fa-facebook-f"></i></button>
-                        <button class="dd-aff-share-btn twitter" onclick="shareTwitter()"><i class="fab fa-twitter"></i></button>
-                        <button class="dd-aff-share-btn telegram" onclick="shareTelegram()"><i class="fab fa-telegram-plane"></i></button>
+                    <div id="affActiveView" style="display:none">
+                        <div class="dd-aff-header">
+                            <i class="fas fa-coins" style="color:#f59e0b"></i>
+                            <span>شارك واربح</span>
+                            <span class="dd-aff-points" id="ddAffPoints">0</span>
+                        </div>
+                        <div class="dd-aff-desc">شارك رابطك مع أصدقائك واكسب <strong>5 نقاط</strong> لكل مشاركة</div>
+                        <div class="dd-aff-link-box">
+                            <input type="text" id="ddAffLink" readonly value="جاري التحميل...">
+                            <button class="dd-aff-copy" onclick="copyAffLink()"><i class="fas fa-copy"></i></button>
+                        </div>
+                        <div class="dd-aff-share">
+                            <button class="dd-aff-share-btn whatsapp" onclick="shareWhatsApp()"><i class="fab fa-whatsapp"></i></button>
+                            <button class="dd-aff-share-btn facebook" onclick="shareFacebook()"><i class="fab fa-facebook-f"></i></button>
+                            <button class="dd-aff-share-btn twitter" onclick="shareTwitter()"><i class="fab fa-twitter"></i></button>
+                            <button class="dd-aff-share-btn telegram" onclick="shareTelegram()"><i class="fab fa-telegram-plane"></i></button>
+                        </div>
                     </div>
                 </div>
                 <div class="dd-divider"></div>
@@ -932,6 +953,11 @@
         const snap=await get(ref(db,'users/'+user.uid));
         userData=snap.val()||{};
         window._userData=userData;
+        if(!userData || !userData.name) {
+            await signOut(auth);
+            location.replace('login.html');
+            return;
+        }
         if(userData.banned){await signOut(auth);location.replace('index.html');return}
         // Track login with IP + device + browser
         (async function(){
@@ -1154,7 +1180,7 @@
 
         await loadSavedData();
         togglePaidFeatures(userData.plan||'free');
-        loadAffiliatePoints();
+        loadAffiliateState();
         onValue(ref(db,'users/'+user.uid+'/plan'),s=>{const p=s.val()||'free';const l=p==='pro'?'Pro':p==='unlimited'?'Unlimited':'Free';if(document.getElementById('ddPlan'))document.getElementById('ddPlan').textContent=l;userData.plan=p;if(window._userData)window._userData.plan=p;togglePaidFeatures(p)});
     });
 
@@ -1168,6 +1194,28 @@
         if(!window.currentUid) return '';
         return 'https://qcv.vexonet.online/login.html?ref=' + window.currentUid;
     }
+    function loadAffiliateState() {
+        if(!window.currentUid) return;
+        // Check if user is an approved affiliate
+        onValue(ref(db,'users/'+window.currentUid+'/affiliateStatus'),function(snap){
+            var status = snap.val(); // null, 'pending', or 'approved'
+            var applyView = document.getElementById('affApplyView');
+            var pendingView = document.getElementById('affPendingView');
+            var activeView = document.getElementById('affActiveView');
+            if(!applyView || !pendingView || !activeView) return;
+            applyView.style.display = 'none';
+            pendingView.style.display = 'none';
+            activeView.style.display = 'none';
+            if(status === 'approved') {
+                activeView.style.display = 'block';
+                loadAffiliatePoints();
+            } else if(status === 'pending') {
+                pendingView.style.display = 'block';
+            } else {
+                applyView.style.display = 'block';
+            }
+        });
+    }
     function loadAffiliatePoints() {
         if(!window.currentUid) return;
         onValue(ref(db,'users/'+window.currentUid+'/affiliatePoints'),function(snap){
@@ -1178,6 +1226,26 @@
         var linkEl = document.getElementById('ddAffLink');
         if(linkEl) linkEl.value = getAffiliateLink();
     }
+    window.applyAffiliate=function(){
+        if(!window.currentUid) return;
+        var btn = document.querySelector('.dd-aff-apply-btn');
+        if(btn){btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...'}
+        set(ref(db,'affiliateRequests/'+window.currentUid),{
+            uid: window.currentUid,
+            name: userData.name||'',
+            email: userData.email||'',
+            timestamp: Date.now(),
+            status: 'pending'
+        }).then(function(){
+            return set(ref(db,'users/'+window.currentUid+'/affiliateStatus'),'pending');
+        }).then(function(){
+            if(btn){btn.disabled=false;btn.innerHTML='<i class="fas fa-check"></i> تم الإرسال'}
+            if(window.QCVNotify) QCVNotify.success();
+        }).catch(function(){
+            if(btn){btn.disabled=false;btn.innerHTML='<i class="fas fa-paper-plane"></i> تقديم طلب'}
+            if(window.QCVNotify) QCVNotify.error();
+        });
+    };
     window.copyAffLink=function(){
         var link = getAffiliateLink();
         if(!link) return;

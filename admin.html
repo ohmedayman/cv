@@ -505,6 +505,7 @@ tr:hover td{background:rgba(0,3,201,.02)}
                 <div class="table-wrap">
                     <div class="sub-tabs">
                         <button class="sub-tab active" onclick="switchAffiliateTab('overview',this)">نظرة عامة</button>
+                        <button class="sub-tab" onclick="switchAffiliateTab('requests',this)">الطلبات <span class="badge" id="affRequestsBadge" style="display:none">0</span></button>
                         <button class="sub-tab" onclick="switchAffiliateTab('marketers',this)">المسوقين</button>
                         <button class="sub-tab" onclick="switchAffiliateTab('campaigns',this)">الحملات</button>
                         <button class="sub-tab" onclick="switchAffiliateTab('commissions',this)">العمولات</button>
@@ -520,6 +521,10 @@ tr:hover td{background:rgba(0,3,201,.02)}
                                 <div class="stat-card"><div class="stat-icon yellow"><i class="fas fa-coins"></i></div><div class="stat-value" id="affStatCommissions">0</div><div class="stat-label">العمولات (ج.م)</div></div>
                             </div>
                         </div>
+                    </div>
+                    <!-- Requests -->
+                    <div class="affiliate-section" id="aff-requests">
+                        <div class="table-scroll" style="padding:16px"><table style="min-width:500px"><thead><tr><th>المتقدم</th><th>البريد</th><th>التاريخ</th><th>إجراءات</th></tr></thead><tbody id="affRequestsList"><tr><td colspan="4" class="empty-state"><p>لا توجد طلبات</p></td></tr></tbody></table></div>
                     </div>
                     <!-- Marketers -->
                     <div class="affiliate-section" id="aff-marketers">
@@ -805,7 +810,8 @@ function checkAndLoad() {
         restGet('/domains.json'), restGet('/staff.json'), restGet('/settings.json'),
         restGet('/affiliateLinks.json'), restGet('/affiliateCampaigns.json'),
         restGet('/affiliateReferrals.json'), restGet('/affiliateCommissions.json'),
-        restGet('/messages.json'), restGet('/siteSettings/maintenance.json')
+        restGet('/messages.json'), restGet('/siteSettings/maintenance.json'),
+        restGet('/affiliateRequests.json')
     ]).then(function(r) {
         window.allUsers = r[0] || {};
         window.allSubs = r[1] || {};
@@ -820,6 +826,10 @@ function checkAndLoad() {
         window.allMessages = r[10] || {};
         var maintenanceData = r[11] || {};
         window.allSettings.maintenance = (maintenanceData === true) || (maintenanceData && maintenanceData.enabled === true);
+        window.allAffRequests = r[12] || {};
+        var pendingReqs = Object.values(window.allAffRequests).filter(function(e){return e.status==='pending'}).length;
+        var reqBadge = document.getElementById('affRequestsBadge');
+        if(reqBadge){reqBadge.textContent=pendingReqs;reqBadge.style.display=pendingReqs?'':'none';}
 
         var entries = Object.entries(window.allUsers);
         var el;
@@ -959,6 +969,9 @@ window.viewUser = function(uid) {
         '<div class="profile-row"><div class="label">التحميلات</div><div class="value">'+(u.downloads||0)+(pl==='free'?' / 2':' / ∞')+'</div></div></div>' +
         '<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px">' +
         '<button class="btn-primary-sm" onclick="closeModal();changePlan(\''+uid+'\')"><i class="fas fa-exchange-alt"></i> تغيير الباقة</button>' +
+        (u.affiliateStatus === 'approved' ?
+            '<button class="btn-primary-sm" style="background:var(--yellow)" onclick="closeModal();toggleMarketer(\''+uid+'\',false)"><i class="fas fa-user-minus"></i> إلغاء مسوق</button>' :
+            '<button class="btn-primary-sm" style="background:#f59e0b" onclick="closeModal();toggleMarketer(\''+uid+'\',true)"><i class="fas fa-user-plus"></i> جعله مسوق</button>') +
         (u.banned?'<button class="btn-primary-sm" style="background:var(--green)" onclick="closeModal();toggleBan(\''+uid+'\',false)"><i class="fas fa-unlock"></i> فك الحظر</button>':'<button class="btn-danger-sm" onclick="closeModal();toggleBan(\''+uid+'\',true)"><i class="fas fa-ban"></i> حظر</button>') +
         '<button class="btn-danger-sm" onclick="closeModal();deleteUser(\''+uid+'\')"><i class="fas fa-trash"></i> حذف</button></div>' +
         '<div id="userLoginHistory" style="margin-top:16px"><div style="text-align:center;color:var(--muted);padding:12px"><i class="fas fa-spinner fa-spin"></i> جاري تحميل سجل الدخول...</div></div>';
@@ -1012,6 +1025,20 @@ window.changePlan = function(uid) {
 window.toggleBan = async function(uid, ban) {
     await restPatch('/users/' + uid, { banned: ban });
     showToast(ban ? 'تم حظر المستخدم' : 'تم فك الحظر', ban ? 'error' : 'success');
+    loadAllData();
+};
+
+window.toggleMarketer = async function(uid, approve) {
+    var status = approve ? 'approved' : null;
+    await restPatch('/users/' + uid, { affiliateStatus: status });
+    if(approve) {
+        await restPost('/affiliateRequests', { uid: uid, name: (window.allUsers[uid]||{}).name||'', email: (window.allUsers[uid]||{}).email||'', status: 'approved', approvedAt: Date.now(), timestamp: Date.now() });
+    } else {
+        // Remove from requests
+        var reqs = await restGet('/affiliateRequests.json') || {};
+        Object.entries(reqs).forEach(function(e){ if(e[1].uid === uid) restDelete('/affiliateRequests/'+e[0]); });
+    }
+    showToast(approve ? 'تم تفعيل التسويق للمستخدم' : 'تم إلغاء التسويق', approve ? 'success' : 'warning');
     loadAllData();
 };
 
@@ -1165,6 +1192,38 @@ window.switchAffiliateTab = function(tab, btn) {
     document.querySelectorAll('.affiliate-section').forEach(function(s) { s.classList.remove('active'); });
     var el = document.getElementById('aff-' + tab);
     if (el) el.classList.add('active');
+    if(tab === 'requests') loadAffRequests();
+};
+
+function loadAffRequests() {
+    restGet('/affiliateRequests.json').then(function(data) {
+        var list = document.getElementById('affRequestsList');
+        if (!list) return;
+        var entries = Object.entries(data || {}).filter(function(e) { return e[1].status === 'pending'; });
+        var badge = document.getElementById('affRequestsBadge');
+        if(badge) { badge.textContent = entries.length; badge.style.display = entries.length ? '' : 'none'; }
+        if (!entries.length) { list.innerHTML = '<tr><td colspan="4" class="empty-state"><p>لا توجد طلبات معلقة</p></td></tr>'; return; }
+        list.innerHTML = entries.map(function(e) {
+            var r = e[1];
+            var d = new Date(r.timestamp);
+            var dateStr = d.toLocaleDateString('ar-EG') + ' ' + d.toLocaleTimeString('ar-EG', {hour:'2-digit',minute:'2-digit'});
+            return '<tr><td>' + (r.name || '-') + '</td><td>' + (r.email || '-') + '</td><td>' + dateStr + '</td><td><button class="btn-sm" style="background:#059669;color:#fff;margin:2px" onclick="approveAffiliate(\'' + e[0] + '\')"><i class="fas fa-check"></i> موافقة</button><button class="btn-sm" style="background:#ef4444;color:#fff;margin:2px" onclick="rejectAffiliate(\'' + e[0] + '\')"><i class="fas fa-times"></i> رفض</button></td></tr>';
+        }).join('');
+    });
+}
+
+window.approveAffiliate = async function(uid) {
+    await restPatch('/affiliateRequests/' + uid, { status: 'approved', approvedAt: Date.now() });
+    await restPatch('/users/' + uid, { affiliateStatus: 'approved' });
+    showToast('تمت الموافقة على المسوق', 'success');
+    loadAffRequests();
+};
+
+window.rejectAffiliate = async function(uid) {
+    await restPatch('/affiliateRequests/' + uid, { status: 'rejected', rejectedAt: Date.now() });
+    await restPatch('/users/' + uid, { affiliateStatus: 'rejected' });
+    showToast('تم رفض الطلب', 'warning');
+    loadAffRequests();
 };
 
 window.showAddCampaign = function() {
@@ -1206,9 +1265,13 @@ window.copyLink = function() {
 window.toggleMaintenance = function() {
     var el = document.getElementById('settingsMaintenance');
     var active = el.classList.contains('active');
-    el.className = 'toggle-switch' + (active ? '' : ' active');
-    restPatch('/siteSettings/maintenance', { enabled: !active });
-    showToast(active ? 'تم تعطيل وضع الصيانة' : 'تم تفعيل وضع الصيانة', active ? 'success' : 'warning');
+    var newState = !active;
+    el.className = 'toggle-switch' + (newState ? ' active' : '');
+    window.allSettings.maintenance = newState;
+    restPatch('/siteSettings/maintenance', { enabled: newState }).then(function() {
+        console.log('[QCV Admin] Maintenance mode set to:', newState);
+    });
+    showToast(newState ? 'تم تفعيل وضع الصيانة' : 'تم تعطيل وضع الصيانة', newState ? 'warning' : 'success');
 };
 
 window.toggleAnalytics = function() {
