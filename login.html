@@ -950,7 +950,6 @@
     <a href="index.html" class="nav-logo"><div class="logo-box">Q</div>CV</a>
     <div class="nav-links">
         <a href="index.html" data-i18n="home">الرئيسية</a>
-        <a href="templates.html" data-i18n="templates">القوالب</a>
         <a href="pay.html" data-i18n="pricing">التسعير</a>
         <a href="careers.html" data-i18n="careers">الوظائف</a>
         <a href="help.html" data-i18n="help">المساعدة</a>
@@ -1207,6 +1206,18 @@
 
         let isSignUpMode = false, isResetting = false;
 
+        // Track affiliate link visits
+        (function(){
+            var params = new URLSearchParams(window.location.search);
+            var refUid = params.get('ref');
+            if(refUid){
+                var visitsRef = ref(db, 'users/' + refUid + '/affiliateVisits');
+                get(visitsRef).then(function(snap){ set(visitsRef, (snap.val()||0) + 1); }).catch(function(){});
+                // Store ref in sessionStorage for registration tracking
+                try { sessionStorage.setItem('affiliate_ref', refUid); } catch(e){}
+            }
+        })();
+
         async function checkApprovedDomain(email) {
             try {
                 const domain = email.split('@')[1]?.toLowerCase();
@@ -1384,12 +1395,15 @@
                     saveUserData(res.user, { name });
                     // Track referral
                     const urlParams = new URLSearchParams(window.location.search);
-                    const referrerUid = urlParams.get('ref');
+                    const referrerUid = urlParams.get('ref') || (function(){ try { return sessionStorage.getItem('affiliate_ref'); } catch(e){ return null; } })();
                     if (referrerUid && referrerUid !== res.user.uid) {
                         set(ref(db, 'users/' + res.user.uid + '/referredBy'), referrerUid).catch(()=>{});
                         const ptsRef = ref(db, 'users/' + referrerUid + '/affiliatePoints');
                         get(ptsRef).then(snap => { set(ptsRef, (snap.val() || 0) + 5); }).catch(()=>{});
+                        const regRef = ref(db, 'users/' + referrerUid + '/affiliateRegistrations');
+                        get(regRef).then(snap => { set(regRef, (snap.val() || 0) + 1); }).catch(()=>{});
                         push(ref(db, 'users/' + referrerUid + '/affiliateReferrals'), { referred: res.user.uid, name: name, timestamp: Date.now() }).catch(()=>{});
+                        try { sessionStorage.removeItem('affiliate_ref'); } catch(e){}
                     }
                     if (window.QCVNotify) QCVNotify.success();
                     location.replace("editor.html");

@@ -506,6 +506,7 @@ tr:hover td{background:rgba(0,3,201,.02)}
                     <div class="sub-tabs">
                         <button class="sub-tab active" onclick="switchAffiliateTab('overview',this)">نظرة عامة</button>
                         <button class="sub-tab" onclick="switchAffiliateTab('requests',this)">الطلبات <span class="badge" id="affRequestsBadge" style="display:none">0</span></button>
+                        <button class="sub-tab" onclick="switchAffiliateTab('exchanges',this)">استبدال النقاط <span class="badge" id="affExchangeBadge" style="display:none">0</span></button>
                         <button class="sub-tab" onclick="switchAffiliateTab('marketers',this)">المسوقين</button>
                         <button class="sub-tab" onclick="switchAffiliateTab('campaigns',this)">الحملات</button>
                         <button class="sub-tab" onclick="switchAffiliateTab('commissions',this)">العمولات</button>
@@ -525,6 +526,10 @@ tr:hover td{background:rgba(0,3,201,.02)}
                     <!-- Requests -->
                     <div class="affiliate-section" id="aff-requests">
                         <div class="table-scroll" style="padding:16px"><table style="min-width:500px"><thead><tr><th>المتقدم</th><th>البريد</th><th>التاريخ</th><th>إجراءات</th></tr></thead><tbody id="affRequestsList"><tr><td colspan="4" class="empty-state"><p>لا توجد طلبات</p></td></tr></tbody></table></div>
+                    </div>
+                    <!-- Points Exchange -->
+                    <div class="affiliate-section" id="aff-exchanges">
+                        <div class="table-scroll" style="padding:16px"><table style="min-width:600px"><thead><tr><th>المتقدم</th><th>البريد</th><th>النقاط الحالية</th><th>الباقة</th><th>المدة</th><th>التاريخ</th><th>إجراءات</th></tr></thead><tbody id="affExchangeList"><tr><td colspan="7" class="empty-state"><p>لا توجد طلبات استبدال</p></td></tr></tbody></table></div>
                     </div>
                     <!-- Marketers -->
                     <div class="affiliate-section" id="aff-marketers">
@@ -811,7 +816,7 @@ function checkAndLoad() {
         restGet('/affiliateLinks.json'), restGet('/affiliateCampaigns.json'),
         restGet('/affiliateReferrals.json'), restGet('/affiliateCommissions.json'),
         restGet('/messages.json'), restGet('/siteSettings/maintenance.json'),
-        restGet('/affiliateRequests.json')
+        restGet('/affiliateRequests.json'), restGet('/pointsExchange.json')
     ]).then(function(r) {
         window.allUsers = r[0] || {};
         window.allSubs = r[1] || {};
@@ -827,9 +832,13 @@ function checkAndLoad() {
         var maintenanceData = r[11] || {};
         window.allSettings.maintenance = (maintenanceData === true) || (maintenanceData && maintenanceData.enabled === true);
         window.allAffRequests = r[12] || {};
+        window.allPointsExchange = r[13] || {};
         var pendingReqs = Object.values(window.allAffRequests).filter(function(e){return e.status==='pending'}).length;
         var reqBadge = document.getElementById('affRequestsBadge');
         if(reqBadge){reqBadge.textContent=pendingReqs;reqBadge.style.display=pendingReqs?'':'none';}
+        var pendingExchanges = Object.values(window.allPointsExchange).filter(function(e){return e.status==='pending'}).length;
+        var exBadge = document.getElementById('affExchangeBadge');
+        if(exBadge){exBadge.textContent=pendingExchanges;exBadge.style.display=pendingExchanges?'':'none';}
 
         var entries = Object.entries(window.allUsers);
         var el;
@@ -1193,6 +1202,7 @@ window.switchAffiliateTab = function(tab, btn) {
     var el = document.getElementById('aff-' + tab);
     if (el) el.classList.add('active');
     if(tab === 'requests') loadAffRequests();
+    if(tab === 'exchanges') loadExchangeRequests();
 };
 
 function loadAffRequests() {
@@ -1224,6 +1234,44 @@ window.rejectAffiliate = async function(uid) {
     await restPatch('/users/' + uid, { affiliateStatus: 'rejected' });
     showToast('تم رفض الطلب', 'warning');
     loadAffRequests();
+};
+
+// ===== POINTS EXCHANGE =====
+function loadExchangeRequests() {
+    restGet('/pointsExchange.json').then(function(data) {
+        var list = document.getElementById('affExchangeList');
+        if (!list) return;
+        var entries = Object.entries(data || {}).filter(function(e) { return e[1].status === 'pending'; });
+        var badge = document.getElementById('affExchangeBadge');
+        if(badge) { badge.textContent = entries.length; badge.style.display = entries.length ? '' : 'none'; }
+        if (!entries.length) { list.innerHTML = '<tr><td colspan="7" class="empty-state"><p>لا توجد طلبات استبدال معلقة</p></td></tr>'; return; }
+        list.innerHTML = entries.map(function(e) {
+            var r = e[1];
+            var d = new Date(r.timestamp);
+            var dateStr = d.toLocaleDateString('ar-EG') + ' ' + d.toLocaleTimeString('ar-EG', {hour:'2-digit',minute:'2-digit'});
+            return '<tr><td>' + escHtml(r.name || '-') + '</td><td>' + escHtml(r.email || '-') + '</td><td><span class="badge badge-active">' + (r.currentPoints||0) + '</span></td><td><span class="badge badge-pro">' + escHtml(r.plan||'pro') + '</span></td><td>' + (r.duration||30) + ' يوم</td><td>' + dateStr + '</td><td><button class="btn-sm" style="background:#059669;color:#fff;margin:2px" onclick="approveExchange(\'' + e[0] + '\',\'' + escHtml(r.uid) + '\')"><i class="fas fa-check"></i> موافقة</button><button class="btn-sm" style="background:#ef4444;color:#fff;margin:2px" onclick="rejectExchange(\'' + e[0] + '\')"><i class="fas fa-times"></i> رفض</button></td></tr>';
+        }).join('');
+    });
+}
+
+window.approveExchange = async function(reqId, uid) {
+    var expiry = Date.now() + (30 * 86400000);
+    await restPatch('/pointsExchange/' + reqId, { status: 'approved', approvedAt: Date.now() });
+    await restPatch('/users/' + uid, { plan: 'pro', planExpiry: expiry });
+    // Deduct points
+    restGet('/users/' + uid + '/affiliatePoints.json').then(function(pts){
+        var cur = pts || 0;
+        restPatch('/users/' + uid, { affiliatePoints: Math.max(0, cur - 100) });
+    });
+    showToast('تم الموافقة على الاستبدال وتفعيل باقة Pro', 'success');
+    loadExchangeRequests();
+    loadAllData();
+};
+
+window.rejectExchange = async function(reqId) {
+    await restPatch('/pointsExchange/' + reqId, { status: 'rejected', rejectedAt: Date.now() });
+    showToast('تم رفض طلب الاستبدال', 'warning');
+    loadExchangeRequests();
 };
 
 window.showAddCampaign = function() {

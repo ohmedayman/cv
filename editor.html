@@ -117,7 +117,18 @@
         .dd-aff-desc{font-size:0.68rem;color:var(--muted);margin-bottom:10px;line-height:1.5}
         .dd-aff-desc strong{color:#f59e0b}
         .dd-aff-link-box{display:flex;gap:4px;margin-bottom:10px}
-        .dd-aff-link-box input{flex:1;padding:8px 10px;background:var(--input);border:1px solid var(--border);border-radius:8px;font-size:0.68rem;color:var(--text);outline:none;min-width:0}
+        .dd-aff-link-box input{flex:1;padding:8px 10px;background:var(--input);border:1px solid var(--border);border-radius:8px;font-size:0.72rem;color:var(--text);outline:none;min-width:0;direction:ltr;text-align:left;font-family:monospace}
+        .dd-aff-stats{display:flex;gap:10px;margin-bottom:10px}
+        .dd-aff-stat{flex:1;text-align:center;background:var(--input);border-radius:8px;padding:8px 4px}
+        .dd-aff-stat .num{font-size:1.1rem;font-weight:900;color:var(--accent);display:block}
+        .dd-aff-stat .lbl{font-size:0.65rem;color:var(--muted);margin-top:2px}
+        .dd-aff-exchange{background:var(--input);border-radius:10px;padding:12px}
+        .dd-aff-exchange-header{font-weight:800;font-size:0.82rem;margin-bottom:4px;color:var(--text)}
+        .dd-aff-exchange-desc{font-size:0.72rem;color:var(--muted);margin-bottom:10px}
+        .dd-aff-exchange-btn{width:100%;padding:10px;background:linear-gradient(135deg,#8b5cf6,#6366f1);color:#fff;border:none;border-radius:8px;font-weight:800;font-size:0.82rem;cursor:pointer;font-family:Cairo,sans-serif;transition:all .2s}
+        .dd-aff-exchange-btn:hover{opacity:.9;transform:translateY(-1px)}
+        .dd-aff-exchange-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+        .dd-aff-exchange-pending{text-align:center;font-size:0.78rem;color:#f59e0b;font-weight:700;padding:8px 0}
         .dd-aff-copy{padding:8px 12px;background:var(--accent);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:0.75rem;transition:all 0.2s;flex-shrink:0}
         .dd-aff-copy:hover{background:#0002a3}
         .dd-aff-copy.copied{background:#059669}
@@ -147,7 +158,7 @@
         .dd-upgrade-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(56,189,248,0.3)}
 
         /* ===== LAYOUT ===== */
-        .editor-layout{display:flex;height:calc(100vh - 56px)}
+        .editor-layout{display:flex;height:calc(100vh - 56px);overflow:hidden}
 
         /* Left Sidebar */
         .sidebar-nav{width:250px;min-width:250px;background:var(--sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;order:1;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
@@ -155,13 +166,13 @@
         .btn-upgrade:hover{background:var(--accent);color:#fff;box-shadow:0 2px 8px rgba(0,3,201,0.2)}
 
         /* Nav Tabs */
-        .nav-tabs{flex:1;padding:6px 10px}
-        .nav-tab{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;font-weight:600;font-size:0.82rem;color:var(--muted);cursor:pointer;transition:all 0.2s;margin-bottom:4px;position:relative}
+        .nav-tabs{flex:1;padding:4px 8px}
+        .nav-tab{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;font-weight:600;font-size:0.8rem;color:var(--muted);cursor:pointer;transition:all 0.2s;margin-bottom:2px;position:relative}
         .nav-tab:hover{background:var(--bg);color:var(--text)}
         .nav-tab.active{background:rgba(0,3,201,0.08);color:var(--accent);font-weight:700}
-        .nav-tab .icon{width:30px;height:30px;border-radius:8px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:0.82rem;flex-shrink:0;transition:all 0.2s}
+        .nav-tab .icon{width:28px;height:28px;border-radius:7px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:0.78rem;flex-shrink:0;transition:all 0.2s}
         .nav-tab.active .icon{background:rgba(0,3,201,0.12);color:var(--accent)}
-        .nav-tab .tab-label{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:0.8rem}
+        .nav-tab .tab-label{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:0.78rem}
         .nav-tab .tab-dots{width:22px;height:22px;border:none;background:transparent;color:var(--muted);border-radius:4px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.15s;flex-shrink:0;opacity:0}
         .nav-tab:hover .tab-dots{opacity:1}
         .nav-tab .tab-dots:hover{background:rgba(0,0,0,0.1);color:var(--text)}
@@ -175,7 +186,7 @@
         .nav-tab-custom .icon{background:rgba(139,92,246,0.15) !important;color:#a78bfa !important}
         .nav-tab-custom.active .icon{background:rgba(139,92,246,0.3) !important}
 
-        .add-section-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 14px;margin:6px 10px 10px;border:2px dashed var(--border);border-radius:8px;font-size:0.78rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.2s;font-family:inherit;background:transparent}
+        .add-section-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 12px;margin:4px 8px 8px;border:2px dashed var(--border);border-radius:8px;font-size:0.75rem;font-weight:600;color:var(--muted);cursor:pointer;transition:all 0.2s;font-family:inherit;background:transparent}
         .add-section-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(56,189,248,0.05)}
         .upload-cv-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 14px;margin:4px 12px 12px;border:2px solid #6366f1;border-radius:8px;font-size:0.78rem;font-weight:700;color:#6366f1;cursor:pointer;transition:all 0.2s;font-family:inherit;background:rgba(99,102,241,0.06)}
         .upload-cv-btn:hover{background:#6366f1;color:#fff;border-color:#6366f1;transform:translateY(-1px);box-shadow:0 2px 8px rgba(99,102,241,0.3)}
@@ -211,15 +222,15 @@
         .upload-result .ur-text{font-size:0.8rem;color:var(--text);font-weight:600}
         .upload-result .ur-sub{font-size:0.7rem;color:var(--muted);margin-top:4px}
 
-        .sidebar-bottom{padding:10px;border-top:1px solid var(--border);flex-shrink:0}
-        .sidebar-feature{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;font-size:0.8rem;color:var(--light);cursor:pointer;transition:all 0.2s;margin-bottom:2px}
+        .sidebar-bottom{padding:8px 10px;border-top:1px solid var(--border);flex-shrink:0}
+        .sidebar-feature{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;font-size:0.78rem;color:var(--light);cursor:pointer;transition:all 0.2s;margin-bottom:1px}
 
         /* Pro Upsell Card */
-        .pro-upsell{padding:14px;margin:0 0 8px;background:linear-gradient(135deg,rgba(0,3,201,0.04),rgba(139,92,246,0.04));border:1px solid rgba(0,3,201,0.12);border-radius:12px}
-        .pro-upsell-header{font-size:0.85rem;font-weight:800;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:6px}
-        .pro-upsell-feat{font-size:0.75rem;color:var(--text);padding:5px 0;display:flex;align-items:center;gap:8px;font-weight:600}
-        .pro-upsell-feat i{font-size:0.6rem;flex-shrink:0}
-        .pro-upsell-btn{width:100%;margin-top:12px;padding:10px;background:linear-gradient(135deg,#0003c9,#1e40af);color:#fff;border:none;border-radius:8px;font-weight:800;font-size:0.78rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px}
+        .pro-upsell{padding:10px;margin:0 0 6px;background:linear-gradient(135deg,rgba(0,3,201,0.04),rgba(139,92,246,0.04));border:1px solid rgba(0,3,201,0.12);border-radius:10px}
+        .pro-upsell-header{font-size:0.8rem;font-weight:800;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+        .pro-upsell-feat{font-size:0.72rem;color:var(--text);padding:3px 0;display:flex;align-items:center;gap:6px;font-weight:600}
+        .pro-upsell-feat i{font-size:0.55rem;flex-shrink:0}
+        .pro-upsell-btn{width:100%;margin-top:8px;padding:8px;background:linear-gradient(135deg,#0003c9,#1e40af);color:#fff;border:none;border-radius:8px;font-weight:800;font-size:0.75rem;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px}
         .pro-upsell-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,3,201,0.3)}
         .sidebar-feature:hover{background:rgba(0,0,0,0.04)}
         .sidebar-feature .pro-badge{background:var(--accent);color:#000;font-size:0.55rem;padding:1px 5px;border-radius:4px;font-weight:700;margin-right:auto}
@@ -249,27 +260,27 @@
         .tpl-card-badge{display:inline-block;padding:3px 8px;border-radius:5px;font-size:0.6rem;font-weight:700;margin-top:6px}
 
         /* Middle - Forms */
-        .editor-forms{width:340px;min-width:340px;overflow-y:auto;padding:16px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+        .editor-forms{width:340px;min-width:340px;overflow-y:auto;padding:12px 14px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;overflow-x:hidden}
         .editor-forms::-webkit-scrollbar{width:4px}
         .editor-forms::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
-        .form-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:12px;display:none}
+        .form-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:10px;display:none}
         .form-card.active{display:block}
-        .form-card-header{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border)}
-        .form-card-header .icon{width:36px;height:36px;border-radius:10px;background:rgba(0,3,201,0.08);display:flex;align-items:center;justify-content:center;font-size:1rem;color:var(--accent)}
-        .form-card-header h3{font-size:0.95rem;font-weight:800}
-        .field{margin-bottom:16px}
-        .field label{display:flex;align-items:center;justify-content:space-between;font-size:0.74rem;color:var(--muted);margin-bottom:7px;font-weight:600}
-        .field label .char-count{font-size:0.62rem;color:var(--muted);font-weight:400}
-        .field input,.field textarea,.field select{width:100%;padding:11px 13px;background:var(--input);border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:inherit;font-size:0.85rem;outline:none;transition:border-color 0.2s}
+        .form-card-header{display:flex;align-items:center;gap:8px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+        .form-card-header .icon{width:32px;height:32px;border-radius:8px;background:rgba(0,3,201,0.08);display:flex;align-items:center;justify-content:center;font-size:0.88rem;color:var(--accent)}
+        .form-card-header h3{font-size:0.88rem;font-weight:800}
+        .field{margin-bottom:12px}
+        .field label{display:flex;align-items:center;justify-content:space-between;font-size:0.72rem;color:var(--muted);margin-bottom:5px;font-weight:600}
+        .field label .char-count{font-size:0.6rem;color:var(--muted);font-weight:400}
+        .field input,.field textarea,.field select{width:100%;padding:9px 11px;background:var(--input);border:1px solid var(--border);color:#1a1a2e;border-radius:8px;font-family:inherit;font-size:0.82rem;outline:none;transition:border-color 0.2s}
         .field input:focus,.field textarea:focus{border-color:var(--accent)}
-        .field textarea{resize:vertical;min-height:90px;line-height:1.6}
+        .field textarea{resize:vertical;min-height:80px;line-height:1.5}
         .field-hint{font-size:0.65rem;color:var(--muted);margin-top:4px;font-style:italic}
-        .repeater-block{background:rgba(0,0,0,0.04);border:1px dashed var(--border);border-radius:7px;padding:10px;margin-bottom:8px}
-        .rb-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-        .rb-title{font-size:0.72rem;font-weight:700;color:var(--light)}
+        .repeater-block{background:rgba(0,0,0,0.04);border:1px dashed var(--border);border-radius:7px;padding:8px;margin-bottom:6px}
+        .rb-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+        .rb-title{font-size:0.7rem;font-weight:700;color:var(--light)}
         .btn-rb-delete{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);color:var(--red);border-radius:5px;padding:3px 8px;font-size:0.65rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all 0.15s}
         .btn-rb-delete:hover{background:var(--red);color:#fff}
-        .btn-add{width:100%;padding:11px;background:transparent;border:1px dashed var(--accent);color:var(--accent);border-radius:8px;font-weight:700;font-size:0.8rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px}
+        .btn-add{width:100%;padding:8px;background:transparent;border:1px dashed var(--accent);color:var(--accent);border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px}
         .btn-add:hover{background:rgba(0,3,201,0.06);border-style:solid}
 
         /* AI Score Widget */
@@ -397,8 +408,8 @@
         .match-kw.missing{background:rgba(239,68,68,0.1);color:var(--red)}
 
         /* Portfolio Link */
-        .portfolio-link-box{margin-top:10px;padding:10px;background:rgba(37,99,235,0.06);border:1px solid rgba(37,99,235,0.15);border-radius:8px}
-        .portfolio-link-box .pl-title{font-size:0.72rem;font-weight:700;color:var(--sky);margin-bottom:6px}
+        .portfolio-link-box{margin-top:6px;padding:8px;background:rgba(37,99,235,0.06);border:1px solid rgba(37,99,235,0.15);border-radius:8px}
+        .portfolio-link-box .pl-title{font-size:0.7rem;font-weight:700;color:var(--sky);margin-bottom:4px}
         .portfolio-url{display:flex;flex-direction:column;gap:6px}
         .portfolio-url input{width:100%;padding:8px 10px;background:var(--input);border:1px solid var(--border);color:#1a1a2e;border-radius:6px;font-size:0.72rem;font-family:monospace;direction:ltr;text-align:left;box-sizing:border-box}
         .portfolio-url-btns{display:flex;gap:6px}
@@ -410,10 +421,10 @@
 
         /* Right - Preview */
         .preview-zone{flex:1;background:#e5e7eb;display:flex;flex-direction:column;align-items:center;overflow:hidden;min-width:0}
-        .preview-container{flex:1;display:flex;justify-content:center;align-items:flex-start;padding:28px;overflow-y:auto;width:100%;position:relative}
+        .preview-container{flex:1;display:flex;justify-content:center;align-items:flex-start;padding:20px;overflow-y:auto;width:100%;position:relative}
         .ai-cv-badge{position:absolute;top:10px;right:10px;background:linear-gradient(135deg,rgba(139,92,246,0.2),rgba(37,99,235,0.2));border:1px solid rgba(139,92,246,0.3);color:#a78bfa;font-size:0.7rem;font-weight:700;padding:5px 12px;border-radius:20px;z-index:5;display:flex;align-items:center;gap:4px;backdrop-filter:blur(8px)}
-        .zoom-controls{display:flex;align-items:center;gap:8px;padding:12px 20px;background:var(--sidebar);border-top:1px solid var(--border);width:100%;justify-content:center;position:sticky;bottom:0;z-index:10}
-        .zoom-btn{width:38px;height:38px;border-radius:8px;background:var(--card);border:1px solid var(--border);color:var(--light);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;font-size:1rem}
+        .zoom-controls{display:flex;align-items:center;gap:6px;padding:8px 16px;background:var(--sidebar);border-top:1px solid var(--border);width:100%;justify-content:center;position:sticky;bottom:0;z-index:10}
+        .zoom-btn{width:34px;height:34px;border-radius:6px;background:var(--card);border:1px solid var(--border);color:var(--light);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;font-size:0.9rem}
         .zoom-btn:hover{border-color:var(--accent);color:var(--accent)}
         .zoom-btn.active{background:var(--accent);color:#000;border-color:var(--accent)}
         .zoom-pct{font-size:0.78rem;font-weight:700;color:var(--text);min-width:45px;text-align:center}
@@ -492,17 +503,17 @@
         }
         @media(max-width:600px){
             .sidebar-nav{max-height:35vh;overflow-y:auto}
-            .nav-tabs{padding:6px 8px}
-            .nav-tab{font-size:0.75rem;padding:8px 10px}
-            .nav-tab .icon{width:26px;height:26px;font-size:0.78rem}
-            .editor-forms{max-height:40vh;padding:12px}
-            .field input,.field textarea,.field select{font-size:0.82rem;padding:9px 11px}
-            .form-card{padding:16px}
-            .preview-zone{padding:8px}
+            .nav-tabs{padding:4px 6px}
+            .nav-tab{font-size:0.72rem;padding:6px 8px}
+            .nav-tab .icon{width:24px;height:24px;font-size:0.72rem}
+            .editor-forms{max-height:40vh;padding:10px}
+            .field input,.field textarea,.field select{font-size:0.8rem;padding:8px 10px}
+            .form-card{padding:12px}
+            .preview-zone{padding:6px}
             .cv-page{transform:scale(0.5);transform-origin:top center}
             .topbar-logo{font-size:1.1rem}
             .topbar-center select{font-size:0.72rem;max-width:100px}
-            .add-section-btn{font-size:0.7rem;padding:8px 10px}
+            .add-section-btn{font-size:0.7rem;padding:6px 8px}
             .profile-dropdown{width:260px;right:-10px}
             .btn-export span:not(.spinner){display:none}
             .btn-html-export span{display:none}
@@ -530,7 +541,6 @@
     <div class="topbar-logo">Q<span>CV</span></div>
     <div class="topbar-nav">
         <a href="editor.html" class="active">Editor</a>
-        <a href="templates.html">Templates</a>
         <a href="portfolio-view.html" target="_blank" rel="noopener noreferrer" id="myPageLink">My Page</a>
     </div>
     <div class="topbar-center">
@@ -650,11 +660,15 @@
                         <div class="dd-aff-header">
                             <i class="fas fa-coins" style="color:#f59e0b"></i>
                             <span>شارك واربح</span>
-                            <span class="dd-aff-points" id="ddAffPoints">0</span>
                         </div>
-                        <div class="dd-aff-desc">شارك رابطك مع أصدقائك واكسب <strong>5 نقاط</strong> لكل مشاركة</div>
+                        <div class="dd-aff-desc">شارك رابطك واكسب <strong>5 نقاط</strong> لكل تسجيل جديد</div>
+                        <div class="dd-aff-stats">
+                            <div class="dd-aff-stat"><span class="num" id="ddAffVisits">0</span><span class="lbl">زوار</span></div>
+                            <div class="dd-aff-stat"><span class="num" id="ddAffReg">0</span><span class="lbl">تسجيلات</span></div>
+                            <div class="dd-aff-stat"><span class="num" id="ddAffPoints">0</span><span class="lbl">نقاط</span></div>
+                        </div>
                         <div class="dd-aff-link-box">
-                            <input type="text" id="ddAffLink" readonly value="جاري التحميل...">
+                            <input type="text" id="ddAffLink" readonly value="جاري التحميل..." title="اضغط للنسخ">
                             <button class="dd-aff-copy" onclick="copyAffLink()"><i class="fas fa-copy"></i></button>
                         </div>
                         <div class="dd-aff-share">
@@ -662,6 +676,13 @@
                             <button class="dd-aff-share-btn facebook" onclick="shareFacebook()"><i class="fab fa-facebook-f"></i></button>
                             <button class="dd-aff-share-btn twitter" onclick="shareTwitter()"><i class="fab fa-twitter"></i></button>
                             <button class="dd-aff-share-btn telegram" onclick="shareTelegram()"><i class="fab fa-telegram-plane"></i></button>
+                        </div>
+                        <div class="dd-divider" style="margin:12px 0"></div>
+                        <div class="dd-aff-exchange" id="affExchangeSection">
+                            <div class="dd-aff-exchange-header"><i class="fas fa-gift" style="color:#8b5cf6"></i> استبدال النقاط</div>
+                            <div class="dd-aff-exchange-desc">استبدل <strong>100 نقطة</strong> بباقة <strong>Pro</strong> لمدة 30 يوم</div>
+                            <button class="dd-aff-exchange-btn" id="affExchangeBtn" onclick="exchangePoints()"><i class="fas fa-sync-alt"></i> استبدال 100 نقطة</button>
+                            <div class="dd-aff-exchange-pending" id="affExchangePending" style="display:none"><i class="fas fa-clock" style="color:#f59e0b"></i> طلب الاستبدال قيد المراجعة</div>
                         </div>
                     </div>
                 </div>
@@ -685,9 +706,9 @@
     <div class="sidebar-nav">
 
         <!-- My CVs Button -->
-        <div style="padding:12px 14px 8px">
-            <button onclick="openPanel('cvs')" style="width:100%;padding:11px 16px;background:linear-gradient(135deg,rgba(56,189,248,0.12),rgba(37,99,235,0.12));border:1px solid rgba(56,189,248,0.2);color:#1a1a2e;border-radius:12px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:'Cairo',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.2s" onmouseover="this.style.borderColor='rgba(56,189,248,0.4)';this.style.transform='translateY(-1px)'" onmouseout="this.style.borderColor='rgba(56,189,248,0.2)';this.style.transform='none'">
-                <span style="font-size:1.1rem"><i class="fas fa-file-alt"></i></span> My CVs
+        <div style="padding:8px 10px 4px">
+            <button onclick="openPanel('cvs')" style="width:100%;padding:9px 14px;background:linear-gradient(135deg,rgba(56,189,248,0.12),rgba(37,99,235,0.12));border:1px solid rgba(56,189,248,0.2);color:#1a1a2e;border-radius:10px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:'Cairo',sans-serif;display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.2s" onmouseover="this.style.borderColor='rgba(56,189,248,0.4)';this.style.transform='translateY(-1px)'" onmouseout="this.style.borderColor='rgba(56,189,248,0.2)';this.style.transform='none'">
+                <span style="font-size:1rem"><i class="fas fa-file-alt"></i></span> My CVs
             </button>
         </div>
 
@@ -773,7 +794,7 @@
         <button class="add-section-btn" onclick="openSectionModal()">+ Add Section</button>
 
         <!-- Portfolio Link -->
-        <div id="portfolioLinkWrap" style="padding:10px;border-top:1px solid var(--border);flex-shrink:0">
+        <div id="portfolioLinkWrap" style="padding:8px 10px;border-top:1px solid var(--border);flex-shrink:0">
             <div class="portfolio-link-box">
                 <div class="pl-title"><i class="fas fa-link" style="margin-left:4px"></i> Portfolio Link</div>
                 <div class="portfolio-url">
@@ -899,7 +920,7 @@
 <!-- Upgrade Modal -->
 <div class="upgrade-overlay" id="upgradeOverlay" onclick="closeUpgradeModal(event)">
     <div class="upgrade-card" onclick="event.stopPropagation()">
-        <div class="upgrade-badge">الاشهر</div>
+        <div class="upgrade-badge">الأكثر شعبية</div>
         <button class="upgrade-close" onclick="closeUpgradeModal()">&times;</button>
         <div class="upgrade-card-top">
             <span class="rocket"><i class="fas fa-rocket"></i></span>
@@ -917,9 +938,10 @@
             <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">تصدير PDF بدون علامة مائية</span></div>
             <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">ملفات شخصية وبصرية</span></div>
             <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">صفحة بورتفوليو شخصية</span></div>
-            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">تقييم متقدم للسيرة بالذكاء الاصطناعي</span></div>
+            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">تقييم السيرة بالذكاء الاصطناعي</span></div>
             <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">مساعد كتابة بالذكاء الاصطناعي</span></div>
             <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">مطابقة الوظائف بالذكاء الاصطناعي</span></div>
+            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">رفع وتحليل السيرة (3 مرات/شهر)</span></div>
         </div>
         <div class="upgrade-actions">
             <button class="upgrade-btn-primary" onclick="window.location.href='pay.html'"><i class="fas fa-star"></i> اشترك الان</button>
@@ -1192,7 +1214,7 @@
     // ===== AFFILIATE / SHARE & EARN =====
     function getAffiliateLink() {
         if(!window.currentUid) return '';
-        return 'https://qcv.vexonet.online/login.html?ref=' + window.currentUid;
+        return 'https://qcv.vexonet.online/ref.html?u=' + window.currentUid;
     }
     function loadAffiliateState() {
         if(!window.currentUid) return;
@@ -1223,6 +1245,17 @@
             var el = document.getElementById('ddAffPoints');
             if(el) el.textContent = pts;
         });
+        onValue(ref(db,'users/'+window.currentUid+'/affiliateVisits'),function(snap){
+            var v = snap.val() || 0;
+            var el = document.getElementById('ddAffVisits');
+            if(el) el.textContent = v;
+        });
+        onValue(ref(db,'users/'+window.currentUid+'/affiliateRegistrations'),function(snap){
+            var r = snap.val() || 0;
+            var el = document.getElementById('ddAffReg');
+            if(el) el.textContent = r;
+        });
+        loadExchangeState();
         var linkEl = document.getElementById('ddAffLink');
         if(linkEl) linkEl.value = getAffiliateLink();
     }
@@ -1279,8 +1312,58 @@
         if(!window.currentUid) return;
         var sharesRef = ref(db,'users/'+window.currentUid+'/affiliateShares');
         push(sharesRef,{platform:platform,timestamp:Date.now()});
-        var ptsRef = ref(db,'users/'+window.currentUid+'/affiliatePoints');
-        get(ptsRef).then(function(snap){var cur=snap.val()||0;set(ptsRef,cur+5)});
+    }
+
+    // ===== EXCHANGE POINTS FOR PRO =====
+    window.exchangePoints = function(){
+        if(!window.currentUid) return;
+        var btn = document.getElementById('affExchangeBtn');
+        var ptsEl = document.getElementById('ddAffPoints');
+        var pts = parseInt(ptsEl ? ptsEl.textContent : '0');
+        if(pts < 100){
+            if(window.QCVNotify) QCVNotify.error();
+            alert('ليس لديك نقاط كافية. تحتاج 100 نقطة على الأقل');
+            return;
+        }
+        if(!confirm('هل تريد استبدال 100 نقطة بباقة Pro لمدة 30 يوم؟')) return;
+        if(btn){btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...'}
+        push(ref(db,'pointsExchange'),{
+            uid: window.currentUid,
+            name: userData.name||'',
+            email: userData.email||'',
+            currentPoints: pts,
+            plan: 'pro',
+            duration: 30,
+            status: 'pending',
+            timestamp: Date.now()
+        }).then(function(){
+            var pending = document.getElementById('affExchangePending');
+            var btn2 = document.getElementById('affExchangeBtn');
+            if(pending) pending.style.display = 'block';
+            if(btn2) btn2.style.display = 'none';
+            if(window.QCVNotify) QCVNotify.success();
+        }).catch(function(){
+            if(btn){btn.disabled=false;btn.innerHTML='<i class="fas fa-sync-alt"></i> استبدال 100 نقطة'}
+            if(window.QCVNotify) QCVNotify.error();
+        });
+    };
+    function loadExchangeState(){
+        if(!window.currentUid) return;
+        // Check if there's a pending exchange request
+        var exRef = ref(db,'pointsExchange');
+        get(exRef).then(function(snap){
+            var data = snap.val() || {};
+            var hasPending = Object.values(data).some(function(e){ return e.uid === window.currentUid && e.status === 'pending'; });
+            var pending = document.getElementById('affExchangePending');
+            var btn = document.getElementById('affExchangeBtn');
+            if(hasPending){
+                if(pending) pending.style.display = 'block';
+                if(btn) btn.style.display = 'none';
+            } else {
+                if(pending) pending.style.display = 'none';
+                if(btn) btn.style.display = '';
+            }
+        });
     }
 
     function togglePaidFeatures(plan) {
