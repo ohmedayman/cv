@@ -635,7 +635,10 @@ tr:hover td{background:rgba(0,3,201,.02)}
                         <div class="field"><label>Gemini API Key (fallback)</label><input type="password" id="settingsGeminiKey" placeholder="...AI"></div>
                     </div>
                 </div>
-                <div style="text-align:left;padding:8px 0"><button class="btn-primary-sm" onclick="saveSettings()" style="padding:12px 32px;font-size:.9rem"><i class="fas fa-save"></i> حفظ الإعدادات</button></div>
+                <div style="text-align:left;padding:8px 0;display:flex;gap:10px;align-items:center">
+                    <button class="btn-primary-sm" onclick="saveSettings()" style="padding:12px 32px;font-size:.9rem"><i class="fas fa-save"></i> حفظ الإعدادات</button>
+                    <button class="btn-primary-sm" onclick="bumpVersion()" style="padding:12px 20px;font-size:.9rem;background:#ef4444"><i class="fas fa-sync-alt"></i> إجبار التحديث للجميع</button>
+                </div>
             </div>
         </div>
     </div>
@@ -861,6 +864,52 @@ function checkAndLoad() {
         var pb = document.getElementById('pendingBadge');
         if (pb) { if (pending > 0) { pb.textContent = pending; pb.style.display = 'inline'; } else { pb.style.display = 'none'; } }
 
+        // Affiliate Overview Stats
+        var affUsers = entries.filter(function(e){ return e[1].affiliateStatus === 'approved'; });
+        var totalClicks = 0, totalConversions = 0;
+        affUsers.forEach(function(e){ totalClicks += (e[1].affiliateVisits || 0); totalConversions += (e[1].affiliateRegistrations || 0); });
+        el = document.getElementById('affStatTotal'); if (el) el.textContent = affUsers.length;
+        el = document.getElementById('affStatClicks'); if (el) el.textContent = totalClicks;
+        el = document.getElementById('affStatConversions'); if (el) el.textContent = totalConversions;
+        el = document.getElementById('affStatCommissions'); if (el) el.textContent = Object.values(window.allCommissions).reduce(function(s,c){return s+(c.amount||0);},0);
+
+        // Marketers List
+        var mkt = document.getElementById('marketersList');
+        if (mkt) {
+            mkt.innerHTML = affUsers.length ? affUsers.map(function(e) {
+                var uid = e[0], u = e[1], c = getAvatarColor(uid);
+                return '<tr><td><div class="user-cell"><div class="user-avatar" style="background:'+c+'">'+escHtml((u.name||'U')[0].toUpperCase())+'</div><div class="user-info"><div class="name">'+escHtml(u.name||'مستخدم')+'</div><div class="email">'+escHtml(u.email)+'</div></div></div></td><td style="direction:ltr;text-align:left;font-size:.75rem">'+escHtml(uid.substring(0,8))+'</td><td>'+(u.affiliateVisits||0)+'</td><td>'+(u.affiliateRegistrations||0)+'</td></tr>';
+            }).join('') : '<tr><td colspan="4" class="empty-state"><p>لا يوجد مسوقين</p></td></tr>';
+        }
+
+        // Campaigns List
+        var cmpT = document.getElementById('campaignsList');
+        if (cmpT) {
+            var camps = Object.entries(window.allCampaigns);
+            cmpT.innerHTML = camps.length ? camps.map(function(e) {
+                var c = e[1];
+                return '<tr><td><strong>'+escHtml(c.name||'')+'</strong></td><td style="direction:ltr;text-align:left">'+escHtml(c.code||'')+'</td><td>'+(c.clicks||0)+'</td><td>'+(c.conversions||0)+'</td><td><div class="actions"><button class="btn-action btn-delete" onclick="deleteCampaign(\''+e[0]+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
+            }).join('') : '<tr><td colspan="5" class="empty-state"><p>لا توجد حملات</p></td></tr>';
+        }
+
+        // Commissions List
+        var cmmT = document.getElementById('commissionsList');
+        if (cmmT) {
+            var comms = Object.entries(window.allCommissions);
+            cmmT.innerHTML = comms.length ? comms.map(function(e) {
+                var c = e[1], st = c.status==='paid'?'badge-approved':'badge-pending', st2 = c.status==='paid'?'مدفوع':'معلق';
+                return '<tr><td>'+escHtml(c.userName||c.uid||'-')+'</td><td>'+(c.amount||0)+' ج.م</td><td><span class="badge '+st+'">'+st2+'</span></td><td>'+formatDateTime(c.createdAt)+'</td><td><div class="actions"></div></td></tr>';
+            }).join('') : '<tr><td colspan="5" class="empty-state"><p>لا توجد عمولات</p></td></tr>';
+        }
+
+        // Link Generator Campaign Dropdown
+        var lcSelect = document.getElementById('linkCampaign');
+        if (lcSelect) {
+            var opts = '<option value="">اختر حملة</option>';
+            Object.entries(window.allCampaigns).forEach(function(e){ opts += '<option value="'+escHtml(e[0])+'">'+escHtml(e[1].name||e[0])+'</option>'; });
+            lcSelect.innerHTML = opts;
+        }
+
         // Recent Users
         var rt = document.getElementById('recentUsers');
         if (rt) {
@@ -942,6 +991,13 @@ function checkAndLoad() {
         el = document.getElementById('settingsUnlimitedPrice'); if (el) el.value = window.allSettings.unlimitedPrice || 299;
         el = document.getElementById('settingsMaintenance'); if (el) el.className = 'toggle-switch' + (window.allSettings.maintenance ? ' active' : '');
         el = document.getElementById('settingsAnalytics'); if (el) el.className = 'toggle-switch' + (window.allSettings.trackerEnabled ? ' active' : '');
+        el = document.getElementById('settingsAiKey'); if (el) el.value = window.allSettings.aiKey || '';
+        el = document.getElementById('settingsGroqKey'); if (el) el.value = window.allSettings.groqKey || '';
+        el = document.getElementById('settingsXaiKey'); if (el) el.value = window.allSettings.xaiKey || '';
+        el = document.getElementById('settingsDeepseekKey'); if (el) el.value = window.allSettings.deepseekKey || '';
+        el = document.getElementById('settingsNaraKey'); if (el) el.value = window.allSettings.naraKey || '';
+        el = document.getElementById('settingsOpenrouterKey'); if (el) el.value = window.allSettings.openrouterKey || '';
+        el = document.getElementById('settingsGeminiKey'); if (el) el.value = window.allSettings.geminiKey || '';
 
         // Activity Feed
         var af = document.getElementById('activityFeed');
@@ -975,7 +1031,7 @@ window.viewUser = function(uid) {
         '<div class="profile-row"><div class="label">تاريخ التسجيل</div><div class="value">'+formatDateTime(u.registeredAt)+'</div></div>' +
         '<div class="profile-row"><div class="label">آخر دخول</div><div class="value">'+formatDateTime(u.lastLogin)+'</div></div>' +
         '<div class="profile-row"><div class="label">الحالة</div><div class="value">'+(u.banned?'<span class="badge badge-banned">محظور</span>':'<span class="badge badge-active">نشط</span>')+'</div></div>' +
-        '<div class="profile-row"><div class="label">التحميلات</div><div class="value">'+(u.downloads||0)+(pl==='free'?' / 2':' / ∞')+'</div></div></div>' +
+        '<div class="profile-row"><div class="label">التحميلات</div><div class="value">'+(u.downloads||0)+(pl==='free'?' / 1':pl==='pro'?' / 5':' / ∞')+'</div></div></div>' +
         '<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px">' +
         '<button class="btn-primary-sm" onclick="closeModal();changePlan(\''+uid+'\')"><i class="fas fa-exchange-alt"></i> تغيير الباقة</button>' +
         (u.affiliateStatus === 'approved' ?
@@ -1151,7 +1207,7 @@ window.deleteJob = function(id) {
 // ===== CRUD: STAFF =====
 window.showAddStaff = function() {
     document.getElementById('modalTitle').textContent = 'إضافة موظف';
-    document.getElementById('modalBody').innerHTML = '<div class="field" style="margin-bottom:12px"><label>الاسم</label><input type="text" id="staffName" placeholder="الاسم الكامل"></div><div class="field" style="margin-bottom:12px"><label>البريد الإلكتروني</label><input type="email" id="staffEmail" placeholder="email@example.com"></div><div class="field" style="margin-bottom:12px"><label>كلمة المرور</label><input type="text" id="staffPass" placeholder="كلمة المرور"></div><div class="field"><label>الدور</label><select id="staffRole"><option value="support">دعم فني</option><option value="manager">مدير قسم</option><option value="admin">مدير</option></select></div>';
+    document.getElementById('modalBody').innerHTML = '<div class="field" style="margin-bottom:12px"><label>الاسم</label><input type="text" id="staffName" placeholder="الاسم الكامل"></div><div class="field" style="margin-bottom:12px"><label>البريد الإلكتروني</label><input type="email" id="staffEmail" placeholder="email@example.com"></div><div class="field" style="margin-bottom:12px"><label>كلمة المرور</label><input type="password" id="staffPass" placeholder="كلمة المرور"></div><div class="field"><label>الدور</label><select id="staffRole"><option value="support">دعم فني</option><option value="manager">مدير قسم</option><option value="admin">مدير</option></select></div>';
     document.getElementById('modalConfirm').style.display = 'block';
     document.getElementById('modalConfirm').textContent = 'إضافة';
     document.getElementById('modalConfirm').onclick = async function() {
@@ -1222,18 +1278,24 @@ function loadAffRequests() {
     });
 }
 
-window.approveAffiliate = async function(uid) {
-    await restPatch('/affiliateRequests/' + uid, { status: 'approved', approvedAt: Date.now() });
+window.approveAffiliate = async function(reqId) {
+    var reqData = window.allAffRequests[reqId];
+    var uid = reqData ? reqData.uid : reqId;
+    await restPatch('/affiliateRequests/' + reqId, { status: 'approved', approvedAt: Date.now() });
     await restPatch('/users/' + uid, { affiliateStatus: 'approved' });
     showToast('تمت الموافقة على المسوق', 'success');
     loadAffRequests();
+    loadAllData();
 };
 
-window.rejectAffiliate = async function(uid) {
-    await restPatch('/affiliateRequests/' + uid, { status: 'rejected', rejectedAt: Date.now() });
+window.rejectAffiliate = async function(reqId) {
+    var reqData = window.allAffRequests[reqId];
+    var uid = reqData ? reqData.uid : reqId;
+    await restPatch('/affiliateRequests/' + reqId, { status: 'rejected', rejectedAt: Date.now() });
     await restPatch('/users/' + uid, { affiliateStatus: 'rejected' });
     showToast('تم رفض الطلب', 'warning');
     loadAffRequests();
+    loadAllData();
 };
 
 // ===== POINTS EXCHANGE =====
@@ -1330,12 +1392,26 @@ window.toggleAnalytics = function() {
     showToast(active ? 'تم تعطيل التتبع' : 'تم تفعيل التتبع', 'success');
 };
 
+window.bumpVersion = async function() {
+    if (!confirm('هذا سيجبر جميع المستخدمين على تحديث الصفحة. متأكد؟')) return;
+    var newVersion = 'v' + Date.now();
+    await restPatch('/siteSettings', { version: newVersion });
+    showToast('تم تحديث النسخة! سيؤخذ المستخدمون للتحديث تلقائياً', 'success');
+};
+
 window.saveSettings = async function() {
     var settings = {
         defaultPlan: document.getElementById('settingsDefaultPlan').value,
         commissionPercent: parseInt(document.getElementById('settingsCommission').value) || 20,
         proPrice: parseInt(document.getElementById('settingsProPrice').value) || 99,
         unlimitedPrice: parseInt(document.getElementById('settingsUnlimitedPrice').value) || 299,
+        aiKey: document.getElementById('settingsAiKey') ? document.getElementById('settingsAiKey').value : '',
+        groqKey: document.getElementById('settingsGroqKey') ? document.getElementById('settingsGroqKey').value : '',
+        xaiKey: document.getElementById('settingsXaiKey') ? document.getElementById('settingsXaiKey').value : '',
+        deepseekKey: document.getElementById('settingsDeepseekKey') ? document.getElementById('settingsDeepseekKey').value : '',
+        naraKey: document.getElementById('settingsNaraKey') ? document.getElementById('settingsNaraKey').value : '',
+        openrouterKey: document.getElementById('settingsOpenrouterKey') ? document.getElementById('settingsOpenrouterKey').value : '',
+        geminiKey: document.getElementById('settingsGeminiKey') ? document.getElementById('settingsGeminiKey').value : '',
         updatedAt: Date.now()
     };
     await restPatch('/settings', settings);

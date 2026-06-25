@@ -14,13 +14,13 @@
       {
         "source": "**/*.@(css|js)",
         "headers": [
-          { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+          { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
         ]
       },
       {
         "source": "**/*.@(jpg|jpeg|gif|png|svg|webp|ico)",
         "headers": [
-          { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+          { "key": "Cache-Control", "value": "public, max-age=2592000" }
         ]
       },
       {
@@ -32,7 +32,8 @@
       {
         "source": "**/*.html",
         "headers": [
-          { "key": "Cache-Control", "value": "no-cache, must-revalidate" },
+          { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" },
+          { "key": "Pragma", "value": "no-cache" },
           { "key": "X-Content-Type-Options", "value": "nosniff" },
           { "key": "X-Frame-Options", "value": "SAMEORIGIN" }
         ]
@@ -46,6 +47,50 @@
       {
         "source": "/p/:code",
         "destination": "/portfolio-view.html"
+      },
+      {
+        "source": "/editor",
+        "destination": "/editor.html"
+      },
+      {
+        "source": "/login",
+        "destination": "/login.html"
+      },
+      {
+        "source": "/pay",
+        "destination": "/pay.html"
+      },
+      {
+        "source": "/about",
+        "destination": "/about.html"
+      },
+      {
+        "source": "/careers",
+        "destination": "/careers.html"
+      },
+      {
+        "source": "/help",
+        "destination": "/help.html"
+      },
+      {
+        "source": "/templates",
+        "destination": "/templates.html"
+      },
+      {
+        "source": "/privacy",
+        "destination": "/privacy.html"
+      },
+      {
+        "source": "/terms",
+        "destination": "/terms.html"
+      },
+      {
+        "source": "/admin",
+        "destination": "/admin.html"
+      },
+      {
+        "source": "/ai",
+        "destination": "/ai.html"
       }
     ]
   },
