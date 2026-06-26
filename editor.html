@@ -1096,13 +1096,16 @@
         const snap=await get(ref(db,'users/'+user.uid));
         userData=snap.val()||{};
         window._userData=userData;
-        if(!userData || !userData.name) {
-            // Auto-fix: create missing user data instead of logging out
+        if(!userData.name) {
+            // Auto-fix: add missing fields without destroying existing data
             const name = user.displayName || user.email?.split('@')[0] || 'مستخدم';
             const email = user.email || '';
-            const fixedData = { uid: user.uid, name, email, plan: 'free', banned: false, registeredAt: Date.now(), lastLogin: Date.now() };
-            await set(ref(db, 'users/' + user.uid), fixedData).catch(()=>{});
-            userData = fixedData;
+            const fixData = { name, email };
+            if(!userData.plan) fixData.plan = 'free';
+            if(!userData.registeredAt) fixData.registeredAt = Date.now();
+            fixData.lastLogin = Date.now();
+            await update(ref(db, 'users/' + user.uid), fixData).catch(()=>{});
+            Object.assign(userData, fixData);
             window._userData = userData;
         }
         if(userData.banned){await signOut(auth);location.replace('index.html');return}
@@ -1617,6 +1620,10 @@
 
 <!-- ===== CV LOGIC ===== -->
 <script>
+    function escapeHtml(str) {
+        if(!str) return '';
+        return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
     let currentTemplate = 'classic';
     let currentZoom = 100;
     let isGridView = false;
@@ -2012,30 +2019,12 @@
                 const dlLimit = plan === 'unlimited' ? Infinity : plan === 'pro' ? 5 : 1;
                 if(downloads >= dlLimit) {
                     if(window.QCVNotify) QCVNotify.error();
-                    alert('You reached the ' + (plan === 'pro' ? 'Pro' : 'free') + ' limit (' + dlLimit + ' downloads). ' + (plan === 'pro' ? 'Upgrade to Unlimited for unlimited downloads.' : 'Upgrade to Pro for more.'));
+                    if(window.QCVNotify) QCVNotify.toast(plan === 'pro' ? 'وصلت حد التحميلات (5). ارتقِ لـ Unlimited' : 'وصلت حد التحميلات (1). ارتقِ لـ Pro', 'error');
                     window.location.href = 'pay.html';
                     return;
                 }
 
-                const newCount = downloads + 1;
-                console.log('ExportPDF: writing new count =', newCount);
-                await _set(_ref(_db, 'users/' + window.currentUid + '/downloads'), newCount);
-                console.log('ExportPDF: Firebase write success');
-
-                // Update display immediately
-                var dlDisplay = document.getElementById('ddDownloads');
-                if(dlDisplay) {
-                    const ulPlan = ud.plan || 'free';
-                    const ulLimit = ulPlan === 'unlimited' ? '∞' : ulPlan === 'pro' ? 5 : 1;
-                    dlDisplay.textContent = newCount + ' / ' + ulLimit;
-                    if(ulPlan !== 'unlimited') {
-                        dlDisplay.style.color = newCount >= ulLimit ? '#ef4444' : newCount >= ulLimit - 1 ? '#f59e0b' : '#059669';
-                    }
-                }
-
-                // Also update userData cache
-                if(userData) userData.downloads = newCount;
-                if(window._userData) window._userData.downloads = newCount;
+                // Don't increment yet — wait for PDF success
             } catch(e) {
                 console.error('Download tracking error:', e);
             }
@@ -2069,6 +2058,23 @@
             };
             await html2pdf().set(opt).from(el).save();
             if(window.QCVNotify) QCVNotify.download();
+            // Increment download count ONLY after successful PDF
+            if(window.currentUid && window._db) {
+                try {
+                    const newCount = downloads + 1;
+                    await _set(_ref(_db, 'users/' + window.currentUid + '/downloads'), newCount);
+                    var dlDisplay = document.getElementById('ddDownloads');
+                    if(dlDisplay) {
+                        const ulLimit = plan === 'unlimited' ? '∞' : plan === 'pro' ? 5 : 1;
+                        dlDisplay.textContent = newCount + ' / ' + ulLimit;
+                        if(plan !== 'unlimited') {
+                            dlDisplay.style.color = newCount >= ulLimit ? '#ef4444' : newCount >= ulLimit - 1 ? '#f59e0b' : '#059669';
+                        }
+                    }
+                    if(userData) userData.downloads = newCount;
+                    if(window._userData) window._userData.downloads = newCount;
+                } catch(e) { console.error('Download count error:', e); }
+            }
         } catch(err) {
             console.error('PDF export error:', err);
             if(window.QCVNotify) QCVNotify.error();
@@ -2166,7 +2172,7 @@
             } catch(e) { console.error('AI data parse error', e); }
         }
 
-        // Always start with sample data so user sees a CV
+        // Always start with sample data so user sees a CV while loading
         loadSampleData();
 
         if(!window.currentUid || !window._db) return;
@@ -3334,6 +3340,10 @@ window.applyAiResult = function() {
         if(inputSkills) {
             inputSkills.value = skills.join(', ');
         }
+    } else {
+        // Improve, ATS Optimize, Ask AI, and any other action — apply to summary
+        document.getElementById('inputSummary').value = aiResultText;
+        data.summary = aiResultText;
     }
     renderCV();
     closeAiPanel();
@@ -3367,11 +3377,11 @@ function callDeepSeek(prompt, onSuccess, onError) {
 
 function callRemainingProviders(prompt, onSuccess, onError) {
     var settings = (window.QCVSettings && window.QCVSettings.get) ? window.QCVSettings.get() : {};
-    var groqKey = settings.groqKey || localStorage.getItem('qcv_groq_key') || '';
+    var groqKey = settings.groqKey || localStorage.getItem('qcv_groq_key') || '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';
     var openrouterKey = settings.openrouterKey || localStorage.getItem('qcv_openrouter_key') || '';
     var openaiKey = settings.aiApiKey || localStorage.getItem('qcv_ai_key') || '';
 
-    var naraKey = settings.naraKey || localStorage.getItem('qcv_nara_key') || '';
+    var naraKey = settings.naraKey || localStorage.getItem('qcv_nara_key') || 'sk-nry-8byFwwi7R-yyindmAMnSQoqzX4y4M2Doz5B8pq7ehrA';
 
     var providers = [];
     if(groqKey) providers.push({ url: 'https://api.groq.com/openai/v1/chat/completions', key: groqKey, model: 'llama-3.3-70b-versatile' });

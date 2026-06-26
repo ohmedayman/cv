@@ -1,0 +1,30 @@
+{
+    "name": "QCV - Create Professional CV",
+    "short_name": "QCV",
+    "description": "Create professional ATS-friendly CVs with AI scoring, 15+ templates, and public portfolio",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0a0e1a",
+    "theme_color": "#0003c9",
+    "orientation": "any",
+    "scope": "/",
+    "lang": "ar",
+    "dir": "ltr",
+    "categories": ["business", "productivity", "utilities"],
+    "icons": [
+        {
+            "src": "https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "screenshots": [],
+    "prefer_related_applications": false
+}

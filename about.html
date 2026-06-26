@@ -17,6 +17,8 @@
     <meta property="og:site_name" content="QCV">
     <meta property="og:locale" content="ar_AR">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="components.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -82,6 +84,7 @@
         body.dark-mode .theme-toggle{border-color:#1e293b;color:#f1f5f9}
         body.dark-mode .lang-switch{background:#141b2d;border-color:#1e293b}
     </style>
+    <script src="js/pwa.js" defer></script>
 </head>
 <body>
     <nav class="navbar">
@@ -176,5 +179,14 @@
     <script src="js/auto-reload.js"></script>
     <script src="js/analytics.js"></script>
     <script src="js/notify-sounds.js"></script>
+<div id="installBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#0003c9,#0005a0);color:#fff;padding:14px 20px;z-index:10000;align-items:center;justify-content:center;gap:12px;box-shadow:0 -4px 20px rgba(0,0,0,0.3);direction:rtl">
+    <img src="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png" alt="QCV" style="width:36px;height:36px;border-radius:8px">
+    <div style="flex:1;text-align:right">
+        <div style="font-weight:700;font-size:0.88rem">تثبيت QCV على جهازك</div>
+        <div style="font-size:0.72rem;opacity:0.8">افتحه بسرعة من شاشة الرئيسية</div>
+    </div>
+    <button id="installBtn" style="background:#27ffed;color:#0003c9;border:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;white-space:nowrap">تثبيت</button>
+    <button id="installClose" style="background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.1rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
 </body>
 </html>

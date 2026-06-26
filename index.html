@@ -32,6 +32,13 @@
     <meta name="twitter:description" content="ابنِ سيرة ذاتية احترافية متوافقة مع ATS في دقائق. قوالب مجانية، تحليل CV ذكي، تصدير PDF. جرّب مجاناً.">
     <meta name="twitter:image" content="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0003c9">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="QCV">
+    <meta name="mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="components.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
@@ -1057,6 +1064,59 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
+<!-- PWA: Service Worker + Install Banner -->
+<script>
+if('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js').catch(function(){});
+}
+
+(function(){
+    var deferredPrompt = null;
+    var installBanner = document.getElementById('installBanner');
+    var installBtn = document.getElementById('installBtn');
+    var installClose = document.getElementById('installClose');
+
+    window.addEventListener('beforeinstallprompt', function(e) {
+        e.preventDefault();
+        deferredPrompt = e;
+        if(localStorage.getItem('qcv_install_dismissed')) return;
+        if(installBanner) installBanner.style.display = 'flex';
+    });
+
+    if(installBtn) {
+        installBtn.addEventListener('click', function() {
+            if(!deferredPrompt) return;
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(function(choice) {
+                deferredPrompt = null;
+                if(installBanner) installBanner.style.display = 'none';
+            });
+        });
+    }
+    if(installClose) {
+        installClose.addEventListener('click', function() {
+            if(installBanner) installBanner.style.display = 'none';
+            localStorage.setItem('qcv_install_dismissed', '1');
+        });
+    }
+
+    window.addEventListener('appinstalled', function() {
+        deferredPrompt = null;
+        if(installBanner) installBanner.style.display = 'none';
+    });
+})();
+</script>
+
+<!-- Install Banner -->
+<div id="installBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#0003c9,#0005a0);color:#fff;padding:14px 20px;z-index:10000;align-items:center;justify-content:center;gap:12px;box-shadow:0 -4px 20px rgba(0,0,0,0.3);direction:rtl">
+    <img src="https://i.postimg.cc/L59BQSvq/qcv-app-icon-final.png" alt="QCV" style="width:36px;height:36px;border-radius:8px">
+    <div style="flex:1;text-align:right">
+        <div style="font-weight:700;font-size:0.88rem">تثبيت QCV على جهازك</div>
+        <div style="font-size:0.72rem;opacity:0.8">افتحه بسرعة من شاشة الرئيسية</div>
+    </div>
+    <button id="installBtn" style="background:#27ffed;color:#0003c9;border:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;white-space:nowrap">تثبيت</button>
+    <button id="installClose" style="background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.1rem;cursor:pointer;padding:4px 8px">✕</button>
+</div>
 
 
 </body>
