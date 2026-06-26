@@ -1425,8 +1425,15 @@ window.toggleAnalytics = function() {
 window.bumpVersion = async function() {
     if (!confirm('هذا سيجبر جميع المستخدمين على تحديث الصفحة. متأكد؟')) return;
     var newVersion = 'v' + Date.now();
-    await restPatch('/siteSettings', { version: newVersion });
-    showToast('تم تحديث النسخة! سيؤخذ المستخدمون للتحديث تلقائياً', 'success');
+    try {
+        await restPatch('/siteSettings', { version: newVersion });
+        // Also update localStorage so other tabs on this browser reload
+        localStorage.setItem('qcv_site_version', newVersion);
+        showToast('تم تحديث النسخة! المستخدمون سيتجددون تلقائياً', 'success');
+    } catch(e) {
+        console.error('bumpVersion error:', e);
+        showToast('خطأ في التحديث', 'error');
+    }
 };
 
 window.saveSettings = async function() {

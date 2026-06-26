@@ -71,6 +71,11 @@
         .btn-upload-cv i{font-size:0.85rem}
         .btn-save{background:var(--card);color:var(--text);border:1px solid var(--border);padding:7px 16px;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:flex;align-items:center;gap:5px}
         .btn-save:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,3,201,0.04)}
+        .undo-redo{display:flex;align-items:center;gap:2px;margin:0 4px}
+        .undo-redo button{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.85rem;transition:all 0.2s}
+        .undo-redo button:hover:not(:disabled){border-color:var(--accent);color:var(--accent);background:rgba(0,3,201,0.04)}
+        .undo-redo button:disabled{opacity:0.3;cursor:not-allowed}
+        .undo-redo .redo-arrow{transform:scaleX(-1)}
         .btn-export{background:var(--accent);color:#fff;border:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,3,201,0.2)}
         .btn-export:hover{background:#0002a3;transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,3,201,0.3)}
         .btn-export .spinner{display:none;width:13px;height:13px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite}
@@ -732,6 +737,10 @@
             <i class="fas fa-sun icon-sun" style="color:#f59e0b"></i>
             <i class="fas fa-moon icon-moon" style="display:none;color:#8b5cf6"></i>
         </button>
+        <div class="undo-redo">
+            <button id="undoBtn" onclick="undoAction()" disabled title="تراجع (Ctrl+Z)"><i class="fas fa-undo"></i></button>
+            <button id="redoBtn" onclick="redoAction()" disabled title="إعادة (Ctrl+Y)"><i class="fas fa-undo redo-arrow"></i></button>
+        </div>
         <button class="btn-upload-cv" id="uploadCvBtn" onclick="openUploadModal()" title="رفع سيرة ذاتية"><i class="fas fa-cloud-upload-alt"></i> <span>رفع CV</span></button>
         <button class="btn-save" onclick="saveToFirebase()"><i class="fas fa-save"></i> Save</button>
         <button class="btn-ai-gen" id="btnAiGen" onclick="window.open('ai.html')" style="display:none"><i class="fas fa-robot"></i> AI Generate</button>
@@ -1628,6 +1637,85 @@
     let currentZoom = 100;
     let isGridView = false;
 
+    // Undo/Redo
+    var undoStack = [];
+    var redoStack = [];
+    var undoLocked = false;
+
+    function snapshotState() {
+        if(undoLocked) return;
+        var data = collectData();
+        var design = JSON.parse(JSON.stringify(designSettings));
+        var tpl = currentTemplate;
+        undoStack.push({ data: data, design: design, template: tpl });
+        if(undoStack.length > 50) undoStack.shift();
+        redoStack = [];
+        updateUndoRedoButtons();
+    }
+
+    function restoreState(state) {
+        undoLocked = true;
+        document.getElementById('inputName').value = state.data.name || '';
+        document.getElementById('inputTitle').value = state.data.title || '';
+        document.getElementById('inputEmail').value = state.data.email || '';
+        document.getElementById('inputPhone').value = state.data.phone || '';
+        document.getElementById('inputLocation').value = state.data.location || '';
+        document.getElementById('inputLinkedin').value = state.data.linkedin || '';
+        document.getElementById('inputSummary').value = state.data.summary || '';
+        document.getElementById('inputSkills').value = Array.isArray(state.data.skills) ? state.data.skills.join('\n') : (state.data.skills || '');
+        document.getElementById('expContainer').innerHTML = '';
+        document.getElementById('eduContainer').innerHTML = '';
+        document.getElementById('langContainer').innerHTML = '';
+        if(state.data.experience) state.data.experience.forEach(function(e){ addExp(e.role||'',e.company||'',e.duration||'',e.description||''); });
+        if(state.data.education) state.data.education.forEach(function(e){ addEdu(e.degree||'',e.school||'',e.duration||'',e.description||''); });
+        if(state.data.languages) state.data.languages.forEach(function(l){ addLang(l.name||'',l.level||'Intermediate'); });
+        designSettings = JSON.parse(JSON.stringify(state.design));
+        document.getElementById('fontSize').value = designSettings.fontSize;
+        document.getElementById('lineSpacing').value = designSettings.lineSpacing * 10;
+        if(document.getElementById('pageMargin')) document.getElementById('pageMargin').value = designSettings.pageMargin;
+        if(typeof changeTemplate === 'function') changeTemplate(state.template);
+        else { currentTemplate = state.template; document.getElementById('cvPage').className = 'cv-page tpl-' + state.template; }
+        renderCV();
+        undoLocked = false;
+    }
+
+    window.undoAction = function() {
+        if(undoStack.length === 0) return;
+        var current = { data: collectData(), design: JSON.parse(JSON.stringify(designSettings)), template: currentTemplate };
+        redoStack.push(current);
+        var prev = undoStack.pop();
+        restoreState(prev);
+        updateUndoRedoButtons();
+    };
+
+    window.redoAction = function() {
+        if(redoStack.length === 0) return;
+        var current = { data: collectData(), design: JSON.parse(JSON.stringify(designSettings)), template: currentTemplate };
+        undoStack.push(current);
+        var next = redoStack.pop();
+        restoreState(next);
+        updateUndoRedoButtons();
+    };
+
+    function updateUndoRedoButtons() {
+        var u = document.getElementById('undoBtn');
+        var r = document.getElementById('redoBtn');
+        if(u) u.disabled = undoStack.length === 0;
+        if(r) r.disabled = redoStack.length === 0;
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if((e.ctrlKey || e.metaKey) && e.key === 'z' && !e.shiftKey) { e.preventDefault(); window.undoAction(); }
+        if((e.ctrlKey || e.metaKey) && (e.key === 'y' || (e.key === 'z' && e.shiftKey))) { e.preventDefault(); window.redoAction(); }
+    });
+
+    // Auto-snapshot on user input changes
+    var _snapshotTimer = null;
+    function debouncedSnapshot() {
+        clearTimeout(_snapshotTimer);
+        _snapshotTimer = setTimeout(snapshotState, 800);
+    }
+
     // Design settings state
     let designSettings = {
         fontSize: 11,
@@ -1718,22 +1806,25 @@
 
     window.addExp = function(role='', company='', dur='', desc='') {
         const id = 'exp_'+Date.now()+'_'+Math.random().toString(36).substr(2,4);
-        document.getElementById('expContainer').insertAdjacentHTML('beforeend', `<div class="repeater-block" id="${id}"><div class="rb-header"><span class="rb-title">Experience</span><button class="btn-rb-delete" onclick="document.getElementById('${id}').remove();renderCV()">Delete</button></div><div class="field"><label>Title</label><input type="text" value="${role}" oninput="renderCV()" placeholder="UI/UX Designer"></div><div class="field"><label>Company</label><input type="text" value="${company}" oninput="renderCV()" placeholder="Company Name"></div><div class="field"><label>Duration</label><input type="text" value="${dur}" oninput="renderCV()" placeholder="2020 - Present"></div><div class="field"><label>Description</label><textarea oninput="renderCV()" placeholder="- Redesigned the main interface\n- Reduced load time by 30%">${desc}</textarea></div></div>`);
+        document.getElementById('expContainer').insertAdjacentHTML('beforeend', `<div class="repeater-block" id="${id}"><div class="rb-header"><span class="rb-title">Experience</span><button class="btn-rb-delete" onclick="document.getElementById('${id}').remove();renderCV();snapshotState()">Delete</button></div><div class="field"><label>Title</label><input type="text" value="${role}" oninput="renderCV()" placeholder="UI/UX Designer"></div><div class="field"><label>Company</label><input type="text" value="${company}" oninput="renderCV()" placeholder="Company Name"></div><div class="field"><label>Duration</label><input type="text" value="${dur}" oninput="renderCV()" placeholder="2020 - Present"></div><div class="field"><label>Description</label><textarea oninput="renderCV()" placeholder="- Redesigned the main interface\n- Reduced load time by 30%">${desc}</textarea></div></div>`);
         renderCV();
+        snapshotState();
     };
 
     window.addEdu = function(deg='', sch='', dur='', desc='') {
         const id = 'edu_'+Date.now()+'_'+Math.random().toString(36).substr(2,4);
-        document.getElementById('eduContainer').insertAdjacentHTML('beforeend', `<div class="repeater-block" id="${id}"><div class="rb-header"><span class="rb-title">Education</span><button class="btn-rb-delete" onclick="document.getElementById('${id}').remove();renderCV()">Delete</button></div><div class="field"><label>Degree</label><input type="text" value="${deg}" oninput="renderCV()" placeholder="B.Sc. Computer Science"></div><div class="field"><label>School</label><input type="text" value="${sch}" oninput="renderCV()" placeholder="University Name"></div><div class="field"><label>Duration</label><input type="text" value="${dur}" oninput="renderCV()" placeholder="2016 - 2020"></div><div class="field"><label>Details</label><textarea oninput="renderCV()" placeholder="- GPA: 3.8\n- Computer Science Club member">${desc}</textarea></div></div>`);
+        document.getElementById('eduContainer').insertAdjacentHTML('beforeend', `<div class="repeater-block" id="${id}"><div class="rb-header"><span class="rb-title">Education</span><button class="btn-rb-delete" onclick="document.getElementById('${id}').remove();renderCV();snapshotState()">Delete</button></div><div class="field"><label>Degree</label><input type="text" value="${deg}" oninput="renderCV()" placeholder="B.Sc. Computer Science"></div><div class="field"><label>School</label><input type="text" value="${sch}" oninput="renderCV()" placeholder="University Name"></div><div class="field"><label>Duration</label><input type="text" value="${dur}" oninput="renderCV()" placeholder="2016 - 2020"></div><div class="field"><label>Details</label><textarea oninput="renderCV()" placeholder="- GPA: 3.8\n- Computer Science Club member">${desc}</textarea></div></div>`);
         renderCV();
+        snapshotState();
     };
 
     window.addLang = function(name='', level='Intermediate') {
         const id = 'lang_'+Date.now()+'_'+Math.random().toString(36).substr(2,4);
         const levels = ['Native','Fluent','Advanced','Intermediate','Beginner'];
         const options = levels.map(l => `<option value="${l}" ${l===level?'selected':''}>${l}</option>`).join('');
-        document.getElementById('langContainer').insertAdjacentHTML('beforeend', `<div class="repeater-block" id="${id}"><div class="rb-header"><span class="rb-title">Language</span><button class="btn-rb-delete" onclick="document.getElementById('${id}').remove();renderCV()">Delete</button></div><div class="field"><label>Language</label><input type="text" value="${name}" oninput="renderCV()" placeholder="English"></div><div class="field"><label>Level</label><select oninput="renderCV()">${options}</select></div></div>`);
+        document.getElementById('langContainer').insertAdjacentHTML('beforeend', `<div class="repeater-block" id="${id}"><div class="rb-header"><span class="rb-title">Language</span><button class="btn-rb-delete" onclick="document.getElementById('${id}').remove();renderCV();snapshotState()">Delete</button></div><div class="field"><label>Language</label><input type="text" value="${name}" oninput="renderCV()" placeholder="English"></div><div class="field"><label>Level</label><select oninput="renderCV()">${options}</select></div></div>`);
         renderCV();
+        snapshotState();
     };
 
     window.changeTemplate = function(tpl) {
@@ -1744,6 +1835,7 @@
             document.getElementById('templateSelect').value = currentTemplate;
             return;
         }
+        snapshotState();
         currentTemplate = tpl;
         document.getElementById('cvPage').className = 'cv-page tpl-' + tpl;
         renderCV();
@@ -1755,24 +1847,29 @@
         designSettings.fontSize = parseInt(v);
         document.getElementById('fontSizeVal').textContent = v;
         applyDesignSettings();
+        debouncedSnapshot();
     };
     window.setFontColor = function(v) {
         designSettings.fontColor = v;
         applyDesignSettings();
+        debouncedSnapshot();
     };
     window.setFontFamily = function(v) {
         designSettings.fontFamily = v;
         applyDesignSettings();
+        snapshotState();
     };
     window.setPageMargin = function(v) {
         designSettings.pageMargin = parseInt(v);
         document.getElementById('pageMarginVal').textContent = v;
         applyDesignSettings();
+        debouncedSnapshot();
     };
     window.setLineSpacing = function(v) {
         designSettings.lineSpacing = (v / 10).toFixed(1);
         document.getElementById('lineSpacingVal').textContent = (v / 10).toFixed(1);
         applyDesignSettings();
+        debouncedSnapshot();
     };
     window.setAccentColor = function(v) {
         // B&W mode — accent color is always black
@@ -2054,7 +2151,7 @@
                 image: { type: 'jpeg', quality: paid ? 0.98 : 0.85 },
                 html2canvas: { scale: paid ? 2 : 1.5, useCORS: true, letterRendering: true, logging: false },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                pagebreak: { mode: ['avoid-all'] }
+                pagebreak: { mode: ['css', 'legacy'], before: '.page-break', avoid: '.avoid-break' }
             };
             await html2pdf().set(opt).from(el).save();
             if(window.QCVNotify) QCVNotify.download();
@@ -3046,29 +3143,29 @@
 </div>
 
 <!-- AI Assistant -->
-<button class="ai-assist-btn" id="aiAssistBtn" onclick="toggleAiMenu()" title="AI Assistant">
+<button class="ai-assist-btn" id="aiAssistBtn" onclick="toggleAiMenu()" title="المساعد الذكي">
     <i class="fas fa-wand-magic-sparkles"></i>
 </button>
 <div class="ai-menu" id="aiMenu">
-    <button class="ai-menu-item" onclick="aiAction('summarize')"><i class="fas fa-compress-alt" style="color:#0003c9"></i>Summarize<span class="ai-shortcut">AI</span></button>
-    <button class="ai-menu-item" onclick="aiAction('proofread')"><i class="fas fa-spell-check" style="color:#059669"></i>Proofread<span class="ai-shortcut">AI</span></button>
-    <button class="ai-menu-item" onclick="aiAction('improve')"><i class="fas fa-arrow-up-right-dots" style="color:#f59e0b"></i>Improve Content<span class="ai-shortcut">AI</span></button>
-    <button class="ai-menu-item" onclick="aiAction('skills')"><i class="fas fa-lightbulb" style="color:#8b5cf6"></i>Suggest Skills<span class="ai-shortcut">AI</span></button>
-    <button class="ai-menu-item" onclick="aiAction('ats')"><i class="fas fa-robot" style="color:#0ea5e9"></i>ATS Optimize<span class="ai-shortcut">AI</span></button>
+    <button class="ai-menu-item" onclick="aiAction('summarize')"><i class="fas fa-compress-alt" style="color:#0003c9"></i>ملخص احترافي<span class="ai-shortcut">AI</span></button>
+    <button class="ai-menu-item" onclick="aiAction('proofread')"><i class="fas fa-spell-check" style="color:#059669"></i>تصحيح لغوي<span class="ai-shortcut">AI</span></button>
+    <button class="ai-menu-item" onclick="aiAction('improve')"><i class="fas fa-arrow-up-right-dots" style="color:#f59e0b"></i>تحسين المحتوى<span class="ai-shortcut">AI</span></button>
+    <button class="ai-menu-item" onclick="aiAction('skills')"><i class="fas fa-lightbulb" style="color:#8b5cf6"></i>اقتراح مهارات<span class="ai-shortcut">AI</span></button>
+    <button class="ai-menu-item" onclick="aiAction('ats')"><i class="fas fa-robot" style="color:#0ea5e9"></i>تحسين ATS<span class="ai-shortcut">AI</span></button>
     <div class="ai-menu-divider"></div>
-    <button class="ai-menu-item" onclick="aiAction('custom')"><i class="fas fa-comment-dots" style="color:var(--muted)"></i>Ask AI Anything<span class="ai-shortcut">AI</span></button>
+    <button class="ai-menu-item" onclick="aiAction('custom')"><i class="fas fa-comment-dots" style="color:var(--muted)"></i>اسأل أي حاجة<span class="ai-shortcut">AI</span></button>
 </div>
 <div class="ai-result-panel" id="aiResultPanel">
     <div class="ai-result-header">
-        <h4><i class="fas fa-wand-magic-sparkles"></i> <span id="aiResultTitle">AI Assistant</span></h4>
+        <h4><i class="fas fa-wand-magic-sparkles"></i> <span id="aiResultTitle">المساعد الذكي</span></h4>
         <button class="ai-result-close" onclick="closeAiPanel()">&times;</button>
     </div>
     <div class="ai-result-body" id="aiResultBody">
-        <div class="ai-result-loading"><i class="fas fa-spinner"></i>Thinking...</div>
+        <div class="ai-result-loading"><i class="fas fa-spinner"></i>جاري التفكير...</div>
     </div>
     <div class="ai-result-actions">
-        <button onclick="copyAiResult()"><i class="fas fa-copy"></i> Copy</button>
-        <button class="primary" onclick="applyAiResult()"><i class="fas fa-check"></i> Apply</button>
+        <button onclick="copyAiResult()"><i class="fas fa-copy"></i>نسخ</button>
+        <button class="primary" onclick="applyAiResult()"><i class="fas fa-check"></i>تطبيق</button>
     </div>
 </div>
 
@@ -3090,10 +3187,31 @@ document.addEventListener('DOMContentLoaded', () => {
         guideBtn.onclick = () => startEditorTutorial();
         topbar.insertBefore(guideBtn, topbar.firstChild);
     }
+
+    // ===== UNDO/REDO: Snapshot on every user action =====
+    // Text inputs
+    document.querySelectorAll('.editor-forms input, .editor-forms textarea, .editor-forms select').forEach(function(el) {
+        el.addEventListener('input', debouncedSnapshot);
+        el.addEventListener('change', snapshotState);
+    });
+    // Delegated: new inputs added dynamically (repeater blocks)
+    var formsContainer = document.getElementById('editor-forms') || document.querySelector('.editor-forms');
+    if(formsContainer) {
+        formsContainer.addEventListener('input', function(e) {
+            if(e.target.matches('input, textarea, select')) debouncedSnapshot();
+        });
+        formsContainer.addEventListener('change', function(e) {
+            if(e.target.matches('input, textarea, select')) snapshotState();
+        });
+    }
+
     // Auto-show only if user hasn't seen editor tutorial specifically
     if (!localStorage.getItem('qcv_editor_tutorial_done')) {
         setTimeout(() => startEditorTutorial(), 2000);
     }
+
+    // Take initial snapshot after data loads
+    setTimeout(snapshotState, 1500);
 });
 
 function startEditorTutorial() {
@@ -3110,6 +3228,7 @@ function startEditorTutorial() {
 // ===== AI ASSISTANT =====
 let aiMenuOpen = false;
 let aiResultText = '';
+let aiResultAction = '';
 
 window.toggleAiMenu = function() {
     aiMenuOpen = !aiMenuOpen;
@@ -3141,20 +3260,26 @@ window.copyAiResult = function() {
 
 window.applyAiResult = function() {
     const data = collectData();
-    const action = document.getElementById('aiResultTitle').textContent;
-    if(action.includes('Summarize') || action.includes('ملخص')) {
+    const action = aiResultAction || document.getElementById('aiResultTitle').textContent;
+    if(action === 'summarize' || action === 'proofread') {
         document.getElementById('inputSummary').value = aiResultText;
         data.summary = aiResultText;
-    } else if(action.includes('Proofread') || action.includes('تصحيح')) {
+    } else if(action === 'improve') {
         document.getElementById('inputSummary').value = aiResultText;
         data.summary = aiResultText;
-    } else if(action.includes('Skills') || action.includes('مهارات')) {
-        const skills = aiResultText.split(',').map(s => s.trim()).filter(s => s);
+    } else if(action === 'skills') {
+        const skills = aiResultText.split(/[,،\n]+/).map(s => s.replace(/^[-•*]\s*/, '').trim()).filter(s => s && s.length > 1);
         data.skills = skills;
         const inputSkills = document.getElementById('inputSkills');
         if(inputSkills) {
             inputSkills.value = skills.join(', ');
         }
+    } else if(action === 'ats') {
+        document.getElementById('inputSummary').value = aiResultText;
+        data.summary = aiResultText;
+    } else if(action === 'fix') {
+        document.getElementById('inputSummary').value = aiResultText;
+        data.summary = aiResultText;
     }
     renderCV();
     closeAiPanel();
@@ -3166,43 +3291,91 @@ window.aiAction = function(action) {
     document.getElementById('aiMenu').classList.remove('show');
     aiMenuOpen = false;
     document.getElementById('aiResultPanel').classList.add('show');
-    document.getElementById('aiResultBody').innerHTML = '<div class="ai-result-loading"><i class="fas fa-spinner"></i>Analyzing your CV...</div>';
+    document.getElementById('aiResultBody').innerHTML = '<div class="ai-result-loading"><i class="fas fa-spinner"></i>جاري التفكير...</div>';
 
+    aiResultAction = action;
     const titles = {
-        summarize: 'Summarize',
-        proofread: 'Proofread',
-        improve: 'Improve Content',
-        skills: 'Suggest Skills',
-        ats: 'ATS Optimize',
-        custom: 'Ask AI'
+        summarize: 'ملخص احترافي',
+        proofread: 'تصحيح النص',
+        improve: 'تحسين المحتوى',
+        skills: 'اقتراح مهارات',
+        ats: 'تحسين ATS',
+        custom: 'اسأل الذكاء الاصطناعي'
     };
-    document.getElementById('aiResultTitle').textContent = titles[action] || 'AI Assistant';
+    document.getElementById('aiResultTitle').textContent = titles[action] || 'المساعد الذكي';
 
     const cvText = [
-        data.name ? 'Name: ' + data.name : '',
-        data.title ? 'Title: ' + data.title : '',
-        data.email ? 'Email: ' + data.email : '',
-        data.summary ? 'Summary: ' + data.summary : '',
-        (data.experience || []).map(e => 'Experience: ' + (e.role||'') + ' at ' + (e.company||'') + ' (' + (e.duration||'') + ')\n' + (e.description||'')).join('\n'),
-        (data.education || []).map(e => 'Education: ' + (e.degree||'') + ' from ' + (e.school||'')).join('\n'),
-        'Skills: ' + (data.skills || []).join(', ')
+        data.name ? 'الاسم: ' + data.name : '',
+        data.title ? 'المسمى الوظيفي: ' + data.title : '',
+        data.email ? 'البريد: ' + data.email : '',
+        data.summary ? 'الملخص: ' + data.summary : '',
+        (data.experience || []).map(e => 'خبرة: ' + (e.role||'') + ' في ' + (e.company||'') + ' (' + (e.duration||'') + ')\n' + (e.description||'')).join('\n'),
+        (data.education || []).map(e => 'تعليم: ' + (e.degree||'') + ' من ' + (e.school||'')).join('\n'),
+        'المهارات: ' + (data.skills || []).join(', ')
     ].filter(Boolean).join('\n\n');
 
     const prompts = {
-        summarize: 'Write a professional CV summary (2-3 sentences) based on this resume data. Be concise and impactful. Use action verbs and quantify achievements where possible:\n\n' + cvText,
-        proofread: 'Proofread this CV and return the corrected summary ONLY. Fix grammar, spelling, and improve clarity. Return ONLY the corrected text, nothing else:\n\nSummary: ' + (data.summary || ''),
-        improve: 'Improve this CV content. Rewrite the summary and experience descriptions to be more impactful. Use power verbs, add metrics where possible, and make it ATS-friendly:\n\n' + cvText,
-        skills: 'Suggest 8-12 relevant professional skills for this person based on their experience and job title. Return ONLY a comma-separated list of skills, nothing else:\n\nTitle: ' + (data.title || '') + '\nExperience: ' + (data.experience || []).map(e => e.role + ' ' + e.description).join(', '),
-        ats: 'Analyze this CV for ATS (Applicant Tracking System) optimization. List the top 5 improvements to make it more ATS-friendly. Be specific:\n\n' + cvText,
-        custom: 'You are a professional CV/resume advisor. Help the user with their CV. Be concise and actionable.\n\nCV Data:\n' + cvText
+        summarize: 'أنت مستشار وظائف محترف وم friendly جداً. المهم عندك تساعد المستخدم يكتب سيرة ذاتية قوية.\n\n' +
+            'اكتب ملخصاً وظيفياً احترافياً (3-4 جمل) لهذا الشخص بناءً على بياناته:\n\n' + cvText + '\n\n' +
+            'المتطلبات:\n' +
+            '- ابدأ بجملة تحدد مهنته وإجمالي خبرته\n' +
+            '-اذكر أكبر إنجاز أو نقطة قوة\n' +
+            '- استخدم أفعال قوية مثل: أدرت، طورت، حققت، قادت\n' +
+            '- لو فيه أرقام أو نسب حطها (مثل: زدت المبيعات 30%)\n' +
+            '- خلّه مناسب لسوق العمل العربي والدولي\n' +
+            '- رجّع الملخص فقط، بدون عناوين أو شرح',
+
+        proofread: 'أنت محرر لغوي عربي محترف ودقيق جداً.\n\n' +
+            'صحّح وحسّن هذا النص من حيث:\n' +
+            '- الأخطاء الإملائية والنحوية\n' +
+            '- وضوح الصياغة وقوة التعبير\n' +
+            '- التأكد من الاتساق في الأزمنة والأفعال\n' +
+            '- إزالة أي تكرار غير ضروري\n\n' +
+            'النص الحالي:\n' + (data.summary || 'لا يوجد ملخص مكتوب بعد') + '\n\n' +
+            'رجّع النص المُصحّح فقط بدون أي شرح أو تعليقات.',
+
+        improve: 'أنت خبير في كتابة السير الذاتية وتحسين المحتوى. المستخدم عايز تحسينات عملية واقعية.\n\n' +
+            'حسّن الملخص الوظيفي التالي واجعله أقوى وأكثر احترافية:\n\n' +
+            'الملخص الحالي:\n' + (data.summary || 'لا يوجد ملخص') + '\n\n' +
+            'الخبرة:\n' + (data.experience || []).map(e => '- ' + (e.role||'') + ' في ' + (e.company||'') + ': ' + (e.description||'')).join('\n') + '\n\n' +
+            'المطلوب:\n' +
+            '- استخدم أفعال قوية (lead, optimize, deliver, implement)\n' +
+            '- أضف أرقام ونسب لو ممكن\n' +
+            '- خلّه مناسب لـ ATS (سياق البحث عن وظيفة)\n' +
+            '- اجعله مختصر ومؤثر (3-4 جمل كحد أقصى)\n' +
+            '- رجّع الملخص المُحسّن فقط بدون شرح',
+
+        skills: 'أنت خبير في التوظيف وسوق العمل. المستخدم عايز مهارات مناسبة لBackground بتاعه.\n\n' +
+            'المسمى الوظيفي: ' + (data.title || 'غير محدد') + '\n' +
+            'الخبرة: ' + (data.experience || []).map(e => (e.role||'') + ' - ' + (e.description||'')).join('; ') + '\n\n' +
+            'اقترح 10-12 مهارة احترافية مناسبة لهذا الشخص.\n\n' +
+            'المطلوب:\n' +
+            '-Mix of technical + soft skills\n' +
+            '- حط المهارات الأكثر طلباً في سوق العمل الحالي\n' +
+            '- رجّع المهارات كقائمة مفصولة بفواصل فقط، بدون أرقام أو شرح',
+
+        ats: 'أنت خبير في أنظمة تتبع المتقدمين (ATS). المستخدم عايز ملخصه يعدي فلتر الـ ATS.\n\n' +
+            'الملخص الحالي:\n' + (data.summary || 'لا يوجد ملخص') + '\n\n' +
+            'المسمى الوظيفي: ' + (data.title || '') + '\n\n' +
+            'حسّن الملخص ليكون متوافق مع أنظمة ATS:\n' +
+            '- استخدم كلمات مفتاحية منIndustry بتاعته\n' +
+            '- تجنّب الرموز والصور والجداول\n' +
+            '- استخدم جمل مباشرة وبسيطة\n' +
+            '- حدد المهارات والخبرات بوضوح\n' +
+            '- خلّه 2-3 جمل فقط\n' +
+            '- رجّع الملخص المُحسّن فقط بدون شرح',
+
+        custom: 'أنت مساعد ذكي ودود ومحترف متخصص في كتابة وتحسين السير الذاتية. تتكلم مع المستخدم بأسلوب ودود ومحترف.\n\n' +
+            'بيانات السيرة الذاتية:\n' + cvText + '\n\n' +
+            'جاوب على سؤال المستخدم بأسلوب ودود ومفيد. لو السؤال عن تحسين السيرة الذاتية، اقترح تحسينات عملية. لو سؤال عام عن السيرة الذاتية، جاوب بشكل مفيد ومختصر.'
     };
 
     callAI(prompts[action] || prompts.custom, function(result) {
         aiResultText = result;
         const html = result.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        document.getElementById('aiResultBody').innerHTML = '<div style="white-space:pre-wrap">' + html + '</div>';
+        document.getElementById('aiResultBody').innerHTML = '<div style="white-space:pre-wrap;line-height:1.6">' + html + '</div>';
     }, function(err) {
-        document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px;color:var(--red)"><i class="fas fa-exclamation-triangle" style="font-size:1.2rem;margin-bottom:6px;display:block"></i>AI Error<br><span style="font-size:0.7rem;color:var(--muted)">' + (typeof err === 'string' ? err : 'Check API key in Admin → Settings') + '</span></div>';
+        document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px;color:var(--red)"><i class="fas fa-exclamation-triangle" style="font-size:1.2rem;margin-bottom:6px;display:block"></i>مش لاقي الاتصال دلوقتي<br><span style="font-size:0.72rem;color:var(--muted)">حاول تاني بعد شوية أو تحقق من الإعدادات</span></div>';
     });
 };
 
@@ -3213,8 +3386,8 @@ window.aiFixIssue = function(section, issueText, issueType) {
     var plan = ud ? (ud.plan || 'free') : 'free';
     if(plan === 'free') {
         document.getElementById('aiResultPanel').classList.add('show');
-        document.getElementById('aiResultTitle').textContent = 'AI Fix';
-        document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px"><i class="fas fa-lock" style="font-size:1.5rem;color:#6366f1;margin-bottom:8px;display:block"></i><div style="font-weight:700;font-size:0.85rem;margin-bottom:4px;color:var(--text)">AI Fix — Pro Feature</div><div style="font-size:0.72rem;color:var(--muted);margin-bottom:12px">Upgrade to Pro to use AI-powered fixes</div><a href="pay.html" style="display:inline-block;padding:8px 20px;background:#6366f1;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:0.8rem;text-decoration:none">Upgrade to Pro</a></div>';
+        document.getElementById('aiResultTitle').textContent = 'إصلاح بالذكاء الاصطناعي';
+        document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px"><i class="fas fa-lock" style="font-size:1.5rem;color:#0003c9;margin-bottom:8px;display:block"></i><div style="font-weight:700;font-size:0.85rem;margin-bottom:4px;color:var(--text)">ميزة AI متاحة للنسخة Pro</div><div style="font-size:0.72rem;color:var(--muted);margin-bottom:12px">ارتقِ لباقة Pro واستخدم إصلاح وتحسين السيرة الذاتية بالذكاء الاصطناعي</div><a href="pay.html" style="display:inline-block;padding:8px 20px;background:#0003c9;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:0.8rem;text-decoration:none">ارتقِ للنسخة Pro</a></div>';
         return;
     }
     const data = collectData();
@@ -3238,11 +3411,19 @@ window.aiFixIssue = function(section, issueText, issueType) {
     }
     const sectionText = typeof sectionData === 'string' ? sectionData : JSON.stringify(sectionData);
 
-    const prompt = 'أنت مستشار سيرة ذاتية محترف. المستخدم عنده المشكلة دي في قسم "' + section + '":\n\nالمشكلة: ' + issueText + '\n\nبيانات القسم الحالي:\n' + sectionText + '\n\nالسيرة الذاتية كاملة:\n' + cvText + '\n\nقدم النص المُصحّح الذي يجب استخدامه. كن مختصراً (2-4 جمل). أرجع النص المُصحّح فقط بدون شرح.';
+    const prompt = 'أنت مستشار سيرة ذاتية محترف وودود. المستخدم عنده ملاحظة على قسم "' + section + '" في سيرته الذاتية.\n\n' +
+        'المشكلة: ' + issueText + '\n\n' +
+        'بيانات القسم الحالي:\n' + sectionText + '\n\n' +
+        'السيرة الذاتية كاملة:\n' + cvText + '\n\n' +
+        'المطلوب:\n' +
+        '- حل المشكلة بطريقة عملية وواضحة\n' +
+        '- اكتب النص المُصحّح جاهز للنسخ مباشرة\n' +
+        '- لو فيه تحسينات إضافية مقترحة اذكرها باختصار\n' +
+        '- رجّع النص النهائي فقط بدون عناوين أو شرح طويل';
 
     document.getElementById('aiResultPanel').classList.add('show');
-    document.getElementById('aiResultTitle').textContent = 'AI Fix: ' + section;
-    document.getElementById('aiResultBody').innerHTML = '<div class="ai-result-loading"><i class="fas fa-spinner"></i>جاري التحليل...</div>';
+    document.getElementById('aiResultTitle').textContent = 'إصلاح: ' + section;
+    document.getElementById('aiResultBody').innerHTML = '<div class="ai-result-loading"><i class="fas fa-spinner"></i>جاري التفكير...</div>';
 
     callAI(prompt, function(result) {
         aiResultText = result;
@@ -3256,19 +3437,18 @@ window.aiFixIssue = function(section, issueText, issueType) {
 // Override applyAiResult for CV Score fix context
 window.applyAiResult = function() {
     const data = collectData();
-    const action = document.getElementById('aiResultTitle').textContent;
+    const action = aiResultAction || 'summary';
 
-    if(action.includes('AI Fix:')) {
-        // CV Score fix — apply to the relevant section
-        const section = action.replace('AI Fix:', '').trim();
+    if(action === 'fix') {
+        const ctx = window._aiFixContext || {};
+        const section = ctx.section || 'summary';
         if(section === 'summary') {
             document.getElementById('inputSummary').value = aiResultText;
             data.summary = aiResultText;
         } else if(section === 'experience') {
             if(data.experience && data.experience.length > 0) {
                 var expIdx = 0;
-                var ctx = window._aiFixContext;
-                if(ctx && ctx.issueText) {
+                if(ctx.issueText) {
                     var m = ctx.issueText.match(/#(\d+)/);
                     if(m) expIdx = parseInt(m[1]) - 1;
                 }
@@ -3279,14 +3459,13 @@ window.applyAiResult = function() {
                 }
             }
         } else if(section === 'skills') {
-            const skills = aiResultText.split(',').map(s => s.trim()).filter(s => s);
+            const skills = aiResultText.split(/[,،\n]+/).map(s => s.replace(/^[-•*]\s*/, '').trim()).filter(s => s && s.length > 1);
             data.skills = skills;
             const inputSkills = document.getElementById('inputSkills');
             if(inputSkills) {
                 inputSkills.value = skills.join(', ');
             }
         } else if(section === 'personal') {
-            // Try to extract name/title from AI response
             const lines = aiResultText.split('\n').filter(l => l.trim());
             if(lines.length >= 1) {
                 const nameInput = document.getElementById('inputName');
@@ -3301,9 +3480,8 @@ window.applyAiResult = function() {
         } else if(section === 'education') {
             if(data.education && data.education.length > 0) {
                 var eduIdx = 0;
-                var ctx2 = window._aiFixContext;
-                if(ctx2 && ctx2.issueText) {
-                    var m2 = ctx2.issueText.match(/#(\d+)/);
+                if(ctx.issueText) {
+                    var m2 = ctx.issueText.match(/#(\d+)/);
                     if(m2) eduIdx = parseInt(m2[1]) - 1;
                 }
                 if(eduIdx >= 0 && eduIdx < data.education.length) {
@@ -3315,9 +3493,8 @@ window.applyAiResult = function() {
         } else if(section === 'languages') {
             if(data.languages && data.languages.length > 0) {
                 var langIdx = 0;
-                var ctx3 = window._aiFixContext;
-                if(ctx3 && ctx3.issueText) {
-                    var m3 = ctx3.issueText.match(/#(\d+)/);
+                if(ctx.issueText) {
+                    var m3 = ctx.issueText.match(/#(\d+)/);
                     if(m3) langIdx = parseInt(m3[1]) - 1;
                 }
                 if(langIdx >= 0 && langIdx < data.languages.length) {
@@ -3327,21 +3504,18 @@ window.applyAiResult = function() {
                 }
             }
         }
-    } else if(action.includes('Summarize') || action.includes('ملخص')) {
+    } else if(action === 'summarize' || action === 'proofread' || action === 'improve' || action === 'ats') {
         document.getElementById('inputSummary').value = aiResultText;
         data.summary = aiResultText;
-    } else if(action.includes('Proofread') || action.includes('تصحيح')) {
-        document.getElementById('inputSummary').value = aiResultText;
-        data.summary = aiResultText;
-    } else if(action.includes('Skills') || action.includes('مهارات')) {
-        const skills = aiResultText.split(',').map(s => s.trim()).filter(s => s);
+    } else if(action === 'skills') {
+        const skills = aiResultText.split(/[,،\n]+/).map(s => s.replace(/^[-•*]\s*/, '').trim()).filter(s => s && s.length > 1);
         data.skills = skills;
         const inputSkills = document.getElementById('inputSkills');
         if(inputSkills) {
             inputSkills.value = skills.join(', ');
         }
     } else {
-        // Improve, ATS Optimize, Ask AI, and any other action — apply to summary
+        // custom / ask AI — apply to summary
         document.getElementById('inputSummary').value = aiResultText;
         data.summary = aiResultText;
     }
@@ -3351,54 +3525,68 @@ window.applyAiResult = function() {
 };
 
 function callAI(prompt, onSuccess, onError) {
-    callDeepSeek(prompt, onSuccess, onError);
+    // Start with NaraRouter (free, works without user key)
+    callNaraRouter(prompt, onSuccess, onError);
 }
 
-function callDeepSeek(prompt, onSuccess, onError) {
-    var key = localStorage.getItem('qcv_deepseek_key') || '';
-    fetch('https://api.deepseek.com/chat/completions', {
+function callNaraRouter(prompt, onSuccess, onError) {
+    var naraKey = (window.QCVSettings && window.QCVSettings.get && window.QCVSettings.get().naraKey) || localStorage.getItem('qcv_nara_key') || 'sk-nry-8byFwwi7R-yyindmAMnSQoqzX4y4M2Doz5B8pq7ehrA';
+    fetch('https://router.bynara.id/v1/chat/completions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key },
-        body: JSON.stringify({ model: 'deepseek-chat', messages: [{ role: 'user', content: prompt }], max_tokens: 800, temperature: 0.7 })
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + naraKey },
+        body: JSON.stringify({ model: 'mimo-v2.5-free', messages: [{ role: 'user', content: prompt }], max_tokens: 1500, temperature: 0.7 })
     })
     .then(function(r) { return r.json(); })
     .then(function(data) {
-        if(data.choices && data.choices[0]) {
+        if(data.choices && data.choices[0] && data.choices[0].message) {
             onSuccess(data.choices[0].message.content.trim());
-        } else if(data.error) {
-            // DeepSeek failed (no balance?) — try remaining API providers
-            callRemainingProviders(prompt, onSuccess, onError);
         } else {
-            callRemainingProviders(prompt, onSuccess, onError);
+            callPollinations(prompt, onSuccess, onError);
         }
     })
-    .catch(function() { callRemainingProviders(prompt, onSuccess, onError); });
+    .catch(function() { callPollinations(prompt, onSuccess, onError); });
 }
 
-function callRemainingProviders(prompt, onSuccess, onError) {
+function callPollinations(prompt, onSuccess, onError) {
+    fetch('https://text.pollinations.ai/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: [{ role: 'user', content: prompt }], model: 'openai', max_tokens: 1500 })
+    })
+    .then(function(r) { return r.text(); })
+    .then(function(text) {
+        if(text && text.length > 5) {
+            onSuccess(text.trim());
+        } else {
+            callUserProviders(prompt, onSuccess, onError);
+        }
+    })
+    .catch(function() { callUserProviders(prompt, onSuccess, onError); });
+}
+
+function callUserProviders(prompt, onSuccess, onError) {
     var settings = (window.QCVSettings && window.QCVSettings.get) ? window.QCVSettings.get() : {};
-    var groqKey = settings.groqKey || localStorage.getItem('qcv_groq_key') || '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';
+    var groqKey = settings.groqKey || localStorage.getItem('qcv_groq_key') || '';
     var openrouterKey = settings.openrouterKey || localStorage.getItem('qcv_openrouter_key') || '';
     var openaiKey = settings.aiApiKey || localStorage.getItem('qcv_ai_key') || '';
-
-    var naraKey = settings.naraKey || localStorage.getItem('qcv_nara_key') || 'sk-nry-8byFwwi7R-yyindmAMnSQoqzX4y4M2Doz5B8pq7ehrA';
+    var deepseekKey = localStorage.getItem('qcv_deepseek_key') || '';
 
     var providers = [];
     if(groqKey) providers.push({ url: 'https://api.groq.com/openai/v1/chat/completions', key: groqKey, model: 'llama-3.3-70b-versatile' });
-    if(naraKey) providers.push({ url: 'https://router.bynara.id/v1/chat/completions', key: naraKey, model: 'auto' });
+    if(deepseekKey) providers.push({ url: 'https://api.deepseek.com/chat/completions', key: deepseekKey, model: 'deepseek-chat' });
     if(openrouterKey) providers.push({ url: 'https://openrouter.ai/api/v1/chat/completions', key: openrouterKey, model: 'meta-llama/llama-3.3-70b-instruct:free' });
     if(openaiKey) providers.push({ url: 'https://api.openai.com/v1/chat/completions', key: openaiKey, model: 'gpt-4o-mini' });
 
     function tryNext(i) {
         if(i >= providers.length) {
-            if(onError) onError('الذكاء الاصطناعي غير متاح — أضف مفتاح Groq المجاني من console.groq.com');
+            if(onError) onError('الذكاء الاصطناعي غير متاح حالياً. حاول مرة أخرى.');
             return;
         }
         var p = providers[i];
         fetch(p.url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + p.key },
-            body: JSON.stringify({ model: p.model, messages: [{ role: 'user', content: prompt }], max_tokens: 800, temperature: 0.7 })
+            body: JSON.stringify({ model: p.model, messages: [{ role: 'user', content: prompt }], max_tokens: 1500, temperature: 0.7 })
         })
         .then(function(r) { return r.json(); })
         .then(function(data) {
