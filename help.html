@@ -198,6 +198,25 @@
             .categories-grid{grid-template-columns:1fr}
         }
 
+        /* ===== DARK MODE ===== */
+        body.dark-mode .search-bar{background:var(--card);border-color:#1e293b;color:var(--text)}
+        body.dark-mode .search-bar input{background:var(--bg);border-color:#1e293b;color:var(--text)}
+        body.dark-mode .search-bar input::placeholder{color:#475569}
+        body.dark-mode .categories-grid .cat-card{background:var(--card);border-color:#1e293b}
+        body.dark-mode .categories-grid .cat-card:hover{border-color:#27ffed}
+        body.dark-mode .cat-icon{background:rgba(39,255,237,0.08);color:#27ffed}
+        body.dark-mode .cat-card h3{color:var(--text)}
+        body.dark-mode .cat-card p{color:var(--muted)}
+        body.dark-mode .faq-list .faq-item{background:var(--card);border-color:#1e293b}
+        body.dark-mode .faq-item:hover{border-color:rgba(39,255,237,0.2)}
+        body.dark-mode .faq-q{color:var(--text)}
+        body.dark-mode .faq-a{color:var(--muted)}
+        body.dark-mode .cta-box{background:linear-gradient(135deg,var(--accent),#0005a0)}
+        body.dark-mode .cta-box h2{color:#fff}
+        body.dark-mode .cta-box p{color:rgba(255,255,255,0.8)}
+        body.dark-mode .footer{background:var(--bg);border-color:#1e293b}
+        body.dark-mode .footer a{color:#27ffed}
+
     </style>
     <script src="js/theme.js"></script>
     <script src="js/lang.js"></script>

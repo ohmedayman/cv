@@ -327,7 +327,7 @@
         .ig input:focus {
             border-color: var(--accent);
             box-shadow: 0 0 0 3px var(--accent-glow);
-            background: #fff;
+            background: var(--card);
         }
 
         .ig input::placeholder {
@@ -868,7 +868,7 @@
             color: var(--text-secondary);
             font-size: 0.78rem;
             z-index: 10;
-            background: #fff;
+            background: var(--bg);
             border-top: 1px solid var(--card-border);
             margin-top: auto;
             display: flex;
@@ -938,6 +938,30 @@
                 border-radius: 16px;
             }
         }
+
+        /* ===== DARK MODE ===== */
+        body.dark-mode .ig input { background: var(--input-bg); border-color: #2d3748; color: var(--text); }
+        body.dark-mode .ig input:focus { background: var(--input-bg); }
+        body.dark-mode .ig input::placeholder { color: #475569; }
+        body.dark-mode .ig label { color: var(--muted); }
+        body.dark-mode .pw-toggle { color: var(--muted); }
+        body.dark-mode .pw-reqs { background: var(--input-bg); border-color: #1e293b; }
+        body.dark-mode .pw-req { color: var(--muted); }
+        body.dark-mode .pw-req.on { color: #34d399; }
+        body.dark-mode .forgot { color: var(--cyan, #27ffed); }
+        body.dark-mode .auth-toggle { color: var(--muted); border-color: #1e293b; }
+        body.dark-mode .auth-toggle a { color: #27ffed; }
+        body.dark-mode .card-title { color: var(--text); }
+        body.dark-mode .card-subtitle { color: var(--muted); }
+        body.dark-mode .success-overlay { background: rgba(10,14,26,0.96); }
+        body.dark-mode .success-t, body.dark-mode .success-s { color: var(--text); }
+        body.dark-mode .social-label { color: var(--muted); }
+        body.dark-mode .btn-google { background: #1e293b; border-color: #2d3748; }
+        body.dark-mode .btn-google span { color: var(--text); }
+        body.dark-mode .grid-bg { background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); }
+        body.dark-mode .auth-card { box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
+        body.dark-mode a { color: #27ffed; }
+        body.dark-mode .footer { border-color: #1e293b; }
 
     </style>
     <script src="js/maintenance.js"></script>
@@ -1229,25 +1253,31 @@
         }
 
         function saveUserData(user, extra = {}) {
+            const userData = {
+                uid: user.uid, name: user.displayName || extra.name || user.email.split('@')[0],
+                email: user.email, photo: user.photoURL || "", plan: 'free', banned: false,
+                registeredAt: Date.now(), lastLogin: Date.now(), ...extra
+            };
+            // Try approved domain check first
             checkApprovedDomain(user.email).then(domainInfo => {
-                const plan = domainInfo ? domainInfo.plan : 'free';
-                const planExpiry = domainInfo && domainInfo.duration ? Date.now() + domainInfo.duration * 30 * 24 * 60 * 60 * 1000 : null;
-                set(ref(db, 'users/' + user.uid), {
-                    uid: user.uid, name: user.displayName || extra.name || user.email.split('@')[0],
-                    email: user.email, photo: user.photoURL || "", plan, banned: false,
-                    registeredAt: Date.now(), lastLogin: Date.now(),
-                    ...(planExpiry && { planExpiry }), ...(domainInfo && { approvedDomain: user.email.split('@')[1] }),
-                    ...extra
+                if (domainInfo) {
+                    userData.plan = domainInfo.plan || 'free';
+                    if (domainInfo.duration) userData.planExpiry = Date.now() + domainInfo.duration * 30 * 24 * 60 * 60 * 1000;
+                    userData.approvedDomain = user.email.split('@')[1];
+                }
+                set(ref(db, 'users/' + user.uid), userData).catch(e => {
+                    console.error('[QCV] saveUserData primary failed:', e);
+                    // Retry with basic data
+                    set(ref(db, 'users/' + user.uid), { uid: user.uid, name: userData.name, email: userData.email, plan: 'free', banned: false, registeredAt: Date.now(), lastLogin: Date.now() });
                 });
                 if (domainInfo) {
                     const dk = user.email.split('@')[1].toLowerCase().replace(/\./g, '_');
                     set(ref(db, 'approvedDomains/' + dk + '/userCount'), (domainInfo.userCount || 0) + 1).catch(() => { });
                 }
-            }).catch(() => {
-                set(ref(db, 'users/' + user.uid), {
-                    uid: user.uid, name: user.displayName || extra.name || user.email.split('@')[0],
-                    email: user.email, photo: user.photoURL || "", plan: 'free', banned: false,
-                    registeredAt: Date.now(), lastLogin: Date.now(), ...extra
+            }).catch(e => {
+                console.error('[QCV] saveUserData fallback:', e);
+                set(ref(db, 'users/' + user.uid), userData).catch(e2 => {
+                    console.error('[QCV] saveUserData fallback also failed:', e2);
                 });
             });
         }
@@ -1430,7 +1460,7 @@
             if (window.QCVNotify) QCVNotify.click();
             try {
                 const res = await signInWithPopup(auth, new GoogleAuthProvider());
-                saveUserData(res.user);
+                saveUserData(res.user, { name: res.user.displayName || res.user.email.split('@')[0] });
                 if (window.QCVNotify) QCVNotify.success();
                 location.replace("editor.html");
             } catch (err) { showToast('errorToast', err.code === 'auth/unauthorized-domain' ? 'خطأ في النطاق' : 'خطأ: ' + err.message, 'error'); }
