@@ -15,7 +15,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    <script src="https://js.puter.com/v2/"></script>
     <style>
         :root{--bg:#f9fafb;--sidebar:#ffffff;--card:#ffffff;--border:#e5e7eb;--accent:#0003c9;--sky:#2563eb;--glow:rgba(0,3,201,0.25);--green:#0003c9;--red:#ef4444;--yellow:#f59e0b;--text:#1a1a2e;--muted:#6b7280;--light:#9ca3af;--input:#f9fafb}
         *{box-sizing:border-box;margin:0;padding:0}
@@ -3342,59 +3341,8 @@ window.applyAiResult = function() {
 };
 
 function callAI(prompt, onSuccess, onError) {
-    // PRIMARY: Puter.js (free, user signs in once with Google/GitHub)
-    if(typeof puter !== 'undefined') {
-        puter.ai.chat(prompt, { model: 'gpt-4o-mini' })
-            .then(function(response) {
-                var text = typeof response === 'string' ? response : (response.message || response.content || JSON.stringify(response));
-                onSuccess(text.trim());
-            })
-            .catch(function(err) {
-                console.log('Puter failed:', err);
-                // If Puter auth error, try to authenticate then retry
-                if(err && (err.code === 'UNAUTHORIZED' || err.message?.includes('auth') || err.message?.includes('sign') || err.message?.includes('login'))) {
-                    showPuterAuth(onSuccess, onError, prompt);
-                    return;
-                }
-                callDeepSeek(prompt, onSuccess, onError);
-            });
-        return;
-    }
-    // Puter not loaded — try to load it, then retry
     callDeepSeek(prompt, onSuccess, onError);
 }
-
-function showPuterAuth(onSuccess, onError, prompt) {
-    var panel = document.getElementById('aiResultPanel');
-    var body = document.getElementById('aiResultBody');
-    var title = document.getElementById('aiResultTitle');
-    panel.classList.add('show');
-    title.textContent = 'AI Setup';
-    body.innerHTML = '<div style="text-align:center;padding:20px"><i class="fas fa-user-circle" style="font-size:2.5rem;color:#6366f1;margin-bottom:12px;display:block"></i><div style="font-weight:700;font-size:0.9rem;margin-bottom:6px;color:var(--text)">Sign in to use AI (free)</div><div style="font-size:0.75rem;color:var(--muted);margin-bottom:16px">Click below to connect with Puter. One-time only, takes 10 seconds.</div><button onclick="doPuterAuth()" style="padding:10px 24px;background:#6366f1;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:0.85rem;cursor:pointer;font-family:inherit"><i class="fas fa-plug"></i> Connect with Puter</button><div id="puterAuthStatus" style="margin-top:10px;font-size:0.7rem;color:var(--muted)"></div></div>';
-    // Store prompt for retry after auth
-    window._pendingAIPrompt = prompt;
-    window._pendingAISuccess = onSuccess;
-    window._pendingAIError = onError;
-}
-
-window.doPuterAuth = function() {
-    var status = document.getElementById('puterAuthStatus');
-    status.textContent = 'Opening Puter sign-in...';
-    status.style.color = '#6366f1';
-    puter.ui.authenticate().then(function() {
-        status.textContent = 'Connected! Retrying AI...';
-        status.style.color = '#059669';
-        setTimeout(function() {
-            if(window._pendingAIPrompt) {
-                callAI(window._pendingAIPrompt, window._pendingAISuccess, window._pendingAIError);
-            }
-        }, 500);
-    }).catch(function(err) {
-        status.textContent = 'Sign-in failed. Try again or use DeepSeek.';
-        status.style.color = '#ef4444';
-        console.log('Puter auth failed:', err);
-    });
-};
 
 function callDeepSeek(prompt, onSuccess, onError) {
     var key = localStorage.getItem('qcv_deepseek_key') || '';
