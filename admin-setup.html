@@ -1054,6 +1054,10 @@
             <h4><i class="fa-solid fa-phone"></i> التواصل</h4>
             <p id="previewContactInfo">info@qcv.com</p>
         </div>
+        <div class="preview-card" id="previewSeoWrap" style="margin-top:12px">
+            <h4><i class="fa-solid fa-magnifying-glass"></i> معاينة Google</h4>
+            <div id="previewSeo"></div>
+        </div>
         <div class="preview-footer" id="previewFooter">
             <p id="previewCopyright">© 2026 QCV. جميع الحقوق محفوظة.</p>
             <div class="social-icons" id="previewSocials">
@@ -1502,18 +1506,64 @@ window.togglePreview = function() {
 
 window.updatePreview = function() {
     if (!previewOpen) return;
-    const c = allSettings.colors || {};
-    const b = allSettings.banner || {};
-    const h = allSettings.hero || {};
-    const p = allSettings.pricing || {};
-    const f = allSettings.footer || {};
-    const ct = allSettings.contact || {};
+    // Read from FORM INPUTS instead of allSettings — this makes it live
+    const c = {
+        primary: document.getElementById('colors_primary')?.value || '#0003c9',
+        accent: document.getElementById('colors_accent')?.value || '#27ffed',
+        background: document.getElementById('colors_background')?.value || '#f9fafb',
+        text: document.getElementById('colors_text')?.value || '#1a1a2e'
+    };
+    const b = {
+        enabled: document.getElementById('banner_enabled')?.checked || false,
+        text: document.getElementById('banner_text')?.value || '',
+        link: document.getElementById('banner_link')?.value || '',
+        bgColor: document.getElementById('banner_bgColor')?.value || '#0003c9',
+        textColor: document.getElementById('banner_textColor')?.value || '#ffffff'
+    };
+    const h = {
+        title: document.getElementById('hero_title')?.value || '',
+        subtitle: document.getElementById('hero_subtitle')?.value || '',
+        ctaText: document.getElementById('hero_ctaText')?.value || '',
+        ctaLink: document.getElementById('hero_ctaLink')?.value || '',
+        bgStyle: document.getElementById('hero_bgStyle')?.value || 'gradient',
+        bgColor: document.getElementById('hero_bgColor')?.value || '#1a1a2e',
+        bgImage: document.getElementById('hero_bgImage')?.value || ''
+    };
+    const p = {};
+    for (let i = 1; i <= 3; i++) {
+        p['plan'+i] = {
+            name: document.getElementById('pricing_plan'+i+'_name')?.value || '',
+            price: document.getElementById('pricing_plan'+i+'_price')?.value || '0',
+            period: document.getElementById('pricing_plan'+i+'_period')?.value || '',
+            featured: document.getElementById('pricing_plan'+i+'_featured')?.checked || false,
+            badge: document.getElementById('pricing_plan'+i+'_badge')?.value || ''
+        };
+    }
+    const f = {
+        copyright: document.getElementById('footer_copyright')?.value || '',
+        companyName: document.getElementById('footer_companyName')?.value || '',
+        facebook: document.getElementById('footer_facebook')?.value || '',
+        twitter: document.getElementById('footer_twitter')?.value || '',
+        linkedin: document.getElementById('footer_linkedin')?.value || '',
+        instagram: document.getElementById('footer_instagram')?.value || '',
+        whatsapp: document.getElementById('footer_whatsapp')?.value || '',
+        tiktok: document.getElementById('footer_tiktok')?.value || ''
+    };
+    const ct = {
+        phone: document.getElementById('contact_phone')?.value || '',
+        email: document.getElementById('contact_email')?.value || '',
+        address: document.getElementById('contact_address')?.value || ''
+    };
+    const seo = {
+        metaTitle: document.getElementById('seo_metaTitle')?.value || '',
+        metaDescription: document.getElementById('seo_metaDescription')?.value || ''
+    };
 
     // Banner
     const bannerEl = document.getElementById('previewBanner');
     if (b.enabled) {
-        bannerEl.style.background = b.bgColor || '#0003c9';
-        bannerEl.style.color = b.textColor || '#fff';
+        bannerEl.style.background = b.bgColor;
+        bannerEl.style.color = b.textColor;
         bannerEl.textContent = b.text || 'إعلان';
         bannerEl.classList.add('visible');
     } else {
@@ -1522,31 +1572,31 @@ window.updatePreview = function() {
 
     // Hero
     const heroEl = document.getElementById('previewHero');
-    const bgStyle = h.bgStyle || 'gradient';
+    const bgStyle = h.bgStyle;
     if (bgStyle === 'gradient') {
-        heroEl.style.background = `linear-gradient(135deg, ${h.bgColor || '#1a1a2e'}, ${c.primary || '#0003c9'})`;
+        heroEl.style.background = `linear-gradient(135deg, ${h.bgColor}, ${c.primary})`;
     } else if (bgStyle === 'solid') {
-        heroEl.style.background = h.bgColor || '#1a1a2e';
+        heroEl.style.background = h.bgColor;
     } else if (bgStyle === 'image') {
-        heroEl.style.background = `url(${h.bgImage || ''}) center/cover`;
+        heroEl.style.background = h.bgImage ? `url(${h.bgImage}) center/cover` : `linear-gradient(135deg, ${h.bgColor}, ${c.primary})`;
     }
     document.getElementById('previewHeroTitle').textContent = h.title || 'مرحباً بكم';
     document.getElementById('previewHeroSubtitle').textContent = h.subtitle || '';
     const ctaBtn = document.getElementById('previewHeroCta');
     ctaBtn.textContent = h.ctaText || 'ابدأ الآن';
-    ctaBtn.style.background = c.accent || '#27ffed';
+    ctaBtn.style.background = c.accent;
 
     // Pricing
     const pricingEl = document.getElementById('previewPricing');
     pricingEl.innerHTML = '';
     for (let i = 1; i <= 3; i++) {
-        const plan = p['plan' + i] || {};
+        const plan = p['plan' + i];
         const div = document.createElement('div');
         div.className = 'preview-plan' + (plan.featured ? ' featured' : '');
         div.innerHTML = `
-            ${plan.badge ? `<div style="font-size:9px;color:${c.primary || '#0003c9'};font-weight:700;margin-bottom:4px;">${escapeHtml(plan.badge)}</div>` : ''}
+            ${plan.badge ? `<div style="font-size:9px;color:${c.primary};font-weight:700;margin-bottom:4px;">${escapeHtml(plan.badge)}</div>` : ''}
             <div class="plan-name">${escapeHtml(plan.name || 'خطة ' + i)}</div>
-            <div class="plan-price" style="color:${c.primary || '#0003c9'};">$${plan.price || 0}</div>
+            <div class="plan-price" style="color:${c.primary};">${plan.price || 0} ج.م</div>
             <div style="font-size:10px;color:#6b7280;">${escapeHtml(plan.period || '')}</div>
         `;
         pricingEl.appendChild(div);
@@ -1566,6 +1616,19 @@ window.updatePreview = function() {
     if (f.whatsapp) socialsEl.innerHTML += '<i class="fa-brands fa-whatsapp"></i>';
     if (f.tiktok) socialsEl.innerHTML += '<i class="fa-brands fa-tiktok"></i>';
 
+    // SEO Preview (Google Search Result)
+    const seoPreview = document.getElementById('previewSeo');
+    if (seoPreview) {
+        const title = seo.metaTitle || getVal('general_siteName') || 'QCV';
+        const desc = seo.metaDescription || getVal('general_siteDescription') || '...';
+        const url = getVal('seo_canonicalUrl') || 'https://qcv.vexonet.online';
+        seoPreview.innerHTML = `<div style="background:#fff;border-radius:10px;padding:14px;border:1px solid var(--border);font-family:Arial,sans-serif;direction:ltr;text-align:left">
+            <div style="font-size:12px;color:#202124;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escapeHtml(title)}</div>
+            <div style="font-size:12px;color:#4d5156;margin:4px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escapeHtml(url)}</div>
+            <div style="font-size:12px;color:#4d5156;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${escapeHtml(desc)}</div>
+        </div>`;
+    }
+
     // Overall colors
     heroEl.style.color = c.text || '#fff';
 };
@@ -1575,6 +1638,114 @@ function escapeHtml(str) {
     return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 window.escapeHtml = escapeHtml;
+
+// ===== LIVE PREVIEW: Listen to ALL form inputs =====
+document.addEventListener('input', function(e) {
+    if (e.target.matches('input, textarea, select')) {
+        if (previewOpen) updatePreview();
+        window._hasUnsavedChanges = true;
+    }
+});
+document.addEventListener('change', function(e) {
+    if (e.target.matches('input, textarea, select')) {
+        if (previewOpen) updatePreview();
+        window._hasUnsavedChanges = true;
+    }
+});
+
+// ===== UNSAVED CHANGES WARNING =====
+window._hasUnsavedChanges = false;
+window.addEventListener('beforeunload', function(e) {
+    if (window._hasUnsavedChanges) {
+        e.preventDefault();
+        e.returnValue = '';
+    }
+});
+
+// Mark saved
+const _origSaveSection = window.saveSection;
+window.saveSection = async function(section) {
+    await _origSaveSection(section);
+    window._hasUnsavedChanges = false;
+};
+const _origSaveAll = window.saveAllSections;
+window.saveAllSections = async function() {
+    await _origSaveAll();
+    window._hasUnsavedChanges = false;
+};
+
+// ===== LOADING SPINNER =====
+(function(){
+    var overlay = document.createElement('div');
+    overlay.id = 'loadingOverlay';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(240,242,245,.95);z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;transition:opacity .3s';
+    overlay.innerHTML = '<div style="width:44px;height:44px;border:3px solid #e5e7eb;border-top-color:#0003c9;border-radius:50%;animation:spin .8s linear infinite"></div><p style="color:#6b7280;font-weight:600;font-size:14px">جاري تحميل الإعدادات...</p><style>@keyframes spin{to{transform:rotate(360deg)}}</style>';
+    document.body.appendChild(overlay);
+    setTimeout(function(){ overlay.style.opacity = '0'; setTimeout(function(){ overlay.remove(); }, 400); }, 2500);
+})();
+
+// ===== CONFIRM BEFORE LOGOUT =====
+const _origLogout = window.doLogout;
+window.doLogout = function() {
+    if (window._hasUnsavedChanges) {
+        if (!confirm('عندك تغييرات غير محفوظة. متأكد عايز تسيب الصفحة؟')) return;
+    } else {
+        if (!confirm('متأكد عايز تخرج؟')) return;
+    }
+    _origLogout();
+};
+
+// ===== EXPORT / IMPORT SETTINGS =====
+window.exportSettings = function() {
+    const data = JSON.stringify(allSettings, null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'qcv-settings-' + new Date().toISOString().slice(0,10) + '.json';
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('تم تصدير الإعدادات', 'success');
+};
+
+window.importSettings = function() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = async function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        try {
+            const text = await file.text();
+            const data = JSON.parse(text);
+            if (!confirm('استيراد الإعدادات سيستبدل كل الإعدادات الحالية. متأكد؟')) return;
+            await set(ref(db, 'siteSettings/'), data);
+            showToast('تم استيراد الإعدادات بنجاح', 'success');
+            window._hasUnsavedChanges = false;
+        } catch(err) {
+            showToast('خطأ في ملف الإعدادات', 'error');
+        }
+    };
+    input.click();
+};
+
+// ===== ADD EXPORT/IMPORT BUTTONS TO TOPBAR =====
+(function(){
+    var actions = document.querySelector('.top-bar .actions');
+    if (!actions || document.getElementById('exportBtn')) return;
+    var exportBtn = document.createElement('button');
+    exportBtn.id = 'exportBtn';
+    exportBtn.className = 'preview-toggle';
+    exportBtn.innerHTML = '<i class="fa-solid fa-download"></i> تصدير';
+    exportBtn.onclick = exportSettings;
+    var importBtn = document.createElement('button');
+    importBtn.id = 'importBtn';
+    importBtn.className = 'preview-toggle';
+    importBtn.innerHTML = '<i class="fa-solid fa-upload"></i> استيراد';
+    importBtn.onclick = importSettings;
+    actions.insertBefore(exportBtn, actions.firstChild);
+    actions.insertBefore(importBtn, exportBtn.nextSibling);
+})();
 
 </script>
 </body>
