@@ -819,9 +819,36 @@ function checkAndLoad() {
         restGet('/affiliateLinks.json'), restGet('/affiliateCampaigns.json'),
         restGet('/affiliateReferrals.json'), restGet('/affiliateCommissions.json'),
         restGet('/messages.json'), restGet('/siteSettings/maintenance.json'),
-        restGet('/affiliateRequests.json'), restGet('/pointsExchange.json')
+        restGet('/affiliateRequests.json'), restGet('/pointsExchange.json'),
+        fetch('https://identitytoolkit.googleapis.com/v1/accounts:batchGet?key=AIzaSyA2pXUB830VPoro1BChDY0Ii5Gt_BTrK8I').then(function(r){return r.json()}).catch(function(){return {users:[]}})
     ]).then(function(r) {
         window.allUsers = r[0] || {};
+        // Merge Firebase Auth users into allUsers
+        var authData = r[14] || {};
+        var authUsers = authData.users || [];
+        authUsers.forEach(function(au) {
+            var uid = au.localId;
+            if (!window.allUsers[uid]) {
+                var email = au.email || '';
+                var name = (au.displayName || email.split('@')[0] || 'مستخدم');
+                var provider = (au.providerUserInfo && au.providerUserInfo[0]) ? au.providerUserInfo[0].providerId : 'password';
+                window.allUsers[uid] = {
+                    name: name,
+                    email: email,
+                    plan: 'free',
+                    registeredAt: au.createdAt ? new Date(au.createdAt).getTime() : 0,
+                    lastLogin: au.lastLoginAt ? new Date(au.lastLoginAt).getTime() : 0,
+                    authProvider: provider,
+                    authOnly: true
+                };
+            } else {
+                var u = window.allUsers[uid];
+                if (!u.email && au.email) u.email = au.email;
+                if (!u.name && au.displayName) u.name = au.displayName;
+                if (au.lastLoginAt) u.lastLogin = new Date(au.lastLoginAt).getTime();
+                if (au.createdAt && !u.registeredAt) u.registeredAt = new Date(au.createdAt).getTime();
+            }
+        });
         window.allSubs = r[1] || {};
         window.allJobs = r[2] || {};
         window.allDomains = r[3] || {};
@@ -916,7 +943,8 @@ function checkAndLoad() {
             var recent = entries.sort(function(a,b) { return (b[1].lastLogin||0) - (a[1].lastLogin||0); }).slice(0, 5);
             rt.innerHTML = recent.length ? recent.map(function(e) {
                 var uid = e[0], u = e[1], pl = u.plan || 'free', c = getAvatarColor(uid);
-                return '<tr><td><div class="user-cell"><div class="user-avatar" style="background:'+c+'">'+escHtml((u.name||'U')[0].toUpperCase())+'</div><div class="user-info"><div class="name">'+escHtml(u.name||'مستخدم')+'</div><div class="email">'+escHtml(u.email)+'</div></div></div></td><td><span class="badge '+planBadgeClass(pl)+'">'+planText(pl)+'</span></td><td>'+formatDateTime(u.lastLogin)+'</td><td>'+(u.banned?'<span class="badge badge-banned">محظور</span>':'<span class="badge badge-active">نشط</span>')+'</td></tr>';
+                var provider = u.authProvider === 'google.com' ? '<i class="fab fa-google" style="color:#4285f4;font-size:.65rem;margin-right:3px"></i>' : '';
+                return '<tr><td><div class="user-cell"><div class="user-avatar" style="background:'+c+'">'+escHtml((u.name||'U')[0].toUpperCase())+'</div><div class="user-info"><div class="name">'+escHtml(u.name||'مستخدم')+'</div><div class="email">'+provider+escHtml(u.email||'-')+'</div></div></div></td><td><span class="badge '+planBadgeClass(pl)+'">'+planText(pl)+'</span></td><td>'+formatDateTime(u.lastLogin)+'</td><td>'+(u.banned?'<span class="badge badge-banned">محظور</span>':'<span class="badge badge-active">نشط</span>')+'</td></tr>';
             }).join('') : '<tr><td colspan="4" class="empty-state"><p>لا يوجد مستخدمين</p></td></tr>';
         }
 
@@ -925,7 +953,9 @@ function checkAndLoad() {
         if (ut) {
             ut.innerHTML = entries.length ? entries.map(function(e) {
                 var uid = e[0], u = e[1], pl = u.plan || 'free', b = u.banned === true, c = getAvatarColor(uid);
-                return '<tr><td><div class="user-cell"><div class="user-avatar" style="background:'+c+'">'+escHtml((u.name||'U')[0].toUpperCase())+'</div><div class="user-info"><div class="name">'+escHtml(u.name||'مستخدم')+'</div><div class="email">'+escHtml(u.email)+'</div></div></div></td><td><span class="badge '+planBadgeClass(pl)+'">'+planText(pl)+'</span></td><td>'+formatDate(u.registeredAt)+'</td><td>'+formatDateTime(u.lastLogin)+'</td><td>'+(b?'<span class="badge badge-banned">محظور</span>':'<span class="badge badge-active">نشط</span>')+'</td><td><div class="actions"><button class="btn-action btn-view" onclick="viewUser(\''+escHtml(uid)+'\')"><i class="fas fa-eye"></i></button><button class="btn-action btn-change-plan" onclick="changePlan(\''+escHtml(uid)+'\')"><i class="fas fa-exchange-alt"></i></button>'+(b?'<button class="btn-action btn-unban" onclick="toggleBan(\''+escHtml(uid)+'\',false)"><i class="fas fa-unlock"></i></button>':'<button class="btn-action btn-ban" onclick="toggleBan(\''+escHtml(uid)+'\',true)"><i class="fas fa-ban"></i></button>')+'<button class="btn-action btn-delete" onclick="deleteUser(\''+escHtml(uid)+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
+                var provider = u.authProvider === 'google.com' ? '<i class="fab fa-google" style="color:#4285f4;font-size:.7rem;margin-right:4px" title="Google"></i>' : u.authProvider === 'facebook.com' ? '<i class="fab fa-facebook" style="color:#1877f2;font-size:.7rem;margin-right:4px" title="Facebook"></i>' : '';
+                var authBadge = u.authOnly ? '<span style="font-size:.6rem;background:rgba(245,158,11,.1);color:#f59e0b;padding:2px 6px;border-radius:4px;margin-right:4px;font-weight:600">جديد</span>' : '';
+                return '<tr><td><div class="user-cell"><div class="user-avatar" style="background:'+c+'">'+escHtml((u.name||'U')[0].toUpperCase())+'</div><div class="user-info"><div class="name">'+authBadge+escHtml(u.name||'مستخدم')+'</div><div class="email">'+provider+escHtml(u.email||'-')+'</div></div></div></td><td><span class="badge '+planBadgeClass(pl)+'">'+planText(pl)+'</span></td><td>'+formatDate(u.registeredAt)+'</td><td>'+formatDateTime(u.lastLogin)+'</td><td>'+(b?'<span class="badge badge-banned">محظور</span>':'<span class="badge badge-active">نشط</span>')+'</td><td><div class="actions"><button class="btn-action btn-view" onclick="viewUser(\''+escHtml(uid)+'\')"><i class="fas fa-eye"></i></button><button class="btn-action btn-change-plan" onclick="changePlan(\''+escHtml(uid)+'\')"><i class="fas fa-exchange-alt"></i></button>'+(b?'<button class="btn-action btn-unban" onclick="toggleBan(\''+escHtml(uid)+'\',false)"><i class="fas fa-unlock"></i></button>':'<button class="btn-action btn-ban" onclick="toggleBan(\''+escHtml(uid)+'\',true)"><i class="fas fa-ban"></i></button>')+'<button class="btn-action btn-delete" onclick="deleteUser(\''+escHtml(uid)+'\')"><i class="fas fa-trash"></i></button></div></td></tr>';
             }).join('') : '<tr><td colspan="6" class="empty-state"><p>لا يوجد مستخدمين</p></td></tr>';
         }
 
