@@ -1,0 +1,124 @@
+services:
+  # ─── PostgreSQL Database ──────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: callcenter-db
+    environment:
+      POSTGRES_DB: callcenter
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─── Redis Cache ──────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: callcenter-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  # ─── Asterisk / FreePBX ───────────────────────────────────
+  asterisk:
+    image: tiredofit/freepbx:latest
+    container_name: callcenter-asterisk
+    ports:
+      - "80:80"       # FreePBX Web GUI
+      - "443:443"     # HTTPS
+      - "5060:5060"   # SIP UDP
+      - "5060:5060/udp"
+      - "8088:8088"   # ARI HTTP
+      - "8089:8089"   # ARI/WSS WebSocket
+    volumes:
+      - asterisk_data:/var/lib/asterisk
+      - asterisk recordings:/var/spool/asterisk/monitor
+      - ./asterisk/config:/etc/asterisk/custom
+    environment:
+      - FREEPBX_ADMIN_PASS=admin
+      - ASTERISK_SIP_PASS=change-me
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    networks:
+      - callcenter-net
+
+  # ─── Backend API ──────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: callcenter-api
+    ports:
+      - "3001:3001"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/callcenter
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
+      - ASTERISK_HOST=asterisk
+      - ASTERISK_PORT=8088
+      - ASTERISK_USER=admin
+      - ASTERISK_PASSWORD=admin
+      - ASTERISK_WS_HOST=wss://asterisk:8089/ws
+      - SIP_DOMAIN=asterisk
+      - SIP_WS_SERVER=wss://asterisk:8089/ws
+      - NODE_ENV=production
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      asterisk:
+        condition: service_started
+    volumes:
+      - recordings:/app/recordings
+    networks:
+      - callcenter-net
+
+  # ─── Frontend ─────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: callcenter-web
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - callcenter-net
+
+  # ─── Nginx Reverse Proxy ──────────────────────────────────
+  nginx:
+    image: nginx:alpine
+    container_name: callcenter-nginx
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - callcenter-net
+
+volumes:
+  postgres_data:
+  redis_data:
+  asterisk_data:
+  asterisk recordings:
+  recordings:
+
+networks:
+  callcenter-net:
+    driver: bridge

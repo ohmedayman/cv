@@ -1,0 +1,144 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// ─── Users & Auth ────────────────────────────────────────────
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  passwordHash  String
+  firstName     String
+  lastName      String
+  role          String    @default("AGENT")
+  sipExtension  String?   @unique
+  sipPassword   String?
+  status        String    @default("OFFLINE")
+  avatarUrl     String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  callLogs      CallLog[]
+  recordings    Recording[]
+  agentStats    AgentStat[]
+}
+
+// ─── Customers (CRM) ────────────────────────────────────────
+
+model Customer {
+  id            String    @id @default(uuid())
+  phoneNumber   String    @unique
+  firstName     String?
+  lastName      String?
+  email         String?
+  address       String?
+  notes         String?
+  tags          String    @default("[]")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  callLogs      CallLog[]
+  orders        Order[]
+}
+
+// ─── Orders (Retail) ────────────────────────────────────────
+
+model Order {
+  id            String    @id @default(uuid())
+  customerId    String
+  orderNumber   String    @unique
+  items         String    @default("[]")
+  totalAmount   Float
+  status        String    @default("PENDING")
+  notes         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  customer      Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+}
+
+// ─── Call Logs ───────────────────────────────────────────────
+
+model CallLog {
+  id            String    @id @default(uuid())
+  callId        String    @unique
+  customerId    String?
+  agentId       String?
+  direction     String
+  fromNumber    String
+  toNumber      String
+  startTime     DateTime
+  endTime       DateTime?
+  duration      Int?
+  status        String    @default("RINGING")
+  queueWaitTime Int?
+  hangupCause   String?
+  notes         String?
+  rating        Int?
+
+  customer      Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  agent         User?     @relation(fields: [agentId], references: [id], onDelete: SetNull)
+  recordings    Recording[]
+}
+
+// ─── Recordings ──────────────────────────────────────────────
+
+model Recording {
+  id            String    @id @default(uuid())
+  callLogId     String
+  agentId       String
+  filePath      String
+  fileSize      Int?
+  duration      Int?
+  format        String    @default("wav")
+  createdAt     DateTime  @default(now())
+
+  callLog       CallLog   @relation(fields: [callLogId], references: [id], onDelete: Cascade)
+  agent         User      @relation(fields: [agentId], references: [id], onDelete: Cascade)
+}
+
+// ─── Agent Stats (Daily) ────────────────────────────────────
+
+model AgentStat {
+  id            String    @id @default(uuid())
+  agentId       String
+  date          DateTime  @default(now())
+  totalCalls    Int       @default(0)
+  answeredCalls Int       @default(0)
+  missedCalls   Int       @default(0)
+  totalDuration Int       @default(0)
+  avgTalkTime   Int?
+  avgWaitTime   Int?
+  satisfactionScore Float?
+
+  agent         User      @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  @@unique([agentId, date])
+}
+
+// ─── Queues ──────────────────────────────────────────────────
+
+model Queue {
+  id            String    @id @default(uuid())
+  name          String    @unique
+  description   String?
+  strategy      String    @default("ringall")
+  maxWaitTime   Int       @default(300)
+  musicOnHold   String?
+  createdAt     DateTime  @default(now())
+}
+
+// ─── System Settings ────────────────────────────────────────
+
+model Setting {
+  id            String    @id @default(uuid())
+  key           String    @unique
+  value         String
+  description   String?
+  updatedAt     DateTime  @updatedAt
+}
