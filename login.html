@@ -934,12 +934,38 @@
             .nav-links {
                 display: none;
             }
-
+            .theme-toggle{width:44px!important;height:44px!important}
+            .lang-switch button{padding:8px 12px!important}
+            .pw-toggle{min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center}
+            .nav-cta{padding:12px 24px!important;min-height:44px}
+            .nav-links.show {
+                display: flex !important;
+                flex-direction: column;
+                position: fixed;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: var(--card, #fff);
+                border-bottom: 1px solid var(--card-border, #e5e7eb);
+                padding: 16px 20px;
+                gap: 12px;
+                z-index: 999;
+                box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            }
+            .nav-links.show a, .nav-links.show button {
+                width: 100%;
+                text-align: center;
+                padding: 12px !important;
+            }
+            .nav-mobile-toggle {
+                display: flex !important;
+            }
             .auth-card {
                 padding: 30px 24px;
                 border-radius: 16px;
             }
         }
+        .nav-mobile-toggle{display:none;align-items:center;justify-content:center;width:44px;height:44px;border:none;background:none;font-size:1.3rem;color:var(--text);cursor:pointer;border-radius:10px;flex-shrink:0}
 
         /* ===== DARK MODE ===== */
         body.dark-mode .ig input { background: var(--input-bg); border-color: #2d3748; color: var(--text); }
@@ -984,6 +1010,7 @@
         <button class="theme-toggle" onclick="QCVTheme.toggle()" aria-label="تبديل الوضع الليلي" style="background:none;border:1px solid var(--border);color:var(--text);width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all 0.2s;flex-shrink:0" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'"><span class="icon-sun">☀</span><span class="icon-moon" style="display:none">🌒</span></button>
         <div class="lang-switch" style="display:flex;align-items:center;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:50px;padding:2px 4px"><button class="lang-ar" onclick="QCVLang.set('ar')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:1">عربي</button><button class="lang-en" onclick="QCVLang.set('en')" style="background:none;border:none;color:var(--text);padding:4px 10px;border-radius:50px;cursor:pointer;font-size:0.75rem;font-weight:700;opacity:0.5">EN</button></div>
     </div>
+    <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')" aria-label="القائمة">&#9776;</button>
 </nav>
 
     <div class="grid-bg"></div>

@@ -124,21 +124,26 @@
             var el = document.getElementById('cvPage');
             if (!el) return;
             var btn = document.getElementById('downloadBtn');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحميل...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
             btn.disabled = true;
+            // Fix: temporarily hide overflow to prevent blank page in PDF
+            var origOverflow = el.style.overflow;
+            el.style.overflow = 'hidden';
             var opt = {
                 margin: 0,
                 filename: (document.title.split(' - ')[0] || 'CV') + '.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2, useCORS: true, letterRendering: true },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+                pagebreak: { mode: ['css', 'legacy'] }
             };
             html2pdf().set(opt).from(el).save().then(function() {
-                btn.innerHTML = '<i class="fas fa-download"></i> تحميل PDF';
+                el.style.overflow = origOverflow || 'visible';
+                btn.innerHTML = '<i class="fas fa-download"></i> Download PDF';
                 btn.disabled = false;
             }).catch(function() {
-                btn.innerHTML = '<i class="fas fa-download"></i> تحميل PDF';
+                el.style.overflow = origOverflow || 'visible';
+                btn.innerHTML = '<i class="fas fa-download"></i> Download PDF';
                 btn.disabled = false;
             });
         };

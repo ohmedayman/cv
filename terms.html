@@ -48,7 +48,8 @@
         .footer-links li{margin-bottom:8px}.footer-links a{color:var(--muted);text-decoration:none;font-size:0.85rem;transition:color 0.2s}.footer-links a:hover{color:var(--accent)}
         .footer-bottom{text-align:center;padding-top:20px;border-top:1px solid var(--border);color:var(--muted);font-size:0.82rem}
         .whatsapp-btn{position:fixed;bottom:24px;left:24px;width:56px;height:56px;background:#25d366;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;box-shadow:0 4px 20px rgba(37,211,102,0.35);z-index:9999;text-decoration:none;transition:all 0.3s}.whatsapp-btn:hover{transform:scale(1.1)}
-        @media(max-width:768px){.navbar{padding:0 20px}.nav-links{display:none}.hero-section h1{font-size:1.8rem}.footer-content{grid-template-columns:1fr}}
+        .nav-mobile-toggle{display:none;align-items:center;justify-content:center;width:44px;height:44px;border:none;background:none;font-size:1.3rem;color:var(--text);cursor:pointer;border-radius:10px;flex-shrink:0}
+        @media(max-width:768px){.navbar{padding:0 20px}.nav-links{display:none}.nav-links.show{display:flex !important;flex-direction:column;position:fixed;top:70px;left:0;right:0;background:var(--card,#fff);border-bottom:1px solid var(--border,#e5e7eb);padding:16px 20px;gap:12px;z-index:999;box-shadow:0 8px 25px rgba(0,0,0,0.1)}.nav-links.show li{width:100%}.nav-links.show li a,.nav-links.show li button{width:100%;text-align:center;padding:12px !important}.nav-mobile-toggle{display:flex !important}.theme-toggle{width:44px!important;height:44px!important}.lang-switch button{padding:8px 12px!important}.hero-section h1{font-size:1.8rem}.footer-content{grid-template-columns:1fr}}
 
         body.dark-mode{
             --bg:#0a0e1a;--bg2:#0f1525;--card:#141b2d;--border:#1e293b;--accent:#0003c9;--text:#f1f5f9;--muted:#94a3b8
@@ -81,6 +82,7 @@
             <a href="login.html" style="color:var(--muted);text-decoration:none;font-weight:600;font-size:0.9rem">تسجيل الدخول</a>
             <a href="login.html" class="nav-cta">ابدأ مجاناً</a>
         </div>
+        <button class="nav-mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('show')" aria-label="القائمة">&#9776;</button>
     </nav>
 
     <section class="hero-section">

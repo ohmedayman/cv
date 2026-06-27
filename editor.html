@@ -21,20 +21,23 @@
         body{background:var(--bg);color:var(--text);font-family:'Inter','Cairo',sans-serif;height:100vh;overflow:hidden}
 
         /* ===== TOP BAR ===== */
-        .topbar{height:56px;background:var(--sidebar);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 16px;gap:10px;z-index:100;position:relative;direction:ltr;overflow:visible}
-        .topbar-logo{font-size:1.4rem;font-weight:900;color:var(--text);display:flex;align-items:center;gap:6px;flex-shrink:0}
+        .topbar{height:56px;background:var(--sidebar);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 12px;gap:6px;z-index:100;position:relative;direction:ltr;overflow:visible}
+        .topbar-logo{font-size:1.3rem;font-weight:900;color:var(--text);display:flex;align-items:center;gap:4px;flex-shrink:0}
         .topbar-logo span{color:var(--accent)}
-        .topbar-nav{display:flex;align-items:center;gap:6px;margin-left:16px}
-        .topbar-nav a{color:var(--muted);text-decoration:none;font-weight:600;font-size:0.8rem;padding:6px 12px;border-radius:6px;transition:all 0.2s}
+        .topbar-nav{display:flex;align-items:center;gap:2px;flex-shrink:0}
+        .topbar-nav a{color:var(--muted);text-decoration:none;font-weight:600;font-size:0.75rem;padding:5px 10px;border-radius:6px;transition:all 0.2s;white-space:nowrap}
         .topbar-nav a:hover,.topbar-nav a.active{color:var(--text);background:rgba(0,0,0,0.05)}
         .topbar-nav a.active{color:var(--accent)}
-        .topbar-center{display:flex;align-items:center;gap:10px;flex:1;justify-content:center;min-width:0;overflow:hidden}
-        .ctrl-group{display:flex;align-items:center;gap:5px}
-        .ctrl-group label{font-size:0.68rem;color:var(--muted);font-weight:600;white-space:nowrap}
-        .ctrl-group input[type="range"]{width:60px;accent-color:var(--accent);cursor:pointer}
-        .ctrl-group select{background:var(--card);border:1px solid var(--border);color:#1a1a2e;padding:5px 8px;border-radius:6px;font-size:0.72rem;font-family:inherit;cursor:pointer;outline:none}
+        .topbar-divider{width:1px;height:24px;background:var(--border);flex-shrink:0;margin:0 4px}
+        .topbar-center{display:flex;align-items:center;gap:6px;flex:1;justify-content:center;min-width:0;overflow:hidden}
+        .ctrl-group{display:flex;align-items:center;gap:4px;flex-shrink:0}
+        .ctrl-group label{font-size:0.65rem;color:var(--muted);font-weight:600;white-space:nowrap;min-width:14px;text-align:center}
+        .ctrl-group select{background:var(--card);border:1px solid var(--border);color:#1a1a2e;padding:4px 6px;border-radius:6px;font-size:0.7rem;font-family:inherit;cursor:pointer;outline:none;max-width:100px}
         .ctrl-group select:focus{border-color:var(--accent)}
         .ctrl-group input[type="color"]{width:24px;height:24px;border:1px solid var(--border);border-radius:6px;cursor:pointer;background:none;padding:2px}
+        .slider-group{gap:3px}
+        .slider-group input[type="range"]{width:50px;accent-color:var(--accent);cursor:pointer;height:4px}
+        .slider-val{font-size:0.6rem;color:var(--muted);min-width:16px;text-align:center;font-weight:700}
         .notif-bell{position:relative;width:38px;height:38px;border-radius:10px;border:1px solid var(--border);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s;font-size:1rem;color:var(--muted)}
         .notif-bell:hover{border-color:var(--accent);color:var(--accent)}
         .notif-badge{position:absolute;top:-4px;right:-4px;width:18px;height:18px;background:#ef4444;color:#fff;border-radius:50%;font-size:0.6rem;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg);animation:pulse-badge 2s infinite}
@@ -63,26 +66,27 @@
         .notif-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;padding-top:6px;border-top:1px solid var(--border)}
         .notif-meta span{font-size:0.7rem;color:var(--muted);display:flex;align-items:center;gap:3px;background:var(--bg);padding:2px 8px;border-radius:6px;font-weight:600}
         .notif-meta i{font-size:0.6rem;color:var(--accent)}
-        .topbar-left{display:flex;align-items:center;gap:8px;flex-shrink:0;overflow:visible}
-        .theme-toggle{width:36px;height:36px;border-radius:10px;background:var(--card);border:1px solid var(--border);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all 0.25s}
+        .topbar-left{display:flex;align-items:center;gap:4px;flex-shrink:0;overflow:visible}
+        .theme-toggle{width:32px;height:32px;border-radius:8px;background:var(--card);border:1px solid var(--border);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.85rem;transition:all 0.25s}
         .theme-toggle:hover{border-color:var(--accent);transform:scale(1.05);box-shadow:0 2px 8px rgba(0,3,201,0.15)}
-        .btn-upload-cv{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;padding:7px 14px;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:5px;transition:all 0.2s;box-shadow:0 2px 8px rgba(99,102,241,0.25)}
+        .btn-upload-cv{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;border:none;padding:6px 10px;border-radius:8px;font-weight:700;font-size:0.72rem;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:4px;transition:all 0.2s;box-shadow:0 2px 8px rgba(99,102,241,0.25)}
         .btn-upload-cv:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(99,102,241,0.35);background:linear-gradient(135deg,#4f46e5,#7c3aed)}
-        .btn-upload-cv i{font-size:0.85rem}
-        .btn-save{background:var(--card);color:var(--text);border:1px solid var(--border);padding:7px 16px;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:flex;align-items:center;gap:5px}
+        .btn-upload-cv i{font-size:0.8rem}
+        .btn-save{background:var(--card);color:var(--text);border:1px solid var(--border);padding:6px 10px;border-radius:8px;font-weight:700;font-size:0.72rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:flex;align-items:center;gap:4px}
         .btn-save:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,3,201,0.04)}
-        .undo-redo{display:flex;align-items:center;gap:2px;margin:0 4px}
-        .undo-redo button{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.85rem;transition:all 0.2s}
+        .btn-label{display:inline}
+        .undo-redo{display:flex;align-items:center;gap:2px}
+        .undo-redo button{width:28px;height:28px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:0.78rem;transition:all 0.2s}
         .undo-redo button:hover:not(:disabled){border-color:var(--accent);color:var(--accent);background:rgba(0,3,201,0.04)}
         .undo-redo button:disabled{opacity:0.3;cursor:not-allowed}
         .undo-redo .redo-arrow{transform:scaleX(-1)}
-        .btn-export{background:var(--accent);color:#fff;border:none;padding:8px 18px;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,3,201,0.2)}
+        .btn-export{background:var(--accent);color:#fff;border:none;padding:6px 14px;border-radius:8px;font-weight:700;font-size:0.72rem;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:5px;transition:all 0.2s;box-shadow:0 2px 8px rgba(0,3,201,0.2)}
         .btn-export:hover{background:#0002a3;transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,3,201,0.3)}
-        .btn-export .spinner{display:none;width:13px;height:13px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite}
+        .btn-export .spinner{display:none;width:12px;height:12px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite}
         .btn-export.loading .spinner{display:block}.btn-export.loading .exp-text{display:none}
-        .btn-html-export{background:transparent;color:var(--accent);border:1px solid rgba(0,3,201,0.3);padding:8px 16px;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;transition:all 0.2s}
+        .btn-html-export{background:transparent;color:var(--accent);border:1px solid rgba(0,3,201,0.3);padding:6px 12px;border-radius:8px;font-weight:700;font-size:0.72rem;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:5px;transition:all 0.2s}
         .btn-html-export:hover{background:rgba(0,3,201,0.06);border-color:var(--accent);transform:translateY(-1px)}
-        .btn-ai-gen{background:linear-gradient(135deg,rgba(139,92,246,0.15),rgba(37,99,235,0.15));color:#7c3aed;border:1px solid rgba(139,92,246,0.3);padding:8px 16px;border-radius:8px;font-weight:700;font-size:0.78rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:none;align-items:center;gap:6px}
+        .btn-ai-gen{background:linear-gradient(135deg,rgba(139,92,246,0.15),rgba(37,99,235,0.15));color:#7c3aed;border:1px solid rgba(139,92,246,0.3);padding:6px 12px;border-radius:8px;font-weight:700;font-size:0.72rem;cursor:pointer;font-family:inherit;transition:all 0.2s;display:none;align-items:center;gap:5px}
         .btn-ai-gen:hover{background:linear-gradient(135deg,rgba(139,92,246,0.25),rgba(37,99,235,0.25));border-color:rgba(139,92,246,0.5);transform:translateY(-1px)}
         @keyframes spin{to{transform:rotate(360deg)}}
         .profile-area{position:relative;flex-shrink:0}
@@ -513,19 +517,19 @@
             .preview-zone{padding:6px}
             .cv-page{transform:scale(0.5);transform-origin:top center}
             .topbar-logo{font-size:1.1rem}
-            .topbar-center select{font-size:0.72rem;max-width:100px}
+            .topbar-center select{font-size:0.68rem;max-width:80px}
+            .slider-group input[type="range"]{width:40px}
             .add-section-btn{font-size:0.7rem;padding:6px 8px}
             .profile-dropdown{width:260px;right:-10px}
-            .btn-export span:not(.spinner){display:none}
-            .btn-html-export span{display:none}
-            .btn-save span{display:none}
+            .btn-label{display:none}
             .profile-name{display:none}
             .ctrl-group label{display:none}
         }
         @media(max-width:400px){
             .cv-page{transform:scale(0.38)}
-            .topbar{flex-wrap:wrap;height:auto;padding:8px 12px;gap:8px}
-            .topbar-center{order:3;width:100%}
+            .topbar{flex-wrap:wrap;height:auto;padding:6px 8px;gap:6px}
+            .topbar-center{order:3;width:100%;justify-content:flex-start;flex-wrap:wrap}
+            .topbar-divider{display:none}
             .sidebar-nav{max-height:30vh}
             .editor-forms{max-height:35vh}
             .ai-assist-btn{width:48px;height:48px;bottom:70px;right:16px}
@@ -666,10 +670,10 @@
         <a href="editor.html" class="active">Editor</a>
         <a href="portfolio-view.html" target="_blank" rel="noopener noreferrer" id="myPageLink">My Page</a>
     </div>
+    <div class="topbar-divider"></div>
     <div class="topbar-center">
         <div class="ctrl-group">
-            <label>Template:</label>
-            <select id="templateSelect" onchange="changeTemplate(this.value)">
+            <select id="templateSelect" onchange="changeTemplate(this.value)" title="Template">
                 <option value="classic">Classic</option>
                 <option value="modern">Modern</option>
                 <option value="professional">Professional</option>
@@ -688,8 +692,7 @@
             </select>
         </div>
         <div class="ctrl-group">
-            <label>Font:</label>
-            <select id="fontFamily" onchange="setFontFamily(this.value)">
+            <select id="fontFamily" onchange="setFontFamily(this.value)" title="Font">
                 <option value="Inter">Inter</option>
                 <option value="Cairo">Cairo</option>
                 <option value="Arial">Arial</option>
@@ -699,37 +702,36 @@
                 <option value="Verdana">Verdana</option>
             </select>
         </div>
-        <div class="ctrl-group">
-            <label>Size:</label>
+        <div class="ctrl-group slider-group">
+            <label>Aa</label>
             <input type="range" id="fontSize" min="9" max="16" value="11" oninput="setFontSize(this.value)">
-            <span id="fontSizeVal" style="font-size:0.65rem;color:var(--muted);min-width:20px">11</span>
+            <span id="fontSizeVal" class="slider-val">11</span>
         </div>
-        <div class="ctrl-group">
-            <label>Margins:</label>
+        <div class="ctrl-group slider-group">
+            <label><i class="fas fa-arrows-alt-h" style="font-size:0.6rem"></i></label>
             <input type="range" id="pageMargin" min="10" max="50" value="30" oninput="setPageMargin(this.value)">
-            <span id="pageMarginVal" style="font-size:0.65rem;color:var(--muted);min-width:20px">30</span>
+            <span id="pageMarginVal" class="slider-val">30</span>
         </div>
-        <div class="ctrl-group">
-            <label>Spacing:</label>
+        <div class="ctrl-group slider-group">
+            <label><i class="fas fa-text-height" style="font-size:0.6rem"></i></label>
             <input type="range" id="lineSpacing" min="10" max="25" value="15" oninput="setLineSpacing(this.value)">
-            <span id="lineSpacingVal" style="font-size:0.65rem;color:var(--muted);min-width:20px">1.5</span>
+            <span id="lineSpacingVal" class="slider-val">1.5</span>
         </div>
         <div class="ctrl-group">
-            <label>Text Color:</label>
-            <input type="color" id="fontColor" value="#111111" onchange="setFontColor(this.value)">
+            <input type="color" id="fontColor" value="#111111" onchange="setFontColor(this.value)" title="Text Color">
         </div>
     </div>
     <div class="topbar-left">
-        <div class="notif-bell" onclick="toggleNotifPanel()" title="الإشعارات">
+        <div class="notif-bell" onclick="toggleNotifPanel()" title="Notifications">
             <i class="fas fa-bell"></i>
             <span class="notif-badge" id="notifBadge" data-count="0"></span>
             <div class="notif-panel" id="notifPanel">
                 <div class="notif-header">
-                    <h4><i class="fas fa-bell" style="margin-left:6px;color:var(--accent)"></i> الإشعارات</h4>
-                    <button class="notif-clear" onclick="event.stopPropagation();markAllRead()">مقروءة الكل</button>
+                    <h4><i class="fas fa-bell" style="margin-left:6px;color:var(--accent)"></i> Notifications</h4>
+                    <button class="notif-clear" onclick="event.stopPropagation();markAllRead()">Mark all read</button>
                 </div>
                 <div class="notif-list" id="notifList">
-                    <div class="notif-empty"><i class="fas fa-bell-slash"></i>لا توجد إشعارات بعد</div>
+                    <div class="notif-empty"><i class="fas fa-bell-slash"></i>No notifications yet</div>
                 </div>
             </div>
         </div>
@@ -738,12 +740,12 @@
             <i class="fas fa-moon icon-moon" style="display:none;color:#8b5cf6"></i>
         </button>
         <div class="undo-redo">
-            <button id="undoBtn" onclick="undoAction()" disabled title="تراجع (Ctrl+Z)"><i class="fas fa-undo"></i></button>
-            <button id="redoBtn" onclick="redoAction()" disabled title="إعادة (Ctrl+Y)"><i class="fas fa-undo redo-arrow"></i></button>
+            <button id="undoBtn" onclick="undoAction()" disabled title="Undo (Ctrl+Z)"><i class="fas fa-undo"></i></button>
+            <button id="redoBtn" onclick="redoAction()" disabled title="Redo (Ctrl+Y)"><i class="fas fa-undo redo-arrow"></i></button>
         </div>
-        <button class="btn-upload-cv" id="uploadCvBtn" onclick="openUploadModal()" title="رفع سيرة ذاتية"><i class="fas fa-cloud-upload-alt"></i> <span>رفع CV</span></button>
-        <button class="btn-save" onclick="saveToFirebase()"><i class="fas fa-save"></i> Save</button>
-        <button class="btn-ai-gen" id="btnAiGen" onclick="window.open('ai.html')" style="display:none"><i class="fas fa-robot"></i> AI Generate</button>
+        <button class="btn-upload-cv" id="uploadCvBtn" onclick="openUploadModal()" title="Upload CV"><i class="fas fa-cloud-upload-alt"></i> <span class="btn-label">Upload CV</span></button>
+        <button class="btn-save" onclick="saveToFirebase()"><i class="fas fa-save"></i> <span class="btn-label">Save</span></button>
+        <button class="btn-ai-gen" id="btnAiGen" onclick="window.open('ai.html')" style="display:none"><i class="fas fa-robot"></i> <span class="btn-label">AI</span></button>
         <button class="btn-export" id="exportBtn" onclick="exportPDF()"><span class="exp-text"><i class="fas fa-file-pdf"></i> Export PDF</span><div class="spinner"></div></button>
 
         <div class="profile-area">
@@ -772,33 +774,34 @@
                 <div class="dd-section">
                     <div class="dd-item" onclick="openPanel('profile')"><span class="dd-icon"><i class="fas fa-user"></i></span> Profile</div>
                     <div class="dd-item" onclick="openPanel('cvs')"><span class="dd-icon"><i class="fas fa-file-alt"></i></span> My CVs</div>
+                    <div class="dd-item" onclick="openTrash()"><span class="dd-icon"><i class="fas fa-trash"></i></span> Trash <span id="trashBadge" style="margin-left:auto;background:#ef4444;color:#fff;font-size:0.6rem;padding:1px 6px;border-radius:10px;display:none;font-weight:700"></span></div>
                     <div class="dd-item" onclick="openPanel('settings')"><span class="dd-icon"><i class="fas fa-cog"></i></span> Settings</div>
                 </div>
                 <div class="dd-divider"></div>
                 <!-- Affiliate Section -->
                 <div class="dd-affiliate" id="ddAffiliateSection">
                     <div id="affApplyView">
-                        <div class="dd-aff-apply-header"><i class="fas fa-bullhorn" style="color:#f59e0b"></i> <span>حساب مسوق</span></div>
-                        <div class="dd-aff-apply-desc">افتح طلبك واحصل على رابطك الخاص واربح <strong>5 نقاط</strong> لكل عضو جديد تسجل من خلالك</div>
-                        <button class="dd-aff-apply-btn" onclick="applyAffiliate()"><i class="fas fa-paper-plane"></i> تقديم طلب</button>
+                        <div class="dd-aff-apply-header"><i class="fas fa-bullhorn" style="color:#f59e0b"></i> <span>Affiliate Account</span></div>
+                        <div class="dd-aff-apply-desc">Submit your request, get your unique link and earn <strong>5 points</strong> for each new member who signs up through you</div>
+                        <button class="dd-aff-apply-btn" onclick="applyAffiliate()"><i class="fas fa-paper-plane"></i> Submit Request</button>
                     </div>
                     <div id="affPendingView" style="display:none">
-                        <div class="dd-aff-pending"><i class="fas fa-clock" style="color:#f59e0b"></i> طلبك قيد المراجعة</div>
-                        <div class="dd-aff-pending-desc">سيتم مراجعة طلبك من الإدارة وستتلقى إشعاراً عند الموافقة</div>
+                        <div class="dd-aff-pending"><i class="fas fa-clock" style="color:#f59e0b"></i> Your request is under review</div>
+                        <div class="dd-aff-pending-desc">Your request will be reviewed by admin and you will be notified upon approval</div>
                     </div>
                     <div id="affActiveView" style="display:none">
                         <div class="dd-aff-header">
                             <i class="fas fa-coins" style="color:#f59e0b"></i>
-                            <span>شارك واربح</span>
+                            <span>Share & Earn</span>
                         </div>
-                        <div class="dd-aff-desc">شارك رابطك واكسب <strong>5 نقاط</strong> لكل تسجيل جديد</div>
+                        <div class="dd-aff-desc">Share your link and earn <strong>5 points</strong> for each new sign-up</div>
                         <div class="dd-aff-stats">
-                            <div class="dd-aff-stat"><span class="num" id="ddAffVisits">0</span><span class="lbl">زوار</span></div>
-                            <div class="dd-aff-stat"><span class="num" id="ddAffReg">0</span><span class="lbl">تسجيلات</span></div>
-                            <div class="dd-aff-stat"><span class="num" id="ddAffPoints">0</span><span class="lbl">نقاط</span></div>
+                            <div class="dd-aff-stat"><span class="num" id="ddAffVisits">0</span><span class="lbl">Visits</span></div>
+                            <div class="dd-aff-stat"><span class="num" id="ddAffReg">0</span><span class="lbl">Sign-ups</span></div>
+                            <div class="dd-aff-stat"><span class="num" id="ddAffPoints">0</span><span class="lbl">Points</span></div>
                         </div>
                         <div class="dd-aff-link-box">
-                            <input type="text" id="ddAffLink" readonly value="جاري التحميل..." title="اضغط للنسخ">
+                            <input type="text" id="ddAffLink" readonly value="Loading..." title="Click to copy">
                             <button class="dd-aff-copy" onclick="copyAffLink()"><i class="fas fa-copy"></i></button>
                         </div>
                         <div class="dd-aff-share">
@@ -809,10 +812,10 @@
                         </div>
                         <div class="dd-divider" style="margin:12px 0"></div>
                         <div class="dd-aff-exchange" id="affExchangeSection">
-                            <div class="dd-aff-exchange-header"><i class="fas fa-gift" style="color:#8b5cf6"></i> استبدال النقاط</div>
-                            <div class="dd-aff-exchange-desc">استبدل <strong>100 نقطة</strong> بباقة <strong>Pro</strong> لمدة 30 يوم</div>
-                            <button class="dd-aff-exchange-btn" id="affExchangeBtn" onclick="exchangePoints()"><i class="fas fa-sync-alt"></i> استبدال 100 نقطة</button>
-                            <div class="dd-aff-exchange-pending" id="affExchangePending" style="display:none"><i class="fas fa-clock" style="color:#f59e0b"></i> طلب الاستبدال قيد المراجعة</div>
+                            <div class="dd-aff-exchange-header"><i class="fas fa-gift" style="color:#8b5cf6"></i> Redeem Points</div>
+                            <div class="dd-aff-exchange-desc">Redeem <strong>100 points</strong> for a <strong>Pro</strong> plan for 30 days</div>
+                            <button class="dd-aff-exchange-btn" id="affExchangeBtn" onclick="exchangePoints()"><i class="fas fa-sync-alt"></i> Redeem 100 Points</button>
+                            <div class="dd-aff-exchange-pending" id="affExchangePending" style="display:none"><i class="fas fa-clock" style="color:#f59e0b"></i> Redemption request under review</div>
                         </div>
                     </div>
                 </div>
@@ -940,15 +943,15 @@
         <div class="sidebar-bottom">
             <!-- Pro Plan Upsell (free users only) -->
             <div class="pro-upsell" id="proUpsell">
-                <div class="pro-upsell-header"><i class="fas fa-crown" style="color:#f59e0b"></i> الباقة الاحترافية</div>
-                <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> جميع القوالب (+15)</div>
-                <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> تصدير PDF بدون علامة مائية</div>
-                <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> ملفات شخصية وبصرية</div>
-                <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> صفحة بورتفوليو شخصية</div>
-                <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> تقييم السيرة بالذكاء الاصطناعي</div>
-                <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> مساعد كتابة بالذكاء الاصطناعي</div>
-                <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> مطابقة الوظائف بالذكاء الاصطناعي</div>
-                <button class="pro-upsell-btn" onclick="openUpgradeModal()"><i class="fas fa-star"></i> اشترك الان - 99 ج.م/شهر</button>
+                <div class="pro-upsell-header"><i class="fas fa-crown" style="color:#f59e0b"></i> Pro Plan</div>
+                <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> All templates (+15)</div>
+                <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> PDF export without watermark</div>
+                <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> Personal & visual portfolios</div>
+                <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> Personal portfolio page</div>
+                <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> AI-powered CV scoring</div>
+                <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> AI writing assistant</div>
+                <div class="pro-upsell-feat"><i class="fas fa-check" style="color:#059669"></i> AI job matching</div>
+                <button class="pro-upsell-btn" onclick="openUpgradeModal()"><i class="fas fa-star"></i> Subscribe Now - 99 EGP/mo</button>
             </div>
             <div class="sidebar-feature" onclick="showTemplates()"><span class="icon"><i class="fas fa-file-alt"></i></span> Change Template</div>
             <div class="sidebar-feature paid-only" id="aiAssistantBtn" onclick="window.open('ai.html')" style="display:none"><span class="icon"><i class="fas fa-brain"></i></span> AI Assistant</div>
@@ -1050,32 +1053,32 @@
 <!-- Upgrade Modal -->
 <div class="upgrade-overlay" id="upgradeOverlay" onclick="closeUpgradeModal(event)">
     <div class="upgrade-card" onclick="event.stopPropagation()">
-        <div class="upgrade-badge">الأكثر شعبية</div>
+        <div class="upgrade-badge">Most Popular</div>
         <button class="upgrade-close" onclick="closeUpgradeModal()">&times;</button>
         <div class="upgrade-card-top">
             <span class="rocket"><i class="fas fa-rocket"></i></span>
-            <div class="plan-label">الباقة الاحترافية</div>
-            <div class="plan-sub">للمحترفين والباحثين عن عمل</div>
+            <div class="plan-label">Pro Plan</div>
+            <div class="plan-sub">For professionals and job seekers</div>
         </div>
         <div class="upgrade-price">
             <span class="price-num">99</span>
-            <span class="price-currency"> ج.م / </span>
-            <span class="price-period">شهرياً</span>
+            <span class="price-currency"> EGP / </span>
+            <span class="price-period">Monthly</span>
         </div>
         <div class="upgrade-features">
-            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">5 سير ذاتية احترافية</span></div>
-            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">جميع القوالب (+15)</span></div>
-            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">تصدير PDF بدون علامة مائية</span></div>
-            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">ملفات شخصية وبصرية</span></div>
-            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">صفحة بورتفوليو شخصية</span></div>
-            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">تقييم السيرة بالذكاء الاصطناعي</span></div>
-            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">مساعد كتابة بالذكاء الاصطناعي</span></div>
-            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">مطابقة الوظائف بالذكاء الاصطناعي</span></div>
-            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">رفع وتحليل السيرة (3 مرات/شهر)</span></div>
+            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">5 professional CVs</span></div>
+            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">All templates (+15)</span></div>
+            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">PDF export without watermark</span></div>
+            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">Personal & visual portfolios</span></div>
+            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">Personal portfolio page</span></div>
+            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">AI-powered CV scoring</span></div>
+            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">AI writing assistant</span></div>
+            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">AI job matching</span></div>
+            <div class="upgrade-feat"><span class="feat-check"><i class="fas fa-check"></i></span><span class="feat-text">Upload & analyze CV (3 times/month)</span></div>
         </div>
         <div class="upgrade-actions">
-            <button class="upgrade-btn-primary" onclick="window.location.href='pay.html'"><i class="fas fa-star"></i> اشترك الان</button>
-            <button class="upgrade-btn-secondary" onclick="closeUpgradeModal()">لاحقاً</button>
+            <button class="upgrade-btn-primary" onclick="window.location.href='pay.html'"><i class="fas fa-star"></i> Subscribe Now</button>
+            <button class="upgrade-btn-secondary" onclick="closeUpgradeModal()">Later</button>
         </div>
     </div>
 </div>
@@ -1125,7 +1128,7 @@
                 var ipData = await ipRes.json();
                 var ip = ipData.ip || 'unknown';
                 var ua = navigator.userAgent;
-                var device = 'جهاز غير معروف';
+                var device = 'Unknown device';
                 if(ua.indexOf('iPhone')>-1) device = 'iPhone';
                 else if(ua.indexOf('iPad')>-1) device = 'iPad';
                 else if(ua.indexOf('Samsung')>-1) device = 'Samsung ' + (ua.match(/SM-\w+/)||[''])[0];
@@ -1137,7 +1140,7 @@
                 else if(ua.indexOf('Mac')>-1) device = 'Apple Mac';
                 else if(ua.indexOf('Windows')>-1) device = 'Windows PC';
                 else if(ua.indexOf('Linux')>-1) device = 'Linux PC';
-                var browser = 'متصفح غير معروف';
+                var browser = 'Unknown browser';
                 if(ua.indexOf('Edg/')>-1) browser = 'Edge ' + ua.split('Edg/')[1]?.split(' ')[0];
                 else if(ua.indexOf('Chrome/')>-1 && ua.indexOf('OPR/')===-1) browser = 'Chrome ' + ua.split('Chrome/')[1]?.split(' ')[0];
                 else if(ua.indexOf('Firefox/')>-1) browser = 'Firefox ' + ua.split('Firefox/')[1]?.split(' ')[0];
@@ -1146,7 +1149,7 @@
                 try { var geo = await fetch('https://ipapi.co/' + ip + '/json/'); var gd = await geo.json(); if(gd.city) city = gd.city; } catch(e){}
                 var notifId = 'n_' + Date.now();
                 await set(ref(db, 'users/' + user.uid + '/notifications/' + notifId), {
-                    type: 'login', text: 'ادخول من ' + device, ip: ip, device: device, browser: browser, city: city, timestamp: Date.now(), read: false
+                    type: 'login', text: 'Login from ' + device, ip: ip, device: device, browser: browser, city: city, timestamp: Date.now(), read: false
                 });
                 await set(ref(db, 'users/' + user.uid + '/lastLogin'), Date.now());
             } catch(e) { console.log('Login tracking skipped:', e); }
@@ -1248,12 +1251,12 @@
             }
             list.innerHTML = visibleNotifs.slice(0, 20).map(n => {
                 const typeClasses = { info: 'notif-type-info', warning: 'notif-type-warning', success: 'notif-type-success', promo: 'notif-type-promo', login: 'notif-type-success', plan: 'notif-type-info', download: 'notif-type-info' };
-                const typeLabels = { info: 'معلوماتية', warning: 'تحذير', success: 'تهنئة', promo: 'عرض خاص', login: 'ادخول', plan: 'باقة', download: 'تحميل' };
+                const typeLabels = { info: 'Info', warning: 'Warning', success: 'Success', promo: 'Promo', login: 'Login', plan: 'Plan', download: 'Download' };
                 const ago = getTimeAgo(n.timestamp || n.sentAt);
                 var safeLink = (n.link && (n.link.startsWith('http://') || n.link.startsWith('https://'))) ? n.link : '#';
                 var metaHtml = '';
                 if (n.type === 'login' && n.ip) {
-                    metaHtml = '<div class="notif-meta"><span><i class="fas fa-wifi"></i> ' + escapeHtml(n.ip) + '</span><span><i class="fas fa-map-marker-alt"></i> ' + escapeHtml(n.city || 'غير معروف') + '</span><span><i class="fas fa-mobile-alt"></i> ' + escapeHtml(n.device || '') + '</span><span><i class="fas fa-globe"></i> ' + escapeHtml(n.browser || '') + '</span></div>';
+                    metaHtml = '<div class="notif-meta"><span><i class="fas fa-wifi"></i> ' + escapeHtml(n.ip) + '</span><span><i class="fas fa-map-marker-alt"></i> ' + escapeHtml(n.city || 'Unknown') + '</span><span><i class="fas fa-mobile-alt"></i> ' + escapeHtml(n.device || '') + '</span><span><i class="fas fa-globe"></i> ' + escapeHtml(n.browser || '') + '</span></div>';
                 }
                 return `<div class="notif-item ${n.read ? '' : 'unread'}" onclick="markRead('${n.id}')">
                     <span class="notif-type ${typeClasses[n.type] || 'notif-type-info'}">${typeLabels[n.type] || n.type}</span>
@@ -1286,10 +1289,10 @@
         function getTimeAgo(ts) {
             if (!ts) return '';
             const diff = Date.now() - ts;
-            if (diff < 60000) return 'الآن';
-            if (diff < 3600000) return 'منذ ' + Math.floor(diff / 60000) + ' دقيقة';
-            if (diff < 86400000) return 'منذ ' + Math.floor(diff / 3600000) + ' ساعة';
-            return 'منذ ' + Math.floor(diff / 86400000) + ' يوم';
+            if (diff < 60000) return 'Just now';
+            if (diff < 3600000) return Math.floor(diff / 60000) + 'm ago';
+            if (diff < 86400000) return Math.floor(diff / 3600000) + 'h ago';
+            return Math.floor(diff / 86400000) + 'd ago';
         }
 
         // Cache AI keys on load
@@ -1340,6 +1343,7 @@
         await loadSavedData();
         togglePaidFeatures(userData.plan||'free');
         loadAffiliateState();
+        cleanExpiredTrash();
         onValue(ref(db,'users/'+user.uid+'/plan'),s=>{const p=s.val()||'free';const l=p==='pro'?'Pro':p==='unlimited'?'Unlimited':'Free';if(document.getElementById('ddPlan'))document.getElementById('ddPlan').textContent=l;userData.plan=p;if(window._userData)window._userData.plan=p;togglePaidFeatures(p)});
     });
 
@@ -1399,7 +1403,7 @@
     window.applyAffiliate=function(){
         if(!window.currentUid) return;
         var btn = document.querySelector('.dd-aff-apply-btn');
-        if(btn){btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...'}
+        if(btn){btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Sending...'}
         set(ref(db,'affiliateRequests/'+window.currentUid),{
             uid: window.currentUid,
             name: userData.name||'',
@@ -1409,10 +1413,10 @@
         }).then(function(){
             return set(ref(db,'users/'+window.currentUid+'/affiliateStatus'),'pending');
         }).then(function(){
-            if(btn){btn.disabled=false;btn.innerHTML='<i class="fas fa-check"></i> تم الإرسال'}
+            if(btn){btn.disabled=false;btn.innerHTML='<i class="fas fa-check"></i> Sent'}
             if(window.QCVNotify) QCVNotify.success();
         }).catch(function(){
-            if(btn){btn.disabled=false;btn.innerHTML='<i class="fas fa-paper-plane"></i> تقديم طلب'}
+            if(btn){btn.disabled=false;btn.innerHTML='<i class="fas fa-paper-plane"></i> Submit Request'}
             if(window.QCVNotify) QCVNotify.error();
         });
     };
@@ -1459,11 +1463,11 @@
         var pts = parseInt(ptsEl ? ptsEl.textContent : '0');
         if(pts < 100){
             if(window.QCVNotify) QCVNotify.error();
-            alert('ليس لديك نقاط كافية. تحتاج 100 نقطة على الأقل');
+            alert('Not enough points. You need at least 100 points');
             return;
         }
-        if(!confirm('هل تريد استبدال 100 نقطة بباقة Pro لمدة 30 يوم؟')) return;
-        if(btn){btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...'}
+        if(!confirm('Do you want to redeem 100 points for a Pro plan for 30 days?')) return;
+        if(btn){btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Sending...'}
         push(ref(db,'pointsExchange'),{
             uid: window.currentUid,
             name: userData.name||'',
@@ -1480,7 +1484,7 @@
             if(btn2) btn2.style.display = 'none';
             if(window.QCVNotify) QCVNotify.success();
         }).catch(function(){
-            if(btn){btn.disabled=false;btn.innerHTML='<i class="fas fa-sync-alt"></i> استبدال 100 نقطة'}
+            if(btn){btn.disabled=false;btn.innerHTML='<i class="fas fa-sync-alt"></i> Redeem 100 Points'}
             if(window.QCVNotify) QCVNotify.error();
         });
     };
@@ -1600,11 +1604,114 @@
         closePanel();
     };
 
+    // Trash functions
+    window.openTrash = async function() {
+        document.getElementById('profileDropdown').classList.remove('show');
+        document.getElementById('trashModal').classList.add('show');
+        loadTrashList();
+    };
+    window.closeTrash = function() { document.getElementById('trashModal').classList.remove('show'); };
+
+    window.loadTrashList = async function() {
+        if(!window.currentUid) return;
+        const snap = await get(ref(db, 'users/'+window.currentUid+'/trash'));
+        const list = snap.val() || {};
+        const container = document.getElementById('trashList');
+        if(!container) return;
+        const keys = Object.keys(list);
+        if(keys.length === 0) {
+            container.innerHTML = '<div style="text-align:center;padding:40px 20px;color:var(--muted)"><i class="fas fa-trash" style="font-size:2rem;margin-bottom:10px;display:block;opacity:0.3"></i><div style="font-size:0.85rem;font-weight:600">Trash is empty</div></div>';
+            return;
+        }
+        let html = '';
+        keys.forEach(id => {
+            const cv = list[id];
+            const deletedAt = cv.deletedAt || Date.now();
+            const daysLeft = Math.max(0, 30 - Math.floor((Date.now() - deletedAt) / 86400000));
+            html += `<div style="display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--border);border-radius:12px;margin-bottom:8px;background:var(--bg2)">
+                <div style="width:40px;height:40px;border-radius:10px;background:rgba(239,68,68,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0"><i class="fas fa-file-alt" style="color:var(--muted)"></i></div>
+                <div style="flex:1;min-width:0">
+                    <div style="font-weight:700;font-size:0.82rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${cv.name || cv.data?.name || 'Untitled CV'}</div>
+                    <div style="font-size:0.68rem;color:var(--muted)">Deleted ${daysLeft > 0 ? daysLeft + ' days left' : '— expires soon'}</div>
+                </div>
+                <button onclick="restoreFromTrash('${id}')" style="padding:6px 12px;background:#059669;color:#fff;border:none;border-radius:8px;font-size:0.72rem;font-weight:700;cursor:pointer;flex-shrink:0;font-family:inherit">Restore</button>
+                <button onclick="permanentDelete('${id}')" style="padding:6px 12px;background:#ef4444;color:#fff;border:none;border-radius:8px;font-size:0.72rem;font-weight:700;cursor:pointer;flex-shrink:0;font-family:inherit">Delete</button>
+            </div>`;
+        });
+        container.innerHTML = html;
+    };
+
+    window.restoreFromTrash = async function(id) {
+        if(!window.currentUid) return;
+        const snap = await get(ref(db, 'users/'+window.currentUid+'/trash/'+id));
+        const cvData = snap.val();
+        if(!cvData) return;
+        const { deletedAt, ...rest } = cvData;
+        await set(ref(db, 'users/'+window.currentUid+'/cvs/'+id), rest);
+        await set(ref(db, 'users/'+window.currentUid+'/trash/'+id), null);
+        loadTrashList();
+        updateTrashBadge(Math.max(0, (document.getElementById('trashList')?.children.length || 1) - 1));
+        if(window.QCVNotify) QCVNotify.toast('CV restored!', 'success');
+    };
+
+    window.permanentDelete = async function(id) {
+        if(!confirm('Permanently delete this CV? This cannot be undone.')) return;
+        if(!window.currentUid) return;
+        await set(ref(db, 'users/'+window.currentUid+'/trash/'+id), null);
+        loadTrashList();
+        updateTrashBadge(Math.max(0, (document.getElementById('trashList')?.children.length || 1) - 1));
+        if(window.QCVNotify) QCVNotify.toast('CV permanently deleted', 'info');
+    };
+
+    window.cleanExpiredTrash = async function() {
+        if(!window.currentUid) return;
+        const snap = await get(ref(db, 'users/'+window.currentUid+'/trash'));
+        const list = snap.val() || {};
+        const now = Date.now();
+        let expired = 0;
+        Object.entries(list).forEach(([id, cv]) => {
+            const deletedAt = cv.deletedAt || 0;
+            if(now - deletedAt > 30 * 86400000) {
+                set(ref(db, 'users/'+window.currentUid+'/trash/'+id), null);
+                expired++;
+            }
+        });
+        updateTrashBadge(Object.keys(list).length - expired);
+    };
+
+    window.updateTrashBadge = function(count) {
+        const badge = document.getElementById('trashBadge');
+        if(!badge) return;
+        if(count > 0) {
+            badge.textContent = count;
+            badge.style.display = 'inline';
+        } else {
+            badge.style.display = 'none';
+        }
+    };
+
+    // Load trash badge count on init
+    (function loadTrashBadge() {
+        if(!window.currentUid) return;
+        get(ref(db, 'users/'+window.currentUid+'/trash')).then(snap => {
+            const list = snap.val() || {};
+            updateTrashBadge(Object.keys(list).length);
+        }).catch(()=>{});
+    })();
+
     window.deleteCV = async function(id) {
-        if(!confirm('Are you sure you want to delete this CV?')) return;
-        await set(ref(db, 'users/'+window.currentUid+'/cvs/'+id), null);
+        if(!confirm('Move this CV to trash? You can restore it later from the trash bin.')) return;
+        const snap = await get(ref(db, 'users/'+window.currentUid+'/cvs/'+id));
+        const cvData = snap.val();
+        if(cvData) {
+            await set(ref(db, 'users/'+window.currentUid+'/trash/'+id), { ...cvData, deletedAt: Date.now() });
+            await set(ref(db, 'users/'+window.currentUid+'/cvs/'+id), null);
+        }
         if(currentCvId === id) { currentCvId = 'default'; window.currentCvId = 'default'; await loadSavedData(); }
         loadCvsList();
+        // Update trash badge
+        get(ref(db, 'users/'+window.currentUid+'/trash')).then(s => { updateTrashBadge(Object.keys(s.val()||{}).length); }).catch(()=>{});
+        if(window.QCVNotify) QCVNotify.toast('CV moved to trash', 'info');
     };
 
     window._set = set;
@@ -1621,8 +1728,8 @@
             const path = cid === 'default' ? 'users/'+window.currentUid+'/cvData' : 'users/'+window.currentUid+'/cvs/'+cid+'/data';
             set(ref(db, path), data).then(()=>{
                 if(window.QCVNotify){QCVNotify.save();QCVNotify.success()}
-                if(btn){const o=btn.innerHTML;btn.innerHTML='&#10003; تم الحفظ';btn.style.color='#38bdf8';btn.style.borderColor='#38bdf8';setTimeout(()=>{btn.innerHTML=o;btn.style.color='';btn.style.borderColor=''},2000)}
-            }).catch(e=>{console.error('Firebase save error:',e); if(btn){btn.innerHTML='&#10007; حفظ فشل';btn.style.color='#ef4444';btn.style.borderColor='#ef4444';setTimeout(()=>{btn.innerHTML='&#128190; Save';btn.style.color='';btn.style.borderColor=''},2000)}});
+                if(btn){const o=btn.innerHTML;btn.innerHTML='&#10003; Saved';btn.style.color='#38bdf8';btn.style.borderColor='#38bdf8';setTimeout(()=>{btn.innerHTML=o;btn.style.color='';btn.style.borderColor=''},2000)}
+            }).catch(e=>{console.error('Firebase save error:',e); if(btn){btn.innerHTML='&#10007; Save failed';btn.style.color='#ef4444';btn.style.borderColor='#ef4444';setTimeout(()=>{btn.innerHTML='&#128190; Save';btn.style.color='';btn.style.borderColor=''},2000)}});
         } catch(e) { console.error('saveToFirebase exception:', e); }
     };
 </script>
@@ -1918,52 +2025,8 @@
         }
     };
 
-    // Arabic translations for CV Score issues
-    const issueAR = {
-        'Add a professional summary (2-3 lines about your experience)': 'أضف ملخصاً مهنياً (2-3 أسطر عن خبرتك)',
-        'Summary too short': 'الملخص قصير جداً — أضف تفاصيل عن إنجازاتك',
-        'consider expanding to 100+ chars': 'وسّع الملخص لأكثر من 100 حرف',
-        'add numbers/results': 'أضف أرقاماً ونتائج قابلة للقياس',
-        'Add at least 1 work experience entry': 'أضف خبرة عمل واحدة على الأقل',
-        'Add 2+ work experiences': 'أضف خبرتين أو أكثر',
-        'has no description': 'بدون وصف — أضف 3-5 نقاط',
-        'bullet(s)': 'نقاط — أضف المزيد',
-        'Add your educational background': 'أضف خلفيتك التعليمية',
-        'Add your full name': 'أضف اسمك الكامل',
-        'Add your email address': 'أضف بريدك الإلكتروني',
-        'Add your phone number': 'أضف رقم هاتفك',
-        'Add your job title': 'أضف المسمى الوظيفي',
-        'Add a professional summary for ATS': 'أضف ملخصاً مهنياً لتحسين البحث',
-        'skill(s)': 'مهارات — ATS يحتاج 3-5 مهارات على الأقل',
-        'Add 5+ skills': 'أضف 5 مهارات أو أكثر',
-        '8+ skills recommended': '8 مهارات أو أكثر للمطابقة القصوى',
-        'missing job title': 'المسمى الوظيفي غير موجود',
-        'missing company name': 'اسم الشركة غير موجود',
-        'add work duration': 'أضف مدة العمل',
-        'description too short': 'الوصف قصير جداً',
-        'No skills listed': 'لا توجد مهارات — أهم شيء يبحث عنه ATS',
-        'aim for 8-12': 'استهدف 8-12 مهارة لأفضل نتيجة',
-        'maximize ATS matching': 'أضف مهارات إضافية لتحسين المطابقة',
-        'keep them concise': 'اجعلها مختصرة لـ ATS',
-        'No numbers/metrics': 'لا توجد أرقام — أضف نتائج قابلة للقياس',
-        'add 3+ metrics': 'أضف 3 مؤشرات أو أكثر',
-        'No action verbs': 'لا توجد أفعال تحفيزية — ابدأ بكلمات مثل "قاد"، "طور"، "حقّق"',
-        'use 3+ different power verbs': 'استخدم 3 أفعال تحفيزية مختلفة',
-        'No bullet points': 'لا توجد نقاط — استخدم أسطر منفصلة',
-        'aim for 5+': 'استهدف 5 نقاط أو أكثر',
-        'Add percentages': 'أضف نسباً مئوية أو قيم مالية',
-        'Add a number to your summary': 'أضف رقماً في ملخصك',
-        'Name is required': 'الاسم مطلوب',
-        'Email is required': 'البريد الإلكتروني مطلوب',
-        'Phone number is required': 'رقم الهاتف مطلوب',
-        'Job title helps': 'المسمى الوظيفي يساعد في العثور عليك',
-        'No experience bullets': 'أضف نقاطاً في وصف الخبرة'
-    };
-
+    // CV Score issues - keep in English
     function translateIssue(text) {
-        for(var key in issueAR) {
-            if(text.includes(key)) return issueAR[key];
-        }
         return text;
     }
 
@@ -2001,7 +2064,7 @@
                         const icon = iss.type === 'critical' ? 'fa-exclamation-circle' : iss.type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle';
                         const clr = iss.type === 'critical' ? '#ef4444' : iss.type === 'warning' ? '#f59e0b' : '#0ea5e9';
                         const arText = translateIssue(iss.text);
-                        return `<div class="cat-issue" onclick="aiFixIssue('${iss.section}','${arText.replace(/'/g,"\\'")}','${iss.type}')"><i class="fas ${icon}" style="color:${clr};font-size:0.6rem"></i><span>${arText}</span><span class="issue-fix ai-fix-btn"><i class="fas fa-wand-magic-sparkles"></i> إصلاح ${iss.fix}</span></div>`;
+                        return `<div class="cat-issue" onclick="aiFixIssue('${iss.section}','${arText.replace(/'/g,"\\'")}','${iss.type}')"><i class="fas ${icon}" style="color:${clr};font-size:0.6rem"></i><span>${arText}</span><span class="issue-fix ai-fix-btn"><i class="fas fa-wand-magic-sparkles"></i> Fix ${iss.fix}</span></div>`;
                     }).join('') + '</div>';
                 }
                 return `<div class="ai-detail-row">
@@ -2022,13 +2085,13 @@
         const summaryEl = document.getElementById('scoreSummary');
         if(summaryEl) {
             if(totalIssues === 0) {
-                summaryEl.innerHTML = '<strong>النتيجة: 100/100</strong> — ممتاز! سيرتك الذاتية محسّنة بالكامل.';
+                summaryEl.innerHTML = '<strong>Score: 100/100</strong> — Perfect! Your CV is fully optimized.';
                 summaryEl.style.background = 'rgba(5,150,105,0.06)';
                 summaryEl.style.borderColor = 'rgba(5,150,105,0.15)';
                 summaryEl.style.color = '#059669';
             } else {
                 const potential = scores.overall + scores.recommendations.reduce((sum, r) => sum + parseInt(r.fix.replace('+','')), 0);
-                summaryEl.innerHTML = `صلح <strong>${totalIssues} مشكل${totalIssues>1?'ات':''}</strong> عشان توصل <strong>${Math.min(100, potential)}/100</strong>`;
+                summaryEl.innerHTML = `Fix <strong>${totalIssues} issue${totalIssues>1?'s':''}</strong> to reach <strong>${Math.min(100, potential)}/100</strong>`;
                 summaryEl.style.background = 'rgba(0,3,201,0.04)';
                 summaryEl.style.borderColor = 'rgba(0,3,201,0.1)';
                 summaryEl.style.color = 'var(--text)';
@@ -2040,23 +2103,23 @@
         if(recs) {
             let html = '';
             if(totalIssues === 0) {
-                html = '<div style="text-align:center;padding:12px;color:#059669;font-size:0.75rem;font-weight:700"><i class="fas fa-check-circle" style="margin-right:4px"></i> ممتاز! سيرتك الذاتية محسّنة بالكامل</div>';
+                html = '<div style="text-align:center;padding:12px;color:#059669;font-size:0.75rem;font-weight:700"><i class="fas fa-check-circle" style="margin-right:4px"></i> Perfect! Your CV is fully optimized</div>';
             } else {
                 html = `<div style="display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap">`;
-                if(criticalCount) html += `<span style="font-size:0.62rem;font-weight:700;color:#ef4444;background:rgba(239,68,68,0.08);padding:2px 8px;border-radius:10px">${criticalCount} خطأ</span>`;
-                if(warningCount) html += `<span style="font-size:0.62rem;font-weight:700;color:#f59e0b;background:rgba(245,158,11,0.08);padding:2px 8px;border-radius:10px">${warningCount} تحذير</span>`;
-                if(infoCount) html += `<span style="font-size:0.62rem;font-weight:700;color:#0ea5e9;background:rgba(14,165,233,0.08);padding:2px 8px;border-radius:10px">${infoCount} نصيحة</span>`;
+                if(criticalCount) html += `<span style="font-size:0.62rem;font-weight:700;color:#ef4444;background:rgba(239,68,68,0.08);padding:2px 8px;border-radius:10px">${criticalCount} error(s)</span>`;
+                if(warningCount) html += `<span style="font-size:0.62rem;font-weight:700;color:#f59e0b;background:rgba(245,158,11,0.08);padding:2px 8px;border-radius:10px">${warningCount} warning(s)</span>`;
+                if(infoCount) html += `<span style="font-size:0.62rem;font-weight:700;color:#0ea5e9;background:rgba(14,165,233,0.08);padding:2px 8px;border-radius:10px">${infoCount} tip(s)</span>`;
                 html += '</div>';
                 html += scores.recommendations.slice(0, 8).map(r => {
                     const arTitle = translateIssue(r.title);
                     return `<div class="ai-rec ${r.type}" onclick="aiFixIssue('${r.section}','${arTitle.replace(/'/g,"\\'")}','${r.type}')">
                         <div class="rec-icon"><i class="fas ${r.type==='critical'?'fa-exclamation-circle':r.type==='warning'?'fa-exclamation-triangle':'fa-info-circle'}"></i></div>
                         <div class="rec-body"><div class="rec-title">${arTitle}</div></div>
-                        <span class="rec-fix"><i class="fas fa-wand-magic-sparkles"></i> إصلاح ${r.fix}</span>
+                        <span class="rec-fix"><i class="fas fa-wand-magic-sparkles"></i> Fix ${r.fix}</span>
                     </div>`;
                 }).join('');
                 if(scores.recommendations.length > 8) {
-                    html += `<div style="text-align:center;font-size:0.62rem;color:var(--muted);padding:4px">+${scores.recommendations.length - 8} مشاكل تانية</div>`;
+                    html += `<div style="text-align:center;font-size:0.62rem;color:var(--muted);padding:4px">+${scores.recommendations.length - 8} more issues</div>`;
                 }
             }
             recs.innerHTML = html;
@@ -2116,7 +2179,7 @@
                 const dlLimit = plan === 'unlimited' ? Infinity : plan === 'pro' ? 5 : 1;
                 if(downloads >= dlLimit) {
                     if(window.QCVNotify) QCVNotify.error();
-                    if(window.QCVNotify) QCVNotify.toast(plan === 'pro' ? 'وصلت حد التحميلات (5). ارتقِ لـ Unlimited' : 'وصلت حد التحميلات (1). ارتقِ لـ Pro', 'error');
+                    if(window.QCVNotify) QCVNotify.toast(plan === 'pro' ? 'Download limit reached (5). Upgrade to Unlimited' : 'Download limit reached (1). Upgrade to Pro', 'error');
                     window.location.href = 'pay.html';
                     return;
                 }
@@ -2134,6 +2197,10 @@
 
         b.classList.add('loading');
         const el = document.getElementById('cvPage');
+
+        // Fix: temporarily hide overflow to prevent blank page in PDF
+        const origOverflow = el.style.overflow;
+        el.style.overflow = 'hidden';
 
         let watermark = null;
         if (!paid) {
@@ -2176,6 +2243,7 @@
             console.error('PDF export error:', err);
             if(window.QCVNotify) QCVNotify.error();
         } finally {
+            el.style.overflow = origOverflow || 'visible';
             if (watermark && watermark.parentNode) watermark.remove();
             b.classList.remove('loading');
         }
@@ -2323,9 +2391,9 @@
                 card.className = 'form-card';
                 card.id = 'tab-' + sec.id;
                 if (sec.content) {
-                    card.innerHTML = '<div class="form-card-header"><span class="icon">&#128196;</span><h3 contenteditable="true" onblur="renameSection(\'' + sec.id + '\',this.textContent)">' + (sec.title || 'قسم') + '</h3><button class="btn-rb-delete" onclick="removeCustomSection(\'' + sec.id + '\')" style="margin-left:auto">حذف</button></div><textarea id="blank-' + sec.id + '" placeholder="اكتب هنا..." style="width:100%;min-height:200px;padding:14px;background:var(--input);border:1px solid var(--border);border-radius:10px;font-family:inherit;font-size:0.88rem;line-height:1.8;resize:vertical;outline:none;color:var(--text);direction:rtl" oninput="updateBlankContent(\'' + sec.id + '\',this.value)">' + (sec.content || '') + '</textarea>';
+                    card.innerHTML = '<div class="form-card-header"><span class="icon">&#128196;</span><h3 contenteditable="true" onblur="renameSection(\'' + sec.id + '\',this.textContent)">' + (sec.title || 'Section') + '</h3><button class="btn-rb-delete" onclick="removeCustomSection(\'' + sec.id + '\')" style="margin-left:auto">Delete</button></div><textarea id="blank-' + sec.id + '" placeholder="Type here..." style="width:100%;min-height:200px;padding:14px;background:var(--input);border:1px solid var(--border);border-radius:10px;font-family:inherit;font-size:0.88rem;line-height:1.8;resize:vertical;outline:none;color:var(--text);direction:ltr" oninput="updateBlankContent(\'' + sec.id + '\',this.value)">' + (sec.content || '') + '</textarea>';
                 } else {
-                    card.innerHTML = '<div class="form-card-header"><span class="icon">&#128196;</span><h3 contenteditable="true" onblur="renameSection(\'' + sec.id + '\',this.textContent)">' + (sec.title || 'قسم') + '</h3><button class="btn-rb-delete" onclick="removeCustomSection(\'' + sec.id + '\')" style="margin-left:auto">حذف</button></div><div id="' + sec.id + '-items"></div><button class="btn-add" onclick="addCustomItem(\'' + sec.id + '\')">+ إضافة عنصر</button>';
+                    card.innerHTML = '<div class="form-card-header"><span class="icon">&#128196;</span><h3 contenteditable="true" onblur="renameSection(\'' + sec.id + '\',this.textContent)">' + (sec.title || 'Section') + '</h3><button class="btn-rb-delete" onclick="removeCustomSection(\'' + sec.id + '\')" style="margin-left:auto">Delete</button></div><div id="' + sec.id + '-items"></div><button class="btn-add" onclick="addCustomItem(\'' + sec.id + '\')">+ Add item</button>';
                 }
                 forms.appendChild(card);
             });
@@ -2541,7 +2609,7 @@
         var plan = ud ? (ud.plan || 'free') : 'free';
         if(plan === 'free') {
             if(window.QCVNotify) QCVNotify.error();
-            alert('هذه ميزة مدفوعة — ارتقِ للخطة Pro');
+            alert('This is a paid feature - upgrade to Pro');
             return;
         }
         uploadedData = null;
@@ -2573,7 +2641,7 @@
     window.handleUploadFile = function(input) {
         var file = input.files ? input.files[0] : null;
         if(!file) return;
-        if(file.size > 5 * 1024 * 1024) { alert('الملف أكبر من 5MB'); return; }
+        if(file.size > 5 * 1024 * 1024) { alert('File is larger than 5MB'); return; }
 
         document.getElementById('uploadDropzone').style.display = 'none';
         document.getElementById('uploadProgress').classList.add('show');
@@ -2604,12 +2672,12 @@
         document.getElementById('uploadActions').style.display = '';
         if(success && data) {
             var fieldCount = Object.keys(data).filter(k => data[k] && (typeof data[k] === 'string' ? data[k].trim() : true)).length;
-            result.innerHTML = '<i class="fas fa-check-circle ur-success"></i><div class="ur-text">تم التحليل بنجاح!</div><div class="ur-sub">تم العثور على ' + fieldCount + ' حقل جاهز للاستيراد</div>';
+            result.innerHTML = '<i class="fas fa-check-circle ur-success"></i><div class="ur-text">Analysis complete!</div><div class="ur-sub">Found ' + fieldCount + ' fields ready for import</div>';
             document.getElementById('uploadConfirmBtn').disabled = false;
         } else if(success && !data) {
-            result.innerHTML = '<i class="fas fa-exclamation-triangle ur-error"></i><div class="ur-text">لم يتم التعرف على البيانات</div><div class="ur-sub">جرب ملف HTML أو TXT أو JSON أو PDF</div>';
+            result.innerHTML = '<i class="fas fa-exclamation-triangle ur-error"></i><div class="ur-text">Could not recognize data</div><div class="ur-sub">Try an HTML, TXT, JSON, or PDF file</div>';
         } else {
-            result.innerHTML = '<i class="fas fa-times-circle ur-error"></i><div class="ur-text">خطأ في قراءة الملف</div><div class="ur-sub">' + (errMsg || 'الملف غير مدعوم') + '</div>';
+            result.innerHTML = '<i class="fas fa-times-circle ur-error"></i><div class="ur-text">Error reading file</div><div class="ur-sub">' + (errMsg || 'Unsupported file') + '</div>';
         }
     };
 
@@ -2628,7 +2696,7 @@
             uploadedData = parseTXT_CV(fullText);
             showUploadResult(true, uploadedData);
         } catch(err) {
-            showUploadResult(false, null, 'خطأ في قراءة ملف PDF: ' + err.message);
+            showUploadResult(false, null, 'Error reading PDF file: ' + err.message);
         }
     };
 
@@ -2888,7 +2956,7 @@
         if(d.skills && d.skills.length) {
             var inputSkills = document.getElementById('inputSkills');
             if(inputSkills) {
-                inputSkills.value = d.skills.join(', ');
+                inputSkills.value = d.skills.join('\n');
             }
         }
 
@@ -2914,7 +2982,7 @@
                         // Add content textarea
                         var itemsDiv = document.getElementById(lastSec.id + '-items');
                         if(itemsDiv) {
-                            itemsDiv.innerHTML = '<div class="field"><label>المحتوى</label><textarea oninput="updateCustomItem(\'' + lastSec.id + '\',\'' + lastSec.id + '_content\',\'content\',this.value)" style="min-height:80px">' + (cs.content || '') + '</textarea></div>';
+                            itemsDiv.innerHTML = '<div class="field"><label>Content</label><textarea oninput="updateCustomItem(\'' + lastSec.id + '\',\'' + lastSec.id + '_content\',\'content\',this.value)" style="min-height:80px">' + (cs.content || '') + '</textarea></div>';
                         }
                     }
                 }
@@ -2928,7 +2996,7 @@
 
     window.addBlankPage = function() {
         const id = 'sec_' + Date.now();
-        const section = { id, type: 'custom', title: 'قسم جديد', content: '' };
+        const section = { id, type: 'custom', title: 'New Section', content: '' };
         customSections.push(section);
         sectionOrder.push(id);
 
@@ -2937,7 +3005,7 @@
         tab.className = 'nav-tab nav-tab-custom';
         tab.id = 'nav-' + id;
         tab.dataset.section = id;
-        tab.innerHTML = '<span class="icon">&#128196;</span><span class="tab-label" contenteditable="true" onblur="renameSection(\'' + id + '\',this.textContent)">قسم جديد</span><span class="tab-move"><button onclick="event.stopPropagation();moveSection(\'' + id + '\',-1)" title="&#9650;">&#9650;</button><button onclick="event.stopPropagation();moveSection(\'' + id + '\',1)" title="&#9660;">&#9660;</button></span>';
+        tab.innerHTML = '<span class="icon">&#128196;</span><span class="tab-label" contenteditable="true" onblur="renameSection(\'' + id + '\',this.textContent)">New Section</span><span class="tab-move"><button onclick="event.stopPropagation();moveSection(\'' + id + '\',-1)" title="&#9650;">&#9650;</button><button onclick="event.stopPropagation();moveSection(\'' + id + '\',1)" title="&#9660;">&#9660;</button></span>';
         tab.onclick = function() { switchTab(id, this); };
         navTabs.appendChild(tab);
 
@@ -2962,12 +3030,12 @@
         closeSectionModal();
         const id = 'sec_' + Date.now();
         const labels = {
-            certifications: 'الشهادات',
-            projects: 'المشاريع',
-            awards: 'الجوائز',
-            volunteer: 'التطوع',
-            interests: 'الاهتمامات',
-            custom: 'قسم مخصص'
+            certifications: 'Certifications',
+            projects: 'Projects',
+            awards: 'Awards',
+            volunteer: 'Volunteer',
+            interests: 'Interests',
+            custom: 'Custom Section'
         };
         const icons = {
             certifications: '&#127942;',
@@ -3099,16 +3167,16 @@
 <div class="section-modal-overlay" id="sectionModal">
     <div class="section-modal">
         <div class="section-modal-header">
-            <h2>إضافة قسم</h2>
+            <h2>Add Section</h2>
             <button class="section-modal-close" onclick="closeSectionModal()">&times;</button>
         </div>
         <div class="section-modal-body">
-            <button class="section-option" onclick="addCustomSection('certifications')"><span class="sec-icon">&#127942;</span><span class="sec-name">الشهادات</span><span class="sec-desc">رخص وشهادات مهنية</span></button>
-            <button class="section-option" onclick="addCustomSection('projects')"><span class="sec-icon">&#128194;</span><span class="sec-name">المشاريع</span><span class="sec-desc">أعمال ومعرض أعمال</span></button>
-            <button class="section-option" onclick="addCustomSection('awards')"><span class="sec-icon">&#127941;</span><span class="sec-name">الجوائز</span><span class="sec-desc">تقديرات وجوائز</span></button>
-            <button class="section-option" onclick="addCustomSection('volunteer')"><span class="sec-icon">&#129309;</span><span class="sec-name">التطوع</span><span class="sec-desc">خبرات تطوعية</span></button>
-            <button class="section-option" onclick="addCustomSection('interests')"><span class="sec-icon">&#127775;</span><span class="sec-name">الاهتمامات</span><span class="sec-desc">هوايات واهتمامات</span></button>
-            <button class="section-option" onclick="addCustomSection('custom')"><span class="sec-icon">&#9998;</span><span class="sec-name">قسم مخصص</span><span class="sec-desc">أضف قسمك الخاص</span></button>
+            <button class="section-option" onclick="addCustomSection('certifications')"><span class="sec-icon">&#127942;</span><span class="sec-name">Certifications</span><span class="sec-desc">Licenses and professional certificates</span></button>
+            <button class="section-option" onclick="addCustomSection('projects')"><span class="sec-icon">&#128194;</span><span class="sec-name">Projects</span><span class="sec-desc">Work and portfolio</span></button>
+            <button class="section-option" onclick="addCustomSection('awards')"><span class="sec-icon">&#127941;</span><span class="sec-name">Awards</span><span class="sec-desc">Recognition and awards</span></button>
+            <button class="section-option" onclick="addCustomSection('volunteer')"><span class="sec-icon">&#129309;</span><span class="sec-name">Volunteer</span><span class="sec-desc">Volunteer experience</span></button>
+            <button class="section-option" onclick="addCustomSection('interests')"><span class="sec-icon">&#127775;</span><span class="sec-name">Interests</span><span class="sec-desc">Hobbies and interests</span></button>
+            <button class="section-option" onclick="addCustomSection('custom')"><span class="sec-icon">&#9998;</span><span class="sec-name">Custom Section</span><span class="sec-desc">Add your own section</span></button>
         </div>
     </div>
 </div>
@@ -3116,8 +3184,8 @@
 <!-- Upload CV Modal -->
 <div class="upload-modal-overlay" id="uploadModal">
     <div class="upload-modal">
-        <h3><i class="fas fa-cloud-upload-alt" style="color:#6366f1;margin-left:6px"></i> رفع السيرة الذاتية</h3>
-        <p>ارفع ملف السيرة الذاتية ومحرر QCV هيعمل import للمحتوى تلقائياً.</p>
+        <h3><i class="fas fa-cloud-upload-alt" style="color:#6366f1;margin-left:6px"></i> Upload CV</h3>
+        <p>Upload your CV and QCV editor will automatically import the content.</p>
         <div class="upload-formats">
             <span>HTML</span>
             <span>TXT</span>
@@ -3126,46 +3194,59 @@
         </div>
         <div class="upload-dropzone" id="uploadDropzone" onclick="document.getElementById('uploadFileInput').click()">
             <i class="fas fa-file-upload"></i>
-            <div class="uz-text">اسحب الملف هنا أو اضغط للتحديد</div>
-            <div class="uz-sub">يدعم HTML, TXT, JSON, PDF — الحد الأقصى 5MB</div>
+            <div class="uz-text">Drop file here or click to select</div>
+            <div class="uz-sub">Supports HTML, TXT, JSON, PDF — Max 5MB</div>
             <input type="file" id="uploadFileInput" accept=".html,.htm,.txt,.json,.pdf" onchange="handleUploadFile(this)">
         </div>
         <div class="upload-progress" id="uploadProgress">
             <i class="fas fa-spinner"></i>
-            <div style="font-weight:600;font-size:0.85rem;color:var(--text)">جاري تحليل الملف...</div>
+            <div style="font-weight:600;font-size:0.85rem;color:var(--text)">Analyzing file...</div>
         </div>
         <div class="upload-result" id="uploadResult"></div>
         <div class="upload-actions" id="uploadActions">
-            <button class="btn-cancel" onclick="closeUploadModal()">إلغاء</button>
-            <button class="btn-upload" id="uploadConfirmBtn" disabled onclick="confirmUpload()">استيراد البيانات</button>
+            <button class="btn-cancel" onclick="closeUploadModal()">Cancel</button>
+            <button class="btn-upload" id="uploadConfirmBtn" disabled onclick="confirmUpload()">Import Data</button>
+        </div>
+    </div>
+</div>
+
+<!-- Trash Modal -->
+<div class="upload-modal-overlay" id="trashModal">
+    <div class="upload-modal" style="max-width:500px">
+        <h3 style="display:flex;align-items:center;gap:8px"><i class="fas fa-trash" style="color:#ef4444"></i> Trash</h3>
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:16px">Deleted CVs are kept for 30 days. You can restore or permanently delete them.</p>
+        <div id="trashList" style="max-height:400px;overflow-y:auto"></div>
+        <div class="upload-actions" id="trashActions">
+            <button class="btn-cancel" onclick="closeTrash()">Close</button>
         </div>
     </div>
 </div>
 
 <!-- AI Assistant -->
-<button class="ai-assist-btn" id="aiAssistBtn" onclick="toggleAiMenu()" title="المساعد الذكي">
+<button class="ai-assist-btn" id="aiAssistBtn" onclick="toggleAiMenu()" title="AI Assistant">
     <i class="fas fa-wand-magic-sparkles"></i>
 </button>
 <div class="ai-menu" id="aiMenu">
-    <button class="ai-menu-item" onclick="aiAction('summarize')"><i class="fas fa-compress-alt" style="color:#0003c9"></i>ملخص احترافي<span class="ai-shortcut">AI</span></button>
-    <button class="ai-menu-item" onclick="aiAction('proofread')"><i class="fas fa-spell-check" style="color:#059669"></i>تصحيح لغوي<span class="ai-shortcut">AI</span></button>
-    <button class="ai-menu-item" onclick="aiAction('improve')"><i class="fas fa-arrow-up-right-dots" style="color:#f59e0b"></i>تحسين المحتوى<span class="ai-shortcut">AI</span></button>
-    <button class="ai-menu-item" onclick="aiAction('skills')"><i class="fas fa-lightbulb" style="color:#8b5cf6"></i>اقتراح مهارات<span class="ai-shortcut">AI</span></button>
-    <button class="ai-menu-item" onclick="aiAction('ats')"><i class="fas fa-robot" style="color:#0ea5e9"></i>تحسين ATS<span class="ai-shortcut">AI</span></button>
+    <button class="ai-menu-item" onclick="aiAction('summarize')"><i class="fas fa-compress-alt" style="color:#0003c9"></i>Professional Summary<span class="ai-shortcut">AI</span></button>
+    <button class="ai-menu-item" onclick="aiAction('proofread')"><i class="fas fa-spell-check" style="color:#059669"></i>Proofread Text<span class="ai-shortcut">AI</span></button>
+    <button class="ai-menu-item" onclick="aiAction('improve')"><i class="fas fa-arrow-up-right-dots" style="color:#f59e0b"></i>Improve Content<span class="ai-shortcut">AI</span></button>
+    <button class="ai-menu-item" onclick="aiAction('skills')"><i class="fas fa-lightbulb" style="color:#8b5cf6"></i>Suggest Skills<span class="ai-shortcut">AI</span></button>
+    <button class="ai-menu-item" onclick="aiAction('ats')"><i class="fas fa-robot" style="color:#0ea5e9"></i>ATS Optimize<span class="ai-shortcut">AI</span></button>
+    <button class="ai-menu-item" onclick="aiAction('translate')"><i class="fas fa-language" style="color:#ec4899"></i>Translate CV<span class="ai-shortcut">AI</span></button>
     <div class="ai-menu-divider"></div>
-    <button class="ai-menu-item" onclick="aiAction('custom')"><i class="fas fa-comment-dots" style="color:var(--muted)"></i>اسأل أي حاجة<span class="ai-shortcut">AI</span></button>
+    <button class="ai-menu-item" onclick="aiAction('custom')"><i class="fas fa-comment-dots" style="color:var(--muted)"></i>Ask AI Anything<span class="ai-shortcut">AI</span></button>
 </div>
 <div class="ai-result-panel" id="aiResultPanel">
     <div class="ai-result-header">
-        <h4><i class="fas fa-wand-magic-sparkles"></i> <span id="aiResultTitle">المساعد الذكي</span></h4>
+        <h4><i class="fas fa-wand-magic-sparkles"></i> <span id="aiResultTitle">AI Assistant</span></h4>
         <button class="ai-result-close" onclick="closeAiPanel()">&times;</button>
     </div>
     <div class="ai-result-body" id="aiResultBody">
-        <div class="ai-result-loading"><i class="fas fa-spinner"></i>جاري التفكير...</div>
+        <div class="ai-result-loading"><i class="fas fa-spinner"></i>Thinking...</div>
     </div>
     <div class="ai-result-actions">
-        <button onclick="copyAiResult()"><i class="fas fa-copy"></i>نسخ</button>
-        <button class="primary" onclick="applyAiResult()"><i class="fas fa-check"></i>تطبيق</button>
+        <button id="aiCopyBtn" onclick="copyAiResult()"><i class="fas fa-copy"></i>Copy</button>
+        <button id="aiApplyBtn" class="primary" onclick="applyAiResult()"><i class="fas fa-check"></i>Apply</button>
     </div>
 </div>
 
@@ -3180,9 +3261,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add guide button in topbar-left
     const topbar = document.querySelector('.topbar-left');
     if (topbar) {
+        const isArBtn = window.QCVLang && QCVLang.current === 'ar';
         const guideBtn = document.createElement('button');
         guideBtn.className = 'btn-save';
-        guideBtn.innerHTML = '<i class="fas fa-question-circle"></i> الدليل';
+        guideBtn.innerHTML = '<i class="fas fa-question-circle"></i> ' + (isArBtn ? 'الدليل' : 'Guide');
         guideBtn.style.cssText = 'background:rgba(0,3,201,0.06);color:var(--accent);border-color:rgba(0,3,201,0.15)';
         guideBtn.onclick = () => startEditorTutorial();
         topbar.insertBefore(guideBtn, topbar.firstChild);
@@ -3215,13 +3297,21 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function startEditorTutorial() {
-    QCVTutorial.start([
+    const isAr = window.QCVLang && QCVLang.current === 'ar';
+    const t = isAr ? [
         { target: '.sidebar-nav', title: 'التنقل بين الأقسام', message: 'من هنا تتنقل بين أقسام السيرة الذاتية: المعلومات الشخصية، الخبرة، التعليم، المهارات، وغيرها.', tip: 'اضغط على أي قسم عشان تعدّل فيه. التغييرات بتظهر فوراً في المعاينة!' },
         { target: '.editor-forms', title: 'إدخال البيانات', message: 'اكتب معلوماتك في كل قسم. الذكاء الاصطناعي هيساعدك في كتابة الملخص الوظيفي واختيار المهارات.', tip: 'كل ما بياناتك كانت أكمل، كل ما السيرة الذاتية كانت أقوى.' },
         { target: '.preview-zone', title: 'معاينة مباشرة', message: 'السيرة الذاتية بتتحدث لحظة ما تكتب. شوف شكلها النهائي قبل ما تحمّلها.', tip: 'تقدر تكبّر وتصغّر باستخدام الأزرار فوق المعاينة.' },
         { target: '.topbar', title: 'حفظ وتصدير', message: 'اضغط "Save" عشان تحفظ شغلك، أو "Export PDF" عشان تحمل السيرة الذاتية بصيغة PDF.', tip: 'الحفظ التلقائي شغال على طول. بياناتك آمنة في السحابة!' },
         { target: '.portfolio-link-box', title: 'رابط المحفظة', message: 'من هنا تنسخ رابط صفحتك الشخصية. شاركه مع أصحاب العمل عشان يشوفوا سيرتك الذاتية أونلاين.', tip: 'الرابط بيشتغل على أي جهاز وموبايل.' }
-    ]);
+    ] : [
+        { target: '.sidebar-nav', title: 'Navigating Sections', message: 'Navigate between CV sections: Personal Info, Experience, Education, Skills, and more.', tip: 'Click any section to edit it. Changes appear instantly in the preview!' },
+        { target: '.editor-forms', title: 'Entering Data', message: 'Fill in your info in each section. AI can help you write the professional summary and suggest skills.', tip: 'The more complete your data, the stronger your CV will be.' },
+        { target: '.preview-zone', title: 'Live Preview', message: 'Your CV updates as you type. See the final look before you export.', tip: 'You can zoom in/out using the buttons above the preview.' },
+        { target: '.topbar', title: 'Save & Export', message: 'Press "Save" to save your work, or "Export PDF" to download your CV as a PDF.', tip: 'Auto-save is always on. Your data is safe in the cloud!' },
+        { target: '.portfolio-link-box', title: 'Portfolio Link', message: 'Copy your personal page link from here. Share it with employers to view your CV online.', tip: 'The link works on any device including mobile.' }
+    ];
+    QCVTutorial.start(t);
     localStorage.setItem('qcv_editor_tutorial_done', '1');
 }
 
@@ -3229,6 +3319,31 @@ function startEditorTutorial() {
 let aiMenuOpen = false;
 let aiResultText = '';
 let aiResultAction = '';
+let aiLoading = false;
+
+function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function renderAiMarkdown(text) {
+    var safe = escHtml(text);
+    safe = safe.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    safe = safe.replace(/\*(.*?)\*/g, '<em>$1</em>');
+    safe = safe.replace(/`(.*?)`/g, '<code style="background:var(--bg-alt,#f0f0f0);padding:1px 4px;border-radius:3px">$1</code>');
+    safe = safe.replace(/^### (.+)$/gm, '<strong style="font-size:1.05em;display:block;margin-top:8px">$1</strong>');
+    safe = safe.replace(/^## (.+)$/gm, '<strong style="font-size:1.1em;display:block;margin-top:10px">$1</strong>');
+    safe = safe.replace(/^# (.+)$/gm, '<strong style="font-size:1.2em;display:block;margin-top:12px">$1</strong>');
+    safe = safe.replace(/^[-•*] (.+)$/gm, '<span style="display:block;padding-left:12px">• $1</span>');
+    safe = safe.replace(/\n/g, '<br>');
+    return '<div style="white-space:pre-wrap;line-height:1.6;font-size:0.82rem">' + safe + '</div>';
+}
+
+function setAiLoading(loading) {
+    aiLoading = loading;
+    var copyBtn = document.getElementById('aiCopyBtn');
+    var applyBtn = document.getElementById('aiApplyBtn');
+    if (copyBtn) copyBtn.style.display = loading ? 'none' : '';
+    if (applyBtn) applyBtn.style.display = loading ? 'none' : '';
+}
 
 window.toggleAiMenu = function() {
     aiMenuOpen = !aiMenuOpen;
@@ -3250,194 +3365,28 @@ window.closeAiPanel = function() {
     document.getElementById('aiResultPanel').classList.remove('show');
     document.getElementById('aiMenu').classList.remove('show');
     aiMenuOpen = false;
+    setAiLoading(false);
 };
 
 window.copyAiResult = function() {
-    navigator.clipboard.writeText(aiResultText).then(() => {
-        if(window.QCVNotify) QCVNotify.success();
+    if (!aiResultText) return;
+    navigator.clipboard.writeText(aiResultText).then(function() {
+        if(window.QCVNotify) QCVNotify.success('Copied!');
+    }).catch(function() {
+        var ta = document.createElement('textarea');
+        ta.value = aiResultText;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        if(window.QCVNotify) QCVNotify.success('Copied!');
     });
 };
 
 window.applyAiResult = function() {
+    if (aiLoading || !aiResultText) return;
     const data = collectData();
-    const action = aiResultAction || document.getElementById('aiResultTitle').textContent;
-    if(action === 'summarize' || action === 'proofread') {
-        document.getElementById('inputSummary').value = aiResultText;
-        data.summary = aiResultText;
-    } else if(action === 'improve') {
-        document.getElementById('inputSummary').value = aiResultText;
-        data.summary = aiResultText;
-    } else if(action === 'skills') {
-        const skills = aiResultText.split(/[,،\n]+/).map(s => s.replace(/^[-•*]\s*/, '').trim()).filter(s => s && s.length > 1);
-        data.skills = skills;
-        const inputSkills = document.getElementById('inputSkills');
-        if(inputSkills) {
-            inputSkills.value = skills.join(', ');
-        }
-    } else if(action === 'ats') {
-        document.getElementById('inputSummary').value = aiResultText;
-        data.summary = aiResultText;
-    } else if(action === 'fix') {
-        document.getElementById('inputSummary').value = aiResultText;
-        data.summary = aiResultText;
-    }
-    renderCV();
-    closeAiPanel();
-    if(window.QCVNotify) QCVNotify.save();
-};
-
-window.aiAction = function(action) {
-    const data = collectData();
-    document.getElementById('aiMenu').classList.remove('show');
-    aiMenuOpen = false;
-    document.getElementById('aiResultPanel').classList.add('show');
-    document.getElementById('aiResultBody').innerHTML = '<div class="ai-result-loading"><i class="fas fa-spinner"></i>جاري التفكير...</div>';
-
-    aiResultAction = action;
-    const titles = {
-        summarize: 'ملخص احترافي',
-        proofread: 'تصحيح النص',
-        improve: 'تحسين المحتوى',
-        skills: 'اقتراح مهارات',
-        ats: 'تحسين ATS',
-        custom: 'اسأل الذكاء الاصطناعي'
-    };
-    document.getElementById('aiResultTitle').textContent = titles[action] || 'المساعد الذكي';
-
-    const cvText = [
-        data.name ? 'الاسم: ' + data.name : '',
-        data.title ? 'المسمى الوظيفي: ' + data.title : '',
-        data.email ? 'البريد: ' + data.email : '',
-        data.summary ? 'الملخص: ' + data.summary : '',
-        (data.experience || []).map(e => 'خبرة: ' + (e.role||'') + ' في ' + (e.company||'') + ' (' + (e.duration||'') + ')\n' + (e.description||'')).join('\n'),
-        (data.education || []).map(e => 'تعليم: ' + (e.degree||'') + ' من ' + (e.school||'')).join('\n'),
-        'المهارات: ' + (data.skills || []).join(', ')
-    ].filter(Boolean).join('\n\n');
-
-    const prompts = {
-        summarize: 'أنت مستشار وظائف محترف وم friendly جداً. المهم عندك تساعد المستخدم يكتب سيرة ذاتية قوية.\n\n' +
-            'اكتب ملخصاً وظيفياً احترافياً (3-4 جمل) لهذا الشخص بناءً على بياناته:\n\n' + cvText + '\n\n' +
-            'المتطلبات:\n' +
-            '- ابدأ بجملة تحدد مهنته وإجمالي خبرته\n' +
-            '-اذكر أكبر إنجاز أو نقطة قوة\n' +
-            '- استخدم أفعال قوية مثل: أدرت، طورت، حققت، قادت\n' +
-            '- لو فيه أرقام أو نسب حطها (مثل: زدت المبيعات 30%)\n' +
-            '- خلّه مناسب لسوق العمل العربي والدولي\n' +
-            '- رجّع الملخص فقط، بدون عناوين أو شرح',
-
-        proofread: 'أنت محرر لغوي عربي محترف ودقيق جداً.\n\n' +
-            'صحّح وحسّن هذا النص من حيث:\n' +
-            '- الأخطاء الإملائية والنحوية\n' +
-            '- وضوح الصياغة وقوة التعبير\n' +
-            '- التأكد من الاتساق في الأزمنة والأفعال\n' +
-            '- إزالة أي تكرار غير ضروري\n\n' +
-            'النص الحالي:\n' + (data.summary || 'لا يوجد ملخص مكتوب بعد') + '\n\n' +
-            'رجّع النص المُصحّح فقط بدون أي شرح أو تعليقات.',
-
-        improve: 'أنت خبير في كتابة السير الذاتية وتحسين المحتوى. المستخدم عايز تحسينات عملية واقعية.\n\n' +
-            'حسّن الملخص الوظيفي التالي واجعله أقوى وأكثر احترافية:\n\n' +
-            'الملخص الحالي:\n' + (data.summary || 'لا يوجد ملخص') + '\n\n' +
-            'الخبرة:\n' + (data.experience || []).map(e => '- ' + (e.role||'') + ' في ' + (e.company||'') + ': ' + (e.description||'')).join('\n') + '\n\n' +
-            'المطلوب:\n' +
-            '- استخدم أفعال قوية (lead, optimize, deliver, implement)\n' +
-            '- أضف أرقام ونسب لو ممكن\n' +
-            '- خلّه مناسب لـ ATS (سياق البحث عن وظيفة)\n' +
-            '- اجعله مختصر ومؤثر (3-4 جمل كحد أقصى)\n' +
-            '- رجّع الملخص المُحسّن فقط بدون شرح',
-
-        skills: 'أنت خبير في التوظيف وسوق العمل. المستخدم عايز مهارات مناسبة لBackground بتاعه.\n\n' +
-            'المسمى الوظيفي: ' + (data.title || 'غير محدد') + '\n' +
-            'الخبرة: ' + (data.experience || []).map(e => (e.role||'') + ' - ' + (e.description||'')).join('; ') + '\n\n' +
-            'اقترح 10-12 مهارة احترافية مناسبة لهذا الشخص.\n\n' +
-            'المطلوب:\n' +
-            '-Mix of technical + soft skills\n' +
-            '- حط المهارات الأكثر طلباً في سوق العمل الحالي\n' +
-            '- رجّع المهارات كقائمة مفصولة بفواصل فقط، بدون أرقام أو شرح',
-
-        ats: 'أنت خبير في أنظمة تتبع المتقدمين (ATS). المستخدم عايز ملخصه يعدي فلتر الـ ATS.\n\n' +
-            'الملخص الحالي:\n' + (data.summary || 'لا يوجد ملخص') + '\n\n' +
-            'المسمى الوظيفي: ' + (data.title || '') + '\n\n' +
-            'حسّن الملخص ليكون متوافق مع أنظمة ATS:\n' +
-            '- استخدم كلمات مفتاحية منIndustry بتاعته\n' +
-            '- تجنّب الرموز والصور والجداول\n' +
-            '- استخدم جمل مباشرة وبسيطة\n' +
-            '- حدد المهارات والخبرات بوضوح\n' +
-            '- خلّه 2-3 جمل فقط\n' +
-            '- رجّع الملخص المُحسّن فقط بدون شرح',
-
-        custom: 'أنت مساعد ذكي ودود ومحترف متخصص في كتابة وتحسين السير الذاتية. تتكلم مع المستخدم بأسلوب ودود ومحترف.\n\n' +
-            'بيانات السيرة الذاتية:\n' + cvText + '\n\n' +
-            'جاوب على سؤال المستخدم بأسلوب ودود ومفيد. لو السؤال عن تحسين السيرة الذاتية، اقترح تحسينات عملية. لو سؤال عام عن السيرة الذاتية، جاوب بشكل مفيد ومختصر.'
-    };
-
-    callAI(prompts[action] || prompts.custom, function(result) {
-        aiResultText = result;
-        const html = result.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        document.getElementById('aiResultBody').innerHTML = '<div style="white-space:pre-wrap;line-height:1.6">' + html + '</div>';
-    }, function(err) {
-        document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px;color:var(--red)"><i class="fas fa-exclamation-triangle" style="font-size:1.2rem;margin-bottom:6px;display:block"></i>مش لاقي الاتصال دلوقتي<br><span style="font-size:0.72rem;color:var(--muted)">حاول تاني بعد شوية أو تحقق من الإعدادات</span></div>';
-    });
-};
-
-// AI Fix Issue — called when clicking a CV Score issue
-window.aiFixIssue = function(section, issueText, issueType) {
-    // Check if paid plan
-    var ud = window._userData || userData;
-    var plan = ud ? (ud.plan || 'free') : 'free';
-    if(plan === 'free') {
-        document.getElementById('aiResultPanel').classList.add('show');
-        document.getElementById('aiResultTitle').textContent = 'إصلاح بالذكاء الاصطناعي';
-        document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px"><i class="fas fa-lock" style="font-size:1.5rem;color:#0003c9;margin-bottom:8px;display:block"></i><div style="font-weight:700;font-size:0.85rem;margin-bottom:4px;color:var(--text)">ميزة AI متاحة للنسخة Pro</div><div style="font-size:0.72rem;color:var(--muted);margin-bottom:12px">ارتقِ لباقة Pro واستخدم إصلاح وتحسين السيرة الذاتية بالذكاء الاصطناعي</div><a href="pay.html" style="display:inline-block;padding:8px 20px;background:#0003c9;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:0.8rem;text-decoration:none">ارتقِ للنسخة Pro</a></div>';
-        return;
-    }
-    const data = collectData();
-    const cvText = [
-        data.name ? 'Name: ' + data.name : '',
-        data.title ? 'Title: ' + data.title : '',
-        data.summary ? 'Summary: ' + data.summary : '',
-        (data.experience || []).map(e => 'Experience: ' + (e.role||'') + ' at ' + (e.company||'') + '\n' + (e.description||'')).join('\n'),
-        (data.education || []).map(e => 'Education: ' + (e.degree||'') + ' from ' + (e.school||'')).join('\n'),
-        'Skills: ' + (data.skills || []).join(', ')
-    ].filter(Boolean).join('\n\n');
-
-    window._aiFixContext = { section: section, issueText: issueText };
-    let sectionData;
-    if (section === 'personal') {
-        sectionData = { name: data.name, title: data.title, email: data.email, phone: data.phone, location: data.location, linkedin: data.linkedin };
-    } else if (data[section] !== undefined) {
-        sectionData = data[section];
-    } else {
-        sectionData = {};
-    }
-    const sectionText = typeof sectionData === 'string' ? sectionData : JSON.stringify(sectionData);
-
-    const prompt = 'أنت مستشار سيرة ذاتية محترف وودود. المستخدم عنده ملاحظة على قسم "' + section + '" في سيرته الذاتية.\n\n' +
-        'المشكلة: ' + issueText + '\n\n' +
-        'بيانات القسم الحالي:\n' + sectionText + '\n\n' +
-        'السيرة الذاتية كاملة:\n' + cvText + '\n\n' +
-        'المطلوب:\n' +
-        '- حل المشكلة بطريقة عملية وواضحة\n' +
-        '- اكتب النص المُصحّح جاهز للنسخ مباشرة\n' +
-        '- لو فيه تحسينات إضافية مقترحة اذكرها باختصار\n' +
-        '- رجّع النص النهائي فقط بدون عناوين أو شرح طويل';
-
-    document.getElementById('aiResultPanel').classList.add('show');
-    document.getElementById('aiResultTitle').textContent = 'إصلاح: ' + section;
-    document.getElementById('aiResultBody').innerHTML = '<div class="ai-result-loading"><i class="fas fa-spinner"></i>جاري التفكير...</div>';
-
-    callAI(prompt, function(result) {
-        aiResultText = result;
-        const html = result.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        document.getElementById('aiResultBody').innerHTML = '<div style="white-space:pre-wrap">' + html + '</div>';
-    }, function(err) {
-        document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px;color:var(--red)"><i class="fas fa-exclamation-triangle" style="font-size:1.2rem;margin-bottom:6px;display:block"></i>خطأ في الذكاء الاصطناعي<br><span style="font-size:0.7rem;color:var(--muted)">' + (typeof err === 'string' ? err : 'تحقق من الاتصال') + '</span></div>';
-    });
-};
-
-// Override applyAiResult for CV Score fix context
-window.applyAiResult = function() {
-    const data = collectData();
-    const action = aiResultAction || 'summary';
+    const action = aiResultAction;
 
     if(action === 'fix') {
         const ctx = window._aiFixContext || {};
@@ -3452,76 +3401,298 @@ window.applyAiResult = function() {
                     var m = ctx.issueText.match(/#(\d+)/);
                     if(m) expIdx = parseInt(m[1]) - 1;
                 }
-                if(expIdx >= 0 && expIdx < data.experience.length) {
-                    data.experience[expIdx].description = aiResultText;
-                } else {
-                    data.experience[0].description = aiResultText;
-                }
+                expIdx = Math.min(expIdx, data.experience.length - 1);
+                data.experience[expIdx].description = aiResultText;
             }
         } else if(section === 'skills') {
-            const skills = aiResultText.split(/[,،\n]+/).map(s => s.replace(/^[-•*]\s*/, '').trim()).filter(s => s && s.length > 1);
+            const skills = aiResultText.split(/[,،\n]+/).map(function(s){ return s.replace(/^[-•*]\s*/,'').trim(); }).filter(function(s){ return s && s.length > 1; });
             data.skills = skills;
-            const inputSkills = document.getElementById('inputSkills');
-            if(inputSkills) {
-                inputSkills.value = skills.join(', ');
-            }
+            var inputSkills = document.getElementById('inputSkills');
+            if(inputSkills) inputSkills.value = skills.join('\n');
         } else if(section === 'personal') {
-            const lines = aiResultText.split('\n').filter(l => l.trim());
-            if(lines.length >= 1) {
-                const nameInput = document.getElementById('inputName');
-                if(nameInput) nameInput.value = lines[0];
-                data.name = lines[0];
-            }
-            if(lines.length >= 2) {
-                const titleInput = document.getElementById('inputTitle');
-                if(titleInput) titleInput.value = lines[1];
-                data.title = lines[1];
-            }
+            var lines = aiResultText.split('\n').filter(function(l){ return l.trim(); });
+            if(lines.length >= 1) { document.getElementById('inputName').value = lines[0]; data.name = lines[0]; }
+            if(lines.length >= 2) { document.getElementById('inputTitle').value = lines[1]; data.title = lines[1]; }
         } else if(section === 'education') {
             if(data.education && data.education.length > 0) {
                 var eduIdx = 0;
-                if(ctx.issueText) {
-                    var m2 = ctx.issueText.match(/#(\d+)/);
-                    if(m2) eduIdx = parseInt(m2[1]) - 1;
-                }
-                if(eduIdx >= 0 && eduIdx < data.education.length) {
-                    data.education[eduIdx].description = aiResultText;
-                } else {
-                    data.education[0].description = aiResultText;
-                }
+                if(ctx.issueText) { var m2 = ctx.issueText.match(/#(\d+)/); if(m2) eduIdx = parseInt(m2[1]) - 1; }
+                eduIdx = Math.min(eduIdx, data.education.length - 1);
+                data.education[eduIdx].description = aiResultText;
             }
         } else if(section === 'languages') {
             if(data.languages && data.languages.length > 0) {
                 var langIdx = 0;
-                if(ctx.issueText) {
-                    var m3 = ctx.issueText.match(/#(\d+)/);
-                    if(m3) langIdx = parseInt(m3[1]) - 1;
-                }
-                if(langIdx >= 0 && langIdx < data.languages.length) {
-                    data.languages[langIdx].name = aiResultText;
-                } else {
-                    data.languages[0].name = aiResultText;
-                }
+                if(ctx.issueText) { var m3 = ctx.issueText.match(/#(\d+)/); if(m3) langIdx = parseInt(m3[1]) - 1; }
+                langIdx = Math.min(langIdx, data.languages.length - 1);
+                data.languages[langIdx].name = aiResultText;
             }
+        } else if(section === 'projects' || section === 'certifications' || section === 'courses' || section === 'awards' || section === 'custom') {
+            var secInput = document.getElementById('input' + section.charAt(0).toUpperCase() + section.slice(1));
+            if(secInput) secInput.value = aiResultText;
+            data[section] = aiResultText;
         }
     } else if(action === 'summarize' || action === 'proofread' || action === 'improve' || action === 'ats') {
         document.getElementById('inputSummary').value = aiResultText;
         data.summary = aiResultText;
     } else if(action === 'skills') {
-        const skills = aiResultText.split(/[,،\n]+/).map(s => s.replace(/^[-•*]\s*/, '').trim()).filter(s => s && s.length > 1);
+        const skills = aiResultText.split(/[,،\n]+/).map(function(s){ return s.replace(/^[-•*]\s*/,'').trim(); }).filter(function(s){ return s && s.length > 1; });
         data.skills = skills;
-        const inputSkills = document.getElementById('inputSkills');
-        if(inputSkills) {
-            inputSkills.value = skills.join(', ');
-        }
-    } else {
-        // custom / ask AI — apply to summary
-        document.getElementById('inputSummary').value = aiResultText;
-        data.summary = aiResultText;
+        var inputSkills2 = document.getElementById('inputSkills');
+        if(inputSkills2) inputSkills2.value = skills.join('\n');
+    } else if(action === 'translate') {
+        var tl = aiResultText.split('\n');
+        var nM='',tM='',eM='',sM=[],skM='',inSum=false;
+        tl.forEach(function(line){
+            var l=line.trim();
+            if(/^(name|الاسم)[:：]/i.test(l)) nM=l.split(/[:：]/).slice(1).join(':').trim();
+            else if(/^(job title|المسمى الوظيفي|title|m_title)[:：]/i.test(l)) tM=l.split(/[:：]/).slice(1).join(':').trim();
+            else if(/^(email|البريد)[:：]/i.test(l)) eM=l.split(/[:：]/).slice(1).join(':').trim();
+            else if(/^(summary|الملخص)[:：]/i.test(l)) { inSum=true; sM.push(l.split(/[:：]/).slice(1).join(':').trim()); }
+            else if(/^(skills|المهارات)[:：]/i.test(l)) skM=l.split(/[:：]/).slice(1).join(':').trim();
+            else if(inSum && l && !/^(experience|education|skills|الخبرة|التعليم|المهارات)[:：]/i.test(l)) sM.push(l);
+            else inSum=false;
+        });
+        if(nM) { document.getElementById('inputName').value=nM; data.name=nM; }
+        if(tM) { document.getElementById('inputTitle').value=tM; data.title=tM; }
+        if(eM) { document.getElementById('inputEmail').value=eM; data.email=eM; }
+        if(sM.length) { var sv=sM.join(' '); document.getElementById('inputSummary').value=sv; data.summary=sv; }
+        if(skM) { var sarr=skM.split(/[,،\n]+/).map(function(x){return x.trim();}).filter(function(x){return x;}); data.skills=sarr; var isk=document.getElementById('inputSkills'); if(isk) isk.value=sarr.join('\n'); }
+    } else if(action === 'custom') {
+        document.getElementById('aiResultBody').innerHTML = '<div style="padding:12px;text-align:center;color:var(--muted);font-size:0.8rem">AI suggestions are for reference only. Apply manually if needed.</div>';
+        return;
     }
+
     renderCV();
     closeAiPanel();
     if(window.QCVNotify) QCVNotify.save();
+};
+
+window.aiAction = function(action) {
+    const data = collectData();
+    document.getElementById('aiMenu').classList.remove('show');
+    aiMenuOpen = false;
+    document.getElementById('aiResultPanel').classList.add('show');
+
+    setAiLoading(true);
+
+    aiResultAction = action;
+    const titles = {
+        summarize: 'Professional Summary',
+        proofread: 'Proofread Text',
+        improve: 'Improve Content',
+        skills: 'Suggest Skills',
+        ats: 'ATS Optimize',
+        translate: 'Translate CV',
+        custom: 'AI Assistant'
+    };
+    document.getElementById('aiResultTitle').textContent = titles[action] || 'AI Assistant';
+
+    const cvText = [
+        data.name ? 'Name: ' + data.name : '',
+        data.title ? 'Job Title: ' + data.title : '',
+        data.email ? 'Email: ' + data.email : '',
+        data.summary ? 'Summary: ' + data.summary : '',
+        (data.experience || []).map(function(e){ return 'Experience: ' + (e.role||'') + ' at ' + (e.company||'') + ' (' + (e.duration||'') + ')\n' + (e.description||''); }).join('\n'),
+        (data.education || []).map(function(e){ return 'Education: ' + (e.degree||'') + ' from ' + (e.school||''); }).join('\n'),
+        'Skills: ' + (data.skills || []).join(', ')
+    ].filter(Boolean).join('\n\n');
+
+    // For custom action, show input field first
+    if(action === 'custom') {
+        var body = document.getElementById('aiResultBody');
+        body.innerHTML = '<div style="padding:12px">' +
+            '<div style="margin-bottom:10px"><label style="display:block;font-size:0.78rem;font-weight:600;margin-bottom:6px;color:var(--text)">Ask anything about your CV:</label>' +
+            '<textarea id="aiCustomInput" rows="3" placeholder="e.g. How can I improve my summary? What skills should I add?..." style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-size:0.8rem;resize:vertical;font-family:inherit"></textarea></div>' +
+            '<button onclick="sendCustomAi()" style="width:100%;padding:10px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:0.82rem">Send</button></div>';
+        setAiLoading(false);
+        setTimeout(function(){ var inp = document.getElementById('aiCustomInput'); if(inp) inp.focus(); }, 100);
+        return;
+    }
+
+    document.getElementById('aiResultBody').innerHTML = '<div class="ai-result-loading"><i class="fas fa-spinner"></i>Thinking...</div>';
+    setAiLoading(true);
+
+    const prompts = {
+        summarize: 'You are a professional career consultant. Write a professional summary (3-4 sentences) for this person based on their data:\n\n' + cvText + '\n\n' +
+            'Requirements:\n' +
+            '- Start with a sentence defining their profession and total experience\n' +
+            '- Mention their biggest achievement or strength\n' +
+            '- Use strong action verbs: led, developed, achieved, drove\n' +
+            '- Include numbers/percentages if available\n' +
+            '- Make it suitable for both local and international job markets\n' +
+            '- Return ONLY the summary, no headings or explanation',
+
+        proofread: 'You are a professional English language editor.\n\n' +
+            'Proofread and improve this text for:\n' +
+            '- Spelling and grammar errors\n' +
+            '- Clarity and strong expression\n' +
+            '- Consistent tense and verb agreement\n' +
+            '- Remove unnecessary repetition\n\n' +
+            'Current text:\n' + (data.summary || 'No summary written yet') + '\n\n' +
+            'Return ONLY the corrected text without any explanation or comments.',
+
+        improve: 'You are a CV writing and content improvement expert. The user wants practical, realistic improvements.\n\n' +
+            'Improve the following professional summary and make it stronger and more professional:\n\n' +
+            'Current summary:\n' + (data.summary || 'No summary') + '\n\n' +
+            'Experience:\n' + (data.experience || []).map(function(e){ return '- ' + (e.role||'') + ' at ' + (e.company||'') + ': ' + (e.description||''); }).join('\n') + '\n\n' +
+            'Requirements:\n' +
+            '- Use strong action verbs (lead, optimize, deliver, implement)\n' +
+            '- Add numbers/percentages if possible\n' +
+            '- Make it ATS-friendly (job search context)\n' +
+            '- Keep it concise and impactful (3-4 sentences max)\n' +
+            '- Return ONLY the improved summary without explanation',
+
+        skills: 'You are a hiring and job market expert. The user wants skills matching their background.\n\n' +
+            'Job Title: ' + (data.title || 'Not specified') + '\n' +
+            'Experience: ' + (data.experience || []).map(function(e){ return (e.role||'') + ' - ' + (e.description||''); }).join('; ') + '\n\n' +
+            'Suggest 10-12 professional skills suitable for this person.\n\n' +
+            'Requirements:\n' +
+            '- Mix of technical + soft skills\n' +
+            '- Include the most in-demand skills in the current job market\n' +
+            '- Return skills as a comma-separated list only, no numbering or explanation',
+
+        ats: 'You are an Applicant Tracking System (ATS) expert. The user wants their summary to pass ATS filters.\n\n' +
+            'Current summary:\n' + (data.summary || 'No summary') + '\n\n' +
+            'Job Title: ' + (data.title || '') + '\n\n' +
+            'Improve the summary to be ATS-compatible:\n' +
+            '- Use industry-specific keywords\n' +
+            '- Avoid symbols, images, and tables\n' +
+            '- Use direct and simple sentences\n' +
+            '- Clearly identify skills and experience\n' +
+            '- Keep it 2-3 sentences only\n' +
+            '- Return ONLY the improved summary without explanation',
+
+        translate: 'You are a professional translator specializing in CV/resume content.\n\n' +
+            'Translate the following CV content. Detect the current language and translate to the OTHER language:\n' +
+            '- If the content is in Arabic → translate to English\n' +
+            '- If the content is in English → translate to Arabic\n\n' +
+            'CV Data:\n' + cvText + '\n\n' +
+            'Rules:\n' +
+            '- Keep the professional tone\n' +
+            '- Preserve all numbers, dates, and proper nouns\n' +
+            '- Translate job titles to their equivalents in the target language\n' +
+            '- Keep formatting consistent\n' +
+            '- Return the FULL translated CV in the same format as input\n' +
+            '- Do NOT add explanations or notes, just the translated content',
+
+        custom: 'You are a friendly and professional AI assistant specialized in writing and improving CVs. Talk to the user in a friendly, professional manner.\n\n' +
+            'CV Data:\n' + cvText + '\n\n' +
+            'Answer the user\'s question in a helpful and concise way. If the question is about improving the CV, suggest practical improvements. If it\'s a general CV question, answer helpfully and concisely.'
+    };
+
+    callAI(prompts[action] || prompts.custom, function(result) {
+        aiResultText = result;
+        setAiLoading(false);
+        document.getElementById('aiResultBody').innerHTML = renderAiMarkdown(result);
+    }, function(err) {
+        setAiLoading(false);
+        document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px;color:var(--red)"><i class="fas fa-exclamation-triangle" style="font-size:1.2rem;margin-bottom:6px;display:block"></i>AI is unavailable right now<br><span style="font-size:0.72rem;color:var(--muted)">Try again in a moment or check your settings</span></div>';
+    });
+};
+
+window.sendCustomAi = function() {
+    var inp = document.getElementById('aiCustomInput');
+    if(!inp || !inp.value.trim()) return;
+    var question = inp.value.trim();
+    var data = collectData();
+    var cvText = [
+        data.name ? 'Name: ' + data.name : '',
+        data.title ? 'Job Title: ' + data.title : '',
+        data.email ? 'Email: ' + data.email : '',
+        data.summary ? 'Summary: ' + data.summary : '',
+        (data.experience || []).map(function(e){ return 'Experience: ' + (e.role||'') + ' at ' + (e.company||'') + ' (' + (e.duration||'') + ')\n' + (e.description||''); }).join('\n'),
+        (data.education || []).map(function(e){ return 'Education: ' + (e.degree||'') + ' from ' + (e.school||''); }).join('\n'),
+        'Skills: ' + (data.skills || []).join(', ')
+    ].filter(Boolean).join('\n\n');
+
+    var prompt = 'You are a friendly and professional AI assistant specialized in writing and improving CVs.\n\n' +
+        'CV Data:\n' + cvText + '\n\n' +
+        'User question: ' + question + '\n\n' +
+        'Answer the user\'s question in a helpful and concise way. If the question is about improving the CV, suggest practical improvements.';
+
+    document.getElementById('aiResultBody').innerHTML = '<div class="ai-result-loading"><i class="fas fa-spinner"></i>Thinking...</div>';
+    aiResultAction = 'custom';
+    setAiLoading(true);
+
+    callAI(prompt, function(result) {
+        aiResultText = result;
+        setAiLoading(false);
+        document.getElementById('aiResultBody').innerHTML = '<div style="margin-bottom:12px;padding:10px;background:var(--bg-alt,#f5f5f5);border-radius:8px;font-size:0.78rem;color:var(--muted)"><strong style="color:var(--text)">Your question:</strong> ' + escHtml(question) + '</div>' + renderAiMarkdown(result);
+    }, function(err) {
+        setAiLoading(false);
+        document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px;color:var(--red)"><i class="fas fa-exclamation-triangle" style="font-size:1.2rem;margin-bottom:6px;display:block"></i>AI is unavailable right now<br><span style="font-size:0.72rem;color:var(--muted)">Try again in a moment or check your settings</span></div>';
+    });
+};
+
+// AI Fix Issue — called when clicking a CV Score issue
+window.aiFixIssue = function(section, issueText, issueType) {
+    var ud = window._userData || userData;
+    var plan = ud ? (ud.plan || 'free') : 'free';
+    if(plan === 'free') {
+        document.getElementById('aiResultPanel').classList.add('show');
+        document.getElementById('aiResultTitle').textContent = 'AI Fix';
+        document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px"><i class="fas fa-lock" style="font-size:1.5rem;color:#0003c9;margin-bottom:8px;display:block"></i><div style="font-weight:700;font-size:0.85rem;margin-bottom:4px;color:var(--text)">AI is a Pro Feature</div><div style="font-size:0.72rem;color:var(--muted);margin-bottom:12px">Upgrade to Pro to use AI-powered CV improvements</div><a href="pay.html" style="display:inline-block;padding:8px 20px;background:#0003c9;color:#fff;border:none;border-radius:8px;font-weight:700;font-size:0.8rem;text-decoration:none">Upgrade to Pro</a></div>';
+        return;
+    }
+    const data = collectData();
+    const cvText = [
+        data.name ? 'Name: ' + data.name : '',
+        data.title ? 'Title: ' + data.title : '',
+        data.summary ? 'Summary: ' + data.summary : '',
+        (data.experience || []).map(function(e){ return 'Experience: ' + (e.role||'') + ' at ' + (e.company||'') + '\n' + (e.description||''); }).join('\n'),
+        (data.education || []).map(function(e){ return 'Education: ' + (e.degree||'') + ' from ' + (e.school||''); }).join('\n'),
+        'Skills: ' + (data.skills || []).join(', ')
+    ].filter(Boolean).join('\n\n');
+
+    window._aiFixContext = { section: section, issueText: issueText };
+    let sectionData;
+    if (section === 'personal') {
+        sectionData = { name: data.name, title: data.title, email: data.email, phone: data.phone, location: data.location, linkedin: data.linkedin };
+    } else if (data[section] !== undefined) {
+        sectionData = data[section];
+    } else {
+        sectionData = {};
+    }
+    const sectionText = typeof sectionData === 'string' ? sectionData : JSON.stringify(sectionData);
+
+    var isEn = (window.QCVLang && QCVLang.current === 'en');
+    var prompt;
+    if (isEn) {
+        prompt = 'You are a professional and friendly CV consultant. The user has an issue with the "' + section + '" section of their CV.\n\n' +
+            'Issue: ' + issueText + '\n\n' +
+            'Current section data:\n' + sectionText + '\n\n' +
+            'Full CV:\n' + cvText + '\n\n' +
+            'Required:\n' +
+            '- Solve the issue in a practical and clear way\n' +
+            '- Write the corrected text ready to copy directly\n' +
+            '- If there are additional improvements, mention them briefly\n' +
+            '- Return ONLY the final text, no headings or long explanation';
+    } else {
+        prompt = 'أنت مستشار سيرة ذاتية محترف وودود. المستخدم عنده ملاحظة على قسم "' + section + '" في سيرته الذاتية.\n\n' +
+            'المشكلة: ' + issueText + '\n\n' +
+            'بيانات القسم الحالي:\n' + sectionText + '\n\n' +
+            'السيرة الذاتية كاملة:\n' + cvText + '\n\n' +
+            'المطلوب:\n' +
+            '- حل المشكلة بطريقة عملية وواضحة\n' +
+            '- اكتب النص المُصحّح جاهز للنسخ مباشرة\n' +
+            '- لو فيه تحسينات إضافية مقترحة اذكرها باختصار\n' +
+            '- رجّع النص النهائي فقط بدون عناوين أو شرح طويل';
+    }
+
+    document.getElementById('aiResultPanel').classList.add('show');
+    document.getElementById('aiResultTitle').textContent = isEn ? 'Fix: ' + section : 'إصلاح: ' + section;
+    document.getElementById('aiResultBody').innerHTML = '<div class="ai-result-loading"><i class="fas fa-spinner"></i>Thinking...</div>';
+    setAiLoading(true);
+
+    callAI(prompt, function(result) {
+        aiResultText = result;
+        setAiLoading(false);
+        document.getElementById('aiResultBody').innerHTML = renderAiMarkdown(result);
+    }, function(err) {
+        setAiLoading(false);
+        document.getElementById('aiResultBody').innerHTML = '<div style="text-align:center;padding:20px;color:var(--red)"><i class="fas fa-exclamation-triangle" style="font-size:1.2rem;margin-bottom:6px;display:block"></i>AI Error<br><span style="font-size:0.7rem;color:var(--muted)">' + (typeof err === 'string' ? escHtml(err) : 'Check your connection') + '</span></div>';
+    });
 };
 
 function callAI(prompt, onSuccess, onError) {
@@ -3555,7 +3726,7 @@ function callPollinations(prompt, onSuccess, onError) {
     })
     .then(function(r) { return r.text(); })
     .then(function(text) {
-        if(text && text.length > 5) {
+        if(text && text.length > 20 && !text.trimStart().startsWith('<')) {
             onSuccess(text.trim());
         } else {
             callUserProviders(prompt, onSuccess, onError);
@@ -3579,7 +3750,7 @@ function callUserProviders(prompt, onSuccess, onError) {
 
     function tryNext(i) {
         if(i >= providers.length) {
-            if(onError) onError('الذكاء الاصطناعي غير متاح حالياً. حاول مرة أخرى.');
+            if(onError) onError('AI is currently unavailable. Try again later.');
             return;
         }
         var p = providers[i];
@@ -3602,7 +3773,7 @@ function callUserProviders(prompt, onSuccess, onError) {
 }
 
 </script>
-<a href="https://wa.me/201028707543" target="_blank" rel="noopener noreferrer" class="whatsapp-btn" aria-label="واتساب" style="position:fixed;bottom:28px;left:28px;z-index:9999;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.3s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+<a href="https://wa.me/201028707543" target="_blank" rel="noopener noreferrer" class="whatsapp-btn" aria-label="WhatsApp" style="position:fixed;bottom:28px;left:28px;z-index:9999;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.3s" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
     <i class="fab fa-whatsapp" style="color:#fff;font-size:1.8rem"></i>
 </a>
 </body>

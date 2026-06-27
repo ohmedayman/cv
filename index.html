@@ -79,7 +79,7 @@
             {"@type":"Offer","price":"99","priceCurrency":"EGP","name":"الباقة الاحترافية","description":"5 سير ذاتية احترافية مع جميع القوالب وذكاء اصطناعي ورفع وتحليل 3 مرات/شهر","billingIncrement":"P1M"},
             {"@type":"Offer","price":"299","priceCurrency":"EGP","name":"الباقة غير المحدودة","description":"سير ذاتية غير محدودة مع جميع القوالب وذكاء اصطناعي وتحليل غير محدود ودعم 24/7","billingIncrement":"P1M"}
         ],
-        "aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","ratingCount":"10240","bestRating":"5","worstRating":"1"},
+        "aggregateRating":{"@type":"AggregateRating","ratingValue":"4.8","ratingCount":"52","bestRating":"5","worstRating":"1"},
         "review": [
             {"@type":"Review","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"أحمد محمد"},"reviewBody":"QCV غيّر حياتي! حصلت على مقابلة عمل في شركة كبيرة."},
             {"@type":"Review","reviewRating":{"@type":"Rating","ratingValue":"5","bestRating":"5"},"author":{"@type":"Person","name":"سارة خالد"},"reviewBody":"القوالب احترافية جداً والتحليل الـ ATS فادني أفهم ليه سيرتي الذاتية كانت بترفض."},
@@ -378,6 +378,9 @@
         }
         @media(max-width:768px){
             .nav-mobile-toggle{display:flex}
+            .theme-toggle{width:44px!important;height:44px!important}
+            .lang-switch button{padding:8px 12px!important}
+            .nav-cta{padding:12px 24px!important;min-height:44px}
             .nav-center{display:none;position:fixed;top:68px;left:0;right:0;background:var(--sidebar, rgba(255,255,255,0.98));backdrop-filter:blur(20px);flex-direction:column;padding:20px;gap:12px;border-bottom:1px solid var(--border);z-index:999;box-shadow:0 8px 24px rgba(0,0,0,0.06)}
             .nav-center.show{display:flex}
             .nav-center li{width:100%}
@@ -427,6 +430,8 @@
             .stat{min-width:45%}
             .pricing-grid{padding:0}
             .price-card{padding:28px 20px}
+            .p-price .val{font-size:2rem}
+            .p-price .free{font-size:1.8rem}
             .cta-box h2{font-size:1.15rem}
             .cta-box p{font-size:0.88rem}
             .section-header h2{font-size:1.35rem}
@@ -507,10 +512,10 @@
 
 <!-- ===== STATS ===== -->
 <div class="stats-bar">
-    <div class="stat"><div class="stat-icon"><i class="fas fa-file-alt"></i></div><div class="stat-num" data-target="15" data-prefix="+">+15</div><div class="stat-label" data-i18n="stat_templates">قالب سيرة ذاتية</div></div>
-    <div class="stat"><div class="stat-icon"><i class="fas fa-star"></i></div><div class="stat-num" data-target="4.9">4.9</div><div class="stat-label" data-i18n="stat_rating">تقييم المستخدمين</div></div>
-    <div class="stat"><div class="stat-icon"><i class="fas fa-check-circle"></i></div><div class="stat-num" data-target="1000" data-prefix="+">+1K</div><div class="stat-label">سيرة ذاتية تم إنشاؤها</div></div>
-    <div class="stat"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-num" data-target="10000" data-prefix="+">+10K</div><div class="stat-label" data-i18n="stat_users">مستخدم نشط</div></div>
+    <div class="stat"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-num" data-target="50" data-prefix="+">+50</div><div class="stat-label">مستخدم نشط</div></div>
+    <div class="stat"><div class="stat-icon"><i class="fas fa-check-circle"></i></div><div class="stat-num" data-target="200" data-prefix="+">+200</div><div class="stat-label">سيرة ذاتية تم إنشاؤها</div></div>
+    <div class="stat"><div class="stat-icon"><i class="fas fa-star"></i></div><div class="stat-num" data-target="4.8">4.8</div><div class="stat-label">تقييم المستخدمين</div></div>
+    <div class="stat"><div class="stat-icon"><i class="fas fa-file-alt"></i></div><div class="stat-num" data-target="15">15</div><div class="stat-label">قالب سيرة ذاتية</div></div>
 </div>
 
 <!-- ===== FEATURES ===== -->
